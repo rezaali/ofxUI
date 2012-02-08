@@ -11,7 +11,7 @@ This UI library was inspired & influenced by:
 - SimpleGUI (http://marcinignac.com/blog/simplegui/)
 - Apple's User Interface 
 
-ofxUI was / is developed by Reza Ali (www.syedrezaali.com || syed.reza.ali@gmail.com || @rezaali). It has been tested on OSX  and iOS (OF 07). It should work on linux and windows, since its only dependency is openFrameworks. ofxUI is open source under an MIT License, therefore you can use it in commercial and non-commercial projects. If you do end up using it, please let me know I would to show examples of it out there in the wild. If you plan to use it in a commercial project please consider donating to help support this addon and future releases/fixes/features (http://www.syedrezaali.com/blog/?p=2172).
+ofxUI was / is developed by Reza Ali (www.syedrezaali.com || syed.reza.ali@gmail.com || @rezaali). It has been tested on OSX  and iOS (OF 07). It should work on linux and windows, since its only dependency is openFrameworks. ofxUI is open source under an MIT License, therefore you can use it in commercial and non-commercial projects. If you do end up using it, please let me know. I would love to see examples of it out there in the wild. If you plan to use it in a commercial project please consider donating to help support this addon and future releases/fixes/features (http://www.syedrezaali.com/blog/?p=2172).
 
 TUTORIAL: 
 
