@@ -91,60 +91,60 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
 	
-	if(!name.compare("RED"))
+	if(name == "RED")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		red = slider->getScaledValue(); 
 	}
-	else if(!name.compare("GREEN"))
+	else if(name == "GREEN")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		green = slider->getScaledValue(); 
 	}	
-	else if(!name.compare("BLUE"))
+	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		blue = slider->getScaledValue(); 		
 	}
-	else if(!name.compare("BGR"))
+	else if(name == "BGR")
 	{
 		ofxUISlider *rslider = (ofxUISlider *) e.widget; 
 		backgroundColor.r = rslider->getScaledValue(); 		
 	}    
-	else if(!name.compare("BGG"))
+	else if(name == "BGG")
 	{
 		ofxUISlider *rslider = (ofxUISlider *) e.widget; 
 		backgroundColor.g = rslider->getScaledValue(); 		
 	}    
-	else if(!name.compare("BGB"))
+	else if(name == "BGB")
 	{
 		ofxUISlider *rslider = (ofxUISlider *) e.widget; 
 		backgroundColor.b = rslider->getScaledValue(); 		
 	}    
-	else if(!name.compare("ALPHA"))
+	else if(name == "ALPHA")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		alpha = slider->getScaledValue(); 		
 	}
-	else if(!name.compare("RADIUS"))
+	else if(name == "RADIUS")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		radius = slider->getScaledValue(); 		
 	}
-	else if(!name.compare("RESOLUTION"))
+	else if(name == "RESOLUTION")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		resolution = slider->getScaledValue();          //gets the value from the specified range, otherwise you can get a normalized value (0.0 -> 1.0); 
         ofSetCircleResolution(resolution); 
         slider->setValue(resolution);                   //shows the int value on the slider 
 	}    
-    else if(!name.compare("POSITION"))
+    else if(name == "POSITION")
 	{
 		ofxUI2DPad *pad = (ofxUI2DPad *) e.widget; 
 		position.x = pad->getPercentValue().x*ofGetWidth(); 
 		position.y = pad->getPercentValue().y*ofGetHeight(); 
 	}    
-    else if(!name.compare("DRAW FILL"))
+    else if(name == "DRAW FILL")
     {
         ofxUILabelToggle *toggle = (ofxUILabelToggle *) e.widget; 
         drawFill = toggle->getValue();     

@@ -56,19 +56,19 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
 	
-	if(!name.compare("RED"))
+	if(name == "RED")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		red = slider->getScaledValue(); 
         cout << "value: " << slider->getScaledValue() << endl; 
 	}
-	else if(!name.compare("GREEN"))
+	else if(name == "GREEN")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		green = slider->getScaledValue(); 
         cout << "value: " << slider->getScaledValue() << endl; 
 	}	
-	else if(!name.compare("BLUE"))
+	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		blue = slider->getScaledValue(); 		

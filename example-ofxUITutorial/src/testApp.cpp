@@ -27,12 +27,12 @@ void testApp::exit()
 //--------------------------------------------------------------
 void testApp::guiEvent(ofxUIEventArgs &e)
 {
-    if(!e.widget->getName().compare("BACKGROUND VALUE"))
+    if(e.widget->getName() == "BACKGROUND VALUE")
     {
         ofxUISlider *slider = (ofxUISlider *) e.widget;    
         ofBackground(slider->getScaledValue());
     }
-    else if(!e.widget->getName().compare("FULLSCREEN"))
+    else if(e.widget->getName() == "FULLSCREEN")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
         ofSetFullscreen(toggle->getValue());   

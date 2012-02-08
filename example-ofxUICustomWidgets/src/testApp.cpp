@@ -92,43 +92,43 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
 	
-	if(!name.compare("RED"))
+	if(name == "RED")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		red = slider->getScaledValue(); 
         cout << "value: " << slider->getScaledValue() << endl; 
 	}
-	else if(!name.compare("GREEN"))
+	else if(name == "GREEN")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		green = slider->getScaledValue(); 
         cout << "value: " << slider->getScaledValue() << endl; 
 	}	
-	else if(!name.compare("BLUE"))
+	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		blue = slider->getScaledValue(); 		
         cout << "value: " << slider->getScaledValue() << endl;         
 	}
-	else if(!name.compare("BLUE"))
+	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		blue = slider->getScaledValue(); 		
         cout << "value: " << slider->getScaledValue() << endl;         
 	}    
-    else if(!name.compare("RSLIDER"))
+    else if(name == "RSLIDER")
     {
         ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) e.widget; 
         cout << "valuelow: " << rslider->getScaledValueLow() << endl; 
         cout << "valuehigh: " << rslider->getScaledValueHigh() << endl;   
     }
-    else if(!name.compare("PAD"))
+    else if(name == "PAD")
     {
         ofxUI2DPad *pad = (ofxUI2DPad *) e.widget; 
         cout << "value x: " << pad->getScaledValue().x << endl; 
         cout << "value y: " << pad->getScaledValue().y << endl;         
     }
-    else if(!name.compare("CSLIDER") || !name.compare("CSLIDER 2"))
+    else if(name == "CSLIDER" || name == "CSLIDER 2")
     {
         ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) e.widget; 
         cout << "value: " << rotslider->getScaledValue() << endl; 

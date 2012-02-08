@@ -42,36 +42,36 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	int kind = e.widget->getKind(); 
 	cout << "got event from: " << name << endl; 	
 	
-	if(!name.compare("RED"))
+	if(name == "RED")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		cout << "RED " << slider->getScaledValue() << endl; 
 		red = slider->getScaledValue(); 
 	}
-	else if(!name.compare("GREEN"))
+	else if(name == "GREEN")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		cout << "GREEN " << slider->getScaledValue() << endl; 
 		green = slider->getScaledValue(); 
 	}
 	
-	else if(!name.compare("BLUE"))
+	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.widget; 
 		cout << "BLUE " << slider->getScaledValue() << endl; 
 		blue = slider->getScaledValue(); 		
 	}
-	else if(!name.compare("DRAW GRID"))
+	else if(name == "DRAW GRID")
 	{
 		ofxUIButton *button = (ofxUIButton *) e.widget; 
 		bdrawGrid = button->getValue(); 
 	}
-	else if(!name.compare("D_GRID"))
+	else if(name == "D_GRID")
 	{
 		ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
 		bdrawGrid = toggle->getValue(); 
 	}
-    else if(!name.compare("TEXT INPUT"))
+    else if(name == "TEXT INPUT")
     {
         ofxUITextInput *textinput = (ofxUITextInput *) e.widget; 
         if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)

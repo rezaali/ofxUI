@@ -112,30 +112,26 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	
     
     
-	if(!name.compare("B1"))
+	if(name == "B1")
 	{
         ofxUIButton *button = (ofxUIButton *) e.widget; 
         cout << "value: " << button->getValue() << endl; 
 	}
-    else if(!name.compare("B2"))
+    else if(name == "B2")
     {
         ofxUIButton *button = (ofxUIButton *) e.widget; 
         cout << "value: " << button->getValue() << endl;         
     }
-    else if(!name.compare("T1"))
+    else if(name == "T1")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
         cout << "value: " << toggle->getValue() << endl;     
     }
-    else if(!name.compare("T2"))
+    else if(name == "T2")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget; 
         cout << "value: " << toggle->getValue() << endl;     
     }
-
-    
-    
-    
 }
 //--------------------------------------------------------------
 void testApp::exit()
