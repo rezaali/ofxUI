@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void testApp::setup()
 { 
-	ofEnableSmoothing(); 
+//	ofEnableSmoothing(); 
 	ofBackground(0); 
 	
 	setGUI1(); 
@@ -77,6 +77,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
         {
             cout << "ON ENTER: "; 
+//            ofUnregisterKeyEvents((testApp*)this); 
         }
         else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
         {
@@ -85,6 +86,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
         {
             cout << "ON BLUR: "; 
+//            ofRegisterKeyEvents(this);             
         }        
         string output = textinput->getTextString(); 
         cout << output << endl; 
@@ -105,7 +107,10 @@ void testApp::exit()
 //--------------------------------------------------------------
 void testApp::keyPressed(int key)
 {
-
+    if(gui2->hasKeyboardFocus())
+    {
+        return;  
+    }
 	switch (key) 
 	{			
 		case '`':

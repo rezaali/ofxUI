@@ -57,6 +57,7 @@ public:
         float h = ofGetHeight(); 
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w,h);
+        setDrawBack(false); 
     }
 
     void init(int w, int h)
@@ -74,18 +75,29 @@ public:
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect);
         
-		font_large = new ofTrueTypeFont(); 
-		font_medium = new ofTrueTypeFont(); 
-		font_small = new ofTrueTypeFont(); 		
-		
-		font_large->loadFont(OFX_UI_FONT_NAME,OFX_UI_FONT_LARGE_SIZE,true, true, false, 0.0,OFX_UI_FONT_RESOLUTION); 				
-		font_medium->loadFont(OFX_UI_FONT_NAME,OFX_UI_FONT_MEDIUM_SIZE,true, true, false, 0.0,OFX_UI_FONT_RESOLUTION); 				
-		font_small->loadFont(OFX_UI_FONT_NAME,OFX_UI_FONT_SMALL_SIZE,true, true, false, 0.0,OFX_UI_FONT_RESOLUTION); 						
+        font_large = new ofTrueTypeFont();
+        font_medium = new ofTrueTypeFont();
+        font_small = new ofTrueTypeFont();
         
+        fontName = OFX_UI_FONT_NAME;
+        setFont(fontName,true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
+                
 		font = font_medium; 
 		lastAdded = NULL; 
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
+        hasKeyBoard = false; 
+    }
+
+    //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
+    bool setFont(string filename, bool _bAntiAliased=true, bool _bFullCharacterSet=true, bool makeContours=false, float simplifyAmt=0.0, int dpi=OFX_UI_FONT_RESOLUTION) 
+    {
+        bool large = updateFont(OFX_UI_FONT_LARGE, filename, OFX_UI_FONT_LARGE_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool medium = updateFont(OFX_UI_FONT_MEDIUM, filename, OFX_UI_FONT_MEDIUM_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool small = updateFont(OFX_UI_FONT_SMALL, filename, OFX_UI_FONT_SMALL_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool successful = large && medium && small;
+        if( successful ) fontName = filename;
+        return successful;
     }
     
     void setFontSize(ofxWidgetFontType _kind, int _size, int _resolution = OFX_UI_FONT_RESOLUTION)
@@ -98,7 +110,7 @@ public:
                     delete font_large;          
                 }
                 font_large = new ofTrueTypeFont(); 
-                font_large->loadFont(OFX_UI_FONT_NAME,_size,true, true, false, 0.0,_resolution); 				            
+                font_large->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				            
                 break; 
 
             case OFX_UI_FONT_MEDIUM:
@@ -107,7 +119,7 @@ public:
                     delete font_medium;          
                 }
                 font_medium = new ofTrueTypeFont(); 
-                font_medium->loadFont(OFX_UI_FONT_NAME,_size,true, true, false, 0.0,_resolution); 				                            
+                font_medium->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				                            
                 break; 
 
             case OFX_UI_FONT_SMALL:
@@ -116,7 +128,7 @@ public:
                     delete font_small;          
                 }
                 font_small = new ofTrueTypeFont(); 
-                font_small->loadFont(OFX_UI_FONT_NAME,_size,true, true, false, 0.0,_resolution); 				                            
+                font_small->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				                            
                 break; 
         }
     }
@@ -141,6 +153,11 @@ public:
 			enable(); 
 		}
 	}
+    
+    bool hasKeyboardFocus()
+    {
+        return hasKeyBoard; 
+    }
 	
 	void enable()
 	{
@@ -904,11 +921,12 @@ public:
 	}
 	
 	void triggerEvent(ofxUIWidget *child)
-	{
+	{        
+        checkForKeyFocus(child); 
 		GUIevent->widget = child; 		
 		ofNotifyEvent(newGUIEvent,*GUIevent,this);		
 	}
-	
+	    
 	void setWidgetColor(int _target, ofColor _color)
 	{
 		switch (_target) 
@@ -971,6 +989,19 @@ public:
     {
         return widgets;
     }
+    
+    vector<ofxUIWidget*> getWidgetsOfType(ofxWidgetType type)
+    {
+        vector<ofxUIWidget*> widgetToReturn; 
+        for(int i = 0; i < widgets.size(); i++)
+		{
+            if(widgets[i]->getKind() == type)
+            {
+                widgetToReturn.push_back(widgets[i]);
+            }
+		}	 
+        return widgetToReturn;                                         
+    }
 	
 	ofEvent<ofxUIEventArgs> newGUIEvent;
 	
@@ -1000,8 +1031,83 @@ protected:
 	bool enable_highlight_fill; 	
 	bool enabled; 
     int uniqueIDs; 
+    bool hasKeyBoard; 
     
     float widgetSpacing; 
+    
+    string fontName;
+
+    //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)    
+    bool updateFont(ofxWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
+        bool success = false;
+        switch(_kind)
+        {
+            case OFX_UI_FONT_LARGE:
+                if(font_large != NULL)
+                {
+                    delete font_large;
+                }
+                font_large = new ofTrueTypeFont();
+                success = font_large->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
+                break;
+                
+            case OFX_UI_FONT_MEDIUM:
+                if(font_medium != NULL)
+                {
+                    delete font_medium;
+                }
+                font_medium = new ofTrueTypeFont();
+                success = font_medium->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
+                break;
+                
+            case OFX_UI_FONT_SMALL:
+                if(font_small != NULL)
+                {
+                    delete font_small;
+                }
+                font_small = new ofTrueTypeFont();
+                success = font_small->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
+                break;
+        }
+        return success;
+    }
+    
+    void checkForKeyFocus(ofxUIWidget *child)
+    {
+        if(child->getKind() == OFX_UI_WIDGET_TEXTINPUT)
+        {
+            ofxUITextInput *textinput = (ofxUITextInput *) child;         
+            switch(textinput->getTriggerType())
+            {
+                case OFX_UI_TEXTINPUT_ON_FOCUS:
+                {
+                    hasKeyBoard = true; 
+                }
+                    break; 
+                    
+                case OFX_UI_TEXTINPUT_ON_ENTER:
+                {
+                    hasKeyBoard = true; 
+                }        
+                    break; 
+                    
+                case OFX_UI_TEXTINPUT_ON_UNFOCUS:
+                {
+                    hasKeyBoard = false; 
+                }        
+                    break; 
+                    
+                default:
+                {
+                    hasKeyBoard = false; 
+                }
+                    break;                     
+            }
+        }        
+    }
+
+    
+    
 };
 
 #endif

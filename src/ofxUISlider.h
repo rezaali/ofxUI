@@ -76,7 +76,7 @@ public:
         
 		if(kind == OFX_UI_WIDGET_SLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue(),2)), OFX_UI_FONT_SMALL); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(max,2)), OFX_UI_FONT_SMALL); 
 		}
 		else 
 		{
@@ -371,13 +371,11 @@ public:
 	{
 		parent = _parent; 
 		paddedRect->height += label->getPaddingRect()->height; 
-		if(kind == OFX_UI_WIDGET_SLIDER_V)
-		{
-			if(label->getPaddingRect()->width > paddedRect->width)
-			{
-				paddedRect->width = label->getPaddingRect()->width+padding;				
-			}
-		}
+        if(label->getPaddingRect()->width > paddedRect->width)
+        {
+            paddedRect->width = label->getPaddingRect()->width;				
+        }
+        updateLabel(); 
 	}	
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

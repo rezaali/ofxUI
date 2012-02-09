@@ -145,6 +145,11 @@ void testApp::exit()
 //--------------------------------------------------------------
 void testApp::keyPressed(int key)
 {
+    if(gui->hasKeyboardFocus())
+    {
+        return; 
+    }
+    
     switch (key) 
     {
         case 'p':

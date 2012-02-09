@@ -15,8 +15,8 @@ void testApp::setup()
     drawPadding = false; 
     
     gui = new ofxUICanvas(0,0,length+xInit,ofGetHeight());     
-    
-	gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE)); 
+	
+    gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE)); 
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
 	gui->addWidgetDown(new ofxUILabel("HORIZONTAL SLIDERS", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
@@ -39,6 +39,9 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
 	gui->addWidgetDown(new ofxUI2DPad(length-xInit,160, ofPoint((length-xInit)*.5,190*.5), "PAD")); 	
 
+    
+
+    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
 }

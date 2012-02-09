@@ -92,6 +92,20 @@ public:
         draw_fill = !draw_fill; 
         draw_back = !draw_back; 
     }
+    
+    void setToggleColor(bool _value)
+    {
+        if(_value)
+        {
+            draw_fill = true; 
+            draw_back = false; 
+        }
+        else
+        {
+            draw_fill = false; 
+            draw_back = true;             
+        }
+    }
 protected: 
 }; 
 

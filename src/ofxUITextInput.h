@@ -155,7 +155,7 @@ public:
         else
         {
             state = OFX_UI_STATE_NORMAL;        
-			clicked = false; 
+            unClick(); 
         }
         stateChange();         
     }
@@ -168,8 +168,8 @@ public:
         }    
         else
         {
-            state = OFX_UI_STATE_NORMAL;      
-			clicked = false;             
+            state = OFX_UI_STATE_NORMAL;  
+            unClick(); 
         }
         stateChange();     
     }
@@ -204,8 +204,8 @@ public:
 #else            
             state = OFX_UI_STATE_OVER; 
 #endif 
-			triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS; 
-			triggerEvent(this); 
+//			triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS; 
+//			triggerEvent(this); 
         }    
         else
         {
@@ -280,6 +280,15 @@ public:
 		}
     }
     
+    void unClick()
+    {
+        if(clicked)
+        {
+            clicked = false;          
+			triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS; 
+			triggerEvent(this);             
+        }     
+    }
     void stateChange()
     {        
         switch (state) {
