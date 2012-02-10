@@ -204,7 +204,7 @@ public:
             }
             XML->popTag(); 
         }
-                
+        hasKeyBoard = false;                
         delete XML; 
     }
     
