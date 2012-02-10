@@ -63,7 +63,7 @@ public:
     {        
 		name = _name; 		        
 
-        kind = OFX_UI_WIDGET_LABELBUTTON; 		
+        kind = OFX_UI_WIDGET_LABELTOGGLE; 		
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect); 
         

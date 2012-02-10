@@ -8,6 +8,8 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUISlider(304,16,0.0,255.0,100.0,"BACKGROUND VALUE")); 
     gui->addWidgetDown(new ofxUIToggle(32, 32, false, "FULLSCREEN"));
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
+    gui->loadSettings("GUI/guiSettings.xml"); 
+    
 }
 
 //--------------------------------------------------------------
@@ -22,6 +24,7 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::exit()
 {
+    gui->saveSettings("GUI/guiSettings.xml"); 
     delete gui; 
 }
 //--------------------------------------------------------------

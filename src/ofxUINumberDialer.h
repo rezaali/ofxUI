@@ -94,6 +94,20 @@ public:
         return value; 
     }
     
+    void setValue(float _value)
+    {
+        if(_value > max)
+        {
+            _value = max;             
+        }
+        else if(_value < min)
+        {
+            _value = min; 
+        }            
+        value = _value; 
+        setTextString(ofToString(value, precision));         
+    }
+    
     void draw()
     {
         ofPushStyle(); 

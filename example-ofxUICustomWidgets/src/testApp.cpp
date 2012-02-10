@@ -61,14 +61,19 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabel("DROP DOWN LIST", OFX_UI_FONT_MEDIUM));     
     
     vector<string> items; items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM"); items.push_back("FOURTH ITEM");
+    
+    vector<string> items2; items2.push_back("FIFTH ITEM"); items2.push_back("SIXTH ITEM"); items2.push_back("SEVENTH ITEM"); items2.push_back("EIGTHTH ITEM");
+    
     gui->addWidgetDown(new ofxUIDropDownList("DROP DOWN", items, OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetRight(new ofxUIDropDownList("ALLOW MULTIPLE", items, OFX_UI_FONT_MEDIUM));     
+    gui->addWidgetRight(new ofxUIDropDownList("ALLOW MULTIPLE", items2, OFX_UI_FONT_MEDIUM));     
     
     ofxUIDropDownList* ddl = (ofxUIDropDownList *) gui->getWidget("ALLOW MULTIPLE");
     ddl->setAllowMultiple(true); 
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
+    
+    gui->loadSettings("GUI/guiSettings.xml"); 
 }
 
 //--------------------------------------------------------------
@@ -137,6 +142,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 //--------------------------------------------------------------
 void testApp::exit()
 {
+    gui->saveSettings("GUI/guiSettings.xml"); 
     delete gui; 
 	delete[] buffer;     
     delete img; 

@@ -89,6 +89,212 @@ public:
         hasKeyBoard = false; 
     }
 
+    void saveSettings(string fileName)
+    {
+        ofxXmlSettings *XML = new ofxXmlSettings(); 
+        for(int i = 0; i < widgetsWithState.size(); i++)
+        {                
+            int index = XML->addTag("Widget");
+            if(XML->pushTag("Widget", index))
+            {
+                XML->setValue("Kind", widgetsWithState[i]->getKind(), 0);
+                XML->setValue("Name", widgetsWithState[i]->getName(), 0);
+                writeSpecificWidgetData(widgetsWithState[i], XML); 
+            }
+            XML->popTag();                            
+        }
+        XML->saveFile(fileName);                
+        delete XML; 
+    }
+    
+    void writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
+    {
+        int kind = widget->getKind();        
+        switch (kind) {
+            case OFX_UI_WIDGET_TOGGLE:
+            {
+                ofxUIToggle *toggle = (ofxUIToggle *) widget; 
+                XML->setValue("Value", (toggle->getValue() ? 1 : 0), 0);                
+            }
+                break;
+                
+            case OFX_UI_WIDGET_SLIDER_H:
+            case OFX_UI_WIDGET_SLIDER_V:
+            {
+                ofxUISlider *slider = (ofxUISlider *) widget; 
+                XML->setValue("Value", slider->getScaledValue(), 0); 
+            }
+                break;
+
+            case OFX_UI_WIDGET_RSLIDER_H:
+            case OFX_UI_WIDGET_RSLIDER_V:
+            {
+                ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget; 
+                XML->setValue("HighValue", rslider->getScaledValueHigh(), 0); 
+                XML->setValue("LowValue", rslider->getScaledValueLow(), 0);                 
+            }
+                break;
+
+            case OFX_UI_WIDGET_NUMBERDIALER:
+            {
+                ofxUINumberDialer *numdialer = (ofxUINumberDialer *) widget; 
+                XML->setValue("Value", numdialer->getValue(), 0); 
+            }
+                break;
+
+            case OFX_UI_WIDGET_2DPAD:
+            {
+                ofxUI2DPad *pad = (ofxUI2DPad *) widget; 
+                XML->setValue("XValue", pad->getScaledValue().x, 0); 
+                XML->setValue("YValue", pad->getScaledValue().y, 0);                 
+            }
+                break;
+
+            case OFX_UI_WIDGET_TEXTINPUT:
+            {
+                ofxUITextInput *textInput = (ofxUITextInput *) widget; 
+                XML->setValue("Value", textInput->getTextString(), 0);                 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_LABELTOGGLE:
+            {
+                ofxUILabelToggle *ltoggle = (ofxUILabelToggle *) widget; 
+                XML->setValue("Value", (ltoggle->getValue() ? 1 : 0), 0);                
+            }
+                break;
+
+            case OFX_UI_WIDGET_IMAGETOGGLE:
+            {
+                ofxUIImageToggle *itoggle = (ofxUIImageToggle *) widget; 
+                XML->setValue("Value", (itoggle->getValue() ? 1 : 0), 0);                
+            }
+                break;
+                
+            case OFX_UI_WIDGET_ROTARYSLIDER:
+            {
+                ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
+                XML->setValue("Value", rotslider->getScaledValue(), 0); 
+            }
+                break;
+
+            default:
+                break;
+        }
+    }
+    
+    void loadSettings(string fileName)
+    {
+        ofxXmlSettings *XML = new ofxXmlSettings(); 
+        XML->loadFile(fileName); 
+        int widgetTags = XML->getNumTags("Widget"); 
+        cout << "Number of Tags: " << widgetTags << endl; 
+        for(int i = 0; i < widgetTags; i++)
+        {
+            XML->pushTag("Widget", i);
+            int kind = XML->getValue("Kind", 0, 0);
+            cout << "Widget Kind: " << kind << endl; 
+            string name = XML->getValue("Name", "NULL", 0);
+            cout << "Widget Name: " << name << endl; 
+            ofxUIWidget *widget = getWidget(name); 
+            if(widget != NULL)
+            {
+                loadSpecificWidgetData(widget, XML); 
+                triggerEvent(widget); 
+            }
+            XML->popTag(); 
+        }
+                
+        delete XML; 
+    }
+    
+    void loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
+    {
+        int kind = widget->getKind();        
+        switch (kind) 
+        {
+            case OFX_UI_WIDGET_TOGGLE:
+            {
+                ofxUIToggle *toggle = (ofxUIToggle *) widget; 
+                int value = XML->getValue("Value", (toggle->getValue() ? 1 : 0), 0);                             
+                toggle->setValue((value ? 1 : 0)); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_SLIDER_H:
+            case OFX_UI_WIDGET_SLIDER_V:
+            {
+                ofxUISlider *slider = (ofxUISlider *) widget; 
+                float value = XML->getValue("Value", slider->getScaledValue(), 0);            
+                slider->setValue(value); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_RSLIDER_H:
+            case OFX_UI_WIDGET_RSLIDER_V:
+            {
+                ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget; 
+                float valueHigh = XML->getValue("HighValue", rslider->getScaledValueHigh(), 0); 
+                float valueLow = XML->getValue("LowValue", rslider->getScaledValueLow(), 0); 
+                rslider->setValueHigh(valueHigh);
+                rslider->setValueLow(valueLow);
+            }
+                break;
+                
+            case OFX_UI_WIDGET_NUMBERDIALER:
+            {
+                ofxUINumberDialer *numdialer = (ofxUINumberDialer *) widget; 
+                float value = XML->getValue("Value", numdialer->getValue(), 0);             
+                numdialer->setValue(value);                 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_2DPAD:
+            {
+                ofxUI2DPad *pad = (ofxUI2DPad *) widget; 
+                float valueX = XML->getValue("XValue", pad->getScaledValue().x, 0); 
+                float valueY = XML->getValue("YValue", pad->getScaledValue().y, 0); 
+                pad->setValue(ofPoint(valueX, valueY)); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_TEXTINPUT:
+            {
+                ofxUITextInput *textInput = (ofxUITextInput *) widget; 
+                string value = XML->getValue("Value", textInput->getTextString(), 0);             
+                textInput->setTextString(value); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_LABELTOGGLE:
+            {
+                ofxUILabelToggle *ltoggle = (ofxUILabelToggle *) widget; 
+                int value = XML->getValue("Value", (ltoggle->getValue() ? 1 : 0), 0);                         
+                ltoggle->setValue((value ? 1 : 0)); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_IMAGETOGGLE:
+            {
+                ofxUIImageToggle *itoggle = (ofxUIImageToggle *) widget; 
+                int value = XML->getValue("Value", (itoggle->getValue() ? 1 : 0), 0);                        
+                itoggle->setValue((value ? 1 : 0)); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_ROTARYSLIDER:
+            {
+                ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
+                float value = XML->getValue("Value", rotslider->getScaledValue(), 0);            
+                rotslider->setValue(value); 
+            }
+                break;
+                
+            default:
+                break;
+        }        
+    }
+    
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
     bool setFont(string filename, bool _bAntiAliased=true, bool _bFullCharacterSet=true, bool makeContours=false, float simplifyAmt=0.0, int dpi=OFX_UI_FONT_RESOLUTION) 
     {
@@ -595,6 +801,8 @@ public:
 			ofxUILabel *label = (ofxUILabel *) slider->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 				
+
+            widgetsWithState.push_back(widget);                         
 		}
 		else if(widget->getKind() == OFX_UI_WIDGET_2DPAD)		
 		{
@@ -602,6 +810,8 @@ public:
 			ofxUILabel *label = (ofxUILabel *) pad->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 				
+
+            widgetsWithState.push_back(widget);             
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_IMAGE)		
 		{
@@ -615,7 +825,9 @@ public:
 			ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget;
 			ofxUILabel *label = (ofxUILabel *) rslider->getLabel();
 			setLabelFont(label); 			
-			pushbackWidget(label); 				
+			pushbackWidget(label); 			
+            
+            widgetsWithState.push_back(widget);                         
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_ROTARYSLIDER)
 		{
@@ -623,13 +835,17 @@ public:
 			ofxUILabel *label = (ofxUILabel *) rslider->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 				
+            
+            widgetsWithState.push_back(widget);                         
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_BUTTON || widget->getKind() ==  OFX_UI_WIDGET_LABELBUTTON || widget->getKind() == OFX_UI_WIDGET_LABELTOGGLE)
 		{
 			ofxUIButton *button = (ofxUIButton *) widget;
 			ofxUILabel *label = (ofxUILabel *) button->getLabel();
 			setLabelFont(label); 			
-			pushbackWidget(label); 					
+			pushbackWidget(label); 		
+			
+            widgetsWithState.push_back(widget);                         
 		}
         else if(widget->getKind() == OFX_UI_WIDGET_DROPDOWNLIST)            
         { 
@@ -646,6 +862,8 @@ public:
 				setLabelFont(l2); 	
                 pushbackWidget(l2); 					
                 pushbackWidget(t); 
+
+                widgetsWithState.push_back(t);             
 			}            
         }
 		else if(widget->getKind() == OFX_UI_WIDGET_TEXTINPUT)
@@ -653,21 +871,27 @@ public:
 			ofxUITextInput *textinput = (ofxUITextInput *) widget;
 			ofxUILabel *label = (ofxUILabel *) textinput->getLabel();
 			setLabelFont(label); 			
-			pushbackWidget(label); 					
+			pushbackWidget(label); 	
+            
+            widgetsWithState.push_back(widget);             
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_NUMBERDIALER)
 		{
 			ofxUINumberDialer *numberDialer = (ofxUINumberDialer *) widget;
 			ofxUILabel *label = (ofxUILabel *) numberDialer->getLabel();
 			setLabelFont(label); 			
-			pushbackWidget(label); 					
+			pushbackWidget(label); 			
+            
+            widgetsWithState.push_back(widget);                         
 		}		        
 		else if(widget->getKind() == OFX_UI_WIDGET_TOGGLE)
 		{
 			ofxUIToggle *toggle = (ofxUIToggle *) widget;
 			ofxUILabel *label = (ofxUILabel *) toggle->getLabel();
 			setLabelFont(label); 			
-			pushbackWidget(label); 					
+			pushbackWidget(label); 			
+            
+            widgetsWithState.push_back(widget);                         
 		}
 		else if(widget->getKind() == OFX_UI_WIDGET_RADIO)
 		{
@@ -684,7 +908,9 @@ public:
 				ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
 				setLabelFont(l2); 	
 				pushbackWidget(t); 
-				pushbackWidget(l2); 					
+				pushbackWidget(l2);
+                
+                widgetsWithState.push_back(t);                             
 			}
 		}
         else if(widget->getKind() == OFX_UI_WIDGET_TOGGLEMATRIX)
@@ -702,7 +928,9 @@ public:
 				ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
 				setLabelFont(l2); 	
 				pushbackWidget(t); 
-				pushbackWidget(l2); 					
+				pushbackWidget(l2); 			
+                
+                widgetsWithState.push_back(t);                             
 			}
 		}
 		else if(widget->getKind() == OFX_UI_WIDGET_FPS)
@@ -710,6 +938,10 @@ public:
 			ofxUILabel *fps = (ofxUILabel *) widget;
 			setLabelFont(fps); 
 		}
+        else if(widget->getKind() == OFX_UI_WIDGET_IMAGETOGGLE)
+        {
+            widgetsWithState.push_back(widget);              
+        }
 	
 		widget->setParent(this); 
 		widget->setRectParent(this->rect); 		
@@ -1025,6 +1257,7 @@ protected:
     
     map<string, ofxUIWidget*> widgets_map;     
 	vector<ofxUIWidget*> widgets; 
+	vector<ofxUIWidget*> widgetsWithState;     
 	ofxUIWidget *lastAdded; 
 	ofxUIWidget *activeFocusedWidget; 
 	bool enable_highlight_outline; 
@@ -1111,3 +1344,4 @@ protected:
 };
 
 #endif
+

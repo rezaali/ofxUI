@@ -1,0 +1,230 @@
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(0,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(0,1)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(0,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(0,3)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(1,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(1,1)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(1,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(1,3)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(2,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(2,1)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(2,2)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(2,3)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(3,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(3,1)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(3,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX1(3,3)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,1)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,3)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,4)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(0,5)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,1)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,3)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,4)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(1,5)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,0)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,1)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,2)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,3)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,4)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX2(2,5)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX3(0,0)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX3(0,1)</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX3(0,2)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>MATRIX3(0,3)</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>20</Kind>
+    <Name>IMAGETGL</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>R2SLIDER</Name>
+    <Value>77.9143</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIRST ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SECOND ITEM</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>THIRD ITEM WHATS UP DOG</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FOURTH ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIFTH ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SIXTH ITEM</Name>
+    <Value>0</Value>
+</Widget>

@@ -1,0 +1,56 @@
+<Widget>
+    <Kind>4</Kind>
+    <Name>BGR</Name>
+    <Value>233</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>BGG</Name>
+    <Value>52</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>BGB</Name>
+    <Value>27</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RED</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>GREEN</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>BLUE</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>ALPHA</Name>
+    <Value>160.192</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RADIUS</Name>
+    <Value>507.692</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RESOLUTION</Name>
+    <Value>6</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>DRAW FILL</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>11</Kind>
+    <Name>POSITION</Name>
+    <XValue>252</XValue>
+    <YValue>181</YValue>
+</Widget>

@@ -1,0 +1,65 @@
+<Widget>
+    <Kind>8</Kind>
+    <Name>NDIALER</Name>
+    <Value>10000</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Large</Name>
+    <Value>LARGE TEXT FIELD</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Medium</Name>
+    <Value>MEDIUM TEXT FIELD</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Small</Name>
+    <Value>SMALL TEXT FIELD</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Autoclear</Name>
+    <Value>Auto Clear Disabled&#x1B;</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIRST ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SECOND ITEM</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>THIRD ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FOURTH ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIFTH ITEM</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SIXTH ITEM</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SEVENTH ITEM</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>EIGTHTH ITEM</Name>
+    <Value>1</Value>
+</Widget>

@@ -56,6 +56,8 @@ void testApp::setup()
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(backgroundColor); 
+    
+    gui->loadSettings("GUI/guiSettings.xml"); 
 }
 
 //--------------------------------------------------------------
@@ -153,6 +155,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 //--------------------------------------------------------------
 void testApp::exit()
 {
+    gui->saveSettings("GUI/guiSettings.xml");
     delete gui; 
 }
 //--------------------------------------------------------------

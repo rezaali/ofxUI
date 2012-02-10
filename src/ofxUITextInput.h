@@ -361,6 +361,7 @@ public:
 				label->setLabel(textstring); 
 			}				
 		}				
+        displaystring = textstring; 
 	}
 	
 	void setParent(ofxUIWidget *_parent)

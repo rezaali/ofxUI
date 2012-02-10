@@ -1,0 +1,37 @@
+<Widget>
+    <Kind>12</Kind>
+    <Name>TEXT INPUT</Name>
+    <Value>hey there</Value>
+</Widget>
+<Widget>
+    <Kind>8</Kind>
+    <Name>NUMBER DIALER</Name>
+    <Value>-5850</Value>
+</Widget>
+<Widget>
+    <Kind>16</Kind>
+    <Name>LABEL BUTTON</Name>
+</Widget>
+<Widget>
+    <Kind>16</Kind>
+    <Name>AUTOSIZE BUTTON</Name>
+</Widget>
+<Widget>
+    <Kind>16</Kind>
+    <Name>MEDIUM BUTTON</Name>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>LABEL TOGGLE</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>AUTOSIZE TOGGLE</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>MEDIUM TOGGLE</Name>
+    <Value>0</Value>
+</Widget>
