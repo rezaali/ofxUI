@@ -110,6 +110,11 @@ public:
 	{
 		return label; 
 	}
+    
+    void setImage(ofImage *_image)
+    {
+        image = _image; 
+    }
 	
 	void setParent(ofxUIWidget *_parent)
 	{

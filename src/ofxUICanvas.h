@@ -188,14 +188,11 @@ public:
         ofxXmlSettings *XML = new ofxXmlSettings(); 
         XML->loadFile(fileName); 
         int widgetTags = XML->getNumTags("Widget"); 
-        cout << "Number of Tags: " << widgetTags << endl; 
         for(int i = 0; i < widgetTags; i++)
         {
             XML->pushTag("Widget", i);
             int kind = XML->getValue("Kind", 0, 0);
-            cout << "Widget Kind: " << kind << endl; 
             string name = XML->getValue("Name", "NULL", 0);
-            cout << "Widget Name: " << name << endl; 
             ofxUIWidget *widget = getWidget(name); 
             if(widget != NULL)
             {

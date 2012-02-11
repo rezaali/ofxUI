@@ -1,7 +1,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>214.456</Value>
+    <Value>21.3389</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -16,47 +16,47 @@
 <Widget>
     <Kind>5</Kind>
     <Name>0</Name>
-    <Value>62.1562</Value>
+    <Value>255</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>1</Name>
-    <Value>30.2812</Value>
+    <Value>224.719</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>2</Name>
-    <Value>90.8438</Value>
+    <Value>196.031</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>3</Name>
-    <Value>46.2187</Value>
+    <Value>172.125</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>4</Name>
-    <Value>127.5</Value>
+    <Value>141.844</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>5</Name>
-    <Value>68.5312</Value>
+    <Value>119.531</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>6</Name>
-    <Value>175.312</Value>
+    <Value>94.0312</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>7</Name>
-    <Value>98.8125</Value>
+    <Value>62.1562</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>8</Name>
-    <Value>215.156</Value>
+    <Value>19.125</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -95,17 +95,17 @@
 <Widget>
     <Kind>2</Kind>
     <Name>D_GRID</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>6</Kind>
     <Name>RSLIDER</Name>
-    <HighValue>144.037</HighValue>
+    <HighValue>221.925</HighValue>
     <LowValue>64.0167</LowValue>
 </Widget>
 <Widget>
     <Kind>11</Kind>
     <Name>PAD</Name>
-    <XValue>36</XValue>
-    <YValue>29</YValue>
+    <XValue>202</XValue>
+    <YValue>79</YValue>
 </Widget>

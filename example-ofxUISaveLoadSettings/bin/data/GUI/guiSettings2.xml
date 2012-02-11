@@ -1,7 +1,7 @@
 <Widget>
     <Kind>12</Kind>
     <Name>TEXT INPUT</Name>
-    <Value>hey there</Value>
+    <Value>Input Text here</Value>
 </Widget>
 <Widget>
     <Kind>8</Kind>
@@ -23,15 +23,15 @@
 <Widget>
     <Kind>17</Kind>
     <Name>LABEL TOGGLE</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>AUTOSIZE TOGGLE</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>MEDIUM TOGGLE</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>

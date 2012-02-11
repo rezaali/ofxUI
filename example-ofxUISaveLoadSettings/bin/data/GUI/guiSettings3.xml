@@ -16,7 +16,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(0,3)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -31,7 +31,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(1,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -46,7 +46,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(2,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -61,7 +61,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(3,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -111,7 +111,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(1,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -121,7 +121,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(1,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -131,7 +131,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(1,4)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -186,7 +186,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX3(0,3)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>20</Kind>
@@ -196,7 +196,7 @@
 <Widget>
     <Kind>21</Kind>
     <Name>R2SLIDER</Name>
-    <Value>77.9143</Value>
+    <Value>82.3792</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -206,7 +206,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>SECOND ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -221,7 +221,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>FIFTH ITEM</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
