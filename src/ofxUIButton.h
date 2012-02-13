@@ -44,7 +44,7 @@ public:
         init(w, h, _value, _name);        
     }    
     
-    void init(float w, float h, bool _value, string _name)
+    virtual void init(float w, float h, bool _value, string _name)
     {
 		name = _name; 		
 		kind = OFX_UI_WIDGET_BUTTON; 		

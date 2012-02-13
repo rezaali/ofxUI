@@ -699,11 +699,6 @@ public:
         }    
     }	
     
-    bool isHit(int x, int y)
-    {
-        return rect->inside(x, y);
-    }
-    
 	void onKeyPressed(ofKeyEventArgs& data)
     {
 		keyPressed(data.key); 
@@ -745,6 +740,19 @@ public:
     
 #endif	
 	
+    bool isHit(int x, int y)
+    {
+        if(isEnabled())
+        {
+            return rect->inside(x, y);
+        }
+        else
+        {
+            return false; 
+        }
+    }
+    
+
     void stateChange()
     {        
         switch (state) 
@@ -841,8 +849,10 @@ public:
 			ofxUILabel *label = (ofxUILabel *) button->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 		
-			
-            widgetsWithState.push_back(widget);                         
+            if(widget->getKind() != OFX_UI_WIDGET_BUTTON && widget->getKind() != OFX_UI_WIDGET_LABELBUTTON)
+            {
+                widgetsWithState.push_back(widget);                         
+            }
 		}
         else if(widget->getKind() == OFX_UI_WIDGET_DROPDOWNLIST)            
         { 

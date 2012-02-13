@@ -11,7 +11,15 @@ This UI library was inspired & influenced by:
 - SimpleGUI (http://marcinignac.com/blog/simplegui/)
 - Apple's User Interface 
 
+Additionally, I was motived to write my own since I wanted something like ControlP5 (which is easy to get up and running) for Processing for OF. I use ControlP5 a lot and love its minimal aesthetic. I also love simpleGUI for Cinder, but since I primarily code using OF, I developed ofxUI with the intentions that it needs to be minimally designed, intuitive to use, easily integrated, flexible and customizable.
 ofxUI was / is developed by Reza Ali (www.syedrezaali.com || syed.reza.ali@gmail.com || @rezaali). It has been tested on OSX  and iOS (OF 07). It should work on linux and windows, since its only dependency is openFrameworks & ofxXmlSettings. ofxUI is open source under an MIT License, therefore you can use it in commercial and non-commercial projects. If you do end up using it, please let me know. I would love to see examples of it out there in the wild. If you plan to use it in a commercial project please consider donating to help support this addon and future releases/fixes/features (http://www.syedrezaali.com/blog/?p=2172).
+
+On a personal note: I designed ofxUI so that if I present my work to a client or put out an App on the App store, it would have a decent aesthetic and be presentable to non-hackers/programmers. I really like the widgets in MaxMsp, so I wanted to have something similar so when I prototype in C++ I could easily go about creating a UI that is pleasing to use and works robustly. 
+
+In terms of performance, I haven't compared it to other GUIs out there, but since its written using OF drawing calls and uses Listeners built in to OF, it run very fast and doesn't take a lot of CPU...atleast when I tested it when my sketches. On my laptop (Apple Macbook Pro 2009) without vertical sync the all widgets example runs upwards of ~350 fps. 
+
+When I first started programming with C++ it was difficult for me to use the other GUIs...their either depended on other libraries, which weren't included in the download, and it wouldn't work out of the box, or they were complicated to integrate into my projects. Additionally, I was motived to write my own since I wanted something like ControlP5 (which is easy to get up and running) for Processing for OF. I use ControlP5 a lot and love its minimal aesthetic. I also love simpleGUI for Cinder, but since I primarily code using OF, I developed ofxUI with the intentions that it needs to be minimally designed, intuitive to use, easily integrated, flexible and customizable.
+
 
 TUTORIAL: 
 
