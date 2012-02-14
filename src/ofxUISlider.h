@@ -366,6 +366,12 @@ public:
 	{
 		return label; 
 	}
+    
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        label->setVisible(visible); 
+    }
 	
 	void setParent(ofxUIWidget *_parent)
 	{

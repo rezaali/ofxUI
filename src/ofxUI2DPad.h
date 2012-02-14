@@ -338,6 +338,12 @@ public:
         }        
     }
 	
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        label->setVisible(visible); 
+    }
+    
 	void setValue(ofPoint _value)
 	{
 		if(_value.x > rect->width)

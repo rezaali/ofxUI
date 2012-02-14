@@ -352,6 +352,13 @@ public:
         }        
     }
 
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        label->setVisible(visible); 
+    }
+    
+    
 	void setValue(float _value)
 	{
 		value = ofMap(_value, min, max, 0.0, 1.0, true);		

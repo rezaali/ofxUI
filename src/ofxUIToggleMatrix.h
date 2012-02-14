@@ -98,13 +98,14 @@ public:
     void setVisible(bool _visible)
     {
         visible = _visible; 
+        label->setVisible(visible);         
 		for(int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
-            t->setVisible(visible); 
-            
+            t->setVisible(visible);             
         }
     }
+    
 	void activateToggle(string _name)
 	{
 		for(int i = 0; i < toggles.size(); i++)

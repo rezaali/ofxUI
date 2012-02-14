@@ -220,6 +220,18 @@ public:
         hit = false; 
     }
         
+    
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        label->setVisible(visible); 
+        for(int i = 0; i < toggles.size(); i++)
+        {
+            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
+            toggle->setVisible(visible); 
+        }
+    }
+    
     void setToggleVisibility(bool _value)
     {
         for(int i = 0; i < toggles.size(); i++)

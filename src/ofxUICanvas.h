@@ -291,7 +291,7 @@ public:
                 break;
         }        
     }
-    
+        
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
     bool setFont(string filename, bool _bAntiAliased=true, bool _bFullCharacterSet=true, bool makeContours=false, float simplifyAmt=0.0, int dpi=OFX_UI_FONT_RESOLUTION) 
     {

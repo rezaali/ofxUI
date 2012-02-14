@@ -159,7 +159,7 @@ public:
 		paddedRect->width = w+padding*3.0; 
 		paddedRect->height = h+padding*2.0; 
 	}
-    
+        
     string getLabel()
     {
         return label; 

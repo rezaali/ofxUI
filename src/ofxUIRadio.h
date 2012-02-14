@@ -86,10 +86,11 @@ public:
 	{
 		return label; 
 	}
-	
+	    
     void setVisible(bool _visible)
     {
         visible = _visible; 
+        label->setVisible(visible); 
 		for(int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
