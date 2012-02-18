@@ -954,7 +954,7 @@ public:
 		widget->setRectParent(this->rect); 		
 		pushbackWidget(widget); 	
 	}
-		
+    
 	void addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
 	{
 		addWidget(widget); 
@@ -1215,6 +1215,16 @@ public:
 		return widgets_map[_name]; 
 	}
 	
+    void removeWidget(string _name)    
+    {
+        //To Implement
+    }
+    
+    void removeWidget(ofxUIWidget *widget)
+	{
+        //To Implement
+	}
+    
 	void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 

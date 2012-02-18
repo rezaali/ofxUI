@@ -67,7 +67,7 @@ public:
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect); 
         
-        label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
+        label = new ofxUILabel((name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
         
@@ -155,8 +155,8 @@ public:
         float w = labelrect->getWidth(); 
         float pw = rect->getWidth(); 
         
-		labelrect->y = ph*.5 - h*.5; 
-        labelrect->x = pw*.5 - w*.5-padding*.5; 
+		labelrect->y = (int)(ph*.5 - h*.5); 
+        labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
 		paddedRect->height = rect->height+padding*2.0;  
         paddedRect->width = rect->width+padding*2.0;  
 	}	
