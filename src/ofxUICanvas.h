@@ -191,7 +191,6 @@ public:
         for(int i = 0; i < widgetTags; i++)
         {
             XML->pushTag("Widget", i);
-            int kind = XML->getValue("Kind", 0, 0);
             string name = XML->getValue("Name", "NULL", 0);
             ofxUIWidget *widget = getWidget(name); 
             if(widget != NULL)
@@ -357,6 +356,20 @@ public:
 		}
 	}
     
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        if(visible)
+        {
+            enable(); 
+        }
+        else
+        {
+            disable(); 
+        }
+    }
+    
+
     bool hasKeyboardFocus()
     {
         return hasKeyBoard; 
@@ -961,7 +974,6 @@ public:
         ofxUIRectangle *widgetRect = widget->getRect();         
 		if(lastAdded != NULL)
 		{
-			ofxUIRectangle *lastRect = lastAdded->getRect();                         
 			ofxUIRectangle *lastPaddedRect = lastAdded->getPaddingRect(); 
 			widgetRect->y = lastPaddedRect->getY()+lastPaddedRect->getHeight()-rect->getY()+widgetSpacing; 
 		}
@@ -990,7 +1002,6 @@ public:
         ofxUIRectangle *widgetRect = widget->getRect();                 
 		if(lastAdded != NULL)
 		{
-			ofxUIRectangle *lastRect = lastAdded->getRect();             
 			ofxUIRectangle *lastPaddedRect = lastAdded->getPaddingRect(); 
             ofxUIRectangle *widgetPaddedRect = widget->getPaddingRect();                                     
 			widgetRect->y = lastPaddedRect->getY()-widgetPaddedRect->getHeight()-rect->getY();                                     
