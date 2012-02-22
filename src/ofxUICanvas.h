@@ -1035,7 +1035,7 @@ public:
 			ofxUIRectangle *widgetRect = widget->getRect(); 
 			
             widgetRect->x = lastPaddedRect->getX()+lastPaddedRect->getWidth()-rect->getX()+widgetSpacing; 
-			widgetRect->y = lastRect->getY(); 
+			widgetRect->y = lastRect->getY()-rect->getY(); 
 		}
 		else 
 		{
@@ -1057,7 +1057,7 @@ public:
             ofxUIRectangle *widgetPaddedRect = widget->getPaddingRect();                         
 			
             widgetRect->x = lastPaddedRect->getX()-widgetPaddedRect->getWidth()-rect->getX(); 
-			widgetRect->y = lastRect->getY(); 
+			widgetRect->y = lastRect->getY()-rect->getY(); 
 		}
 		else 
 		{

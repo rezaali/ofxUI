@@ -42,8 +42,20 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     }
 }
 //--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void testApp::keyPressed(int key)
+{
+    switch (key) {
+        case 'p':
+            gui->setDrawPadding(true);
+            break;
+        case 'P':
+            gui->setDrawPadding(false);
+            break;
 
+            
+        default:
+            break;
+    }
 }
 
 //--------------------------------------------------------------
