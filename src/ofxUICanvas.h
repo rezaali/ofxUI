@@ -513,6 +513,9 @@ public:
         ofPushStyle(); 
 		glDisable(GL_DEPTH_TEST);        
         ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
+        ofSetRectMode(OF_RECTMODE_CORNER);         
+        ofSetLineWidth(1.0);         
+        
         if(draw_back)
         {
             ofFill(); 
@@ -553,11 +556,7 @@ public:
             ofNoFill();
             ofSetColor(color_outline_highlight); 
 			paddedRect->draw(); 
-		}
-        
-        ofPopStyle();         
-        
-        ofSetLineWidth(1.0); 
+		}            
 		
 		for(int i = widgets.size()-1; i >= 0; i--)
 		{
@@ -568,7 +567,7 @@ public:
 		}
 		
 		glDisable(GL_DEPTH_TEST); 
-
+        ofPopStyle();         
     }
 	
     void exit()

@@ -233,7 +233,7 @@ public:
         
         ofPushMatrix(); 
         ofTranslate(rect->getX(),rect->getY()); 
-        
+
         ofBeginShape(); 
 
         {
