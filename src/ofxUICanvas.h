@@ -967,7 +967,7 @@ public:
 		pushbackWidget(widget); 	
 	}
     
-	void addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
+	ofxUIWidget* addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
 	{
 		addWidget(widget); 
         ofxUIRectangle *widgetRect = widget->getRect();         
@@ -993,9 +993,10 @@ public:
                 break;                     
         }                           
 		lastAdded = widget; 
+		return widget;
 	}
     
-	void addWidgetUp(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
+	ofxUIWidget* addWidgetUp(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
 	{
 		addWidget(widget); 
         ofxUIRectangle *widgetRect = widget->getRect();                 
@@ -1022,9 +1023,10 @@ public:
                 break;                     
         }          
 		lastAdded = widget; 
+		return widget;
 	}    
     
-	void addWidgetRight(ofxUIWidget *widget)
+	ofxUIWidget* addWidgetRight(ofxUIWidget *widget)
 	{
 		addWidget(widget); 	
 		if(lastAdded != NULL)
@@ -1042,10 +1044,11 @@ public:
 			widgetRect->x = widgetSpacing; 
             widgetRect->y = widgetSpacing;                         
 		}
-        lastAdded = widget;  	
+        lastAdded = widget; 
+        return widget; 	
 	}
     
-    void addWidgetLeft(ofxUIWidget *widget)
+  ofxUIWidget* addWidgetLeft(ofxUIWidget *widget)
 	{
 		addWidget(widget); 	        
 		if(lastAdded != NULL)
@@ -1065,9 +1068,10 @@ public:
             widgetRect->y = widgetSpacing;                         
 		}
         lastAdded = widget;  	
+        return widget;
 	}    
     
-    void addWidgetSouthOf(ofxUIWidget *widget, string referenceName)
+    ofxUIWidget* addWidgetSouthOf(ofxUIWidget *widget, string referenceName)
     {
         addWidget(widget); 	
         ofxUIWidget *referenceWidget = getWidget(referenceName);
@@ -1086,9 +1090,10 @@ public:
 			widgetRect->y = widgetSpacing; 
 		}
         lastAdded = widget;  		
+        return widget;
     }    
     
-    void addWidgetNorthOf(ofxUIWidget *widget, string referenceName)
+    ofxUIWidget* addWidgetNorthOf(ofxUIWidget *widget, string referenceName)
     {
         addWidget(widget); 	
         ofxUIWidget *referenceWidget = getWidget(referenceName);
@@ -1108,9 +1113,10 @@ public:
 			widgetRect->y = widgetSpacing; 
 		}
         lastAdded = widget;  	        
+        return widget;
     }      
     
-    void addWidgetWestOf(ofxUIWidget *widget, string referenceName)
+    ofxUIWidget* addWidgetWestOf(ofxUIWidget *widget, string referenceName)
     {
 		addWidget(widget); 	        
         ofxUIWidget *referenceWidget = getWidget(referenceName);
@@ -1130,9 +1136,10 @@ public:
             currentRect->y = widgetSpacing; 
 		}
         lastAdded = widget;  	
+        return widget;
     }        
     
-    void addWidgetEastOf(ofxUIWidget *widget, string referenceName)
+    ofxUIWidget* addWidgetEastOf(ofxUIWidget *widget, string referenceName)
     {
 		addWidget(widget); 	        
         ofxUIWidget *referenceWidget = getWidget(referenceName);
@@ -1150,6 +1157,7 @@ public:
             currentRect->y = widgetSpacing; 
 		}
         lastAdded = widget;  	
+        return widget;
     }         
     
     
