@@ -34,6 +34,8 @@ void testApp::draw()
 	}
     
 	ofPopStyle(); 
+    
+    ofSetRectMode(OF_RECTMODE_CENTER); 
 }
 //--------------------------------------------------------------
 void testApp::guiEvent(ofxUIEventArgs &e)
