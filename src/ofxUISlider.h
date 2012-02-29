@@ -387,6 +387,7 @@ public:
 	
     void setLabelPrecision(int _precision) {
         labelPrecision = _precision;
+        updateLabel();
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
