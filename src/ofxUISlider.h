@@ -64,6 +64,7 @@ public:
         value = _value;                                               //the widget's value
 		max = _max; 
 		min = _min; 
+        labelPrecision = 2;
         
 		if(value > max)
 		{
@@ -78,7 +79,7 @@ public:
         
 		if(kind == OFX_UI_WIDGET_SLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(max,2)), OFX_UI_FONT_SMALL); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(max,labelPrecision)), OFX_UI_FONT_SMALL); 
 		}
 		else 
 		{
@@ -131,7 +132,7 @@ public:
 			}	
 			if(kind == OFX_UI_WIDGET_SLIDER_V)
 			{
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*value, ofToString(getScaledValue(),2)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*value, ofToString(getScaledValue(),labelPrecision)); 
 			}
         }        
         
@@ -302,7 +303,7 @@ public:
 	{
 		if(kind == OFX_UI_WIDGET_SLIDER_H)
 		{
-			label->setLabel(name + ": " + ofToString(getScaledValue(),2)); 		
+			label->setLabel(name + ": " + ofToString(getScaledValue(),labelPrecision)); 		
 		}		
 	}
 	
@@ -384,7 +385,12 @@ public:
             paddedRect->width = label->getPaddingRect()->width;				
         }
         updateLabel(); 
-	}	
+	}
+	
+    void setLabelPrecision(int _precision) {
+        labelPrecision = _precision;
+        updateLabel();
+    }
     
     void setMax(float _max)
     {
@@ -428,6 +434,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	float value, increment; 
 	float max, min; 
 	ofxUILabel *label; 
+    int labelPrecision;
 }; 
 
 #endif
