@@ -22,46 +22,48 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_MINIMAL_SLIDER
-#define OFXUI_MINIMAL_SLIDER
+#ifndef OFXUI_BILABEL_SLIDER
+#define OFXUI_BILABEL_SLIDER
 
 #include "ofxUISlider.h"
 
-class ofxUIMinimalSlider : public ofxUISlider
+class ofxUIBiLabelSlider : public ofxUISlider
 {
 public:
-    ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
+    ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel)
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         autoSize = false; 
-        init(w, h, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 		
+        init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, OFX_UI_FONT_SMALL); 		
     }
     
-    ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name)
+    ofxUIBiLabelSlider(float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel)
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = false; 
-        init(w, h, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 
+        init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, OFX_UI_FONT_SMALL); 
     }    
-
-    ofxUIMinimalSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size)
+    
+    ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size)
     {
         rect = new ofxUIRectangle(x,y,w,0); 
         autoSize = true; 
-        init(w, 0, _min, _max, _value, _name, _size); 		
+        init(w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size); 		
     }
     
-    ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size)
+    ofxUIBiLabelSlider(float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size)
     {
         rect = new ofxUIRectangle(0,0,w,0); 
         autoSize = true; 
-        init(w, 0, _min, _max, _value, _name, _size); 
+        init(w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size); 
     }    
     
-    void init(float w, float h, float _min, float _max, float _value, string _name, int _size)
+    void init(float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size)
     {
-        name = _name; 				
-        kind = OFX_UI_WIDGET_MINIMALSLIDER;
+        name = _name; 	
+        leftLabel = _leftLabel; 
+        rightLabel = _rightLabel; 
+        kind = OFX_UI_WIDGET_BILABELSLIDER; 
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
 		paddedRect->setParent(rect);     
@@ -87,6 +89,12 @@ public:
         label->setDrawBack(true);        
 		label->setParent(label); 
 		label->setRectParent(rect); 	
+
+        rlabel = new ofxUILabel(padding,h*.5,(name+" LABEL"), rightLabel, _size); 	
+        rlabel->setDrawBack(true);        
+		rlabel->setParent(rlabel); 
+		rlabel->setRectParent(rect); 	
+
         increment = 1.0;         
     }
     
@@ -115,8 +123,6 @@ public:
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
-            ofSetColor(label->getColorFillHighlight());             
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
         }        
         
         if(draw_outline)
@@ -131,11 +137,6 @@ public:
             ofNoFill();
             ofSetColor(color_outline_highlight); 
             rect->draw();                      
-            if(!draw_fill_highlight)
-            {
-                ofSetColor(label->getColorFill()); 
-                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
-            }
         }
 		
 		if(draw_padded_rect)
@@ -163,26 +164,20 @@ public:
         
 		updateLabel(); 
 	}
-
     
-    void updateLabel()
+	void updateLabel()
 	{
-
+        
 	}
     
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent;         
+        label->setLabel(leftLabel);
 		ofxUIRectangle *labelrect = label->getRect(); 
-        while(labelrect->width > rect->width)
-        {
-            string labelstring = label->getLabel();
-            string::iterator it;
-            it=labelstring.end();
-            it--; 
-            labelstring.erase (it); 
-            label->setLabel(labelstring);
-        }            
+        ofxUIRectangle *rightlabelrect = rlabel->getRect(); 
+        
+        
         if(autoSize || rect->height < label->getPaddingRect()->height)
         {
             rect->height = label->getPaddingRect()->height;                 
@@ -192,15 +187,27 @@ public:
 		float ph = rect->getHeight(); 	
         
 		labelrect->y = (int)(ph*.5 - h*.5); 
-        labelrect->x = padding; 
-		paddedRect->height = rect->height+padding*2.0;  
-        paddedRect->width = rect->width+padding*2.0;  
 
+        rightlabelrect->y = labelrect->y;
+        rightlabelrect->x = rect->getWidth()-rightlabelrect->getWidth()-padding*2.0; 
+        labelrect->x = padding;
+
+
+		paddedRect->height = rect->getHeight()+padding*2.0;  
+        paddedRect->width = rect->width+padding*2.0;  
+        
         updateLabel(); 
 	}	
     
+    ofxUILabel * getRightLabel()
+    {
+        return rlabel; 
+    }
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize;     
+    string leftLabel, rightLabel; 
+    ofxUILabel *rlabel; 
 }; 
 
 #endif

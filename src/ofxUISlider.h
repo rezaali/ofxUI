@@ -44,7 +44,7 @@ public:
         init(w, h, _min, _max, _value, _name); 
     }    
     
-    void init(float w, float h, float _min, float _max, float _value, string _name)
+    virtual void init(float w, float h, float _min, float _max, float _value, string _name)
     {
         name = _name; 				
 		if(w > h)
@@ -276,7 +276,7 @@ public:
 		increment = _increment; 
 	}
     
-	void input(float x, float y)
+	virtual void input(float x, float y)
 	{
 		if(kind == OFX_UI_WIDGET_SLIDER_H)
 		{
@@ -370,13 +370,18 @@ public:
 		return label; 
 	}
     
+    void setLabelVisible(bool _labelVisible)
+    {
+        label->setVisible(_labelVisible);
+    }
+    
     void setVisible(bool _visible)
     {
         visible = _visible; 
         label->setVisible(visible); 
     }
 	
-	void setParent(ofxUIWidget *_parent)
+	virtual void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
 		paddedRect->height += label->getPaddingRect()->height; 

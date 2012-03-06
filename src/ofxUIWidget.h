@@ -261,6 +261,14 @@ public:
 			parent->triggerEvent(child); 
 		}
 	}
+    
+    virtual void triggerSelf()
+    {
+		if(parent != NULL)
+		{
+			parent->triggerEvent(this); 
+		}        
+    }
 	
 	virtual void setPadding(float _padding)
 	{

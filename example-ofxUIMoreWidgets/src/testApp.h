@@ -25,8 +25,10 @@ class testApp : public ofBaseApp
 	ofxUICanvas *gui;   	
 	void guiEvent(ofxUIEventArgs &e);
     
-    ofxUIMovingGraph *mg; 
+    ofxUIMovingGraph *mg;
     
+    ofxUIMovingGraph *mgX; 
+    ofxUIMovingGraph *mgY; 
     bool drawPadding; 
 };
 

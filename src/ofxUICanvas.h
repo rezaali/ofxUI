@@ -118,6 +118,8 @@ public:
             }
                 break;
                 
+            case OFX_UI_WIDGET_BILABELSLIDER:
+            case OFX_UI_WIDGET_MINIMALSLIDER:                
             case OFX_UI_WIDGET_SLIDER_H:
             case OFX_UI_WIDGET_SLIDER_V:
             {
@@ -217,6 +219,8 @@ public:
             }
                 break;
                 
+            case OFX_UI_WIDGET_BILABELSLIDER:    
+            case OFX_UI_WIDGET_MINIMALSLIDER:
             case OFX_UI_WIDGET_SLIDER_H:
             case OFX_UI_WIDGET_SLIDER_V:
             {
@@ -812,13 +816,21 @@ public:
 			ofxUILabel *label = (ofxUILabel *) widget;
 			setLabelFont(label); 
 		}
-		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V)
+		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER)
 		{
 			ofxUISlider *slider = (ofxUISlider *) widget;
 			ofxUILabel *label = (ofxUILabel *) slider->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 				
 
+            if(widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER)
+            {
+                ofxUIBiLabelSlider *biSlider = (ofxUIBiLabelSlider *) widget;
+                ofxUILabel *rlabel = (ofxUILabel *) biSlider->getRightLabel();
+                setLabelFont(rlabel); 			
+                pushbackWidget(rlabel); 				                
+            }
+            
             widgetsWithState.push_back(widget);                         
 		}
 		else if(widget->getKind() == OFX_UI_WIDGET_2DPAD)		

@@ -75,6 +75,8 @@ enum ofxWidgetType
     OFX_UI_WIDGET_DROPDOWNLIST = 22, 
     OFX_UI_WIDGET_SPACER = 23, 
     OFX_UI_WIDGET_MOVINGGRAPH = 24,
+    OFX_UI_WIDGET_MINIMALSLIDER = 25,
+    OFX_UI_WIDGET_BILABELSLIDER = 26
 };
 
 enum ofxWidgetOrientation
@@ -122,6 +124,7 @@ enum ofxWidgetColorType
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
 #include "ofxUIMinimalSlider.h"
+#include "ofxUIBiLabelSlider.h"
 #include "ofxUIRangeSlider.h"
 #include "ofxUIToggle.h"
 #include "ofxUIButton.h"

@@ -12,8 +12,7 @@ void testApp::setup()
 	
     drawPadding = false; 
     
-    gui = new ofxUICanvas(0,0,length+xInit,ofGetHeight());     
-    
+    gui = new ofxUICanvas(0,0,length+xInit, ofGetHeight());
 	gui->addWidgetDown(new ofxUILabel("MORE WIDGETS", OFX_UI_FONT_LARGE)); 
     
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
@@ -22,14 +21,24 @@ void testApp::setup()
     vector<float> buffer; 
     for(int i = 0; i < bufferSize; i++)
     {
-        buffer.push_back(i);         
+        buffer.push_back(100.0*sin(TWO_PI*(i/(float)bufferSize)));
     }
-    mg = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, 0, 256, "MOVING GRAPH")); 
-    
+    mg = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "MOVING GRAPH")); 
+        
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
     gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE)); 
-    gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0, 100, 50, "MINIMAL", OFX_UI_FONT_SMALL)); 
-    gui->addWidgetDown(new ofxUISlider(length-xInit, 16, 0, 100, 50, "STANDARD"));
+    ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0, "MINIMAL", OFX_UI_FONT_MEDIUM)); 
+    mslider->setLabelPrecision(0);
+    
+    gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50.0, "LEFT", "CALM MODE", "CRAZY MODE", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUILabel("ENHANCED 2D PADS", OFX_UI_FONT_LARGE)); 
+    gui->addWidgetDown(new ofxUI2DPad(length-xInit, 128, ofPoint(-100,100), ofPoint(100,-100), ofPoint(0,0), "2D PAD RANGE"));
+    
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    mgX = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "X GRAPH")); 
+    mgY = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "Y GRAPH")); 
+    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
     
 //    gui->loadSettings("GUI/guiSettings.xml"); 
@@ -57,15 +66,18 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     
     if(name == "MINIMAL")
     {
-        ofxUISlider *slider = (ofxUISlider *) gui->getWidget("STANDARD");
         ofxUISlider *mslider = (ofxUISlider *) e.widget; 
-        slider->setMax(mslider->getScaledValue());
+        cout << mslider->getScaledValue() << endl; 
+        mg->addPoint(mslider->getScaledValue());
     }
-    else if(name == "STANDARD")
+    else if(name == "2D PAD RANGE")
     {
-        
+        ofxUI2DPad *pad = (ofxUI2DPad *) e.widget; 
+        mgX->addPoint(pad->getScaledValue().x);
+        mgY->addPoint(pad->getScaledValue().y);
     }
-            
+     
+    
 }
 //--------------------------------------------------------------
 void testApp::exit()
@@ -107,7 +119,7 @@ void testApp::keyReleased(int key){
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y )
 { 
-   mg->addPoint(ofMap(ofGetMouseY(), 0, ofGetHeight(), 0, 256)); 
+ 
 }
 
 //--------------------------------------------------------------

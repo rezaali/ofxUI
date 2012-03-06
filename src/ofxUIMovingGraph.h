@@ -143,6 +143,11 @@ public:
         return buffer; 
     }
     
+    void setBuffer(vector<float> _buffer)
+    {
+        buffer = _buffer; 
+    }
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     vector<float> buffer;
 	float max, min, scale, inc; 

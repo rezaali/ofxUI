@@ -135,7 +135,10 @@ public:
     
 	void drawString(float x, float y, string _string)
 	{
-		font->drawString(_string, x, y); 
+        if(visible)
+        {
+            font->drawString(_string, x, y); 
+        }
 	}
 	
 	float getStringWidth(string s)

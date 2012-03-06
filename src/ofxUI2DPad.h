@@ -33,16 +33,28 @@ public:
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _value, string _name)
     {
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _name);
+        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+    }	
+
+    ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
+    {
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, _rangeX, _rangeY, _value, _name);
     }	
     
     ofxUI2DPad(float w, float h, ofPoint _value, string _name)
     {
         rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _name);
-    }	
+        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+    }
+	
+    ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
+    {
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _rangeX, _rangeY, _value, _name);
+    }
     
-    void init(float w, float h, ofPoint _value, string _name)
+    void init(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
     {
 		name = _name; 				
 		kind = OFX_UI_WIDGET_2DPAD; 		
@@ -52,8 +64,11 @@ public:
         draw_fill = true;                 
         value = _value;                                               //the widget's value
 		
-		value.x /= rect->width; 
-		value.y /= rect->height;
+        rangeX = _rangeX; 
+        rangeY = _rangeY; 
+        
+		value.x = ofMap(value.x, rangeX.x, rangeX.y, 0.0, 1.0);
+		value.y = ofMap(value.y, rangeY.x, rangeY.y, 0.0, 1.0);
 		
 		if(value.x > 1)
 		{
@@ -346,29 +361,25 @@ public:
     
 	void setValue(ofPoint _value)
 	{
-		if(_value.x > rect->width)
+		if(_value.x > rangeX.y)
 		{
-			_value.x = rect->width; 
+			_value.x = rangeX.y;
 		}
-		else if(_value.x < 0)
+		else if(_value.x < rangeX.x)
 		{
-			_value.x = 0; 
-		}
-		
-		if(_value.y > rect->height)
-		{
-			_value = rect->height; 
-		}
-		else if(_value.y < 0)
-		{
-			_value = 0; 
+			_value.x = rangeX.x; 
 		}
 		
-		ofPoint p = _value; 
-		p.x = p.x/rect->width; 
-		p.y = p.y/rect->height; 		
-        
-		value = p;  
+		if(_value.y > rangeY.y)
+		{
+			_value = rangeY.y; 
+		}
+		else if(_value.y < rangeY.x)
+		{
+			_value = rangeY.x; 
+		}
+		                
+		value = getScaledValue();   
 		triggerEvent(this);										
 		updateLabel(); 		
 	}
@@ -386,8 +397,8 @@ public:
 	ofPoint getScaledValue()
 	{
 		ofPoint p = value; 
-		p.x = p.x*rect->width; 
-		p.y = p.y*rect->height; 		
+		p.x = ofMap(p.x, 0, 1, rangeX.x, rangeX.y); 
+		p.y = ofMap(p.y, 0, 1, rangeY.x, rangeY.y); 
 		return p; 
 	}
     
@@ -406,6 +417,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	ofPoint value; 
     float increment;
 	ofxUILabel *label; 
+    ofPoint rangeX, rangeY; 
 }; 
 
 #endif
