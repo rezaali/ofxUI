@@ -32,7 +32,8 @@ void testApp::setup()
     vector<string> hnames; hnames.push_back("OPEN"); hnames.push_back("FRAME"); hnames.push_back("WORKS");
 	gui->addWidgetDown(new ofxUIRadio(dim, dim, "HORIZONTAL RADIO", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
     vector<string> vnames; vnames.push_back("ROCKS"); vnames.push_back("MY"); vnames.push_back("SOCKS");
-    gui->addWidgetDown(new ofxUIRadio(dim, dim, "VERTICAL RADIO", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
+    ofxUIRadio *radio = (ofxUIRadio *) gui->addWidgetDown(new ofxUIRadio(dim, dim, "VERTICAL RADIO", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
+    radio->activateToggle("SOCKS"); 
     
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
     gui->addWidgetDown(new ofxUILabelButton(false, "LABEL BUTTON", OFX_UI_FONT_MEDIUM)); 

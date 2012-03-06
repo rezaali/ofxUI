@@ -490,6 +490,31 @@ public:
 		}
 	}	
     
+    void setMax(float _max)
+    {
+        setMaxAndMin(_max, min); 
+    }
+    
+    void setMin(float _min)
+    {
+        setMaxAndMin(max, _min); 
+    }
+    
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max; 
+        min = _min; 
+		
+		valuelow= ofMap(valuelow, 0, 1.0, min, max, true);         
+		valuelow = ofMap(valuelow, min, max, 0.0, 1.0, true); 
+
+		valuehigh = ofMap(valuehigh, 0, 1.0, min, max, true);         
+		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
+        
+        updateLabel(); 
+    }
+
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float valuelow, valuehigh, increment; 
     float hitValueLow, hitValueHigh; 

@@ -30,6 +30,8 @@
 class ofxUISlider : public ofxUIWidget
 {
 public:
+    ofxUISlider() {}
+    
     ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
     {
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -296,7 +298,7 @@ public:
 		updateLabel(); 
 	}
 
-	void updateLabel()
+	virtual void updateLabel()
 	{
 		if(kind == OFX_UI_WIDGET_SLIDER_H)
 		{
@@ -383,6 +385,44 @@ public:
         }
         updateLabel(); 
 	}	
+    
+    void setMax(float _max)
+    {
+        setMaxAndMin(_max, min); 
+    }
+
+    float getMax()
+    {
+        return max; 
+    }
+    
+    void setMin(float _min)
+    {
+        setMaxAndMin(max, _min); 
+    }
+    
+    float getMin()
+    {
+        return min; 
+    }
+    
+    ofVec2f getMaxAndMind()
+    {
+        return ofVec2f(max, min); 
+    }
+    
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max; 
+        min = _min; 
+		
+		value = ofMap(value, 0, 1.0, min, max, true);         
+		value = ofMap(value, min, max, 0.0, 1.0, true); 
+        updateLabel(); 
+    }
+
+
+
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 

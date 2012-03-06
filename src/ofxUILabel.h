@@ -71,7 +71,6 @@ public:
 		font = NULL;                 
         draw_back = OFX_UI_LABEL_DRAW_BACK; 
         draw_fill = true; 
-		
 		paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect); 
     }
@@ -128,9 +127,9 @@ public:
     }
     
     void drawBackLabel()
-    {
+    {      
         ofFill(); 
-        ofSetColor(color_back); 
+        ofSetColor(color_back);     
         font->drawString(label, rect->getX()+1, rect->getY()+rect->getHeight()+1);         
     }
     
@@ -187,7 +186,7 @@ public:
 		draw_fill_highlight	= false; 		
 		draw_fill = true; 
 	}
-    
+        
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	int size; 
 	string label; 
