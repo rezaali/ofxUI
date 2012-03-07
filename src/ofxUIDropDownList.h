@@ -73,6 +73,7 @@ public:
         draw_fill = value; 
         allowMultiple = false; 
         initToggles(items, _size);         
+        autoClose = false; 
     }
 
     void initToggles(vector<string> &items, int _size)
@@ -220,6 +221,22 @@ public:
         hit = false; 
     }
         
+    void setAutoClose(bool _autoClose)
+    {
+        autoClose = _autoClose; 
+    }
+    
+    void open()
+    {
+        value = true; 
+        setToggleVisibility(value); 
+    }
+    
+    void close()
+    {
+        value = false; 
+        setToggleVisibility(value); 
+    }
     
     void setVisible(bool _visible)
     {
@@ -251,12 +268,18 @@ public:
 	{
         if(child == this)
         {
+            parent->triggerEvent(child); 
             return; 
         }
+        
         if(!allowMultiple)
         {
             activateToggle(child->getName().c_str()); 
         }
+        if(autoClose)
+        {
+            value = !value; 
+        }        
         setToggleVisibility(value); 
         
 		if(parent != NULL)
@@ -286,10 +309,18 @@ public:
         allowMultiple = _allowMultiple; 
     }
     
+    bool isOpen()
+    {
+        return value; 
+    }
+    
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize; 
+    bool autoClose; 
     vector<ofxUILabelToggle *> toggles; 
     bool allowMultiple; 
+    
 }; 
 
 #endif

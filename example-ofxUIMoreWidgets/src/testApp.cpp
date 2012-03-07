@@ -39,6 +39,16 @@ void testApp::setup()
     mgX = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "X GRAPH")); 
     mgY = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "Y GRAPH")); 
     
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    vector<string> toggles; 
+    toggles.push_back("FIRST");
+    toggles.push_back("SECOND");
+    toggles.push_back("THIRD");
+    toggles.push_back("FOURTH");
+    toggles.push_back("FIFTH");    
+    gui->addWidgetDown(new ofxUIDropDownList(length-xInit, "DROP DOWN LIST", toggles, OFX_UI_FONT_MEDIUM)); 
+    
+    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
     
 //    gui->loadSettings("GUI/guiSettings.xml"); 
@@ -63,6 +73,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
+    cout << name << endl;
     
     if(name == "MINIMAL")
     {
@@ -76,8 +87,11 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         mgX->addPoint(pad->getScaledValue().x);
         mgY->addPoint(pad->getScaledValue().y);
     }
-     
-    
+    else if(name == "DROP DOWN LIST")
+    {
+        ofxUIDropDownList *ddl = (ofxUIDropDownList *) e.widget; 
+        cout << ddl->isOpen() << endl; 
+    }     
 }
 //--------------------------------------------------------------
 void testApp::exit()
