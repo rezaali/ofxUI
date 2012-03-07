@@ -239,33 +239,33 @@ public:
 			{
 				case OF_KEY_RIGHT:
                 {
-                    ofPoint p = getScaledValue(); 
-                    p.x +=increment;                 
-					setValue(p); 
+                    ofPoint p = getScaledValue();         
+                    p.x+=increment; 
+                    value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
                 }
 					break;
 					
 				case OF_KEY_UP:
                 {
-                    ofPoint p = getScaledValue(); 
-                    p.y -=increment; 
-					setValue(p); 
+                    ofPoint p = getScaledValue();         
+                    p.y +=increment; 
+                    value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
                 }
 					break;
 					
 				case OF_KEY_LEFT:
                 {
-                    ofPoint p = getScaledValue(); 
-                    p.x -=increment; 
-					setValue(p); 
+                    ofPoint p = getScaledValue();         
+                    p.x-=increment; 
+                    value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
                 }
 					break;
 					
 				case OF_KEY_DOWN:
                 {
-                    ofPoint p = getScaledValue(); 
-                    p.y +=increment; 
-					setValue(p); 
+                    ofPoint p = getScaledValue();         
+                    p.y -=increment; 
+                    value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
                 }
 					break;					
 					
@@ -273,6 +273,8 @@ public:
 					break;
 			}
 		}
+        triggerEvent(this);										        
+        updateLabel(); 
     }
     
     void keyReleased(int key) 
@@ -378,9 +380,9 @@ public:
 		{
 			_value = rangeY.x; 
 		}
-		                
-		value = getScaledValue();   
-		triggerEvent(this);										
+		                        
+        value.x = ofMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0);
+		value.y = ofMap(_value.y, rangeY.x, rangeY.y, 0.0, 1.0);
 		updateLabel(); 		
 	}
 	
