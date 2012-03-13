@@ -266,6 +266,10 @@ public:
         draw_fill = value; 
         label->setDrawBack(value);         
 	}
+	
+	void toggleValue() {
+	  setValue(!value);
+	}
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool value; 
