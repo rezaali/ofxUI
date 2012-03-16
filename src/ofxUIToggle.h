@@ -46,6 +46,18 @@ public:
 		kind = OFX_UI_WIDGET_TOGGLE; 	        
     }    
     
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
+
     virtual void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))

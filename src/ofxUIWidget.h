@@ -47,12 +47,16 @@ public:
 
         padding = OFX_UI_GLOBAL_PADDING; 
 		draw_padded_rect = OFX_UI_DRAW_PADDING; 						
+		draw_padded_rect_outline = OFX_UI_DRAW_PADDING_OUTLINE; 						        
         
         color_back = OFX_UI_COLOR_BACK;								//the rect's back color
         color_outline = OFX_UI_COLOR_OUTLINE;						//the rect's outline color 
         color_outline_highlight = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;   //the rect's onMouseOver outline highlight color         
 		color_fill = OFX_UI_COLOR_FILL;								//the rect's fill color 
         color_fill_highlight = OFX_UI_COLOR_FILL_HIGHLIGHT;         //the rect's onMouseDown highlight color 
+
+        color_padded_rect = OFX_UI_COLOR_PADDED;
+        color_padded_rect_outline = OFX_UI_COLOR_PADDED_OUTLINE;     
     }
     
     virtual ~ofxUIWidget() 
@@ -68,7 +72,96 @@ public:
     }
     
     virtual void update() {}
-    virtual void draw() {}
+    virtual void draw() 
+    {
+        ofPushStyle(); 
+        
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
+        
+        drawPadded();
+        drawPaddedOutline();        
+
+        drawBack();
+        
+        drawOutline();
+        drawOutlineHighlight();
+        
+        drawFill();
+        drawFillHighlight();
+        
+        ofPopStyle();
+    }
+    
+    virtual void drawBack() 
+    {
+        if(draw_back)
+        {
+            ofFill(); 
+            ofSetColor(color_back); 
+            rect->draw(); 
+        }
+    }
+    
+    virtual void drawOutline() 
+    {
+        if(draw_outline)
+        {
+            ofNoFill();
+            ofSetColor(color_outline); 
+            rect->draw(); 
+        } 
+    }
+    
+    virtual void drawOutlineHighlight() 
+    {
+        if(draw_outline_highlight)
+        {
+            ofNoFill();
+            ofSetColor(color_outline_highlight); 
+            rect->draw();          
+        }
+    }    
+    
+    virtual void drawFill() 
+    {
+        if(draw_fill)
+        {
+            ofFill(); 
+            ofSetColor(color_fill); 
+            rect->draw(); 
+        }
+    }
+    
+    virtual void drawFillHighlight() 
+    {
+        if(draw_fill_highlight)
+        {
+            ofFill(); 
+            ofSetColor(color_fill_highlight); 
+            rect->draw(); 
+        }    
+    }
+    
+    virtual void drawPadded()
+    {
+		if(draw_padded_rect)
+		{
+            ofFill();
+            ofSetColor(color_padded_rect); 
+			paddedRect->draw(); 
+		}                
+    }
+    
+    virtual void drawPaddedOutline()
+    {
+        if(draw_padded_rect_outline)
+		{
+            ofNoFill();
+            ofSetColor(color_padded_rect_outline); 
+			paddedRect->draw(); 
+		}                
+    }     
+    
     
 #ifdef TARGET_OPENGLES          //iOS Mode
     void touchDown(ofTouchEventArgs& touch)
@@ -149,6 +242,16 @@ public:
 		name = _name; 
 	}
 	
+	virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+	}    
+    
 	virtual void setDrawBack(bool _draw_back)
 	{
 		draw_back = _draw_back; 
@@ -158,7 +261,7 @@ public:
 	{
 		draw_outline = _draw_outline; 
 	}
-	
+
 	virtual void setDrawFill(bool _draw_fill)
 	{
 		draw_fill = _draw_fill; 
@@ -199,6 +302,26 @@ public:
 		color_fill_highlight = _color_fill_highlight; 
 	}
 	
+    virtual void setColorPadded(ofColor _color_padded_rect)
+    {
+        color_padded_rect = _color_padded_rect; 
+    }
+    
+    virtual void setColorPaddedOutline(ofColor _color_padded_rect_outline)
+    {
+        color_padded_rect_outline = _color_padded_rect_outline; 
+    }
+    
+	ofColor& getColorPadded()
+	{
+        return color_padded_rect;
+	}
+
+	ofColor& getColorPaddedOutline()
+	{
+        return color_padded_rect_outline;
+	}
+    
 	ofColor& getColorBack()
 	{
 		return color_back; 
@@ -224,7 +347,9 @@ public:
 		return color_fill_highlight; 
 	}
 	
-	virtual int getKind()
+
+	
+    virtual int getKind()
 	{
 		return kind; 
 	}
@@ -285,12 +410,7 @@ public:
 	{
 		return paddedRect; 
 	}
-	
-	virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-	}
-    
+
     virtual void stateChange()
     { 
         
@@ -332,8 +452,12 @@ protected:
 
 	float padding;          //Spacing/Padding Purposes
 	ofxUIRectangle *paddedRect; 	
-	bool draw_padded_rect; 
 
+	bool draw_padded_rect; 
+	bool draw_padded_rect_outline;     
+    ofColor color_padded_rect; 
+	ofColor color_padded_rect_outline;
+    
 #ifdef TARGET_OPENGLES          //iOS Mode
     int touchId;     
 #endif

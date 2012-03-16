@@ -73,7 +73,7 @@ public:
         value = _value;                                               //the widget's value
 		max = _max; 
 		min = _min; 
-        
+        labelPrecision = 2;        
 		if(value > max)
 		{
 			value = max; 
@@ -98,55 +98,37 @@ public:
         increment = 1.0;         
     }
     
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+        rlabel->setDrawPadding(false);
+	}
     
-    void draw()
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+        rlabel->setDrawPaddingOutline(false);        
+	}  
+    
+    virtual void drawFill()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
         if(draw_fill)
         {			
             ofFill(); 
             ofSetColor(color_fill); 
             ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }
-        
+    }
+    virtual void drawFillHighlight()
+    {
         if(draw_fill_highlight)
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }        
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();                      
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        
-        ofPopStyle(); 
     }
     
     void input(float x, float y)

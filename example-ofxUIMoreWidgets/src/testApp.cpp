@@ -5,6 +5,7 @@ void testApp::setup()
 {
 	ofSetVerticalSync(true); 
 	ofEnableSmoothing(); 
+    ofBackground(0);
 	
 	float dim = 16; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
@@ -14,7 +15,7 @@ void testApp::setup()
     
     gui = new ofxUICanvas(0,0,length+xInit, ofGetHeight());
 	gui->addWidgetDown(new ofxUILabel("MORE WIDGETS", OFX_UI_FONT_LARGE)); 
-    
+    gui->addWidgetRight(new ofxUIFPS(OFX_UI_FONT_LARGE));
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
 	gui->addWidgetDown(new ofxUILabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM));         
     int bufferSize = 256; 
@@ -29,6 +30,9 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE)); 
     ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0, "MINIMAL", OFX_UI_FONT_MEDIUM)); 
     mslider->setLabelPrecision(0);
+    gui->addWidgetDown(new ofxUISlider(length-xInit, 24, 0, 100, 50.0, "NORMAL"));
+    gui->addWidgetDown(new ofxUIRangeSlider(length-xInit, 24, 0, 100, 25.0, 50.0, "RANGE"));    
+    gui->addWidgetDown(new ofxUITextInput(length-xInit, "TEXT INPUT FIELD", "INPUT FIELD", OFX_UI_FONT_LARGE));
     
     gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50.0, "LEFT", "CALM MODE", "CRAZY MODE", OFX_UI_FONT_MEDIUM));
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
@@ -45,11 +49,17 @@ void testApp::setup()
     toggles.push_back("SECOND");
     toggles.push_back("THIRD");
     toggles.push_back("FOURTH");
-    toggles.push_back("FIFTH");    
-    gui->addWidgetDown(new ofxUIDropDownList(length-xInit, "DROP DOWN LIST", toggles, OFX_UI_FONT_MEDIUM)); 
-    
+    toggles.push_back("FIFTH");        
+        
+    gui->addWidgetDown(new ofxUINumberDialer(-1000.0, 1000.0, 0.0, 2, "NUMBER", OFX_UI_FONT_LARGE));
+    gui->addWidgetDown(new ofxUILabelButton(length-xInit, false, "LABEL BTN", OFX_UI_FONT_LARGE));
+    gui->addWidgetDown(new ofxUILabelToggle(length-xInit, false, "LABEL TGL", OFX_UI_FONT_LARGE));    
+    gui->addWidgetDown(new ofxUIToggleMatrix(32, 32, 1, 2, "MTX"));    
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
+    
+    gui->setDrawBack(false);
+    gui->setDrawPadding(false);    
     
 //    gui->loadSettings("GUI/guiSettings.xml"); 
 }
@@ -62,8 +72,6 @@ void testApp::update()
 //--------------------------------------------------------------
 void testApp::draw()
 {    
-	ofBackground(200,200,200,255); 
-	
 	ofPushStyle(); 
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);     
 	ofPopStyle(); 
@@ -112,15 +120,22 @@ void testApp::keyPressed(int key)
         case 'p':
         {
             drawPadding = !drawPadding; 
-            gui->setDrawPadding(drawPadding);          
+            gui->setDrawWidgetPadding(drawPadding);                              
         }
             break;
             
         case 'g':
         {
             gui->toggleVisible(); 
-        }
+        }                    
             break; 
+
+        case 'f':
+        {
+            ofToggleFullscreen();
+        }                    
+            break; 
+        
         default:
             break;
     }

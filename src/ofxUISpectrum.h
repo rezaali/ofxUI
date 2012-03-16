@@ -69,18 +69,8 @@ public:
     }
     
     
-    void draw()
+    virtual void drawFill()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
         if(draw_fill)
         {			
 			ofFill(); 
@@ -107,30 +97,6 @@ public:
                 glPopMatrix();						
             }
         }
-		
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        
-        ofPopStyle(); 
     }
 	
 	void setParent(ofxUIWidget *_parent)

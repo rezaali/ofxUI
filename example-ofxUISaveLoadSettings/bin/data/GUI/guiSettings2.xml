@@ -1,24 +1,12 @@
 <Widget>
     <Kind>12</Kind>
     <Name>TEXT INPUT</Name>
-    <Value>Input Text here</Value>
+    <Value>Input Text</Value>
 </Widget>
 <Widget>
     <Kind>8</Kind>
     <Name>NUMBER DIALER</Name>
-    <Value>-5850</Value>
-</Widget>
-<Widget>
-    <Kind>16</Kind>
-    <Name>LABEL BUTTON</Name>
-</Widget>
-<Widget>
-    <Kind>16</Kind>
-    <Name>AUTOSIZE BUTTON</Name>
-</Widget>
-<Widget>
-    <Kind>16</Kind>
-    <Name>MEDIUM BUTTON</Name>
+    <Value>1000</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -28,10 +16,10 @@
 <Widget>
     <Kind>17</Kind>
     <Name>AUTOSIZE TOGGLE</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>MEDIUM TOGGLE</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>

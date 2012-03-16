@@ -57,63 +57,62 @@ public:
         img->loadImage(_pathURL);         
     }
 	
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+	}  
+    
     virtual ~ofxUIImageButton()
     {
         delete img; 
     }
 	
-    
-    void draw()
+
+    virtual void drawBack()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
+                    
         if(draw_back)
         {
             ofFill(); 
             ofSetColor(color_back); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
-        
+    }
+    
+    virtual void drawFill()
+    {
         if(draw_fill)
         {
             ofFill(); 
             ofSetColor(color_fill); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
-        
+    }
+    
+    virtual void drawFillHighlight()
+    {
         if(draw_fill_highlight)
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());             
         }
-        
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
+    }   
+    
+    virtual void drawOutlineHighlight()
+    {
         if(draw_outline_highlight)
         {
             ofNoFill();
             ofSetColor(color_outline_highlight); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
-        
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}				
-		
-        ofPopStyle(); 
-        
-    }
+    }   
     
     void stateChange()
     {        

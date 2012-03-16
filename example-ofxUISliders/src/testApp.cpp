@@ -8,40 +8,40 @@ void testApp::setup()
     
     red = 233; blue = 27; green = 52; 
 	
-	float dim = 16; 
+	float dim = 24; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
     float length = 320-xInit; 
 	
     drawPadding = false; 
     
-    gui = new ofxUICanvas(0,0,length+xInit,ofGetHeight());     
+    gui = new ofxUICanvas(0, 0, length+xInit, ofGetHeight());
 	
     gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE)); 
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
-	gui->addWidgetDown(new ofxUILabel("HORIZONTAL SLIDERS", OFX_UI_FONT_MEDIUM)); 	
+	gui->addWidgetDown(new ofxUILabel("NORMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
-	gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, green, "GREEN")); 
-    gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, blue, "BLUE")); 	
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+	gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
+    gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+	gui->addWidgetDown(new ofxUILabel("BILABEL SLIDER", OFX_UI_FONT_MEDIUM)); 	    
+    gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0.0, 255.0, blue, "BLUE", "LESS BLUE", "MORE BLUE", OFX_UI_FONT_MEDIUM));
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
     gui->addWidgetDown(new ofxUILabel("VERTICAL SLIDERS", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUISlider(dim,160, 0.0, 255.0, 100, "1")); 	
 	gui->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "2")); 
 	gui->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 200, "3")); 
 	gui->addWidgetRight(new ofxUIRangeSlider(dim, 160, 0, 255.0, 100.0, 200.0, "4")); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
     gui->addWidgetDown(new ofxUILabel("RANGE SLIDER", OFX_UI_FONT_MEDIUM)); 
 	gui->addWidgetDown(new ofxUIRangeSlider(length-xInit,dim, 0.0, 255.0, 50.0, 100.0, "RSLIDER")); 
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
 	gui->addWidgetDown(new ofxUILabel("ROTARY SLIDER", OFX_UI_FONT_MEDIUM));
-	gui->addWidgetDown(new ofxUIRotarySlider(dim*4.0, -100.0, 100.0, 0.0, "CSLIDER")); 
-    gui->addWidgetDown(new ofxUIRotarySlider(dim*8.0, 0.0, 100.0, 25.0, "CSLIDER 2")); 
+    gui->addWidgetDown(new ofxUIRotarySlider(dim*5.0, 0.0, 100.0, 25.0, "CSLIDER 2")); 
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
 	gui->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
 	gui->addWidgetDown(new ofxUI2DPad(length-xInit,160, ofPoint((length-xInit)*.5,190*.5), "PAD")); 	
 
-    
-
-    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
 }
@@ -75,22 +75,16 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	}
 	else if(name == "GREEN")
 	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
+		ofxUIMinimalSlider *slider = (ofxUIMinimalSlider *) e.widget; 
 		green = slider->getScaledValue(); 
         cout << "value: " << slider->getScaledValue() << endl; 
 	}	
 	else if(name == "BLUE")
 	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
+		ofxUIBiLabelSlider *slider = (ofxUIBiLabelSlider *) e.widget; 
 		blue = slider->getScaledValue(); 		
         cout << "value: " << slider->getScaledValue() << endl;         
-	}
-	else if(name == "BLUE")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		blue = slider->getScaledValue(); 		
-        cout << "value: " << slider->getScaledValue() << endl;         
-	}    
+	}  
     else if(name == "RSLIDER")
     {
         ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) e.widget; 
@@ -122,7 +116,7 @@ void testApp::keyPressed(int key)
         case 'p':
         {
             drawPadding = !drawPadding; 
-            gui->setDrawPadding(drawPadding);          
+            gui->setDrawWidgetPadding(drawPadding);          
         }
             break;
             

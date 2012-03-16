@@ -76,6 +76,28 @@ public:
         autoClose = false; 
     }
 
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+//        for(int i = 0; i < toggles.size(); i++)
+//        {
+//            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
+//            toggle->setDrawPadding(false);
+//        }
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+//        for(int i = 0; i < toggles.size(); i++)
+//        {
+//            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
+//            toggle->setDrawPaddingOutline(false);
+//        }
+    }  
+
     void initToggles(vector<string> &items, int _size)
     {
         float ty = 20;
@@ -97,59 +119,6 @@ public:
             ty+=20; 
 		}        
     }
-    
-   	    
-    void draw()
-    {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
-        if(draw_fill)
-        {
-            ofFill(); 
-            ofSetColor(color_fill); 
-            rect->draw(); 
-        }
-        
-        if(draw_fill_highlight)
-        {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            rect->draw(); 
-        }
-        
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-        
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}				
-		
-        ofPopStyle(); 
-        
-    }    
     
     void setParent(ofxUIWidget *_parent)
 	{

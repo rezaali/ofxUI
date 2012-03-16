@@ -147,7 +147,7 @@ void testApp::keyPressed(int key)
         case 'p':
         {
             drawPadding = !drawPadding; 
-            gui->setDrawPadding(drawPadding);          
+            gui->setDrawWidgetPadding(drawPadding);          
         }
             break;
             

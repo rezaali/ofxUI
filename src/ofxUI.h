@@ -42,7 +42,11 @@
 #define OFX_UI_COLOR_FILL ofColor(255, 255, 255, 200)                   //the rect's fill color 
 #define OFX_UI_COLOR_FILL_HIGHLIGHT ofColor(255, 255, 255, 255)         //the rect's onMouseDown highlight color 
 
+#define OFX_UI_COLOR_PADDED ofColor(0, 100)                             //the rect's padded color
+#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)         //the rect's padded outline color 
+
 #define OFX_UI_DRAW_PADDING false
+#define OFX_UI_DRAW_PADDING_OUTLINE false
 
 #define OFX_UI_TEXTINPUT_ON_ENTER 0 
 #define OFX_UI_TEXTINPUT_ON_FOCUS 1
@@ -105,7 +109,10 @@ enum ofxWidgetColorType
 	OFX_UI_WIDGET_COLOR_OUTLINE = 1,
 	OFX_UI_WIDGET_COLOR_OUTLINE_HIGHLIGHT = 2, 
 	OFX_UI_WIDGET_COLOR_FILL = 3, 
-	OFX_UI_WIDGET_COLOR_FILL_HIGHLIGHT = 4	
+	OFX_UI_WIDGET_COLOR_FILL_HIGHLIGHT = 4, 
+    OFX_UI_WIDGET_COLOR_PADDED = 5, 
+	OFX_UI_WIDGET_COLOR_PADDED_OUTLINE = 6 
+    
 }; 
 
 #define OFX_UI_FONT_NAME "GUI/NewMedia Fett.ttf"

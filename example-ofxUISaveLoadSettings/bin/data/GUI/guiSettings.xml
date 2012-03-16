@@ -1,62 +1,62 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>21.3389</Value>
+    <Value>5.33473</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>GREEN</Name>
-    <Value>212.322</Value>
+    <Value>170.711</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BLUE</Name>
-    <Value>28.8075</Value>
-</Widget>
-<Widget>
-    <Kind>5</Kind>
-    <Name>0</Name>
     <Value>255</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
+    <Name>0</Name>
+    <Value>150</Value>
+</Widget>
+<Widget>
+    <Kind>5</Kind>
     <Name>1</Name>
-    <Value>224.719</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>2</Name>
-    <Value>196.031</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>3</Name>
-    <Value>172.125</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>4</Name>
-    <Value>141.844</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>5</Name>
-    <Value>119.531</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>6</Name>
-    <Value>94.0312</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>7</Name>
-    <Value>62.1562</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>8</Name>
-    <Value>19.125</Value>
+    <Value>150</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -66,7 +66,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>RAD2</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -76,7 +76,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>RAD4</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -89,10 +89,6 @@
     <Value>0</Value>
 </Widget>
 <Widget>
-    <Kind>3</Kind>
-    <Name>DRAW GRID</Name>
-</Widget>
-<Widget>
     <Kind>2</Kind>
     <Name>D_GRID</Name>
     <Value>0</Value>
@@ -100,12 +96,12 @@
 <Widget>
     <Kind>6</Kind>
     <Name>RSLIDER</Name>
-    <HighValue>221.925</HighValue>
-    <LowValue>64.0167</LowValue>
+    <HighValue>210.188</HighValue>
+    <LowValue>50</LowValue>
 </Widget>
 <Widget>
     <Kind>11</Kind>
     <Name>PAD</Name>
-    <XValue>202</XValue>
-    <YValue>79</YValue>
+    <XValue>101</XValue>
+    <YValue>48</YValue>
 </Widget>

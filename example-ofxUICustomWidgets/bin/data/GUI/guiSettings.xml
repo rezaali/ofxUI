@@ -1,7 +1,7 @@
 <Widget>
     <Kind>8</Kind>
     <Name>NDIALER</Name>
-    <Value>10000</Value>
+    <Value>2380.97</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
@@ -21,7 +21,7 @@
 <Widget>
     <Kind>12</Kind>
     <Name>Text Input Autoclear</Name>
-    <Value>Auto Clear Disabled&#x1B;</Value>
+    <Value>Auto Clear Disabled</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -51,15 +51,15 @@
 <Widget>
     <Kind>17</Kind>
     <Name>SIXTH ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>SEVENTH ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>EIGTHTH ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>

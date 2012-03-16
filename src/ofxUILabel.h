@@ -39,27 +39,58 @@ public:
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _label, _size); 		
+        autoSize = true;
     }
 
     ofxUILabel(float x, float y, string _name, int _size)
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _name, _size); 		
+        autoSize = true;
     }
 
-    
     ofxUILabel(string _name, string _label, int _size)
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _label, _size); 		
-    }
-	
+        autoSize = true;        
+    }	
 
     ofxUILabel(string _name, int _size)
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _name, _size); 		
-    }    
+        autoSize = true;
+    }   
+    
+    ofxUILabel(float x, float y, float w, string _name, string _label, int _size)
+    {
+        rect = new ofxUIRectangle(x,y,w,0); 
+        init(_name, _label, _size); 		
+        autoSize = false;
+    }
+    
+    ofxUILabel(float x, float y, float w, string _name, int _size)
+    {
+        rect = new ofxUIRectangle(x,y,w,0); 
+        init(_name, _name, _size); 		
+        autoSize = false;
+    }
+    
+    ofxUILabel(float w, string _name, string _label, int _size)
+    {
+        rect = new ofxUIRectangle(0,0,w,0); 
+        init(_name, _label, _size); 		
+        autoSize = false;        
+    }	
+    
+    ofxUILabel(float w, string _name, int _size)
+    {
+        rect = new ofxUIRectangle(0,0,w,0); 
+        init(_name, _name, _size); 		
+        autoSize = false;
+    }   
+    
 
     void init(string _name, string _label, int _size)
     {
@@ -75,62 +106,39 @@ public:
 		paddedRect->setParent(rect); 
     }
     
-    void draw()
+    void drawBack()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-
         if(draw_back)
         {
             drawBackLabel(); 
         }
-        
+    }
+    
+    void drawFill()
+    {
         if(draw_fill)
         {
             ofFill(); 
             ofSetColor(color_fill); 
-			font->drawString(label, rect->getX(), rect->getY()+rect->getHeight()); 
+			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()); 
         }
-		
+	}
+	
+    void drawFillHighlight()
+    {
 		if(draw_fill_highlight)
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
-			font->drawString(label, rect->getX(), rect->getY()+rect->getHeight()); 
+			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()); 
         }        
-		
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw(); 
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-		
-        ofPopStyle(); 
-        
-    }
-    
+	}	
+            
     void drawBackLabel()
     {      
         ofFill(); 
         ofSetColor(color_back);     
-        font->drawString(label, rect->getX()+1, rect->getY()+rect->getHeight()+1);         
+        font->drawString(label, rect->getX()+1+xOffset, rect->getY()+rect->getHeight()+1);         
     }
     
 	void drawString(float x, float y, string _string)
@@ -154,12 +162,31 @@ public:
     void setLabel(string _label)
 	{
 		label = _label; 		
-		float w = font->stringWidth(label); 
-		float h = font->stringHeight(label); 		
-		rect->width = w; 
-		rect->height = h; 		 
-		paddedRect->width = w+padding*3.0; 
-		paddedRect->height = h+padding*2.0; 
+        if(autoSize)
+        {
+            float w = font->stringWidth(label); 
+            float h = font->stringHeight(label); 		
+            rect->width = w; 
+            rect->height = h; 		 
+            paddedRect->width = w+padding*3.0; 
+            paddedRect->height = h+padding*2.0; 
+            xOffset = 0;
+        }
+        else
+        {
+            while(getStringWidth(label) > rect->width-padding*4.0)
+            {
+                string::iterator it;
+                it=label.begin();
+                label.erase (it);                    
+            }                        
+            float w = font->stringWidth(label); 
+            float h = font->stringHeight(label); 		
+            rect->height = h; 		             
+            paddedRect->height = h+padding*2.0;             
+            paddedRect->width = rect->width+padding*2.0;
+            xOffset = rect->width*.5 - w*.5;
+        }
 	}
         
     string getLabel()
@@ -193,6 +220,8 @@ public:
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	int size; 
 	string label; 
+    bool autoSize;
+    int xOffset; 
 }; 
 
 #endif

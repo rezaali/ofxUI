@@ -88,6 +88,17 @@ public:
 		label->setRectParent(rect);     
     }
     
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
 	
     float getValue()
     {
@@ -106,57 +117,6 @@ public:
         }            
         value = _value; 
         setTextString(ofToString(value, precision));         
-    }
-    
-    void draw()
-    {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
-        if(draw_fill)
-        {
-            ofFill(); 
-            ofSetColor(color_fill); 
-            rect->draw(); 
-        }
-        
-        if(draw_fill_highlight)
-        {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-        
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}				
-
-        ofPopStyle(); 
-        
     }
     
     void mouseMoved(int x, int y ) 

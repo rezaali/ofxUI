@@ -87,23 +87,54 @@ public:
 		}
         
 		label->setParent(label); 
-		label->setRectParent(rect); 		
+		label->setRectParent(rect); 
         increment = 1.0;         
     }
 
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
     
-    void draw()
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
+    
+    virtual void drawBack() 
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
         if(draw_back)
         {
             ofFill(); 
             ofSetColor(color_back); 
             rect->draw(); 
         }
-        
+    }
+    
+    virtual void drawOutline() 
+    {
+        if(draw_outline)
+        {
+            ofNoFill();
+            ofSetColor(color_outline); 
+            rect->draw(); 
+        }
+    }
+    
+    virtual void drawOutlineHighlight() 
+    {
+        if(draw_outline_highlight)
+        {
+            ofNoFill();
+            ofSetColor(color_outline_highlight); 
+            rect->draw();          
+        }
+    }    
+    
+    virtual void drawFill() 
+    {
         if(draw_fill)
         {			
             ofFill(); 
@@ -117,7 +148,10 @@ public:
 				ofRect(rect->getX(), rect->getY()+rect->getHeight(), rect->getWidth(), -rect->getHeight()*value); 
 			}
         }
-        
+    }
+    
+    virtual void drawFillHighlight() 
+    {
         if(draw_fill_highlight)
         {
             ofFill(); 
@@ -135,29 +169,6 @@ public:
 				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*value, ofToString(getScaledValue(),labelPrecision)); 
 			}
         }        
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        
-        ofPopStyle(); 
     }
         
     void mouseMoved(int x, int y ) 

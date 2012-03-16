@@ -35,6 +35,7 @@ public:
         rect = new ofxUIRectangle(x,y,0,0); 
         init("FPS", "FPS: 60.000", _size); 
 		kind = OFX_UI_WIDGET_FPS; 		
+        labelPrecision = 3;
     }
     
     ofxUIFPS(int _size)
@@ -42,15 +43,21 @@ public:
         rect = new ofxUIRectangle(0,0,0,0); 
         init("FPS", "FPS: 60.000", _size); 
 		kind = OFX_UI_WIDGET_FPS; 		
+        labelPrecision = 3;
     }    
     
 	void update()
 	{
-		label = "FPS: " + ofToString(ofGetFrameRate(), 3); 
+		setLabel("FPS: " + ofToString(ofGetFrameRate(), labelPrecision));
 	}
 	
-	
+    void setLabelPrecision(int _precision) {
+        labelPrecision = _precision;
+    }
+
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+    int labelPrecision;    
 }; 
 
 #endif

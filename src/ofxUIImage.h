@@ -60,18 +60,20 @@ public:
 		label->setRectParent(rect);         
     }
     
-    void draw()
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
+    
+    virtual void drawFill()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
         if(draw_fill)
         {			
 			if(image != NULL)
@@ -81,30 +83,7 @@ public:
 				image->draw(rect->getX(), rect->getY(), rect->width, rect->height); 
 			}
         }
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        
-        ofPopStyle(); 
-    }
+    }        
 
     void setVisible(bool _visible)
     {

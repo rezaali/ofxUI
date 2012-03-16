@@ -71,6 +71,7 @@ public:
         value = _value;                                               //the widget's value
 		max = _max; 
 		min = _min; 
+        labelPrecision = 2;
         
 		if(value > max)
 		{
@@ -90,26 +91,18 @@ public:
         increment = 1.0;         
     }
     
-    
-    void draw()
+    virtual void drawFill()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
         if(draw_fill)
         {			
             ofFill(); 
             ofSetColor(color_fill); 
             ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }
-        
+    }
+    
+    virtual void drawFillHighlight()
+    {
         if(draw_fill_highlight)
         {
             ofFill(); 
@@ -118,14 +111,10 @@ public:
             ofSetColor(label->getColorFillHighlight());             
             label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
         }        
-        
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
+    }
+    
+    virtual void drawOutlineHighlight()
+    {
         if(draw_outline_highlight)
         {
             ofNoFill();
@@ -137,15 +126,6 @@ public:
                 label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
             }
         }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        
-        ofPopStyle(); 
     }
     
     void input(float x, float y)

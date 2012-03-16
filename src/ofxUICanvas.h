@@ -520,48 +520,20 @@ public:
         ofSetRectMode(OF_RECTMODE_CORNER);         
         ofSetLineWidth(1.0);         
         
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
+        drawPadded();
         
-        if(draw_fill)
-        {
-            ofFill(); 
-            ofSetColor(color_fill); 
-            rect->draw(); 
-        }
+        drawPaddedOutline(); 
         
-        if(draw_fill_highlight)
-        {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            rect->draw(); 
-        }
+        drawBack(); 
         
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
+        drawFill(); 
         
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}            
-		
+        drawFillHighlight(); 
+        
+        drawOutline(); 
+        
+        drawOutlineHighlight();
+
 		for(int i = widgets.size()-1; i >= 0; i--)
 		{
             if(widgets[i]->isVisible())
@@ -573,7 +545,7 @@ public:
 		glDisable(GL_DEPTH_TEST); 
         ofPopStyle();         
     }
-	
+    
     void exit()
     {
 
@@ -1234,6 +1206,20 @@ public:
 					widgets[i]->setColorFillHighlight(_color); 
 				}					
 				break;
+                
+			case OFX_UI_WIDGET_COLOR_PADDED:
+				for(int i = 0; i < widgets.size(); i++)
+				{
+					widgets[i]->setColorPadded(_color); 
+				}					
+				break;
+                
+			case OFX_UI_WIDGET_COLOR_PADDED_OUTLINE:
+				for(int i = 0; i < widgets.size(); i++)
+				{
+					widgets[i]->setColorPaddedOutline(_color); 
+				}					
+				break;                
 				
 			default:
 				break;
@@ -1258,11 +1244,33 @@ public:
 	void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
+	}
+
+    void setDrawWidgetPadding(bool _draw_padded_rect)
+    {
 		for(int i = 0; i < widgets.size(); i++)
 		{
 			widgets[i]->setDrawPadding(_draw_padded_rect); 
+		}		        
+    }
+
+	void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+		for(int i = 0; i < widgets.size(); i++)
+		{
+			widgets[i]->setDrawPaddingOutline(_draw_padded_rect_outline); 
 		}		
 	}
+
+    void setDrawWidgetPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		for(int i = 0; i < widgets.size(); i++)
+		{
+			widgets[i]->setDrawPaddingOutline(_draw_padded_rect_outline); 
+		}		
+	}
+
     
     vector<ofxUIWidget*> getWidgets()
     {

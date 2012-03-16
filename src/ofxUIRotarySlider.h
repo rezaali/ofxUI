@@ -77,32 +77,50 @@ public:
 		increment = 0.01;         
     }
     
-    void draw()
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
+
+    virtual void drawBack()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
         if(draw_back)
         {
             ofFill(); 
             ofSetColor(color_back); 
             drawArcStrip(1.0); 
         }
-        
+    }
+
+    virtual void drawFill()    
+    {
         if(draw_fill)
         {			
             ofFill(); 
             ofSetColor(color_fill); 
             drawArcStrip(value); 
         }
-        
+    }
+
+    virtual void drawFillHighlight()
+    {
         if(draw_fill_highlight)
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             drawArcStrip(value); 
         }        
-        
+    }   
+    
+    virtual void drawOutline()
+    {
         if(draw_outline)
         {
             ofNoFill();
@@ -111,7 +129,9 @@ public:
             drawArcStrip(1.0); 
             ofSetLineWidth(1.0);            
         }
-        
+    }
+    virtual void drawOutlineHighlight()
+    {
         if(draw_outline_highlight)
         {
             ofNoFill();
@@ -120,16 +140,7 @@ public:
             drawArcStrip(1.0); 
             ofSetLineWidth(1.0);            
         }
-		
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}		
-        ofPopStyle(); 
-    }
-    
+	}	
     
     void mouseMoved(int x, int y ) 
     {

@@ -9,7 +9,16 @@ void testApp::setup()
 	setGUI1(); 
 	setGUI2(); 
     setGUI3(); 
-	ofBackground(red, green, blue); 
+
+    gui1->setDrawBack(false);
+    gui2->setDrawBack(false);
+    gui3->setDrawBack(false);
+    
+//    gui1->setDrawPadding(false);
+//    gui2->setDrawPadding(false);
+//    gui3->setDrawPadding(false);
+//    
+    ofBackground(red, green, blue); 
 }
 
 //--------------------------------------------------------------
@@ -144,11 +153,24 @@ void testApp::keyPressed(int key)
 
 		case 'p':
 			bdrawPadding = !bdrawPadding; 
-			gui1->setDrawPadding(bdrawPadding); 			
-			gui2->setDrawPadding(bdrawPadding); 			
-			gui3->setDrawPadding(bdrawPadding); 			            
+			gui1->setDrawWidgetPaddingOutline(bdrawPadding); 			
+			gui2->setDrawWidgetPaddingOutline(bdrawPadding); 			
+			gui3->setDrawWidgetPaddingOutline(bdrawPadding); 			            
+			break;			
+
+		case '[':
+			gui1->setDrawWidgetPadding(false); 			
+			gui2->setDrawWidgetPadding(false);
+			gui3->setDrawWidgetPadding(false);
+			break;			
+
+		case ']':
+			gui1->setDrawWidgetPadding(true); 			
+			gui2->setDrawWidgetPadding(true);
+			gui3->setDrawWidgetPadding(true);
 			break;			
 			
+            
 		default:
 			break;
 	}
@@ -270,6 +292,8 @@ void testApp::setGUI1()
 	gui1->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
 	gui1->addWidgetDown(new ofxUI2DPad(length-xInit,120, ofPoint((length-xInit)*.5,120*.5), "PAD")); 	
 
+
+    
     bdrawGrid = false; 
 	bdrawPadding = false; 	
 	ofAddListener(gui1->newGUIEvent,this,&testApp::guiEvent);

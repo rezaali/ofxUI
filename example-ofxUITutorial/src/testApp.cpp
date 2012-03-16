@@ -46,10 +46,10 @@ void testApp::keyPressed(int key)
 {
     switch (key) {
         case 'p':
-            gui->setDrawPadding(true);
+            gui->setDrawWidgetPadding(true);
             break;
         case 'P':
-            gui->setDrawPadding(false);
+            gui->setDrawWidgetPadding(false);
             break;
 
             

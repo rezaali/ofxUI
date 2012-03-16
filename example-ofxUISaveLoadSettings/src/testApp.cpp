@@ -149,9 +149,9 @@ void testApp::keyPressed(int key)
 
 		case 'p':
 			bdrawPadding = !bdrawPadding; 
-			gui1->setDrawPadding(bdrawPadding); 			
-			gui2->setDrawPadding(bdrawPadding); 			
-			gui3->setDrawPadding(bdrawPadding); 			            
+			gui1->setDrawWidgetPadding(bdrawPadding); 			
+			gui2->setDrawWidgetPadding(bdrawPadding); 			
+			gui3->setDrawWidgetPadding(bdrawPadding); 			            
 			break;			
 			
 		default:

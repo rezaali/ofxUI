@@ -49,7 +49,7 @@ public:
 		kind = OFX_UI_WIDGET_TOGGLEMATRIX; 		
 		rows = _rows; 
         cols = _cols; 
-        
+        draw_back = false;  
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
         
@@ -72,24 +72,29 @@ public:
         }
         allowMultiple = true;  
     }
-    
-    void draw()
-    {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
 
-		if(draw_padded_rect)
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+		for(int i = 0; i < toggles.size(); i++)
 		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}				
-		
-        ofPopStyle(); 
-        
-    }
+			ofxUIToggle *t = toggles[i]; 			
+            t->setDrawPadding(false);             
+        }        
+	}
     
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+		for(int i = 0; i < toggles.size(); i++)
+		{
+			ofxUIToggle *t = toggles[i]; 			
+            t->setDrawPaddingOutline(false);             
+        }        
+	}  
+
 	ofxUILabel *getLabel()
 	{
 		return label; 

@@ -65,54 +65,27 @@ public:
 		theta = 0;         
     }
     
-    void draw()
+    virtual void setDrawPadding(bool _draw_padded_rect)
+	{
+		draw_padded_rect = _draw_padded_rect; 
+        label->setDrawPadding(false);
+	}
+    
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
+	{
+		draw_padded_rect_outline = _draw_padded_rect_outline; 
+        label->setDrawPaddingOutline(false);
+	}  
+    
+    virtual void drawFill() 
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        if(draw_back)
-        {
-            ofFill(); 
-            ofSetColor(color_back); 
-            rect->draw(); 
-        }
-        
         if(draw_fill)
         {
             ofFill(); 
             ofSetColor(color_fill); 
             rect->draw(); 
         }
-        
-        if(draw_fill_highlight)
-        {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            rect->draw(); 
-        }
-                
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofSetColor(color_outline); 
-            rect->draw(); 
-        }
-        
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            rect->draw();          
-        }
-        
-		if(draw_padded_rect)
-		{
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
-			paddedRect->draw(); 
-		}				
-		
-		if(clicked)
+        if(clicked)
 		{
 			float h = label->getRect()->height; 
 			
@@ -139,13 +112,9 @@ public:
 			ofFill(); 
             ofSetColor(color_fill); 
 			label->drawString(rect->getX()+defaultX, rect->getY()+defaultY, defaultstring); 
-		}
-		
-        ofPopStyle(); 
-        
+		}        
     }
-    
-
+	
     void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))

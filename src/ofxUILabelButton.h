@@ -72,8 +72,7 @@ public:
         
         setValue(_value);         
     }
-	
-	
+		
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 

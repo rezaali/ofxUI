@@ -82,7 +82,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     {
         ofxUILabelToggle *toggle = (ofxUILabelToggle *) e.widget; 
         drawPadding = toggle->getValue();     
-        gui->setDrawPadding(drawPadding);             
+        gui->setDrawWidgetPadding(drawPadding);             
     }    
     else if(name == "SPACER COLOR")
     {
