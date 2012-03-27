@@ -36,6 +36,7 @@ public:
         init("FPS", "FPS: 60.000", _size); 
 		kind = OFX_UI_WIDGET_FPS; 		
         labelPrecision = 3;
+        autoSize = true; 
     }
     
     ofxUIFPS(int _size)
@@ -44,6 +45,7 @@ public:
         init("FPS", "FPS: 60.000", _size); 
 		kind = OFX_UI_WIDGET_FPS; 		
         labelPrecision = 3;
+        autoSize = true; 
     }    
     
 	void update()
