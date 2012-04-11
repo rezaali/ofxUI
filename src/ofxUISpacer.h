@@ -12,11 +12,25 @@ public:
         init(w, h); 
     }
     
+    ofxUISpacer(float x, float y, float w, float h, string _name)
+    {
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h); 
+        name = _name; 
+    }
+    
     ofxUISpacer(float w, float h)
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h); 
     }    
+    
+    ofxUISpacer(float w, float h, string _name)
+    {
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h); 
+        name = _name; 
+    }        
     
     void init(float w, float h)
     {

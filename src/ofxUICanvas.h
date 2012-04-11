@@ -34,9 +34,12 @@ public:
     ~ofxUICanvas() 
     {
 		delete GUIevent; 
-		delete font_large; 
-		delete font_medium;
-		delete font_small;		
+        if(!hasSharedResources)
+        {
+            delete font_large; 
+            delete font_medium;
+            delete font_small;		
+        }
 		for(int i = 0; i < widgets.size(); i++)
 		{
 			ofxUIWidget *w = widgets[i]; 
@@ -51,6 +54,12 @@ public:
         init(w,h);
     }
 
+    ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources) 
+    {
+        rect = new ofxUIRectangle(x,y,w,h);        
+        init(w,h, sharedResources);
+    }
+    
     ofxUICanvas() 
     {
         float w = ofGetWidth(); 
@@ -60,6 +69,15 @@ public:
         setDrawBack(false); 
     }
 
+    ofxUICanvas(ofxUICanvas *sharedResources) 
+    {
+        float w = ofGetWidth(); 
+        float h = ofGetHeight(); 
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w,h, sharedResources);
+        setDrawBack(false); 
+    }
+    
     void init(int w, int h)
     {
         name = "OFX_UI_WIDGET_CANVAS"; 
@@ -88,6 +106,36 @@ public:
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
     }
+    
+    void init(int w, int h, ofxUICanvas *sharedResources)
+    {
+        name = "OFX_UI_WIDGET_CANVAS"; 
+		kind = OFX_UI_WIDGET_CANVAS; 
+		
+		enable(); 
+		
+		enable_highlight_outline = false; 
+		enable_highlight_fill = false; 
+        
+		GUIevent = new ofxUIEventArgs(this); 
+        
+		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
+		paddedRect->setParent(rect);
+
+        hasSharedResources = true; 
+        font_large = sharedResources->getFontLarge();
+        font_medium = sharedResources->getFontMedium();
+        font_small = sharedResources->getFontSmall();
+        
+        fontName = OFX_UI_FONT_NAME;
+//        setFont(fontName,true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
+        
+		font = font_medium; 
+		lastAdded = NULL; 
+        uniqueIDs = 0;         
+        widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
+        hasKeyBoard = false; 
+    }    
 
     void saveSettings(string fileName)
     {
@@ -294,7 +342,22 @@ public:
                 break;
         }        
     }
-        
+     
+    ofTrueTypeFont *getFontLarge()
+    {
+        return font_large;
+    }    
+    
+    ofTrueTypeFont *getFontMedium()
+    {
+        return font_medium;
+    }
+
+    ofTrueTypeFont *getFontSmall()
+    {
+        return font_small;
+    }
+
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
     bool setFont(string filename, bool _bAntiAliased=true, bool _bFullCharacterSet=true, bool makeContours=false, float simplifyAmt=0.0, int dpi=OFX_UI_FONT_RESOLUTION) 
     {
@@ -349,6 +412,25 @@ public:
         return widgetSpacing;
     }
    
+    bool isEnabled()
+	{
+		return enabled; 
+	}
+	
+    void setVisible(bool _visible)
+    {
+        visible = _visible; 
+        if(visible)
+        {
+            enable();
+        }
+        else
+        {
+            disable();
+        }
+    }
+    
+    
 	void toggleVisible()
 	{
 		if(isEnabled())
@@ -359,20 +441,6 @@ public:
 			enable(); 
 		}
 	}
-    
-    void setVisible(bool _visible)
-    {
-        visible = _visible; 
-        if(visible)
-        {
-            enable(); 
-        }
-        else
-        {
-            disable(); 
-        }
-    }
-    
 
     bool hasKeyboardFocus()
     {
@@ -404,12 +472,6 @@ public:
         disableWindowEventCallbacks(); 
 #endif                		
 	}
-	
-	bool isEnabled()
-	{
-		return enabled; 
-	}
-	
 	
 	//App Callbacks
     void enableAppEventCallbacks()
@@ -740,6 +802,25 @@ public:
         }
     }
     
+    ofxUIWidget *getWidgetHit(float x, float y)
+    {
+        if(isEnabled() && rect->inside(x, y))
+        {
+            for(int i = 0; i < widgets.size(); i++)
+            {
+                if(widgets[i]->isHit(x, y))
+                {
+                    return widgets[i]; 
+                }
+            }
+            return NULL;
+        }
+        else
+        {
+            return NULL; 
+        }        
+    }
+    
 
     void stateChange()
     {        
@@ -779,6 +860,34 @@ public:
             default:
                 break;
         }        
+    }
+    
+    void autoSizeToFitWidgets()
+    {        
+        float maxWidth = 0;
+        float maxHeight = 0;
+
+        for(int i = 0; i < widgets.size(); i++)
+        {
+            ofxUIRectangle* wr = widgets[i]->getRect(); 
+            float widgetwidth = wr->x+wr->getWidth();
+
+            float widgetheight = wr->y+wr->getHeight();
+            
+            if(widgetwidth > maxWidth)
+            {
+                maxWidth = wr->x+widgets[i]->getPaddingRect()->getWidth();
+            }                        
+            if(widgetheight > maxHeight)
+            {
+                maxHeight = wr->y+widgets[i]->getPaddingRect()->getHeight();                                                                        
+            }                                    
+        }
+        
+        rect->width = maxWidth;            
+        rect->height = maxHeight;          
+        paddedRect->width = rect->width+padding*2.0;
+        paddedRect->height = rect->height+padding*2.0;        
     }
     
 	void addWidget(ofxUIWidget *widget)
@@ -1225,8 +1334,8 @@ public:
 				break;
 		}
 	}
-	
-	ofxUIWidget *getWidget(string _name)
+    
+    ofxUIWidget *getWidget(string _name)
 	{
 		return widgets_map[_name]; 
 	}
@@ -1257,10 +1366,6 @@ public:
 	void setDrawPaddingOutline(bool _draw_padded_rect_outline)
 	{
 		draw_padded_rect_outline = _draw_padded_rect_outline; 
-		for(int i = 0; i < widgets.size(); i++)
-		{
-			widgets[i]->setDrawPaddingOutline(_draw_padded_rect_outline); 
-		}		
 	}
 
     void setDrawWidgetPaddingOutline(bool _draw_padded_rect_outline)
@@ -1309,6 +1414,7 @@ protected:
  	
 	ofxUIEventArgs *GUIevent; 
     int state; 
+    bool hasSharedResources;
     
     map<string, ofxUIWidget*> widgets_map;     
 	vector<ofxUIWidget*> widgets; 
@@ -1393,8 +1499,6 @@ protected:
             }
         }        
     }
-
-    
     
 };
 

@@ -147,8 +147,8 @@ public:
         float w = labelrect->getWidth(); 
         float pw = rect->getWidth(); 
         
-		labelrect->y = ph*.5 - h*.5; 
-        labelrect->x = pw*.5 - w*.5-padding*.5; 
+		labelrect->y = (int)(ph*.5 - h*.5);
+        labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
 		paddedRect->height = rect->height+padding*2.0;  
         paddedRect->width = rect->width+padding*2.0;          
                     
@@ -234,22 +234,24 @@ public:
 	}
 
     void triggerEvent(ofxUIWidget *child)
-	{
+	{        
         if(child == this)
         {
             parent->triggerEvent(child); 
             return; 
         }
+
+        if(autoClose)
+        {
+            setValue(!value);
+        }        
+        setToggleVisibility(value);         
+
         
         if(!allowMultiple)
         {
             activateToggle(child->getName().c_str()); 
         }
-        if(autoClose)
-        {
-            value = !value; 
-        }        
-        setToggleVisibility(value); 
         
 		if(parent != NULL)
 		{

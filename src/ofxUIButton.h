@@ -178,7 +178,7 @@ public:
         }        
     }
 	
-    void setVisible(bool _visible)
+    virtual void setVisible(bool _visible)
     {
         visible = _visible; 
         label->setVisible(visible); 

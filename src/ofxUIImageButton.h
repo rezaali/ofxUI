@@ -158,6 +158,12 @@ public:
         draw_fill = value; 
 	}	
     
+    virtual void setVisible(bool _visible)
+    {
+        visible = _visible; 
+    }
+
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     ofImage *img; 
 }; 

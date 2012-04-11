@@ -57,6 +57,8 @@ public:
 
         color_padded_rect = OFX_UI_COLOR_PADDED;
         color_padded_rect_outline = OFX_UI_COLOR_PADDED_OUTLINE;     
+        
+        dead = false; 
     }
     
     virtual ~ofxUIWidget() 
@@ -374,6 +376,18 @@ public:
         visible =! visible; 
     }
     
+    virtual bool isHit(float x, float y)
+    {
+        if(visible)
+        {
+            return paddedRect->inside(x, y);
+        }
+        else
+        {
+            return false; 
+        }
+    }
+    
 	virtual string getName()
 	{
 		return name; 
@@ -461,6 +475,8 @@ protected:
 #ifdef TARGET_OPENGLES          //iOS Mode
     int touchId;     
 #endif
+    
+    bool dead; 
 };
 
 #endif

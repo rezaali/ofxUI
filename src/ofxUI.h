@@ -115,7 +115,11 @@ enum ofxWidgetColorType
     
 }; 
 
+#ifdef TARGET_ANDROID
+#define OFX_UI_FONT_NAME "newmediafett.ttf"
+#else
 #define OFX_UI_FONT_NAME "GUI/NewMedia Fett.ttf"
+#endif
 
 #define OFX_UI_FONT_RESOLUTION 150
 #define OFX_UI_FONT_LARGE_SIZE 10
@@ -130,6 +134,7 @@ enum ofxWidgetColorType
 #include "ofxUILabel.h"
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
+#include "ofxUIFPSSlider.h"
 #include "ofxUIMinimalSlider.h"
 #include "ofxUIBiLabelSlider.h"
 #include "ofxUIRangeSlider.h"

@@ -148,7 +148,17 @@ public:
             font->drawString(_string, x, y); 
         }
 	}
-	
+
+    void drawStringShadow(float x, float y, string _string)
+	{
+        if(visible)
+        {
+            ofFill(); 
+            ofSetColor(color_back);     
+            font->drawString(_string, x+1, y+1);                     
+        }
+	}
+    
 	float getStringWidth(string s)
 	{
 		return font->stringWidth(s); 
