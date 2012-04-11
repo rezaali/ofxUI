@@ -27,6 +27,7 @@
 
 #include "ofxUIWidget.h"
 #include <vector>
+#include <map>
 
 class ofxUICanvas : public ofxUIWidget
 {    
