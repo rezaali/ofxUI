@@ -578,7 +578,8 @@ public:
     void draw()
     {
         ofPushStyle(); 
-		glDisable(GL_DEPTH_TEST);        
+		glDisable(GL_DEPTH_TEST);       
+        glDisable(GL_LIGHTING);
         ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
         ofSetRectMode(OF_RECTMODE_CORNER);         
         ofSetLineWidth(1.0);         
