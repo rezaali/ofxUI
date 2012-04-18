@@ -90,6 +90,13 @@ public:
         init(_name, _name, _size); 		
         autoSize = false;
     }   
+
+    ofxUILabel(float w, string _name, int _size, float h)
+    {
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(_name, _name, _size); 		
+        autoSize = false;
+    }   
     
 
     void init(string _name, string _label, int _size)
@@ -120,7 +127,7 @@ public:
         {
             ofFill(); 
             ofSetColor(color_fill); 
-			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()); 
+			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()+yOffset); 
         }
 	}
 	
@@ -130,7 +137,7 @@ public:
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
-			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()); 
+			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()+yOffset); 
         }        
 	}	
             
@@ -138,7 +145,7 @@ public:
     {      
         ofFill(); 
         ofSetColor(color_back);     
-        font->drawString(label, rect->getX()+1+xOffset, rect->getY()+rect->getHeight()+1);         
+        font->drawString(label, rect->getX()+1+xOffset, rect->getY()+rect->getHeight()+1+yOffset);         
     }
     
 	void drawString(float x, float y, string _string)
@@ -176,11 +183,12 @@ public:
         {
             float w = font->stringWidth(label); 
             float h = font->stringHeight(label); 		
-            rect->width = w; 
-            rect->height = h; 		 
-            paddedRect->width = w+padding*3.0; 
-            paddedRect->height = h+padding*2.0; 
+            rect->setWidth(w); 
+            rect->setHeight(h); 		 
+            paddedRect->setWidth(w+padding*3.0); 
+            paddedRect->setHeight(h+padding*2.0);
             xOffset = 0;
+            yOffset = 0;
         }
         else
         {
@@ -192,9 +200,17 @@ public:
             }                        
             float w = font->stringWidth(label); 
             float h = font->stringHeight(label); 		
-            rect->height = h; 		             
-            paddedRect->height = h+padding*2.0;             
-            paddedRect->width = rect->width+padding*2.0;
+            if(rect->getHeight() > 0)
+            {
+                yOffset = -h*.5;                
+            }
+            else
+            {
+                rect->setHeight(h);
+                yOffset = 0; 
+            }
+            paddedRect->height = rect->getHeight()+padding*2.0;             
+            paddedRect->width = rect->getWidth()+padding*2.0;
             xOffset = rect->width*.5 - w*.5;
         }
 	}
@@ -231,7 +247,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	int size; 
 	string label; 
     bool autoSize;
-    int xOffset; 
+    int xOffset, yOffset; 
 }; 
 
 #endif

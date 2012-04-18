@@ -25,9 +25,9 @@
 #ifndef OFXUI_ROTARY_SLIDER
 #define OFXUI_ROTARY_SLIDER
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUIRotarySlider : public ofxUIWidget
+class ofxUIRotarySlider : public ofxUIWidgetWithLabel
 {
 public:    
     ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name)
@@ -403,10 +403,15 @@ public:
         homePoint = ofPoint(rect->getWidth()*.5, rect->getHeight());   
 	}	
     
+    bool isDraggable()
+    {
+        return true; 
+    }
+
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 
 	float max, min; 
-	ofxUILabel *label; 
     ofPoint center; 
     ofPoint hitPoint; 
     ofPoint homePoint; 

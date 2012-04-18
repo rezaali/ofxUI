@@ -380,7 +380,7 @@ public:
     {
         if(visible)
         {
-            return paddedRect->inside(x, y);
+            return rect->inside(x, y);
         }
         else
         {
@@ -430,6 +430,11 @@ public:
         
     }
     
+    virtual bool isDraggable()
+    {
+        return false; 
+    }
+    
     void setID(int _id)
     {
         id = _id; 
@@ -439,7 +444,22 @@ public:
     {
         return id;
     }
-	
+    
+    virtual void addWidget(ofxUIWidget *widget)
+    {
+        //Experimental
+    }    
+
+    virtual void removeWidget(ofxUIWidget *widget)
+    {
+        //Experimental
+    }    
+    
+    virtual bool hasLabel()
+    {
+        return false; 
+    }
+
 protected:    
 	ofxUIWidget *parent; 
 	ofxUIRectangle *rect; 	

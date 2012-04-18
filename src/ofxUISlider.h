@@ -25,9 +25,9 @@
 #ifndef OFXUI_SLIDER
 #define OFXUI_SLIDER
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUISlider : public ofxUIWidget
+class ofxUISlider : public ofxUIWidgetWithLabel
 {
 public:
     ofxUISlider() {}
@@ -443,13 +443,14 @@ public:
         updateLabel(); 
     }
 
-
-
+    bool isDraggable()
+    {
+        return true; 
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 
-	float max, min; 
-	ofxUILabel *label; 
+	float max, min;  
     int labelPrecision;
 }; 
 

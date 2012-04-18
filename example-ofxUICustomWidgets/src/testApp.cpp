@@ -52,16 +52,17 @@ void testApp::setup()
     float imgDim = (length-xInit)*.5; 
     imgDim -=xInit; 
     gui->addWidgetDown(new ofxUIImage(imgDim,imgDim, img, "OF LOGO 1")); 
-    gui->addWidgetRight(new ofxUIImage(imgDim,imgDim, img2, "OF LOGO 2")); 
-
+    gui->addWidgetRight(new ofxUIImageSampler(imgDim,imgDim, img2, "OF LOGO 2"));         
+    gui->addWidgetNorthOf(new ofxUILabel("IMAGE SAMPLER", OFX_UI_FONT_MEDIUM), "OF LOGO 2");
+    
+    
     gui->addWidgetSouthOf(new ofxUISpacer(length-xInit, 2), "OF LOGO 1"); 
     gui->addWidgetDown(new ofxUILabel("FPS LABEL", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUIFPS(OFX_UI_FONT_MEDIUM)); 
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));  
     gui->addWidgetDown(new ofxUILabel("DROP DOWN LIST", OFX_UI_FONT_MEDIUM));     
     
-    vector<string> items; items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM"); items.push_back("FOURTH ITEM");
-    
+    vector<string> items; items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM"); items.push_back("FOURTH ITEM");    
     vector<string> items2; items2.push_back("FIFTH ITEM"); items2.push_back("SIXTH ITEM"); items2.push_back("SEVENTH ITEM"); items2.push_back("EIGTHTH ITEM");
     
     gui->addWidgetDown(new ofxUIDropDownList("DROP DOWN", items, OFX_UI_FONT_MEDIUM)); 
@@ -115,11 +116,11 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 		blue = slider->getScaledValue(); 		
         cout << "value: " << slider->getScaledValue() << endl;         
 	}
-	else if(name == "BLUE")
+	else if(name == "OF LOGO 2")
 	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		blue = slider->getScaledValue(); 		
-        cout << "value: " << slider->getScaledValue() << endl;         
+		ofxUIImageSampler *sampler = (ofxUIImageSampler *) e.widget; 
+        ofColor c = sampler->getColor();
+        cout << "color value: " << (int)c.r << " " << (int)c.g << " " << (int)c.b << endl;
 	}    
     else if(name == "RSLIDER")
     {

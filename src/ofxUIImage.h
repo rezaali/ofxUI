@@ -25,9 +25,9 @@
 #ifndef OFXUI_IMAGE
 #define OFXUI_IMAGE
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUIImage : public ofxUIWidget
+class ofxUIImage : public ofxUIWidgetWithLabel
 {
 public:
     ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name)
@@ -85,7 +85,7 @@ public:
         }
     }        
 
-    void setVisible(bool _visible)
+    virtual void setVisible(bool _visible)
     {
         visible = _visible; 
         label->setVisible(visible); 
@@ -101,15 +101,20 @@ public:
         image = _image; 
     }
 	
-	void setParent(ofxUIWidget *_parent)
+	virtual void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
 		paddedRect->height += label->getPaddingRect()->height; 		
 	}	
+
+    virtual bool isDraggable()
+    {
+        return false; 
+    }
+    
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	ofImage *image; 
-	ofxUILabel *label; 	
 }; 
 
 #endif

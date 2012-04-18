@@ -25,10 +25,10 @@
 #ifndef OFXUI_NUMBER_DIALER
 #define OFXUI_NUMBER_DIALER
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 #include <math.h>
 
-class ofxUINumberDialer : public ofxUIWidget
+class ofxUINumberDialer : public ofxUIWidgetWithLabel
 {
 public:
     ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size)
@@ -291,9 +291,13 @@ public:
         setTextString(ofToString(value, precision));                     
 	}	
     
+    bool isDraggable()
+    {
+        return true; 
+    }
+
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	ofxUILabel *label; 
 	string textstring;  
     string displaystring; 
 

@@ -25,9 +25,9 @@
 #ifndef OFXUI_TEXT_INPUT
 #define OFXUI_TEXT_INPUT
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUITextInput : public ofxUIWidget
+class ofxUITextInput : public ofxUIWidgetWithLabel
 {
 public:
     ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size)
@@ -374,7 +374,6 @@ public:
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	ofxUILabel *label; 
 	string textstring; 
 	string defaultstring; 
     string displaystring; 

@@ -25,9 +25,9 @@
 #ifndef OFXUI_RANGE_SLIDER
 #define OFXUI_RANGE_SLIDER
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUIRangeSlider : public ofxUIWidget
+class ofxUIRangeSlider : public ofxUIWidgetWithLabel
 {
 public:
     ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name)
@@ -499,6 +499,11 @@ public:
         updateLabel(); 
     }
 
+    bool isDraggable()
+    {
+        return true; 
+    }
+
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float valuelow, valuehigh, increment; 
@@ -506,7 +511,6 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	bool hitHigh, hitLow, hitCenter; 
 	float hitPoint; 
 	float max, min; 
-	ofxUILabel *label; 
 }; 
 
 #endif

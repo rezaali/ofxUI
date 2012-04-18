@@ -3,16 +3,18 @@
 //--------------------------------------------------------------
 void testApp::setup()
 { 
-//	ofEnableSmoothing(); 
+	ofEnableSmoothing(); 
 	ofBackground(0); 
 	
 	setGUI1(); 
 	setGUI2(); 
     setGUI3(); 
+    setGUI4();     
 
     gui1->setDrawBack(false);
     gui2->setDrawBack(false);
     gui3->setDrawBack(false);
+    gui4->setDrawBack(false);    
     
 //    gui1->setDrawPadding(false);
 //    gui2->setDrawPadding(false);
@@ -24,7 +26,7 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-    
+    mg->addPoint(ofGetFrameRate());
 }
 
 //--------------------------------------------------------------
@@ -148,7 +150,8 @@ void testApp::keyPressed(int key)
 		case 'h':
             gui1->toggleVisible(); 
             gui2->toggleVisible(); 
-            gui3->toggleVisible();             
+            gui3->toggleVisible(); 
+            gui4->toggleVisible();             
 			break;
 
 		case 'p':
@@ -156,20 +159,38 @@ void testApp::keyPressed(int key)
 			gui1->setDrawWidgetPaddingOutline(bdrawPadding); 			
 			gui2->setDrawWidgetPaddingOutline(bdrawPadding); 			
 			gui3->setDrawWidgetPaddingOutline(bdrawPadding); 			            
+			gui4->setDrawWidgetPaddingOutline(bdrawPadding); 			                        
 			break;			
 
 		case '[':
 			gui1->setDrawWidgetPadding(false); 			
 			gui2->setDrawWidgetPadding(false);
 			gui3->setDrawWidgetPadding(false);
+			gui4->setDrawWidgetPadding(false);            
 			break;			
 
 		case ']':
 			gui1->setDrawWidgetPadding(true); 			
 			gui2->setDrawWidgetPadding(true);
 			gui3->setDrawWidgetPadding(true);
+			gui4->setDrawWidgetPadding(true);            
 			break;			
 			
+        case '1':
+            gui1->toggleVisible(); 
+            break;
+
+        case '2':
+            gui2->toggleVisible(); 
+            break;
+
+        case '3':
+            gui3->toggleVisible(); 
+            break;
+
+        case '4':
+            gui4->toggleVisible(); 
+            break;
             
 		default:
 			break;
@@ -387,4 +408,47 @@ void testApp::setGUI3()
     gui3->addWidgetDown(new ofxUIDropDownList(200, "DROP DOWN LIST", items, OFX_UI_FONT_MEDIUM)); 
 
 	ofAddListener(gui3->newGUIEvent,this,&testApp::guiEvent);
+}
+
+void testApp::setGUI4()
+{	
+	float dim = 16; 
+	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
+    float length = 255-xInit; 
+	gui4 = new ofxUIScrollableCanvas(length*3+xInit*3+6, 0, length+xInit, ofGetHeight());     
+    gui4->addWidgetDown(new ofxUILabel("PANEL 4: SCROLLABLE", OFX_UI_FONT_LARGE)); 	
+    
+    gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
+
+    gui4->addWidgetDown(new ofxUILabel("BILABEL SLIDER", OFX_UI_FONT_MEDIUM)); 				
+    gui4->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50, "BILABEL", "HOT", "COLD", OFX_UI_FONT_MEDIUM));
+
+    gui4->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 				
+    gui4->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0, 100, 50, "MINIMAL",OFX_UI_FONT_MEDIUM));
+
+    gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));                 
+    
+    gui4->addWidgetDown(new ofxUILabel("CIRCLE SLIDER", OFX_UI_FONT_MEDIUM)); 				
+    gui4->addWidgetDown(new ofxUICircleSlider((length-xInit)*.5, 0, 100, 50.0, "NORTH SOUTH", OFX_UI_FONT_MEDIUM));    
+    
+    gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
+    gui4->addWidgetDown(new ofxUILabel("FPS SLIDER", OFX_UI_FONT_MEDIUM)); 				
+    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0, 400, 0, "FPS SLIDER"));
+
+    vector<float> buffer; 
+    for(int i = 0; i < 256; i++)
+    {
+        buffer.push_back(0.0);
+    }
+
+    gui4->addWidgetDown(new ofxUILabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM)); 				    
+    mg = (ofxUIMovingGraph *) gui4->addWidgetDown(new ofxUIMovingGraph(length-xInit, 120, buffer, 256, 0, 400, "MOVING GRAPH"));
+    
+    gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
+    gui4->addWidgetDown(new ofxUILabel("IMAGE SAMPLER", OFX_UI_FONT_MEDIUM)); 				
+    gui4->addWidgetDown(new ofxUIImageSampler(img->getWidth(), img->getHeight(), img, "SAMPLER"));
+    
+    
+    
+	ofAddListener(gui4->newGUIEvent,this,&testApp::guiEvent);
 }

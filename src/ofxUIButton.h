@@ -25,9 +25,9 @@
 #ifndef OFXUI_BUTTON
 #define OFXUI_BUTTON
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUIButton : public ofxUIWidget
+class ofxUIButton : public ofxUIWidgetWithLabel
 {
 public:    
     ofxUIButton() {}
@@ -58,7 +58,7 @@ public:
 		
         setValue(_value); 
         drawLabel = true;
-        label->setVisible(drawLabel);          
+        label->setVisible(drawLabel);      
     }
         
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -232,7 +232,6 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool value; 
-	ofxUILabel *label; 
     bool drawLabel; 
 }; 
 

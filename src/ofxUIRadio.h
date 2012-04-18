@@ -25,10 +25,10 @@
 #ifndef OFXUI_RADIO
 #define OFXUI_RADIO
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 #include "ofxUIToggle.h"
 
-class ofxUIRadio : public ofxUIWidget
+class ofxUIRadio : public ofxUIWidgetWithLabel
 {
 public:
     ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation)
@@ -189,7 +189,6 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	int orientation; 
-	ofxUILabel *label; 
 	vector<ofxUIToggle *> toggles; 		   
     bool allowMultiple;
 }; 

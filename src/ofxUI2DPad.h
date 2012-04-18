@@ -25,9 +25,9 @@
 #ifndef OFXUI_2D_PAD
 #define OFXUI_2D_PAD
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUI2DPad : public ofxUIWidget
+class ofxUI2DPad : public ofxUIWidgetWithLabel
 {
 public:
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _value, string _name)
@@ -402,10 +402,15 @@ public:
 		paddedRect->height += label->getPaddingRect()->height; 
 	}	
     
+    bool isDraggable()
+    {
+        return true; 
+    }
+
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	ofPoint value; 
     float increment;
-	ofxUILabel *label; 
     ofPoint rangeX, rangeY; 
 }; 
 

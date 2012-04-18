@@ -25,10 +25,10 @@
 #ifndef OFXUI_TOGGLE_MATRIX
 #define OFXUI_TOGGLE_MATRIX
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 #include "ofxUIToggle.h"
 
-class ofxUIToggleMatrix : public ofxUIWidget
+class ofxUIToggleMatrix : public ofxUIWidgetWithLabel
 {
 public:
     ofxUIToggleMatrix(float x, float y, float w, float h, int _rows, int _cols, string _name)
@@ -216,7 +216,6 @@ public:
     }
 
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	ofxUILabel *label; 
 	vector<ofxUIToggle *> toggles; 		   
     int rows, cols; 
     bool allowMultiple;     

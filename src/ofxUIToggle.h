@@ -32,18 +32,14 @@ class ofxUIToggle : public ofxUIButton
 public:
     ofxUIToggle() {}
     
-	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name)
+	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name) : ofxUIButton(x,y,w,h,_value,_name)
     {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _name); 
 		kind = OFX_UI_WIDGET_TOGGLE; 	        
     }
     
-	ofxUIToggle(float w, float h, bool _value, string _name)
+	ofxUIToggle(float w, float h, bool _value, string _name) : ofxUIButton(w,h,_value, _name)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _name); 
-		kind = OFX_UI_WIDGET_TOGGLE; 	        
+		kind = OFX_UI_WIDGET_TOGGLE; 	                
     }    
     
     virtual void setDrawPadding(bool _draw_padded_rect)

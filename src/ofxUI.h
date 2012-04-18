@@ -80,13 +80,24 @@ enum ofxWidgetType
     OFX_UI_WIDGET_SPACER = 23, 
     OFX_UI_WIDGET_MOVINGGRAPH = 24,
     OFX_UI_WIDGET_MINIMALSLIDER = 25,
-    OFX_UI_WIDGET_BILABELSLIDER = 26
+    OFX_UI_WIDGET_BILABELSLIDER = 26,
+    OFX_UI_WIDGET_CIRCLESLIDER = 27, 
+    OFX_UI_WIDGET_IMAGESAMPLER = 28,
+	OFX_UI_WIDGET_SCROLLABLECANVAS = 29
 };
 
 enum ofxWidgetOrientation
 {
 	OFX_UI_ORIENTATION_VERTICAL = 0, 
 	OFX_UI_ORIENTATION_HORIZONTAL = 1
+};
+
+enum ofxWidgetInputDirection
+{
+	OFX_UI_DIRECTION_NORTHSOUTH = 0,
+	OFX_UI_DIRECTION_SOUTHNORTH = 1,    
+	OFX_UI_DIRECTION_EASTWEST = 2,
+	OFX_UI_DIRECTION_WESTEAST = 3
 };
 
 enum ofxWidgetAlignment
@@ -130,12 +141,14 @@ enum ofxWidgetColorType
 
 #include "ofxUIRectangle.h"
 #include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 #include "ofxUIEventArgs.h"
 #include "ofxUILabel.h"
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
 #include "ofxUIFPSSlider.h"
 #include "ofxUIMinimalSlider.h"
+#include "ofxUICircleSlider.h"
 #include "ofxUIBiLabelSlider.h"
 #include "ofxUIRangeSlider.h"
 #include "ofxUIToggle.h"
@@ -156,7 +169,9 @@ enum ofxWidgetColorType
 #include "ofxUISpectrum.h"
 #include "ofxUIMovingGraph.h"
 #include "ofxUIImage.h"
+#include "ofxUIImageSampler.h"
 #include "ofxUICanvas.h"
+#include "ofxUIScrollableCanvas.h"
 
 
 #endif

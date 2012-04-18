@@ -3,8 +3,8 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	ofSetVerticalSync(true); 
 	ofEnableSmoothing(); 
+    ofSetCircleResolution(60);
     
     red = 233; blue = 27; green = 52; 
 	
@@ -16,31 +16,36 @@ void testApp::setup()
     
     gui = new ofxUICanvas(0, 0, length+xInit, ofGetHeight());
 	
-    gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE)); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE));         
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
+    gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0, 1000, 60.0, "FPS SLIDER"));
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
 	gui->addWidgetDown(new ofxUILabel("NORMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
 	gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
 	gui->addWidgetDown(new ofxUILabel("BILABEL SLIDER", OFX_UI_FONT_MEDIUM)); 	    
     gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0.0, 255.0, blue, "BLUE", "LESS BLUE", "MORE BLUE", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
     gui->addWidgetDown(new ofxUILabel("VERTICAL SLIDERS", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUISlider(dim,160, 0.0, 255.0, 100, "1")); 	
-	gui->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "2")); 
-	gui->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 200, "3")); 
-	gui->addWidgetRight(new ofxUIRangeSlider(dim, 160, 0, 255.0, 100.0, 200.0, "4")); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    gui->addWidgetDown(new ofxUISlider(dim,80, 0.0, 255.0, 100, "1")); 	
+	gui->addWidgetRight(new ofxUISlider(dim,80, 0.0, 255.0, 150, "2")); 
+	gui->addWidgetRight(new ofxUISlider(dim,80, 0.0, 255.0, 200, "3")); 
+	gui->addWidgetRight(new ofxUIRangeSlider(dim, 80, 0, 255.0, 100.0, 200.0, "4")); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1));     
     gui->addWidgetDown(new ofxUILabel("RANGE SLIDER", OFX_UI_FONT_MEDIUM)); 
 	gui->addWidgetDown(new ofxUIRangeSlider(length-xInit,dim, 0.0, 255.0, 50.0, 100.0, "RSLIDER")); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
 	gui->addWidgetDown(new ofxUILabel("ROTARY SLIDER", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUIRotarySlider(dim*5.0, 0.0, 100.0, 25.0, "CSLIDER 2")); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    gui->addWidgetDown(new ofxUIRotarySlider(dim*2.0, 0.0, 100.0, 25.0, "CSLIDER 2")); 
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1));     
 	gui->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
-	gui->addWidgetDown(new ofxUI2DPad(length-xInit,160, ofPoint((length-xInit)*.5,190*.5), "PAD")); 	
+	gui->addWidgetDown(new ofxUI2DPad(length-xInit,80, ofPoint((length-xInit)*.5,80*.5), "PAD")); 	
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1));     
+	gui->addWidgetDown(new ofxUILabel("CIRCLE SLIDER", OFX_UI_FONT_MEDIUM)); 
+	gui->addWidgetDown(new ofxUICircleSlider(dim*5, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
 
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 

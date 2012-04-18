@@ -65,6 +65,7 @@ public:
 		paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);     
         
+        size = _size; 
         label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect);
@@ -76,11 +77,83 @@ public:
         autoClose = false; 
     }
 
+    void clearToggles()
+    {        
+        while(toggles.size())
+		{
+			ofxUILabelToggle *t = toggles[0]; 			
+            removeToggle(t->getName());
+        }
+    }    
+    
+    
+    void addToggle(string toggleName)
+    {        
+        float yt = rect->getHeight();
+        
+		for(int i = 0; i < toggles.size(); i++)
+		{
+			ofxUILabelToggle *t = toggles[i]; 			
+            yt +=t->getRect()->getHeight();         
+		}	
+        
+        ofxUILabelToggle *ltoggle;         
+        if(autoSize)
+        {
+            ltoggle = new ofxUILabelToggle(0, yt, false, toggleName, size);                 
+        }
+        else
+        {
+            ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), false, toggleName, size);                 
+        }        
+        ltoggle->setParent(this);
+        ltoggle->getRect()->setParent(this->getRect());
+        ltoggle->getRect()->y = rect->y+yt; 			        
+        ltoggle->getRect()->x = rect->x; 			        
+        ltoggle->setVisible(value); 
+        ltoggle->setLabelVisible(value);             
+        toggles.push_back(ltoggle);         
+        
+        parent->addWidget(ltoggle);
+    }    
+    
+    void removeToggle(string toggleName)
+    {
+        ofxUILabelToggle *t = NULL; 
+        for(int i = 0; i < toggles.size(); i++)
+        {
+            ofxUILabelToggle *other = (ofxUILabelToggle *)toggles[i];
+            if(other->getName() == toggleName)
+            {
+                t = other;
+                toggles.erase(toggles.begin()+i);                                             
+                break; 
+            }
+        }
+        if(t != NULL)
+        {
+            parent->removeWidget(t);
+            
+            float yt = rect->getHeight();
+            for(int i = 0; i < toggles.size(); i++)
+            {
+                ofxUILabelToggle *t = toggles[i]; 			
+                t->setParent(this); 
+                t->getRect()->setParent(this->getRect());                 
+                t->getRect()->y = yt; 
+                t->getRect()->x = 0; 
+                yt +=t->getRect()->getHeight();         
+            }		            
+            
+        }
+        
+    }
+    
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
         label->setDrawPadding(false);
-//        for(int i = 0; i < toggles.size(); i++)
+//        for(int i = 0; i < toggles.size(); i++)s
 //        {
 //            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
 //            toggle->setDrawPadding(false);
@@ -285,13 +358,12 @@ public:
         return value; 
     }
     
-    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize; 
     bool autoClose; 
     vector<ofxUILabelToggle *> toggles; 
     bool allowMultiple; 
-    
+    int size;     
 }; 
 
 #endif

@@ -33,7 +33,7 @@ class ofxUIRectangle : public ofRectangle
 public:
     ofxUIRectangle()
     {
-        x = y = width = height = 0.0f; 
+        x = y = width = height = halfheight = halfwidth = 0.0f; 
         setParent(NULL);         
     }
     
@@ -42,7 +42,9 @@ public:
         x = _x;
         y = _y;
         width = _w;
+        halfwidth = width*.5;                 
         height = _h;
+        halfheight = height*.5;        
         setParent(NULL); 
     }
     
@@ -51,7 +53,9 @@ public:
         x = r.x;
         y = r.y;
         width = r.width;
+        halfwidth = width*.5;         
         height = r.height;
+        halfheight = height*.5;
         setParent(NULL); 
     }
     
@@ -63,11 +67,13 @@ public:
 	void setHeight(float _height)
 	{
 		height = _height; 
+        halfheight = height*.5; 
 	}
 	
 	void setWidth(float _width)
 	{
 		width = _width; 
+        halfwidth = width*.5; 
 	}
 	
     bool inside(ofPoint p)
@@ -193,8 +199,19 @@ public:
 		return height; 
 	}
 	
+    float getHalfWidth()
+	{
+		return halfwidth; 
+	}
+	
+	float getHalfHeight()
+	{
+		return halfheight; 
+	}
 	
 protected: 
+    float halfwidth;
+    float halfheight;
     ofxUIRectangle *parent; 
 
 };

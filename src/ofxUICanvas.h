@@ -168,6 +168,7 @@ public:
                 break;
                 
             case OFX_UI_WIDGET_BILABELSLIDER:
+            case OFX_UI_WIDGET_CIRCLESLIDER:
             case OFX_UI_WIDGET_MINIMALSLIDER:                
             case OFX_UI_WIDGET_SLIDER_H:
             case OFX_UI_WIDGET_SLIDER_V:
@@ -228,6 +229,18 @@ public:
                 XML->setValue("Value", rotslider->getScaledValue(), 0); 
             }
                 break;
+                
+            case OFX_UI_WIDGET_IMAGESAMPLER:
+            {
+                ofxUIImageSampler *imageSampler = (ofxUIImageSampler *) widget;                 
+                XML->setValue("XValue", imageSampler->getValue().x, 0); 
+                XML->setValue("YValue", imageSampler->getValue().y, 0);                 
+                XML->setValue("RColor", imageSampler->getColor().r, 0);                                 
+                XML->setValue("GColor", imageSampler->getColor().g, 0);                                 
+                XML->setValue("BColor", imageSampler->getColor().b, 0);                                                 
+                XML->setValue("AColor", imageSampler->getColor().a, 0);                                 
+            }
+                break;
 
             default:
                 break;
@@ -269,6 +282,7 @@ public:
                 break;
                 
             case OFX_UI_WIDGET_BILABELSLIDER:    
+            case OFX_UI_WIDGET_CIRCLESLIDER:               
             case OFX_UI_WIDGET_MINIMALSLIDER:
             case OFX_UI_WIDGET_SLIDER_H:
             case OFX_UI_WIDGET_SLIDER_V:
@@ -336,6 +350,22 @@ public:
                 ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
                 float value = XML->getValue("Value", rotslider->getScaledValue(), 0);            
                 rotslider->setValue(value); 
+            }
+                break;
+                
+            case OFX_UI_WIDGET_IMAGESAMPLER:
+            {
+                ofxUIImageSampler *imageSampler = (ofxUIImageSampler *) widget; 
+                float valueX = XML->getValue("XValue", imageSampler->getValue().x, 0);   
+                float valueY = XML->getValue("YValue", imageSampler->getValue().y, 0);                   
+                
+                int r = XML->getValue("RColor", imageSampler->getColor().r, 0);                                 
+                int g = XML->getValue("GColor", imageSampler->getColor().g, 0);                                 
+                int b = XML->getValue("BColor", imageSampler->getColor().b, 0);                                                 
+                int a = XML->getValue("AColor", imageSampler->getColor().a, 0);                                 
+                
+                imageSampler->setValue(ofPoint(valueX, valueY));
+                imageSampler->setColor(ofColor(r,g,b,a));
             }
                 break;
                 
@@ -567,7 +597,7 @@ public:
     void onExit(ofEventArgs &data) { exit(); } 
 
     
-    void update()
+    virtual void update()
     {		
 		for(int i = 0; i < widgets.size(); i++)
 		{
@@ -886,12 +916,63 @@ public:
             }                                    
         }
         
-        rect->width = maxWidth;            
-        rect->height = maxHeight;          
+        rect->setWidth(maxWidth);
+        rect->setHeight(maxHeight);
         paddedRect->width = rect->width+padding*2.0;
         paddedRect->height = rect->height+padding*2.0;        
     }
     
+    void removeWidget(ofxUIWidget *widget)
+    {
+//        cout << endl; 
+//        cout << "Widget to find: " << widget->getName() << endl; 
+//        cout << endl; 
+        
+        //for the map
+        map<string, ofxUIWidget*>::iterator it;        
+        it=widgets_map.find(widget->getName());
+        if(it != widgets_map.end())
+        {
+//            cout << "FOUND IT IN MAP, DELETING" << endl;
+            widgets_map.erase(it);     
+        }
+        
+        //for the widgets with state         
+        for(int i = 0; i < widgetsWithState.size(); i++)
+        {
+            ofxUIWidget *other = widgetsWithState[i]; 
+            if(widget->getName() == other->getName())
+            {
+//                cout << "FOUND IT IN WIDGETS WITH STATE, DELETING" << endl;
+                widgetsWithState.erase(widgetsWithState.begin()+i);                
+                break; 
+            }
+        }
+        
+        //for all the widgets 
+        for(int i = 0; i < widgets.size(); i++)
+        {
+            ofxUIWidget *other = (ofxUIWidget *)widgets[i]; 
+//            cout << other->getName() << endl;                     
+            if(widget->getName() == other->getName())
+            {
+//                cout << "FOUND IT\t" << other->getName() << " " << widget->getName() << endl; 
+                widgets.erase(widgets.begin()+i);                             
+                break; 
+            }
+        }
+        
+        if(widget->hasLabel())
+        {
+//            cout << "HAS LABEL" << endl;
+            ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget; 
+            ofxUILabel *label = wwl->getLabelWidget();
+            removeWidget(label);
+        }        
+
+        delete widget;
+    }    
+
 	void addWidget(ofxUIWidget *widget)
 	{
 		if(widget->getKind() == OFX_UI_WIDGET_LABEL)
@@ -899,7 +980,7 @@ public:
 			ofxUILabel *label = (ofxUILabel *) widget;
 			setLabelFont(label); 
 		}
-		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER)
+		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER)
 		{
 			ofxUISlider *slider = (ofxUISlider *) widget;
 			ofxUILabel *label = (ofxUILabel *) slider->getLabel();
@@ -931,7 +1012,16 @@ public:
 			ofxUILabel *label = (ofxUILabel *) image->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 				
-		}				
+		}	
+		else if(widget->getKind() == OFX_UI_WIDGET_IMAGESAMPLER)		
+		{
+			ofxUIImage *image = (ofxUIImage *) widget;
+			ofxUILabel *label = (ofxUILabel *) image->getLabel();
+			setLabelFont(label); 			
+			pushbackWidget(label); 				
+            
+            widgetsWithState.push_back(widget);                                     
+		}	        
 		else if(widget->getKind() == OFX_UI_WIDGET_RSLIDER_H || widget->getKind() == OFX_UI_WIDGET_RSLIDER_V)
 		{
 			ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget;
@@ -1347,11 +1437,6 @@ public:
         //To Implement
     }
     
-    void removeWidget(ofxUIWidget *widget)
-	{
-        //To Implement
-	}
-    
 	void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
@@ -1408,7 +1493,6 @@ protected:
         widgets.push_back(widget);    
 		widgets_map[widget->getName()] = widget;                             
     }
-    
     
 	ofTrueTypeFont *font_large; 	
 	ofTrueTypeFont *font_medium; 		
