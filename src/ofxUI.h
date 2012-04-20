@@ -126,11 +126,11 @@ enum ofxWidgetColorType
     
 }; 
 
-#ifdef TARGET_ANDROID
-#define OFX_UI_FONT_NAME "newmediafett.ttf"
-#else
+//#ifdef TARGET_ANDROID
+//#define OFX_UI_FONT_NAME "newmediafett.ttf"
+//#else
 #define OFX_UI_FONT_NAME "GUI/NewMedia Fett.ttf"
-#endif
+//#endif
 
 #define OFX_UI_FONT_RESOLUTION 150
 #define OFX_UI_FONT_LARGE_SIZE 10

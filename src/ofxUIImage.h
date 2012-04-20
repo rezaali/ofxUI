@@ -36,17 +36,31 @@ public:
         init(w, h, _image, _name); 
     }
     
+    ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name, bool _showLabel)
+    {
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, _image, _name); 
+        showLabel = _showLabel; 
+    }
+    
     ofxUIImage(float w, float h, ofImage *_image, string _name)
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _image, _name); 
+    }    
+
+    ofxUIImage(float w, float h, ofImage *_image, string _name, bool _showLabel)
+    {
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _image, _name); 
+        showLabel = _showLabel; 
     }    
     
     void init(float w, float h, ofImage *_image, string _name)
     {
 		name = _name; 				
 		kind = OFX_UI_WIDGET_IMAGE; 
-        
+        showLabel = true; 
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
 		paddedRect->setParent(rect); 
         
@@ -88,7 +102,7 @@ public:
     virtual void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(visible); 
+        label->setVisible(showLabel);             
     }    
 				
 	ofxUILabel *getLabel()
@@ -104,7 +118,15 @@ public:
 	virtual void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-		paddedRect->height += label->getPaddingRect()->height; 		
+        if(showLabel)
+        {
+            paddedRect->height += label->getPaddingRect()->height; 		
+        }    
+        else
+        {
+            paddedRect->height += padding;
+        }
+        label->setVisible(showLabel);             
 	}	
 
     virtual bool isDraggable()
@@ -115,6 +137,7 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	ofImage *image; 
+    bool showLabel; 
 }; 
 
 #endif

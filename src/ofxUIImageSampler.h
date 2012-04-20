@@ -205,7 +205,7 @@ public:
         {
             value.y = 0.0; 
         }    
-        sampledColor = image->getColor(value.x*image->getWidth(), value.y*image->getHeight());        
+        sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));          //why one? well because if we get to the end, we sample the beginning...
     }
     
     ofColor& getColor()

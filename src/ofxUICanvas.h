@@ -672,7 +672,7 @@ public:
 		touchCancelled(data); 
     }
 	
-	void touchDown(ofTouchEventArgs& touch) 
+	virtual void touchDown(ofTouchEventArgs& touch) 
 	{		
         if(rect->inside(touch.x, touch.y))
         {
@@ -683,7 +683,7 @@ public:
 		}
 	}
     
-	void touchMoved(ofTouchEventArgs& touch) 
+	virtual void touchMoved(ofTouchEventArgs& touch) 
 	{
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -691,7 +691,7 @@ public:
         }
 	}
     
-	void touchUp(ofTouchEventArgs& touch) 
+	virtual void touchUp(ofTouchEventArgs& touch) 
 	{
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -699,7 +699,7 @@ public:
         }
 	}
     
-	void touchDoubleTap(ofTouchEventArgs& touch) 
+	virtual void touchDoubleTap(ofTouchEventArgs& touch) 
 	{
         if(rect->inside(touch.x, touch.y))
         {
@@ -710,7 +710,7 @@ public:
 		}		
 	}
     
-	void touchCancelled(ofTouchEventArgs& touch) 
+	virtual void touchCancelled(ofTouchEventArgs& touch) 
 	{		
         if(rect->inside(touch.x, touch.y))
         {
@@ -743,7 +743,7 @@ public:
         mouseDragged(data.x, data.y, data.button); 
     }
 	
-	void mouseMoved(int x, int y ) 
+	virtual void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))
         {
@@ -754,7 +754,7 @@ public:
 		}	
     }
     
-    void mouseDragged(int x, int y, int button) 
+    virtual void mouseDragged(int x, int y, int button) 
     {		
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -762,7 +762,7 @@ public:
         }                
     }
     
-    void mousePressed(int x, int y, int button) 
+    virtual void mousePressed(int x, int y, int button) 
     {
         if(rect->inside(x, y))
         {
@@ -773,7 +773,7 @@ public:
 		}		
     }
     
-    void mouseReleased(int x, int y, int button) 
+    virtual void mouseReleased(int x, int y, int button) 
     {		        
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -791,7 +791,7 @@ public:
 		keyReleased(data.key); 
     }	
 
-    void keyPressed(int key) 
+    virtual void keyPressed(int key) 
     {
         for(int i = 0; i < widgets.size(); i++)
 		{
@@ -799,7 +799,7 @@ public:
 		}		
     }
     
-    void keyReleased(int key) 
+    virtual void keyReleased(int key) 
     {
 		for(int i = 0; i < widgets.size(); i++)
 		{
@@ -812,7 +812,7 @@ public:
 		windowResized(data.width, data.height); 
     } 	
     
-    void windowResized(int w, int h) 
+    virtual void windowResized(int w, int h) 
     {
 		for(int i = 0; i < widgets.size(); i++)
 		{
@@ -901,19 +901,22 @@ public:
 
         for(int i = 0; i < widgets.size(); i++)
         {
-            ofxUIRectangle* wr = widgets[i]->getRect(); 
-            float widgetwidth = wr->x+wr->getWidth();
+            if(widgets[i]->isVisible())
+            {
+                ofxUIRectangle* wr = widgets[i]->getRect(); 
+                float widgetwidth = wr->x+wr->getWidth();
 
-            float widgetheight = wr->y+wr->getHeight();
-            
-            if(widgetwidth > maxWidth)
-            {
-                maxWidth = wr->x+widgets[i]->getPaddingRect()->getWidth();
-            }                        
-            if(widgetheight > maxHeight)
-            {
-                maxHeight = wr->y+widgets[i]->getPaddingRect()->getHeight();                                                                        
-            }                                    
+                float widgetheight = wr->y+wr->getHeight();
+                
+                if(widgetwidth > maxWidth)
+                {
+                    maxWidth = wr->x+widgets[i]->getPaddingRect()->getWidth();
+                }                        
+                if(widgetheight > maxHeight)
+                {
+                    maxHeight = wr->y+widgets[i]->getPaddingRect()->getHeight();                                                                        
+                }        
+            }
         }
         
         rect->setWidth(maxWidth);
@@ -973,7 +976,7 @@ public:
         delete widget;
     }    
 
-	void addWidget(ofxUIWidget *widget)
+    void addWidget(ofxUIWidget *widget)
 	{
 		if(widget->getKind() == OFX_UI_WIDGET_LABEL)
 		{

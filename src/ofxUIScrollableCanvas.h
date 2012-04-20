@@ -75,6 +75,9 @@ public:
         hitWidget = false; 
         stickyDistance = 100;  
         hit = false; 
+#ifdef TARGET_OPENGLES
+        touchId = -1; 
+#endif
     }
     
     void setScrollArea(float x, float y, float w, float h)
@@ -206,8 +209,6 @@ public:
             acc = 0; 
         }
         
-        
-        
 		for(int i = 0; i < widgets.size(); i++)
 		{
 			widgets[i]->update(); 	
@@ -218,59 +219,47 @@ public:
     {
         sRect->draw(); 
     }
+    	
+#ifdef TARGET_OPENGLES 
+    void touchDown(ofTouchEventArgs& touch)
+    {
+        if(touchId == -1)
+        {    
+            this->mousePressed(touch.x, touch.y, 0);
+            if(hit)
+            {
+                touchId = touch.id;    
+            }            
+        }    
+    }
     
-#ifdef TARGET_OPENGLES
-	
-	void touchDown(ofTouchEventArgs& touch) 
-	{		
-        if(rect->inside(touch.x, touch.y))
+    void touchMoved(ofTouchEventArgs& touch) 
+    {
+        if(touchId == touch.id)
         {
-			for(int i = 0; i < widgets.size(); i++)
-			{
-				if(widgets[i]->isVisible())	widgets[i]->touchDown(touch); 
-			}
-		}
-	}
+            this->mouseDragged(touch.x, touch.y, 0); 
+        }       
+    }
     
-	void touchMoved(ofTouchEventArgs& touch) 
-	{
-        for(int i = 0; i < widgets.size(); i++)
+    void touchUp(ofTouchEventArgs& touch) 
+    {
+        if(touchId == touch.id)
         {
-            if(widgets[i]->isVisible())	widgets[i]->touchMoved(touch);
+            this->mouseReleased(touch.x, touch.y, 0); 
+            touchId = -1;                      
         }
-	}
+    }
     
-	void touchUp(ofTouchEventArgs& touch) 
-	{
-        for(int i = 0; i < widgets.size(); i++)
+    void touchCancelled(ofTouchEventArgs& touch) 
+    {
+        if(touchId == touch.id)
         {
-            if(widgets[i]->isVisible())	widgets[i]->touchUp(touch); 
+            this->mouseReleased(touch.x, touch.y, 0); 
+            touchId = -1;                
         }
-	}
+    } 
     
-	void touchDoubleTap(ofTouchEventArgs& touch) 
-	{
-        if(rect->inside(touch.x, touch.y))
-        {
-			for(int i = 0; i < widgets.size(); i++)
-			{
-				if(widgets[i]->isVisible())	widgets[i]->touchDoubleTap(touch); 
-			}
-		}		
-	}
-    
-	void touchCancelled(ofTouchEventArgs& touch) 
-	{		
-        if(rect->inside(touch.x, touch.y))
-        {
-        	for(int i = 0; i < widgets.size(); i++)
-			{
-				if(widgets[i]->isVisible())	widgets[i]->touchCancelled(touch); 
-			}
-		}	
-	}
-	
-#else	
+#endif	
         
     void mouseDragged(int x, int y, int button) 
     {	
@@ -341,12 +330,6 @@ public:
             pos = ofPoint(x,y);
         }
     }	
-    
-	
-
-    
-#endif	
-    
 
 
 protected:
@@ -361,9 +344,7 @@ protected:
     ofPoint vel; 
     ofPoint acc; 
     float damping;
-    float stickyDistance; 
-    bool hit; 
-    
+    float stickyDistance;     
 };
     
     
