@@ -47,6 +47,12 @@ public:
 		value.y = .5; 
         input(value.x*rect->getWidth(),value.y*rect->getHeight());
         kind = OFX_UI_WIDGET_IMAGESAMPLER; 
+        squareSize = OFX_UI_GLOBAL_WIDGET_SPACING;
+    }
+    
+    void setSquareSize(float _squareSize)
+    {
+        squareSize = _squareSize; 
     }
     
     void drawFill()
@@ -66,7 +72,7 @@ public:
             ofFill(); 
             ofSetColor(sampledColor); 		 
 			ofSetRectMode(OF_RECTMODE_CENTER);            
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING); 
+			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
 			ofSetRectMode(OF_RECTMODE_CORNER);
             
         }
@@ -83,7 +89,7 @@ public:
             ofFill(); 
             ofSetColor(sampledColor); 
 			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING); 
+			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
 			ofSetRectMode(OF_RECTMODE_CORNER);						
         }        
     }
@@ -236,6 +242,7 @@ public:
 protected: 
     ofColor sampledColor; 
 	ofPoint value;     
+    float squareSize; 
 }; 
 
 #endif

@@ -164,6 +164,7 @@ public:
                 tWidth = xt; 
             }
         }
+        rect->setHeight(tHeight);
 		tHeight += padding; 
 		paddedRect->width = tWidth; 	
 		paddedRect->height = tHeight; 			

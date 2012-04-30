@@ -925,6 +925,60 @@ public:
         paddedRect->height = rect->height+padding*2.0;        
     }
     
+    void centerWidgetsOnCanvas()
+    {            
+        float xMin = 0; 
+        float yMin = 0;
+        
+        float xMax = 0; 
+        float yMax = 0;
+        
+        float w = 0; 
+        float h = 0; 
+        
+        for(int i = 0; i < widgets.size(); i++)
+        {
+            if(widgets[i]->isVisible())
+            {
+                ofxUIRectangle* wr = widgets[i]->getRect(); 
+                if(wr->x < xMin)
+                {
+                    xMin = wr->x; 
+                }
+                if((wr->x + wr->getWidth()) > xMax)
+                {
+                    xMax = (wr->x + wr->getWidth()); 
+                }
+                
+                if(wr->y < yMin)
+                {
+                    yMin = wr->y; 
+                }
+                if((wr->y + wr->getHeight()) > yMax)
+                {
+                    yMax = (wr->y + wr->getHeight()); 
+                }                                                                    
+            }
+        }     
+        
+        w = xMax - xMin;
+        h = yMax - yMin;            
+        
+        float moveDeltaX = rect->getHalfWidth() - w*.5; 
+        float moveDeltaY = rect->getHalfHeight() - h*.5;
+                
+        for(int i = 0; i < widgets.size(); i++)
+        {
+            if(widgets[i]->isVisible())
+            {
+                ofxUIRectangle* wr = widgets[i]->getRect(); 
+                wr->x += moveDeltaX-padding;             
+                wr->y += moveDeltaY-padding;                             
+            }
+        }           
+//        addWidget(new ofxUISpacer(xMin+moveDeltaX, yMin+moveDeltaY, w, h));
+    }    
+    
     void removeWidget(ofxUIWidget *widget)
     {
 //        cout << endl; 

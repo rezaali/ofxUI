@@ -43,8 +43,15 @@ public:
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _value, _name);        
     }    
+
+    ofxUIButton(float w, float h, bool _value, string _name, int _size)
+    {
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _value, _name, _size);        
+    }    
+
     
-    virtual void init(float w, float h, bool _value, string _name)
+    virtual void init(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
 		name = _name; 		
 		kind = OFX_UI_WIDGET_BUTTON; 		
@@ -52,7 +59,7 @@ public:
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
         
-		label = new ofxUILabel(w+padding*2.0,0, (name+" LABEL"), name, OFX_UI_FONT_SMALL); 
+		label = new ofxUILabel(w+padding*2.0,0, (name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
 		

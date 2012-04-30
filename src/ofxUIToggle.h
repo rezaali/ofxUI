@@ -41,6 +41,11 @@ public:
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	                
     }    
+
+	ofxUIToggle(float w, float h, bool _value, string _name, int _size) : ofxUIButton(w,h,_value, _name, _size)
+    {
+		kind = OFX_UI_WIDGET_TOGGLE; 	                
+    }    
     
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
