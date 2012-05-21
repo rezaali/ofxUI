@@ -100,6 +100,8 @@ public:
 		
 		label->setParent(label); 
 		label->setRectParent(rect); 		
+        label->setEmbedded(true);
+        
         increment = 0.01; 	
     }
     

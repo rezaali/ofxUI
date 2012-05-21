@@ -73,7 +73,7 @@ public:
         label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue(),2)), OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
 		label->setRectParent(rect); 		
-        
+        label->setEmbedded(true);        
 		increment = 0.01;         
     }
     

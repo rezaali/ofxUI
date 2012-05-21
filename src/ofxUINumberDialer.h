@@ -85,7 +85,8 @@ public:
 		
 		label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), textstring, _size); 
 		label->setParent(label); 
-		label->setRectParent(rect);     
+		label->setRectParent(rect);
+        label->setEmbedded(true);        
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)

@@ -62,7 +62,7 @@ public:
 		label = new ofxUILabel(w+padding*2.0,0, (name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
-		
+        label->setEmbedded(true);		
         setValue(_value); 
         drawLabel = true;
         label->setVisible(drawLabel);      

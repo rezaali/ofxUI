@@ -127,7 +127,7 @@ public:
         {
             ofFill(); 
             ofSetColor(color_fill); 
-			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()+yOffset); 
+			font->drawString(label, (int)rect->getX()+xOffset, (int)rect->getY()+rect->getHeight()+yOffset); 
         }
 	}
 	
@@ -137,7 +137,7 @@ public:
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
-			font->drawString(label, rect->getX()+xOffset, rect->getY()+rect->getHeight()+yOffset); 
+			font->drawString(label, (int)rect->getX()+xOffset, (int)rect->getY()+rect->getHeight()+yOffset); 
         }        
 	}	
             
@@ -145,14 +145,14 @@ public:
     {      
         ofFill(); 
         ofSetColor(color_back);     
-        font->drawString(label, rect->getX()+1+xOffset, rect->getY()+rect->getHeight()+1+yOffset);         
+        font->drawString(label, (int)rect->getX()+1+xOffset, (int)rect->getY()+rect->getHeight()+1+yOffset);         
     }
     
 	void drawString(float x, float y, string _string)
 	{
         if(visible)
         {
-            font->drawString(_string, x, y); 
+            font->drawString(_string, (int)x, (int)y); 
         }
 	}
 
@@ -162,7 +162,7 @@ public:
         {
             ofFill(); 
             ofSetColor(color_back);     
-            font->drawString(_string, x+1, y+1);                     
+            font->drawString(_string, (int)x+1, (int)y+1);                     
         }
 	}
     
@@ -198,11 +198,11 @@ public:
                 it=label.begin();
                 label.erase (it);                    
             }                        
-            float w = font->stringWidth(label); 
-            float h = font->stringHeight(label); 		
+            float w = (int)font->stringWidth(label); 
+            float h = (int)font->stringHeight(label); 		
             if(rect->getHeight() > 0)
             {
-                yOffset = -h*.5;                
+                yOffset = (int)-h*.5;                
             }
             else
             {
@@ -211,7 +211,7 @@ public:
             }
             paddedRect->height = rect->getHeight()+padding*2.0;             
             paddedRect->width = rect->getWidth()+padding*2.0;
-            xOffset = rect->width*.5 - w*.5;
+            xOffset = (int) (rect->width*.5 - w*.5);
         }
 	}
         

@@ -84,7 +84,8 @@ public:
         label->setDrawBack(true);        
 		label->setParent(label); 
 		label->setRectParent(rect); 	
-        increment = .005;    
+        label->setEmbedded(true);        
+        increment = .0005;    
         inputDirection = OFX_UI_DIRECTION_SOUTHNORTH;
     }
     
@@ -126,8 +127,8 @@ public:
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
-            ofSetColor(label->getColorFillHighlight());             
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+//            ofSetColor(label->getColorFillHighlight());             
+//            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
         }        
     }
     
@@ -138,11 +139,11 @@ public:
             ofNoFill();
             ofSetColor(color_outline_highlight); 
             ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
-            if(!draw_fill_highlight)
-            {
-                ofSetColor(label->getColorFill()); 
-                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
-            }
+//            if(!draw_fill_highlight)
+//            {
+//                ofSetColor(label->getColorFill()); 
+//                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+//            }
         }
     }
     

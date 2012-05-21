@@ -42,7 +42,7 @@ public:
     
     void initSampler()
     {
-        label->setVisible(false);            
+        label->setVisible(false);          
         value.x = .5; 
 		value.y = .5; 
         input(value.x*rect->getWidth(),value.y*rect->getHeight());
@@ -232,6 +232,24 @@ public:
     void setValue(ofPoint _value)
     {
         value = _value; 
+        if(value.x > 1.0)
+        {
+            value.x = 1.0;             
+        }
+        else if(value.x < 0.0)
+        {
+            value.x = 0.0;             
+        }
+        
+        if(value.y > 1.0)
+        {
+            value.y = 1.0;             
+        }
+        else if(value.y < 0.0)
+        {
+            value.y = 0.0; 
+        }    
+        sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));          //why one? well because if we get to the end, we sample the beginning...        
     }
     
     bool isDraggable()

@@ -26,11 +26,11 @@
 <Widget>
     <Kind>28</Kind>
     <Name>OF LOGO 2</Name>
-    <XValue>0.75</XValue>
-    <YValue>0.520833</YValue>
-    <RColor>0</RColor>
-    <GColor>183</GColor>
-    <BColor>217</BColor>
+    <XValue>0.284722</XValue>
+    <YValue>0.555556</YValue>
+    <RColor>255</RColor>
+    <GColor>231</GColor>
+    <BColor>76</BColor>
     <AColor>255</AColor>
 </Widget>
 <Widget>
@@ -61,12 +61,12 @@
 <Widget>
     <Kind>17</Kind>
     <Name>SIXTH ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>SEVENTH ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>

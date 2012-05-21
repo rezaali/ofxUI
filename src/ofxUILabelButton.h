@@ -37,9 +37,9 @@ public:
         init(_value, _name, _size); 
     }
 
-    ofxUILabelButton(float w, bool _value, string _name, int _size)
+    ofxUILabelButton(float w, bool _value, string _name, int _size, float h = 0)
     {
-        rect = new ofxUIRectangle(0,0,w,0); 
+        rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = false;         
         init(_value, _name, _size); 
     }
@@ -65,7 +65,7 @@ public:
         label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect);         
-        
+        label->setEmbedded(true);
 		kind = OFX_UI_WIDGET_LABELBUTTON; 	
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);         
@@ -76,8 +76,10 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-		rect->height = label->getPaddingRect()->height+padding*2.0; 
-
+        if(rect->height == 0)
+        {
+            rect->height = label->getPaddingRect()->height+padding*2.0; 
+        }    
 		ofxUIRectangle *labelrect = label->getRect(); 
         if(autoSize)
         {

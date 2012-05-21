@@ -30,15 +30,15 @@
 class ofxUITextInput : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size)
+    ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size, float h = 0)
     {
-        rect = new ofxUIRectangle(x,y,w,0); 
+        rect = new ofxUIRectangle(x,y,w,h); 
         init(w, _name, _textstring, _size); 
     }
     
-    ofxUITextInput(float w, string _name, string _textstring, int _size)
+    ofxUITextInput(float w, string _name, string _textstring, int _size, float h = 0)
     {
-        rect = new ofxUIRectangle(0,0,w,0); 
+        rect = new ofxUIRectangle(0,0,w,h); 
         init(w, _name, _textstring, _size); 
     }    
     
@@ -56,9 +56,10 @@ public:
 		clicked = false;                                            //the widget's value
         autoclear = true; 
 		
-		label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), textstring, _size); 
+		label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), _size); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
+        label->setEmbedded(true);
         
 		triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
 		cursorWidth = 0; spaceOffset = 0; 		
@@ -153,6 +154,11 @@ public:
 				theta = 0; 
                 hit = true; 
 			}
+#ifdef TARGET_OPENGLES
+			clicked = true;
+			theta = 0;
+			hit = true;
+#endif
             state = OFX_UI_STATE_DOWN;     
 			triggerType = OFX_UI_TEXTINPUT_ON_FOCUS; 
 			triggerEvent(this); 			
@@ -186,6 +192,7 @@ public:
 	
     void keyPressed(int key) 
     {
+    	ofLog(OF_LOG_VERBOSE, "openframeworks Drawnetic ofxUI keyPressed: %i", key);
 		if(clicked)            
 		{
             switch (key) 
@@ -325,24 +332,38 @@ public:
 		textstring = ""; 
 		string temp = ""; 
 		
-		for(int i = 0; i < s.length(); i++)
-		{
-			temp+=s.at(i); 
-			float newWidth = label->getStringWidth(temp); 
-			
-			if(newWidth < rect->width-padding*4.0)
-			{
-				textstring+=s.at(i); 
-				label->setLabel(textstring); 
-			}				
-		}				
+        int length = s.length(); 
+        
+        if(length > 0)
+        {
+            for(int i = 0; i < length; i++)
+            {
+                temp+=s.at(i); 
+                float newWidth = label->getStringWidth(temp); 
+                
+                if(newWidth < rect->width-padding*4.0)
+                {
+                    textstring+=s.at(i); 
+                    label->setLabel(textstring); 
+                }				
+            }		
+        }
+        else
+        {
+            textstring = s; 
+            label->setLabel(textstring);                
+        }
         displaystring = textstring; 
 	}
 	
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-		rect->height = label->getPaddingRect()->height+padding*2.0; 
+        if(rect->height == 0)
+        {
+            rect->height = label->getPaddingRect()->height+padding*2.0; 
+        }
+        label->setLabel(textstring);
 		ofxUIRectangle *labelrect = label->getRect(); 
 		float h = labelrect->getHeight(); 
 		float ph = rect->getHeight(); 	

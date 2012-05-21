@@ -18,7 +18,7 @@ void testApp::setup()
 	
     gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE));         
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
-    gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0, 1000, 60.0, "FPS SLIDER"));
+    gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim*.25, 0, 1000, 60.0, "FPS SLIDER"));
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 1)); 
 	gui->addWidgetDown(new ofxUILabel("NORMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 

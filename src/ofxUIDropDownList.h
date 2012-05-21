@@ -69,7 +69,7 @@ public:
         label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect);
-        
+        label->setEmbedded(true);
         value = false;                                               //the widget's value
         draw_fill = value; 
         allowMultiple = false; 

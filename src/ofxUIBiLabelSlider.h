@@ -89,6 +89,7 @@ public:
         label->setDrawBack(true);        
 		label->setParent(label); 
 		label->setRectParent(rect); 	
+        label->setEmbedded(true);        
 
         rlabel = new ofxUILabel(padding,h*.5,(name+" LABEL"), rightLabel, _size); 	
         rlabel->setDrawBack(true);        

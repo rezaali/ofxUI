@@ -56,7 +56,8 @@ public:
 		label = new ofxUILabel(0,0,(name+" LABEL"), name, OFX_UI_FONT_SMALL); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
-		
+        label->setEmbedded(true);
+        
         ofPoint pos = ofPoint(0,0); 
 		for(int i = 0; i < rows; i++)
         {
@@ -108,6 +109,7 @@ public:
 		{
 			ofxUIToggle *t = toggles[i]; 			
             t->setVisible(visible);             
+            t->getLabelWidget()->setVisible(false);
         }
     }
     

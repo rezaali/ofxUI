@@ -57,6 +57,7 @@ public:
 		label = new ofxUILabel(0,0,(name+" LABEL"), name, OFX_UI_FONT_MEDIUM); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
+        label->setEmbedded(true);
         
 		for(int i = 0; i < names.size(); i++)
 		{

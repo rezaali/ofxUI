@@ -71,7 +71,8 @@ public:
         
 		label = new ofxUILabel(0,h+padding,(name+" LABEL"),name, OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
-		label->setRectParent(rect);         
+		label->setRectParent(rect);    
+        label->setEmbedded(true);        
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
