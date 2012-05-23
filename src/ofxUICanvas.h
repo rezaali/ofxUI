@@ -507,17 +507,29 @@ public:
 	//App Callbacks
     void enableAppEventCallbacks()
     {
+#ifdef TARGET_0071
         ofAddListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
         ofAddListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
         ofAddListener(ofEvents().exit, this, &ofxUICanvas::onExit);
+#else
+        ofAddListener(ofEvents.update, this, &ofxUICanvas::onUpdate);
+        ofAddListener(ofEvents.draw, this, &ofxUICanvas::onDraw);
+        ofAddListener(ofEvents.exit, this, &ofxUICanvas::onExit);
+#endif
     }
 	
 	//App Callbacks
     void disableAppEventCallbacks()
     {
+#ifdef TARGET_0071
         ofRemoveListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
         ofRemoveListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
         ofRemoveListener(ofEvents().exit, this, &ofxUICanvas::onExit);
+#else
+        ofRemoveListener(ofEvents.update, this, &ofxUICanvas::onUpdate);
+        ofRemoveListener(ofEvents.draw, this, &ofxUICanvas::onDraw);
+        ofRemoveListener(ofEvents.exit, this, &ofxUICanvas::onExit);
+#endif
     }
 	
 #ifdef TARGET_OPENGLES
@@ -525,20 +537,36 @@ public:
 	//Touch Callbacks
     void enableTouchEventCallbacks()
     {
+#ifdef TARGET_0071
         ofAddListener(ofEvents().touchUp, this, &ofxUICanvas::onTouchUp);
         ofAddListener(ofEvents().touchDown, this, &ofxUICanvas::onTouchDown);
         ofAddListener(ofEvents().touchMoved, this, &ofxUICanvas::onTouchMoved);
         ofAddListener(ofEvents().touchCancelled, this, &ofxUICanvas::onTouchCancelled);
         ofAddListener(ofEvents().touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
+#else
+        ofAddListener(ofEvents.touchUp, this, &ofxUICanvas::onTouchUp);
+        ofAddListener(ofEvents.touchDown, this, &ofxUICanvas::onTouchDown);
+        ofAddListener(ofEvents.touchMoved, this, &ofxUICanvas::onTouchMoved);
+        ofAddListener(ofEvents.touchCancelled, this, &ofxUICanvas::onTouchCancelled);
+        ofAddListener(ofEvents.touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
+#endif
     }	
 
 	void disableTouchEventCallbacks()
     {
+#ifdef TARGET_0071
         ofRemoveListener(ofEvents().touchUp, this, &ofxUICanvas::onTouchUp);
         ofRemoveListener(ofEvents().touchDown, this, &ofxUICanvas::onTouchDown);
         ofRemoveListener(ofEvents().touchMoved, this, &ofxUICanvas::onTouchMoved);
         ofRemoveListener(ofEvents().touchCancelled, this, &ofxUICanvas::onTouchCancelled);
         ofRemoveListener(ofEvents().touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
+#else
+        ofRemoveListener(ofEvents.touchUp, this, &ofxUICanvas::onTouchUp);
+        ofRemoveListener(ofEvents.touchDown, this, &ofxUICanvas::onTouchDown);
+        ofRemoveListener(ofEvents.touchMoved, this, &ofxUICanvas::onTouchMoved);
+        ofRemoveListener(ofEvents.touchCancelled, this, &ofxUICanvas::onTouchCancelled);
+        ofRemoveListener(ofEvents.touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
+#endif
     }	
 	
 #else
@@ -546,31 +574,53 @@ public:
 	//Mouse Callbacks
     void enableMouseEventCallbacks()
     {
+#ifdef TARGET_0071
         ofAddListener(ofEvents().mouseReleased, this, &ofxUICanvas::onMouseReleased);
         ofAddListener(ofEvents().mousePressed, this, &ofxUICanvas::onMousePressed);
         ofAddListener(ofEvents().mouseMoved, this, &ofxUICanvas::onMouseMoved);
         ofAddListener(ofEvents().mouseDragged, this, &ofxUICanvas::onMouseDragged);
+#else
+        ofAddListener(ofEvents.mouseReleased, this, &ofxUICanvas::onMouseReleased);
+        ofAddListener(ofEvents.mousePressed, this, &ofxUICanvas::onMousePressed);
+        ofAddListener(ofEvents.mouseMoved, this, &ofxUICanvas::onMouseMoved);
+        ofAddListener(ofEvents.mouseDragged, this, &ofxUICanvas::onMouseDragged);
+#endif
     }
 
 	//Mouse Callbacks
     void disableMouseEventCallbacks()
     {
+#ifdef TARGET_0071
         ofRemoveListener(ofEvents().mouseReleased, this, &ofxUICanvas::onMouseReleased);
         ofRemoveListener(ofEvents().mousePressed, this, &ofxUICanvas::onMousePressed);
         ofRemoveListener(ofEvents().mouseMoved, this, &ofxUICanvas::onMouseMoved);
         ofRemoveListener(ofEvents().mouseDragged, this, &ofxUICanvas::onMouseDragged);
+#else
+        ofRemoveListener(ofEvents.mouseReleased, this, &ofxUICanvas::onMouseReleased);
+        ofRemoveListener(ofEvents.mousePressed, this, &ofxUICanvas::onMousePressed);
+        ofRemoveListener(ofEvents.mouseMoved, this, &ofxUICanvas::onMouseMoved);
+        ofRemoveListener(ofEvents.mouseDragged, this, &ofxUICanvas::onMouseDragged);
+#endif
     }
 
     //Window Resize Callback
     void enableWindowEventCallbacks()
     {
+#ifdef TARGET_0071
         ofAddListener(ofEvents().windowResized, this, &ofxUICanvas::onWindowResized);        
+#else
+        ofAddListener(ofEvents.windowResized, this, &ofxUICanvas::onWindowResized);        
+#endif
     }
 
 	//Window Resize Callback
     void disableWindowEventCallbacks()
     {
+#ifdef TARGET_0071
         ofRemoveListener(ofEvents().windowResized, this, &ofxUICanvas::onWindowResized);        
+#else
+        ofRemoveListener(ofEvents.windowResized, this, &ofxUICanvas::onWindowResized);        
+#endif
     }
 	
 	
@@ -579,15 +629,25 @@ public:
     //KeyBoard Callbacks
 	void enableKeyEventCallbacks()
 	{
+#ifdef TARGET_0071
 		ofAddListener(ofEvents().keyPressed, this, &ofxUICanvas::onKeyPressed);
 		ofAddListener(ofEvents().keyReleased, this, &ofxUICanvas::onKeyReleased);
+#else
+		ofAddListener(ofEvents.keyPressed, this, &ofxUICanvas::onKeyPressed);
+		ofAddListener(ofEvents.keyReleased, this, &ofxUICanvas::onKeyReleased);
+#endif
 	}
 
 	//KeyBoard Callbacks
 	void disableKeyEventCallbacks()
 	{
+#ifdef TARGET_0071
 		ofRemoveListener(ofEvents().keyPressed, this, &ofxUICanvas::onKeyPressed);
 		ofRemoveListener(ofEvents().keyReleased, this, &ofxUICanvas::onKeyReleased);
+#else
+		ofRemoveListener(ofEvents.keyPressed, this, &ofxUICanvas::onKeyPressed);
+		ofRemoveListener(ofEvents.keyReleased, this, &ofxUICanvas::onKeyReleased);
+#endif
 	}
 
     void onUpdate(ofEventArgs &data) { update(); }
