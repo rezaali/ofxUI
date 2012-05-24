@@ -297,7 +297,7 @@ void testApp::setGUI1()
 	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "7")); 
 	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "8")); 
     
-    gui1->addSpacer(length-xInit, 2);s
+    gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL)); 
 	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO VERTICAL", names, OFX_UI_ORIENTATION_VERTICAL)); 
 
@@ -385,7 +385,7 @@ void testApp::setGUI3()
     gui3->addWidgetDown(new ofxUILabel("MATRIX", OFX_UI_FONT_MEDIUM)); 				
     gui3->addWidgetDown(new ofxUIToggleMatrix(dim, dim, 4, 4, "MATRIX1")); 
     gui3->addWidgetDown(new ofxUIToggleMatrix(dim*2.0, dim*2.0, 3, 6, "MATRIX2")); 
-    gui3->addWidgetDown(new ofxUIToggleMatrix(dim*3.0, dim*3.0, 1, 4, "MATRIX3")); 
+    //gui3->addWidgetDown(new ofxUIToggleMatrix(dim*3.0, dim*3.0, 1, 4, "MATRIX3")); 
 
     gui3->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
     gui3->addWidgetDown(new ofxUILabel("IMAGE BUTTON", OFX_UI_FONT_MEDIUM)); 				    
@@ -407,7 +407,8 @@ void testApp::setGUI3()
     items.push_back("FIFTH ITEM"); 
     items.push_back("SIXTH ITEM");     
     
-    gui3->addWidgetDown(new ofxUIDropDownList(200, "DROP DOWN LIST", items, OFX_UI_FONT_MEDIUM)); 
+    gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
+    gui3->addDropDownList("DROP DOWN LIST", items, 200); 
 
 	ofAddListener(gui3->newGUIEvent,this,&testApp::guiEvent);
 }

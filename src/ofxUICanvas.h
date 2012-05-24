@@ -1501,8 +1501,7 @@ public:
     
     ofxUILabel* addLabel(string _name, string _label = "", float w = 0, float h = 0, float x = 0, float y = 0)
     {
-        _label = _label.empty() ? _name : _label;
-        return (ofxUILabel*)addWidgetDown(new ofxUILabel(x, y, _name, _label, widgetFontSize));
+        return (ofxUILabel*)addWidgetDown(new ofxUILabel(_name, _label, w, h, x, y, widgetFontSize));
     }
 
     ofxUISpacer* addSpacer(float w = 0, float h = 0, float x = 0, float y = 0)
@@ -1518,6 +1517,11 @@ public:
     ofxUISlider* addSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
     {
         return (ofxUISlider*)addWidgetDown(new ofxUISlider(x, y, w, h, _min, _max, _value, _name));
+    }
+    
+    ofxUIDropDownList* addDropDownList(string _name, vector<string> items, float w = 0, float x = 0, float y = 0)
+    {
+        return (ofxUIDropDownList*)addWidgetDown(new ofxUIDropDownList(x, y, w, _name, items, widgetFontSize));
     }
 
     void resetPlacer()

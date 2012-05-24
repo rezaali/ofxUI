@@ -33,7 +33,7 @@ public:
     ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size)
     {
         rect = new ofxUIRectangle(x,y,w,0);                     
-        autoSize = false;         
+        autoSize = w == 0;         
         init(_name, items, _size);         
     }
     
