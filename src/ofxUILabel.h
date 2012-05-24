@@ -35,14 +35,6 @@ public:
         
     }
     
-    ofxUILabel(string _name, string _label = "", float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
-    {
-        rect = new ofxUIRectangle(x,y,w,h);
-        _label = _label.empty() ? _name : _label;
-        init(_name, _label, _size);
-        autoSize = w == 0;
-    }
-    
     ofxUILabel(float x, float y, string _name, string _label, int _size)
     {
         rect = new ofxUIRectangle(x,y,0,0); 

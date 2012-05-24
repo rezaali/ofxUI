@@ -106,8 +106,6 @@ public:
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
-        
-        widgetFontSize = OFX_UI_FONT_MEDIUM;
     }
     
     void init(int w, int h, ofxUICanvas *sharedResources)
@@ -1499,31 +1497,6 @@ public:
         return widget;
     }         
     
-    ofxUILabel* addLabel(string _name, string _label = "", float w = 0, float h = 0, float x = 0, float y = 0)
-    {
-        return (ofxUILabel*)addWidgetDown(new ofxUILabel(_name, _label, w, h, x, y, widgetFontSize));
-    }
-
-    ofxUISpacer* addSpacer(float w = 0, float h = 0, float x = 0, float y = 0)
-    {
-        return (ofxUISpacer*)addWidgetDown(new ofxUISpacer(x, y, w, h));
-    }
-    
-    ofxUISpacer* addSpacer(string _name, float w = 0, float h = 0, float x = 0, float y = 0)
-    {
-        return (ofxUISpacer*)addWidgetDown(new ofxUISpacer(x, y, w, h, _name));
-    }
-    
-    ofxUISlider* addSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
-    {
-        return (ofxUISlider*)addWidgetDown(new ofxUISlider(x, y, w, h, _min, _max, _value, _name));
-    }
-    
-    ofxUIDropDownList* addDropDownList(string _name, vector<string> items, float w = 0, float x = 0, float y = 0)
-    {
-        return (ofxUIDropDownList*)addWidgetDown(new ofxUIDropDownList(x, y, w, _name, items, widgetFontSize));
-    }
-
     void resetPlacer()
     {
         lastAdded = NULL; 
@@ -1548,11 +1521,6 @@ public:
 				label->setFont(font_small); 					
 				break; 					
 		}		
-	}
-	
-	void setWidgetFontSize(int _size)
-	{
-	    widgetFontSize = _size;
 	}
 	
 	void triggerEvent(ofxUIWidget *child)
@@ -1709,8 +1677,6 @@ protected:
     float widgetSpacing; 
     
     string fontName;
-    
-    int widgetFontSize;
 
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)    
     bool updateFont(ofxWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
