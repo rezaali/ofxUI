@@ -83,7 +83,8 @@ public:
     {
         name = "OFX_UI_WIDGET_CANVAS"; 
 		kind = OFX_UI_WIDGET_CANVAS; 
-		
+
+		enabled = false; 
 		enable(); 
 		
 		enable_highlight_outline = false; 
@@ -112,7 +113,8 @@ public:
     {
         name = "OFX_UI_WIDGET_CANVAS"; 
 		kind = OFX_UI_WIDGET_CANVAS; 
-		
+
+		enabled = false; 		
 		enable(); 
 		
 		enable_highlight_outline = false; 

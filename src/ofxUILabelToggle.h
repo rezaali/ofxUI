@@ -36,6 +36,13 @@ public:
         autoSize = false;         
         init(_value, _name, _size); 
     }
+
+    ofxUILabelToggle(float x, float y, float w, float h, bool _value, string _name, int _size)
+    {
+        rect = new ofxUIRectangle(x,y,w,h);                                                      //the widget's value        
+        autoSize = false;         
+        init(_value, _name, _size); 
+    }
     
     ofxUILabelToggle(float w, bool _value, string _name, int _size, float h = 0)
     {

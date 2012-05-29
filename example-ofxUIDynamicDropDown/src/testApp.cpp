@@ -12,8 +12,9 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabel("PRESS '2' TO DELETE FROM LIST", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUILabel("PRESS '3' TO DELETE ALL IN LIST", OFX_UI_FONT_MEDIUM));         
     vector<string> names; 
-    names.push_back("ONE");
+    names.push_back("ONE");    names.push_back("TWO");    names.push_back("THREE");    names.push_back("FOUR");    names.push_back("FIVE");
     ddl = new ofxUIDropDownList(length-xInit, "DYNAMIC DROP DOWN", names, OFX_UI_FONT_MEDIUM); 
+    ddl->setAllowMultiple(true);
     gui->addWidgetDown(ddl);
     
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
@@ -38,15 +39,28 @@ void testApp::exit()
 //--------------------------------------------------------------
 void testApp::guiEvent(ofxUIEventArgs &e)
 {
-    if(e.widget->getName() == "BACKGROUND VALUE")
+    string name = e.widget->getName(); 
+    
+    cout << "WIDGET NAME: " << name << endl; 
+    
+    if(name == "BACKGROUND VALUE")
     {
         ofxUISlider *slider = (ofxUISlider *) e.widget;    
         ofBackground(slider->getScaledValue());
     }
-    else if(e.widget->getName() == "FULLSCREEN")
+    else if(name == "FULLSCREEN")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
         ofSetFullscreen(toggle->getValue());   
+    }
+    else if(name == "DYNAMIC DROP DOWN")
+    {
+        ofxUIDropDownList *ddlist = (ofxUIDropDownList *) e.widget;
+        vector<ofxUIWidget *> &selected = ddlist->getSelected(); 
+        for(int i = 0; i < selected.size(); i++)
+        {
+            cout << "SELECTED: " << selected[i]->getName() << endl; 
+        }
     }
 }
 //--------------------------------------------------------------

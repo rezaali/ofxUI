@@ -104,7 +104,7 @@ public:
         }
         else
         {
-            ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), false, toggleName, size);                 
+            ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), rect->getHeight(), false, toggleName, size);                 
         }        
         ltoggle->setParent(this);
         ltoggle->getRect()->setParent(this->getRect());
@@ -147,6 +147,11 @@ public:
             
         }
         
+    }
+    
+    vector<ofxUIWidget *> & getSelected()
+    {                 
+        return selected;         
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -326,8 +331,20 @@ public:
             activateToggle(child->getName().c_str()); 
         }
         
+        selected.clear();
+        for(int i = 0; i < toggles.size(); i++)
+		{
+			ofxUILabelToggle *t = toggles[i]; 		
+            if(t->getValue())
+            {
+                selected.push_back(t);
+            }                           
+        }        
+            
+        
 		if(parent != NULL)
 		{
+            parent->triggerEvent(this);
 			parent->triggerEvent(child); 
 		}        
 	}	    
@@ -362,6 +379,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     bool autoSize; 
     bool autoClose; 
     vector<ofxUILabelToggle *> toggles; 
+    vector<ofxUIWidget *> selected; 
     bool allowMultiple; 
     int size;     
 }; 
