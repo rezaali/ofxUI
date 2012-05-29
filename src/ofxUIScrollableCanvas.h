@@ -210,7 +210,7 @@ public:
         }
         
 		for(int i = 0; i < widgets.size(); i++)
-		{
+		{            
 			widgets[i]->update(); 	
 		}		
     }

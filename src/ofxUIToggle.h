@@ -58,7 +58,27 @@ public:
 		draw_padded_rect_outline = _draw_padded_rect_outline; 
         label->setDrawPaddingOutline(false);
 	}  
-
+    
+    virtual void draw() 
+    {
+        ofPushStyle(); 
+        
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
+        
+        drawPadded();
+        drawPaddedOutline();        
+        
+        drawBack();
+        
+        drawOutline();
+        drawOutlineHighlight();
+        
+        drawFill();
+        drawFillHighlight();
+        
+        ofPopStyle();
+    }
+    
     virtual void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))

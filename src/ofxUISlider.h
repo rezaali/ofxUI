@@ -319,7 +319,7 @@ public:
 		}		
 	}
 	
-    void stateChange()
+    virtual void stateChange()
     {                
         switch (state) {
             case OFX_UI_STATE_NORMAL:

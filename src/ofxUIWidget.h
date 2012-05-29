@@ -475,6 +475,7 @@ public:
     {
         return false; 
     }
+    
 
 protected:    
 	ofxUIWidget *parent; 

@@ -5,7 +5,7 @@ void testApp::setup()
 {
 	ofSetVerticalSync(true); 
 	ofEnableSmoothing(); 
-    ofBackground(0);
+    ofBackground(100);
 	
 	float dim = 16; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 

@@ -120,6 +120,9 @@
 		F52CD4E0153CC2FD00635309 /* ofxUIToggleMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIToggleMatrix.h; sourceTree = "<group>"; };
 		F52CD4E1153CC2FD00635309 /* ofxUIWaveform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWaveform.h; sourceTree = "<group>"; };
 		F52CD4E2153CC2FD00635309 /* ofxUIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIWidget.h; sourceTree = "<group>"; };
+		F5641C63156D6B1F00D9025E /* ofxUIImageSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIImageSlider.h; sourceTree = "<group>"; };
+		F5641C64156D6E5D00D9025E /* ofxUIMultiImageToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIMultiImageToggle.h; sourceTree = "<group>"; };
+		F5641C65156D6E5D00D9025E /* ofxUIMultiImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIMultiImageButton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +268,8 @@
 		F52CD4C2153CC2FD00635309 /* ofxUI */ = {
 			isa = PBXGroup;
 			children = (
+				F5641C64156D6E5D00D9025E /* ofxUIMultiImageToggle.h */,
+				F5641C65156D6E5D00D9025E /* ofxUIMultiImageButton.h */,
 				F52CD4C3153CC2FD00635309 /* ofxUI.h */,
 				F52CD4C4153CC2FD00635309 /* ofxUI2DPad.h */,
 				F52CD4C5153CC2FD00635309 /* ofxUIBiLabelSlider.h */,
@@ -290,6 +295,7 @@
 				F52CD4D9153CC2FD00635309 /* ofxUIRectangle.h */,
 				F52CD4DA153CC2FD00635309 /* ofxUIRotarySlider.h */,
 				F52CD4DB153CC2FD00635309 /* ofxUISlider.h */,
+				F5641C63156D6B1F00D9025E /* ofxUIImageSlider.h */,
 				F52CD4DC153CC2FD00635309 /* ofxUISpacer.h */,
 				F52CD4DD153CC2FD00635309 /* ofxUISpectrum.h */,
 				F52CD4DE153CC2FD00635309 /* ofxUITextInput.h */,

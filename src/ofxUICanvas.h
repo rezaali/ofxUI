@@ -46,7 +46,7 @@ public:
 			ofxUIWidget *w = widgets[i]; 
 			delete w; 
 		}
-		widgets.clear(); 
+		widgets.clear();             
     }
     
     ofxUICanvas(float x, float y, float w, float h) 
@@ -160,6 +160,9 @@ public:
     {
         int kind = widget->getKind();        
         switch (kind) {
+            case OFX_UI_WIDGET_IMAGETOGGLE:    
+            case OFX_UI_WIDGET_MULTIIMAGETOGGLE: 
+            case OFX_UI_WIDGET_LABELTOGGLE:                
             case OFX_UI_WIDGET_TOGGLE:
             {
                 ofxUIToggle *toggle = (ofxUIToggle *) widget; 
@@ -167,6 +170,10 @@ public:
             }
                 break;
                 
+            case OFX_UI_WIDGET_MULTIIMAGESLIDER_H:
+            case OFX_UI_WIDGET_MULTIIMAGESLIDER_V:                                 
+            case OFX_UI_WIDGET_IMAGESLIDER_H:
+            case OFX_UI_WIDGET_IMAGESLIDER_V:
             case OFX_UI_WIDGET_BILABELSLIDER:
             case OFX_UI_WIDGET_CIRCLESLIDER:
             case OFX_UI_WIDGET_MINIMALSLIDER:                
@@ -208,21 +215,7 @@ public:
                 XML->setValue("Value", textInput->getTextString(), 0);                 
             }
                 break;
-                
-            case OFX_UI_WIDGET_LABELTOGGLE:
-            {
-                ofxUILabelToggle *ltoggle = (ofxUILabelToggle *) widget; 
-                XML->setValue("Value", (ltoggle->getValue() ? 1 : 0), 0);                
-            }
-                break;
-
-            case OFX_UI_WIDGET_IMAGETOGGLE:
-            {
-                ofxUIImageToggle *itoggle = (ofxUIImageToggle *) widget; 
-                XML->setValue("Value", (itoggle->getValue() ? 1 : 0), 0);                
-            }
-                break;
-                
+                                
             case OFX_UI_WIDGET_ROTARYSLIDER:
             {
                 ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
@@ -273,6 +266,9 @@ public:
         int kind = widget->getKind();        
         switch (kind) 
         {
+            case OFX_UI_WIDGET_IMAGETOGGLE:    
+            case OFX_UI_WIDGET_MULTIIMAGETOGGLE: 
+            case OFX_UI_WIDGET_LABELTOGGLE:                
             case OFX_UI_WIDGET_TOGGLE:
             {
                 ofxUIToggle *toggle = (ofxUIToggle *) widget; 
@@ -280,7 +276,11 @@ public:
                 toggle->setValue((value ? 1 : 0)); 
             }
                 break;
-                
+
+            case OFX_UI_WIDGET_MULTIIMAGESLIDER_H:
+            case OFX_UI_WIDGET_MULTIIMAGESLIDER_V:                 
+            case OFX_UI_WIDGET_IMAGESLIDER_H:
+            case OFX_UI_WIDGET_IMAGESLIDER_V:                
             case OFX_UI_WIDGET_BILABELSLIDER:    
             case OFX_UI_WIDGET_CIRCLESLIDER:               
             case OFX_UI_WIDGET_MINIMALSLIDER:
@@ -327,23 +327,7 @@ public:
                 string value = XML->getValue("Value", textInput->getTextString(), 0);             
                 textInput->setTextString(value); 
             }
-                break;
-                
-            case OFX_UI_WIDGET_LABELTOGGLE:
-            {
-                ofxUILabelToggle *ltoggle = (ofxUILabelToggle *) widget; 
-                int value = XML->getValue("Value", (ltoggle->getValue() ? 1 : 0), 0);                         
-                ltoggle->setValue((value ? 1 : 0)); 
-            }
-                break;
-                
-            case OFX_UI_WIDGET_IMAGETOGGLE:
-            {
-                ofxUIImageToggle *itoggle = (ofxUIImageToggle *) widget; 
-                int value = XML->getValue("Value", (itoggle->getValue() ? 1 : 0), 0);                        
-                itoggle->setValue((value ? 1 : 0)); 
-            }
-                break;
+                break;                
                 
             case OFX_UI_WIDGET_ROTARYSLIDER:
             {
@@ -480,29 +464,35 @@ public:
 	
 	void enable()
 	{
-		enabled = true; 
-        enableAppEventCallbacks();        
-#ifdef TARGET_OPENGLES
-        enableTouchEventCallbacks();
-#else
-        enableMouseEventCallbacks();
-        enableWindowEventCallbacks(); 
-#endif
-        enableKeyEventCallbacks();
+        if(!isEnabled())
+        {            
+            enabled = true; 
+            enableAppEventCallbacks();        
+    #ifdef TARGET_OPENGLES
+            enableTouchEventCallbacks();
+    #else
+            enableMouseEventCallbacks();
+            enableWindowEventCallbacks(); 
+    #endif
+            enableKeyEventCallbacks();
+        }
 	}
 	
 	void disable()
 	{
-		enabled = false; 
-        disableAppEventCallbacks();        
-#ifdef TARGET_OPENGLES
-        disableTouchEventCallbacks();
-#else
-        disableMouseEventCallbacks();
-        disableWindowEventCallbacks();
-#endif
-        disableKeyEventCallbacks();
-	}
+        if(isEnabled())
+        {                    
+            enabled = false; 
+            disableAppEventCallbacks();        
+    #ifdef TARGET_OPENGLES
+            disableTouchEventCallbacks();
+    #else
+            disableMouseEventCallbacks();
+            disableWindowEventCallbacks();
+    #endif
+            disableKeyEventCallbacks();
+        }
+    }
 	
 	//App Callbacks
     void enableAppEventCallbacks()
@@ -1018,16 +1008,16 @@ public:
                 break; 
             }
         }
-        
+        vector<ofxUIWidget *>::iterator wit;
         //for all the widgets 
-        for(int i = 0; i < widgets.size(); i++)
+        for(wit=widgets.begin(); wit != widgets.end(); wit++)
         {
-            ofxUIWidget *other = (ofxUIWidget *)widgets[i]; 
+            ofxUIWidget *other = *wit;
 //            cout << other->getName() << endl;                     
             if(widget->getName() == other->getName())
             {
 //                cout << "FOUND IT\t" << other->getName() << " " << widget->getName() << endl; 
-                widgets.erase(widgets.begin()+i);                             
+                widgets.erase(wit);                             
                 break; 
             }
         }
@@ -1045,12 +1035,19 @@ public:
 
     void addWidget(ofxUIWidget *widget)
 	{
-		if(widget->getKind() == OFX_UI_WIDGET_LABEL)
+//        if(widget->hasLabel())
+//        {
+//            ofxUIWidgetWithLabel *widgetWithLabel = (ofxUIWidgetWithLabel *) widget; 
+//            ofxUILabel *label = widgetWithLabel->getLabelWidget();
+//            setLabelFont(label);
+//        }
+//		else 
+        if(widget->getKind() == OFX_UI_WIDGET_LABEL)
 		{
 			ofxUILabel *label = (ofxUILabel *) widget;
 			setLabelFont(label); 
 		}
-		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER)
+		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)           
 		{
 			ofxUISlider *slider = (ofxUISlider *) widget;
 			ofxUILabel *label = (ofxUILabel *) slider->getLabel();
@@ -1110,13 +1107,13 @@ public:
             
             widgetsWithState.push_back(widget);                         
 		}		
-		else if(widget->getKind() == OFX_UI_WIDGET_BUTTON || widget->getKind() ==  OFX_UI_WIDGET_LABELBUTTON || widget->getKind() == OFX_UI_WIDGET_LABELTOGGLE)
+		else if(widget->getKind() == OFX_UI_WIDGET_BUTTON || widget->getKind() ==  OFX_UI_WIDGET_LABELBUTTON || widget->getKind() == OFX_UI_WIDGET_LABELTOGGLE || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGEBUTTON || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGETOGGLE || widget->getKind() == OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
 		{
 			ofxUIButton *button = (ofxUIButton *) widget;
 			ofxUILabel *label = (ofxUILabel *) button->getLabel();
 			setLabelFont(label); 			
 			pushbackWidget(label); 		
-            if(widget->getKind() != OFX_UI_WIDGET_BUTTON && widget->getKind() != OFX_UI_WIDGET_LABELBUTTON)
+            if(widget->getKind() != OFX_UI_WIDGET_BUTTON && widget->getKind() != OFX_UI_WIDGET_LABELBUTTON && widget->getKind() != OFX_UI_WIDGET_MULTIIMAGEBUTTON && widget->getKind() != OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
             {
                 widgetsWithState.push_back(widget);                         
             }
@@ -1222,9 +1219,9 @@ public:
 		pushbackWidget(widget); 	
 	}
     
-	ofxUIWidget* addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
+	ofxUIWidget* addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
 	{
-		addWidget(widget); 
+        if(!reAdd) addWidget(widget); 
         ofxUIRectangle *widgetRect = widget->getRect();         
 		if(lastAdded != NULL)
 		{
@@ -1251,9 +1248,9 @@ public:
 		return widget;
 	}
     
-	ofxUIWidget* addWidgetUp(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT)
+	ofxUIWidget* addWidgetUp(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
 	{
-		addWidget(widget); 
+        if(!reAdd) addWidget(widget); 
         ofxUIRectangle *widgetRect = widget->getRect();                 
 		if(lastAdded != NULL)
 		{
@@ -1281,9 +1278,9 @@ public:
 		return widget;
 	}    
     
-	ofxUIWidget* addWidgetRight(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE)
+	ofxUIWidget* addWidgetRight(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
 	{
-		addWidget(widget); 	
+        if(!reAdd) addWidget(widget); 
         ofxUIRectangle *widgetRect = widget->getRect();                         
 		if(lastAdded != NULL)
 		{
@@ -1309,14 +1306,20 @@ public:
             case OFX_UI_ALIGN_RIGHT: 
                 widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing; 
                 break;                     
+            case OFX_UI_ALIGN_TOP: 
+                widgetRect->y = widgetSpacing;                         
+                break;                     
+            case OFX_UI_ALIGN_BOTTOM: 
+                widgetRect->y = rect->getHeight()-widgetRect->getHeight()-widgetSpacing; 
+                break;                                     
         }                  
         lastAdded = widget; 
         return widget; 	
 	}
     
-  ofxUIWidget* addWidgetLeft(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE)
+    ofxUIWidget* addWidgetLeft(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
 	{
-		addWidget(widget); 	        
+        if(!reAdd) addWidget(widget);     
         ofxUIRectangle *widgetRect = widget->getRect(); 
 		if(lastAdded != NULL)
 		{
@@ -1342,15 +1345,21 @@ public:
                 break; 
             case OFX_UI_ALIGN_RIGHT: 
                 widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing; 
+                break;        
+            case OFX_UI_ALIGN_TOP: 
+                widgetRect->y = widgetSpacing;                         
                 break;                     
+            case OFX_UI_ALIGN_BOTTOM: 
+                widgetRect->y = rect->getHeight()-widgetRect->getHeight()-widgetSpacing; 
+                break;                                                     
         }                          
         lastAdded = widget;  	
         return widget;
 	}    
     
-    ofxUIWidget* addWidgetSouthOf(ofxUIWidget *widget, string referenceName)
-    {
-        addWidget(widget); 	
+    ofxUIWidget* addWidgetSouthOf(ofxUIWidget *widget, string referenceName, bool reAdd = false)
+	{
+        if(!reAdd) addWidget(widget); 
         ofxUIWidget *referenceWidget = getWidget(referenceName);
 		if(referenceWidget != NULL)
 		{
@@ -1370,9 +1379,9 @@ public:
         return widget;
     }    
     
-    ofxUIWidget* addWidgetNorthOf(ofxUIWidget *widget, string referenceName)
-    {
-        addWidget(widget); 	
+    ofxUIWidget* addWidgetNorthOf(ofxUIWidget *widget, string referenceName, bool reAdd = false)
+	{
+        if(!reAdd) addWidget(widget); 
         ofxUIWidget *referenceWidget = getWidget(referenceName);
 		if(referenceWidget != NULL)
 		{
@@ -1393,9 +1402,9 @@ public:
         return widget;
     }      
     
-    ofxUIWidget* addWidgetWestOf(ofxUIWidget *widget, string referenceName)
-    {
-		addWidget(widget); 	        
+    ofxUIWidget* addWidgetWestOf(ofxUIWidget *widget, string referenceName, bool reAdd = false)
+	{
+        if(!reAdd) addWidget(widget);      
         ofxUIWidget *referenceWidget = getWidget(referenceName);
 		if(referenceWidget != NULL)
 		{
@@ -1416,9 +1425,9 @@ public:
         return widget;
     }        
     
-    ofxUIWidget* addWidgetEastOf(ofxUIWidget *widget, string referenceName)
-    {
-		addWidget(widget); 	        
+    ofxUIWidget* addWidgetEastOf(ofxUIWidget *widget, string referenceName, bool reAdd = false)
+	{
+        if(!reAdd) addWidget(widget);     
         ofxUIWidget *referenceWidget = getWidget(referenceName);
 		if(referenceWidget != NULL)
 		{
@@ -1662,7 +1671,7 @@ protected:
             {
                 case OFX_UI_TEXTINPUT_ON_FOCUS:
                 {
-                    hasKeyBoard = true; 
+                    hasKeyBoard = true;         
                 }
                     break; 
                     

@@ -83,7 +83,14 @@ enum ofxWidgetType
     OFX_UI_WIDGET_BILABELSLIDER = 26,
     OFX_UI_WIDGET_CIRCLESLIDER = 27, 
     OFX_UI_WIDGET_IMAGESAMPLER = 28,
-	OFX_UI_WIDGET_SCROLLABLECANVAS = 29
+	OFX_UI_WIDGET_SCROLLABLECANVAS = 29, 
+    OFX_UI_WIDGET_MULTIIMAGEBUTTON = 30,
+    OFX_UI_WIDGET_MULTIIMAGETOGGLE = 31,
+    OFX_UI_WIDGET_MULTIIMAGESLIDER_H = 32,
+    OFX_UI_WIDGET_MULTIIMAGESLIDER_V = 33,
+    OFX_UI_WIDGET_IMAGESLIDER_H = 34,
+    OFX_UI_WIDGET_IMAGESLIDER_V = 35, 
+    OFX_UI_WIDGET_CUSTOMIMAGEBUTTON = 36
 };
 
 enum ofxWidgetOrientation
@@ -104,7 +111,9 @@ enum ofxWidgetAlignment
 {
 	OFX_UI_ALIGN_LEFT = 0,
 	OFX_UI_ALIGN_FREE = 1,
-	OFX_UI_ALIGN_RIGHT = 2    
+	OFX_UI_ALIGN_RIGHT = 2,    
+    OFX_UI_ALIGN_TOP = 3, 
+    OFX_UI_ALIGN_BOTTOM = 4
 };
 
 enum ofxWidgetFontType 
@@ -146,6 +155,8 @@ enum ofxWidgetColorType
 #include "ofxUILabel.h"
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
+#include "ofxUIMultiImageSlider.h"
+#include "ofxUIImageSlider.h"
 #include "ofxUIFPSSlider.h"
 #include "ofxUIMinimalSlider.h"
 #include "ofxUICircleSlider.h"
@@ -153,6 +164,9 @@ enum ofxWidgetColorType
 #include "ofxUIRangeSlider.h"
 #include "ofxUIToggle.h"
 #include "ofxUIButton.h"
+#include "ofxUICustomImageButton.h"
+#include "ofxUIMultiImageButton.h"
+#include "ofxUIMultiImageToggle.h"
 #include "ofxUIRadio.h"
 #include "ofxUI2DPad.h"
 #include "ofxUITextInput.h"
@@ -172,6 +186,5 @@ enum ofxWidgetColorType
 #include "ofxUIImageSampler.h"
 #include "ofxUICanvas.h"
 #include "ofxUIScrollableCanvas.h"
-
 
 #endif

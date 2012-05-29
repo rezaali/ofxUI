@@ -45,7 +45,10 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUI2DPad(length-xInit,80, ofPoint((length-xInit)*.5,80*.5), "PAD")); 	
     gui->addWidgetDown(new ofxUISpacer(length-xInit, 1));     
 	gui->addWidgetDown(new ofxUILabel("CIRCLE SLIDER", OFX_UI_FONT_MEDIUM)); 
-	gui->addWidgetDown(new ofxUICircleSlider(dim*5, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
+	gui->addWidgetDown(new ofxUICircleSlider(dim*2, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUISpacer(length-xInit, 1));     
+	gui->addWidgetDown(new ofxUILabel("IMAGE SLIDER", OFX_UI_FONT_MEDIUM)); 
+    gui->addWidgetDown(new ofxUIImageSlider(length-xInit, dim, 0.0, 255.0, red, "slider.png", "RED"));     
 
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
