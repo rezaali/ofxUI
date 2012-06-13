@@ -91,7 +91,10 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect);         
         label->setEmbedded(true);
-        increment = 1.0; 
+        
+        float horizontalRange = abs(rangeX.x - rangeX.y);
+        float verticalRange = abs(rangeY.x - rangeY.y);
+        increment = MIN(horizontalRange, verticalRange) / 10.0;
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
