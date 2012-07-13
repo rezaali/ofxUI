@@ -91,7 +91,7 @@ public:
 		enable_highlight_fill = false; 
         
 		GUIevent = new ofxUIEventArgs(this); 
-        
+
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect);
         
@@ -1481,6 +1481,44 @@ public:
 		ofNotifyEvent(newGUIEvent,*GUIevent,this);		
 	}
 	    
+    void setUIColors(ofColor &cb, ofColor &co, ofColor &coh, ofColor &cf, ofColor &cfh, ofColor &cp, ofColor &cpo)
+    {
+        setWidgetColor(OFX_UI_WIDGET_COLOR_BACK, cb);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_OUTLINE, co);                
+        setWidgetColor(OFX_UI_WIDGET_COLOR_OUTLINE_HIGHLIGHT, coh);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_FILL, cf);                
+        setWidgetColor(OFX_UI_WIDGET_COLOR_FILL_HIGHLIGHT, cfh);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_PADDED, cp);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_PADDED_OUTLINE, cpo);
+        
+        setColorBack(cb);
+        setColorOutline(co);
+        setColorOutlineHighlight(coh);
+        setColorFill(cf);
+        setColorFillHighlight(cfh);
+        setColorPadded(cp);
+        setColorPaddedOutline(cpo); 
+    }
+    
+    void setTheme(ofxUIThemeType theme)
+    {
+        switch(theme)
+        {
+            case OFX_UI_THEME_MINIMAL:
+            {
+                ofColor cb = OFX_UI_COLOR_BACK; 
+                ofColor co = OFX_UI_COLOR_OUTLINE; 
+                ofColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
+                ofColor cf = OFX_UI_COLOR_FILL; 
+                ofColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
+                ofColor cp = OFX_UI_COLOR_PADDED;
+                ofColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;                          
+        }
+    }
+    
 	void setWidgetColor(int _target, ofColor _color)
 	{
 		switch (_target) 
@@ -1546,7 +1584,11 @@ public:
 	
     void removeWidget(string _name)    
     {
-        //To Implement
+        ofxUIWidget *w = widgets_map[_name];
+        if(w != NULL)
+        {
+            removeWidget(w);
+        }
     }
     
 	void setDrawPadding(bool _draw_padded_rect)

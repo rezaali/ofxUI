@@ -135,6 +135,23 @@ enum ofxWidgetColorType
     
 }; 
 
+enum ofxUIThemeType
+{
+    OFX_UI_THEME_MINIMAL = 0, 
+    OFX_UI_THEME_HIPSTER = 1,
+    OFX_UI_THEME_STEALTH = 2, 
+    OFX_UI_THEME_HACKER = 3,  
+    OFX_UI_THEME_DIETER = 4,
+    OFX_UI_THEME_BARBIE = 5, 
+    OFX_UI_THEME_WINDOWS = 6,
+    OFX_UI_THEME_MACOSX = 7,
+    OFX_UI_THEME_ZOOLANDER = 8,
+    OFX_UI_THEME_VEGAN = 9,
+    OFX_UI_THEME_BERLIN = 10,
+    OFX_UI_THEME_ELEVEN = 11
+};
+
+
 //#ifdef TARGET_ANDROID
 //#define OFX_UI_FONT_NAME "newmediafett.ttf"
 //#else

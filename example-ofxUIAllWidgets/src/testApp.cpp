@@ -15,6 +15,11 @@ void testApp::setup()
     gui2->setDrawBack(false);
     gui3->setDrawBack(false);
     gui4->setDrawBack(false);    
+
+//    gui1->setDrawBack(true);
+//    gui2->setDrawBack(true);
+//    gui3->setDrawBack(true);
+//    gui4->setDrawBack(true);    
     
 //    gui1->setDrawPadding(false);
 //    gui2->setDrawPadding(false);
@@ -114,6 +119,7 @@ void testApp::exit()
 	delete gui1; 
 	delete gui2; 
     delete gui3; 
+    delete gui4; 
 	delete[] buffer; 
     delete img; 
 }
