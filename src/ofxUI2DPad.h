@@ -80,11 +80,11 @@ public:
 		
 		if(value.y > 1)
 		{
-			value = 1; 
+			value.y = 1; 
 		}
 		else if(value.y < 0)
 		{
-			value = 0; 
+			value.y = 0; 
 		}
 		
 		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue().x,2) + ", " + ofToString(getScaledValue().y,2)), OFX_UI_FONT_SMALL); 		
@@ -362,11 +362,11 @@ public:
 		
 		if(_value.y > rangeY.y)
 		{
-			_value = rangeY.y; 
+			_value.y = rangeY.y; 
 		}
 		else if(_value.y < rangeY.x)
 		{
-			_value = rangeY.x; 
+			_value.y = rangeY.x; 
 		}
 		                        
         value.x = ofMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0);
