@@ -75,6 +75,7 @@ public:
         allowMultiple = false; 
         initToggles(items, _size);         
         autoClose = false; 
+        singleSelected = NULL; 
     }
 
     void clearToggles()
@@ -275,13 +276,13 @@ public:
     
     void open()
     {
-        value = true; 
+        setValue(true); 
         setToggleVisibility(value); 
     }
     
     void close()
     {
-        value = false; 
+        setValue(false); 
         setToggleVisibility(value); 
     }
     
@@ -311,6 +312,14 @@ public:
 		return toggles; 
 	}
 
+    void triggerSelf()
+    {
+		if(parent != NULL)
+		{
+			parent->triggerEvent(singleSelected); 
+		}        
+    }
+    
     void triggerEvent(ofxUIWidget *child)
 	{        
         if(child == this)
@@ -356,7 +365,8 @@ public:
 			ofxUILabelToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
 			{
-				t->setValue(true); 					
+				t->setValue(true); 		
+                singleSelected = t; 
 			}
 			else 
 			{
@@ -379,6 +389,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     bool autoSize; 
     bool autoClose; 
     vector<ofxUILabelToggle *> toggles; 
+    ofxUILabelToggle *singleSelected; 
     vector<ofxUIWidget *> selected; 
     bool allowMultiple; 
     int size;     

@@ -30,19 +30,44 @@
 class ofxUIRangeSlider : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name)
+    ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;                                 
         rect = new ofxUIRectangle(x,y,w,h); 	        
-        init(w, h, _min, _max, _valuelow, _valuehigh, _name); 
+        init(w, h, _min, _max, &_valuelow, &_valuehigh, _name, _size); 
     }
     
-    ofxUIRangeSlider(float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name)
+    ofxUIRangeSlider(float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;                                 
         rect = new ofxUIRectangle(0,0,w,h); 	        
-        init(w, h, _min, _max, _valuelow, _valuehigh, _name); 
+        init(w, h, _min, _max, &_valuelow, &_valuehigh, _name, _size); 
     }
     
-    void init(float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name)
+    ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;                         
+        rect = new ofxUIRectangle(x,y,w,h); 	        
+        init(w, h, _min, _max, _valuelow, _valuehigh, _name, _size); 
+    }
+    
+    ofxUIRangeSlider(float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;                                 
+        rect = new ofxUIRectangle(0,0,w,h); 	        
+        init(w, h, _min, _max, _valuelow, _valuehigh, _name, _size); 
+    }
+    
+    ~ofxUIRangeSlider()    
+    {
+        if(!useReference)
+        {
+            delete valuelowRef; 
+            delete valuehighRef;             
+        }        
+    }
+    
+    void init(float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size)
     {
         name = _name; 				
 		if(w > h)
@@ -59,8 +84,21 @@ public:
 		
         draw_fill = true; 
         
-        valuelow = _valuelow;                                               //the widget's value
-        valuehigh = _valuehigh;                                               //the widget's value		
+        valuelow = *_valuelow;                                                  //the widget's value
+        valuehigh = *_valuehigh;                                                //the widget's value		
+        
+        if(useReference)
+        {
+            valuelowRef = _valuelow;                                               
+            valuehighRef = _valuehigh;                                                         
+        }
+        else
+        {
+            valuelowRef = new float(); 
+            valuehighRef = new float();             
+            *valuelowRef = valuelow;                                               
+            *valuehighRef = valuehigh;                                                         
+        }
 		
 		max = _max; 
 		min = _min; 
@@ -91,11 +129,11 @@ public:
 		
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValueLow(),2) + " " + ofToString(getScaledValueHigh(),2)), OFX_UI_FONT_SMALL); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)), _size); 
 		}
 		else 
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), name, OFX_UI_FONT_SMALL); 	
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), name, _size); 	
 		}
 		
 		label->setParent(label); 
@@ -103,6 +141,15 @@ public:
         label->setEmbedded(true);
         
         increment = 0.01; 	
+    }
+    
+    virtual void update()
+    {
+        if(useReference)
+        {
+            valuelow = ofMap(*valuelowRef, min, max, 0.0, 1.0, true); 
+            valuehigh = ofMap(*valuehighRef, min, max, 0.0, 1.0, true);         
+        }
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -150,8 +197,8 @@ public:
 			}	
 			if(kind == OFX_UI_WIDGET_RSLIDER_V)
 			{
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuehigh, ofToString(getScaledValueHigh(),2)); 
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuelow, ofToString(getScaledValueLow(),2)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuehigh, ofToString(getScaledValueHigh(),labelPrecision)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuelow, ofToString(getScaledValueLow(),labelPrecision)); 
 			}
         }      
     }
@@ -358,15 +405,22 @@ public:
         {
             valuelow = 1.0; 
         }
-        
+
+        updateValueRef(); 
 		updateLabel(); 
 	}
 	
+    void updateValueRef()
+    {
+        (*valuelowRef) = getScaledValueLow();  
+        (*valuehighRef) = getScaledValueHigh();          
+    }
+
 	void updateLabel()
 	{
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
-			label->setLabel(name + ": " + ofToString(getScaledValueLow(),2) + " " + ofToString(getScaledValueHigh(),2)); 		
+			label->setLabel(name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)); 		
 		}		
 	}
 	
@@ -425,12 +479,14 @@ public:
 	void setValueLow(float _value)
 	{			
 		valuelow = ofMap(_value, min, max, 0.0, 1.0, true); 
+        updateValueRef(); 
 		updateLabel(); 		
 	}
 
 	void setValueHigh(float _value)
 	{
 		valuehigh = ofMap(_value, min, max, 0.0, 1.0, true); 
+        updateValueRef(); 
 		updateLabel(); 		
 	}
 	
@@ -464,6 +520,13 @@ public:
         label->setVisible(_labelVisible);
     }
 	
+    void setLabelPrecision(int _precision) 
+    {
+        labelPrecision = _precision;
+        updateValueRef();
+        updateLabel();
+    }
+    
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
@@ -497,7 +560,7 @@ public:
 
 		valuehigh = ofMap(valuehigh, 0, 1.0, min, max, true);         
 		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
-        
+        updateValueRef();        
         updateLabel(); 
     }
 
@@ -509,10 +572,14 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float valuelow, valuehigh, increment; 
+    float *valuelowRef; 
+    float *valuehighRef;    
+    bool useReference;         
     float hitValueLow, hitValueHigh; 
 	bool hitHigh, hitLow, hitCenter; 
 	float hitPoint; 
 	float max, min; 
+    int labelPrecision;        
 }; 
 
 #endif

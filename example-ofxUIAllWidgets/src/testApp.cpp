@@ -430,7 +430,7 @@ void testApp::setGUI4()
     gui4->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50, "BILABEL", "HOT", "COLD", OFX_UI_FONT_MEDIUM));
 
     gui4->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 				
-    gui4->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0, 100, 50, "MINIMAL",OFX_UI_FONT_MEDIUM));
+    gui4->addWidgetDown(new ofxUIMinimalSlider(length-xInit, dim, 0, 100, 50.0, "MINIMAL",OFX_UI_FONT_MEDIUM));
 
     gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));                 
     
@@ -439,7 +439,7 @@ void testApp::setGUI4()
     
     gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
     gui4->addWidgetDown(new ofxUILabel("FPS SLIDER", OFX_UI_FONT_MEDIUM)); 				
-    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0, 400, 0, "FPS SLIDER"));
+    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0.0, 400, 0.0, "FPS SLIDER"));
 
     vector<float> buffer; 
     for(int i = 0; i < 256; i++)

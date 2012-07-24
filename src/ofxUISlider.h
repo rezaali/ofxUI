@@ -34,17 +34,41 @@ public:
     
     ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
     {
+        useReference = false;         
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, _value, _name); 		
+        init(w, h, _min, _max, &_value, _name); 		
     }
     
     ofxUISlider(float w, float h, float _min, float _max, float _value, string _name)
     {
+        useReference = false;         
         rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, _value, _name); 
+        init(w, h, _min, _max, &_value, _name); 
     }    
     
-    virtual void init(float w, float h, float _min, float _max, float _value, string _name)
+    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true; 
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, _min, _max, _value, _name); 		
+    }
+    
+    ofxUISlider(float w, float h, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true; 
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _min, _max, _value, _name); 
+    }        
+    
+    ~ofxUISlider()
+    {
+        if(!useReference)
+        {
+            delete valueRef; 
+        }
+    }   
+    
+    virtual void init(float w, float h, float _min, float _max, float *_value, string _name)
     {
         name = _name; 				
 		if(w > h)
@@ -61,7 +85,17 @@ public:
         
         draw_fill = true; 
         
-        value = _value;                                               //the widget's value
+        value = *_value;                                               //the widget's value
+        if(useReference)
+        {
+            valueRef = _value; 
+        }
+        else
+        {
+            valueRef = new float(); 
+            *valueRef = value; 
+        }
+
 		max = _max; 
 		min = _min; 
         labelPrecision = 2;
@@ -89,7 +123,15 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect); 
         label->setEmbedded(true);
-        increment = 1.0;         
+        increment = .10;         
+    }
+    
+    virtual void update()
+    {
+        if(useReference)
+        {
+            value = ofMap(*valueRef, min, max, 0.0, 1.0, true);
+        }
     }
 
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -307,9 +349,14 @@ public:
         {
             value = 0.0;
         }        
-
+        updateValueRef();        
 		updateLabel(); 
 	}
+    
+    void updateValueRef()
+    {
+        (*valueRef) = getScaledValue();  
+    }    
 
 	virtual void updateLabel()
 	{
@@ -359,6 +406,7 @@ public:
 	void setValue(float _value)
 	{
 		value = ofMap(_value, min, max, 0.0, 1.0, true);		
+        updateValueRef();        
 		updateLabel(); 		
 	}
 		
@@ -401,11 +449,13 @@ public:
         {
             paddedRect->width = label->getPaddingRect()->width;				
         }
+        updateValueRef();                
         updateLabel(); 
 	}
 	
     void setLabelPrecision(int _precision) {
         labelPrecision = _precision;
+        updateValueRef();        
         updateLabel();
     }
     
@@ -441,6 +491,7 @@ public:
 		
 		value = ofMap(value, 0, 1.0, min, max, true);         
 		value = ofMap(value, min, max, 0.0, 1.0, true); 
+        updateValueRef();        
         updateLabel(); 
     }
 
@@ -451,6 +502,8 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 
+    float *valueRef; 
+    bool useReference;     
 	float max, min;  
     int labelPrecision;
 }; 

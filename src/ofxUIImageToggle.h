@@ -32,17 +32,35 @@ class ofxUIImageToggle : public ofxUIImageButton
 public:
     ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name)
     {
+        useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _pathURL, _name);         
+        init(w, h, &_value, _pathURL, _name);         
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }
 
     ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name)
     {
+        useReference = false; 
         rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, &_value, _pathURL, _name);         
+		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
+    }
+    
+    ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name)
+    {
+        useReference = true;         
+        rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _value, _pathURL, _name);         
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }
+    
+    ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name)
+    {
+        useReference = true;                 
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _value, _pathURL, _name);         
+		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
+    }    
 
     void mouseMoved(int x, int y ) 
     {
@@ -88,7 +106,7 @@ public:
     {
         if(rect->inside(x, y) && hit)
         {
-            setValue(!value); 
+            setValue(!(*value)); 
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            

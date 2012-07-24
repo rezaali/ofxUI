@@ -33,30 +33,64 @@ class ofxUINumberDialer : public ofxUIWidgetWithLabel
 public:
     ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size)
     {
+        useReference = false;                                 
         rect = new ofxUIRectangle(x,y,0,0); 
-        init(_min, _max, _value, _precision, _name, _size); 
+        init(_min, _max, &_value, _precision, _name, _size); 
     }
     
     ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size)
     {
+        useReference = false;                                 
+        rect = new ofxUIRectangle(0,0,0,0); 
+        init(_min, _max, &_value, _precision, _name, _size); 
+    }    
+    
+    ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size)
+    {
+        useReference = true;                                         
+        rect = new ofxUIRectangle(x,y,0,0); 
+        init(_min, _max, _value, _precision, _name, _size); 
+    }
+    
+    ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size)
+    {
+        useReference = true;                                  
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_min, _max, _value, _precision, _name, _size); 
     }    
     
-    void init(float _min, float _max, float _value, int _precision, string _name, int _size)
+    ~ofxUINumberDialer()
+    {
+        if(!useReference)
+        {
+            delete value; 
+        }        
+    }
+    
+    void init(float _min, float _max, float *_value, int _precision, string _name, int _size)
     {
 		name = _name; 		
 		kind = OFX_UI_WIDGET_NUMBERDIALER;  		
-        value = _value; 
+        
+        if(useReference)
+        {
+            value = _value; 
+        }
+        else
+        {
+            value = new float(); 
+            *value = (*_value); 
+        }
+        
         max = _max; 
         min = _min; 
-        if(value > max)
+        if(*value > max)
         {
-            value = max;             
+            *value = max;             
         }
-        else if(value < min)
+        else if(*value < min)
         {
-            value = min; 
+            *value = min; 
         }
         precision = _precision; 
         
@@ -89,6 +123,14 @@ public:
         label->setEmbedded(true);        
     }
     
+    virtual void update()
+    {
+        if(useReference)
+        {            
+            setTextString(ofToString(*value, precision));                      
+        }
+    }    
+    
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
@@ -103,7 +145,7 @@ public:
 	
     float getValue()
     {
-        return value; 
+        return *value; 
     }
     
     void setValue(float _value)
@@ -116,8 +158,8 @@ public:
         {
             _value = min; 
         }            
-        value = _value; 
-        setTextString(ofToString(value, precision));         
+        *value = _value; 
+        setTextString(ofToString(*value, precision));         
     }
     
     void mouseMoved(int x, int y ) 
@@ -137,17 +179,17 @@ public:
     {
         if(hit)
         {            
-            value += zoneMultiplier*(hitPoint.y-y); 
-            if(value > max)
+            *value += zoneMultiplier*(hitPoint.y-y); 
+            if(*value > max)
             {
-                value = max;             
+                *value = max;             
             }
-            else if(value < min)
+            else if(*value < min)
             {
-                value = min; 
-            }            
+                *value = min; 
+            }                  
             hitPoint = ofPoint(x,y); 
-            setTextString(ofToString(value, precision));     
+            setTextString(ofToString(*value, precision));     
 			triggerEvent(this);             
             state = OFX_UI_STATE_DOWN;         
         }    
@@ -197,7 +239,74 @@ public:
 	
     void keyPressed(int key) 
     {
-    
+        if(state == OFX_UI_STATE_OVER)
+        {
+            switch (key) 
+            {
+                case OF_KEY_RIGHT:
+                    *value += zoneMultiplier; 
+                    if(*value > max)
+                    {
+                        *value = max;             
+                    }
+                    else if(*value < min)
+                    {
+                        *value = min; 
+                    }            
+                    
+                    setTextString(ofToString(*value, precision));     
+                    triggerEvent(this); 
+                    break;
+                    
+                case OF_KEY_UP:
+                    *value += zoneMultiplier; 
+                    if(*value > max)
+                    {
+                        *value = max;             
+                    }
+                    else if(*value < min)
+                    {
+                        *value = min; 
+                    }     
+                    
+                    setTextString(ofToString(*value, precision));     
+                    triggerEvent(this); 
+                    break;
+                    
+                case OF_KEY_LEFT:
+                    *value -= zoneMultiplier; 
+                    if(*value > max)
+                    {
+                        *value = max;             
+                    }
+                    else if(*value < min)
+                    {
+                        *value = min; 
+                    }     
+                    
+                    setTextString(ofToString(*value, precision));     
+                    triggerEvent(this); 
+                    break;
+                    
+                case OF_KEY_DOWN:
+                    *value -= zoneMultiplier; 
+                    if(*value > max)
+                    {
+                        *value = max;             
+                    }
+                    else if(*value < min)
+                    {
+                        *value = min; 
+                    }      
+                    
+                    setTextString(ofToString(*value, precision));     
+                    triggerEvent(this); 
+                    break;					
+                    
+                default:
+                    break;
+            }
+        }    
     }
     
     void keyReleased(int key) 
@@ -289,7 +398,7 @@ public:
  		
 		paddedRect->height = rect->height+padding*2.0; 
 		paddedRect->width = rect->width+padding*2.0;         
-        setTextString(ofToString(value, precision));                     
+        setTextString(ofToString(*value, precision));                             
 	}	
     
     bool isDraggable()
@@ -301,9 +410,10 @@ public:
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	string textstring;  
     string displaystring; 
-
     int precision; 
-	float value, zoneMultiplier; 
+	float zoneMultiplier; 
+	float *value;  
+    bool useReference;     
 	float max, min; 
     ofPoint hitPoint; 
     int numOfPrecisionZones; 

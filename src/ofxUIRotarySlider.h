@@ -32,17 +32,41 @@ class ofxUIRotarySlider : public ofxUIWidgetWithLabel
 public:    
     ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name)
     {
+        useReference = false;           
 		rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, _min, _max, _value, _name); 
+        init(w, _min, _max, &_value, _name); 
     }
     
     ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name)
     {
+        useReference = false;           
 		rect = new ofxUIRectangle(0,0,w,w); 
+        init(w, _min, _max, &_value, _name); 
+    }
+    
+    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true;                         
+		rect = new ofxUIRectangle(x,y,w,w); 
         init(w, _min, _max, _value, _name); 
     }
     
-    void init(float w, float _min, float _max, float _value, string _name)
+    ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true;                         
+		rect = new ofxUIRectangle(0,0,w,w); 
+        init(w, _min, _max, _value, _name); 
+    }    
+    
+    ~ofxUIRotarySlider()
+    {
+        if(!useReference)
+        {
+            delete valueRef; 
+        }        
+    }
+    
+    void init(float w, float _min, float _max, float *_value, string _name)
     {
 		name = _name; 				
         kind = OFX_UI_WIDGET_ROTARYSLIDER;  			
@@ -52,7 +76,17 @@ public:
         
         draw_fill = true; 
         
-        value = _value;                                               //the widget's value
+        value = *_value;                                               //the widget's value
+        if(useReference)
+        {
+            valueRef = _value; 
+        }
+        else
+        {
+            valueRef = new float(); 
+            *valueRef = value; 
+        }
+        
 		max = _max; 
 		min = _min; 
         
@@ -76,6 +110,14 @@ public:
         label->setEmbedded(true);        
 		increment = 0.01;         
     }
+    
+    virtual void update()
+    {
+        if(useReference)
+        {
+            value = ofMap(*valueRef, min, max, 0.0, 1.0, true); 
+        }
+    }    
     
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
@@ -309,8 +351,14 @@ public:
             value = 0.0;
         }        
         
+        updateValueRef();
 		updateLabel(); 
 	}
+    
+    void updateValueRef()
+    {
+        (*valueRef) = getScaledValue();  
+    }
     
 	void updateLabel()
 	{
@@ -373,6 +421,7 @@ public:
 	void setValue(float _value)
 	{
 		value = ofMap(_value, min, max, 0.0, 1.0, true);		
+        updateValueRef();
 		updateLabel(); 		
 	}
     
@@ -411,6 +460,8 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 
+    float *valueRef; 
+    bool useReference;         
 	float max, min; 
     ofPoint center; 
     ofPoint hitPoint; 

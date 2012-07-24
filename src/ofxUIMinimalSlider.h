@@ -30,35 +30,55 @@
 class ofxUIMinimalSlider : public ofxUISlider
 {
 public:
-    ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
+    ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;                                         
         rect = new ofxUIRectangle(x,y,w,h); 
         autoSize = false; 
-        init(w, h, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 		
+        init(w, h, _min, _max, &_value, _name, _size); 		
     }
     
-    ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name)
+    ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;                                         
         rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = false; 
-        init(w, h, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 
+        init(w, h, _min, _max, &_value, _name, _size); 
     }    
-
-    ofxUIMinimalSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size)
+    
+    ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
-        rect = new ofxUIRectangle(x,y,w,0); 
+        useReference = false;                                                 
+        rect = new ofxUIRectangle(0,0,w,0); 
         autoSize = true; 
-        init(w, 0, _min, _max, _value, _name, _size); 		
+        init(w, 0, _min, _max, &_value, _name, _size); 
+    }    
+    
+    ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;                                         
+        rect = new ofxUIRectangle(x,y,w,h); 
+        autoSize = false; 
+        init(w, h, _min, _max, _value, _name, _size); 		
     }
     
-    ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size)
+    ofxUIMinimalSlider(float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = true;                                         
+        rect = new ofxUIRectangle(0,0,w,h); 
+        autoSize = false; 
+        init(w, h, _min, _max, _value, _name, _size); 
+    } 
+    
+    ofxUIMinimalSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;                                                 
         rect = new ofxUIRectangle(0,0,w,0); 
         autoSize = true; 
         init(w, 0, _min, _max, _value, _name, _size); 
-    }    
+    } 
     
-    void init(float w, float h, float _min, float _max, float _value, string _name, int _size)
+    void init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
     {
         name = _name; 				
         kind = OFX_UI_WIDGET_MINIMALSLIDER;
@@ -68,7 +88,18 @@ public:
         
         draw_fill = true; 
         
-        value = _value;                                               //the widget's value
+        value = *_value;                                               //the widget's value
+        
+        if(useReference)
+        {
+            valueRef = _value; 
+        }
+        else
+        {
+            valueRef = new float(); 
+            *valueRef = value; 
+        }
+        
 		max = _max; 
 		min = _min; 
         labelPrecision = 2;
@@ -141,7 +172,7 @@ public:
         {
             value = 0.0;
         }        
-        
+        updateValueRef();        
 		updateLabel(); 
 	}
 
@@ -155,7 +186,7 @@ public:
 	{
 		parent = _parent;         
 		ofxUIRectangle *labelrect = label->getRect(); 
-        while(labelrect->width > rect->width)
+        while(labelrect->getWidth() > rect->getWidth())
         {
             string labelstring = label->getLabel();
             string::iterator it;
@@ -164,19 +195,19 @@ public:
             labelstring.erase (it); 
             label->setLabel(labelstring);
         }            
-        if(autoSize || rect->height < label->getPaddingRect()->height)
+        if(autoSize || rect->getHeight() < label->getPaddingRect()->getHeight())
         {
-            rect->height = label->getPaddingRect()->height;                 
+            rect->setHeight(label->getPaddingRect()->getHeight());             
         }
         
 		float h = labelrect->getHeight(); 
 		float ph = rect->getHeight(); 	
         
-		labelrect->y = (int)(ph*.5 - h*.5); 
-        labelrect->x = padding; 
-		paddedRect->height = rect->height+padding*2.0;  
-        paddedRect->width = rect->width+padding*2.0;  
-
+		labelrect->y = (int)(ph*.5 - h*.5);
+        labelrect->x = padding;
+		paddedRect->setHeight(rect->getHeight()+padding*2.0);  
+        paddedRect->setWidth(rect->getWidth()+padding*2.0);
+        updateValueRef();
         updateLabel(); 
 	}	
     
