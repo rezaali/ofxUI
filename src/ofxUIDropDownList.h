@@ -110,15 +110,14 @@ public:
         {
             ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), rect->getHeight(), false, toggleName, size);                 
         }        
-        ltoggle->setParent(this);
         ltoggle->getRect()->setParent(this->getRect());
         ltoggle->getRect()->y = rect->y+yt; 			        
         ltoggle->getRect()->x = rect->x; 			        
         ltoggle->setVisible(*value); 
         ltoggle->setLabelVisible(*value);             
         toggles.push_back(ltoggle);        
-
         parent->addWidget(ltoggle);
+        ltoggle->setParent(this);        
         if(isOpen())
         {
             open(); 
@@ -351,9 +350,12 @@ public:
 
         if(autoClose)
         {
-            setValue(!*value);
+            if(isOpen())
+            {
+                close();
+            }
         }        
-        setToggleVisibility(*value);         
+
 
         
         if(!allowMultiple)
