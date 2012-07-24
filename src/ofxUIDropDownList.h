@@ -70,8 +70,11 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect);
         label->setEmbedded(true);
-        value = false;                                               //the widget's value
-        draw_fill = value; 
+        
+        value = new bool(); 
+        *value = false; 
+        draw_fill = *value;
+        
         allowMultiple = false; 
         initToggles(items, _size);         
         autoClose = false; 
@@ -111,11 +114,19 @@ public:
         ltoggle->getRect()->setParent(this->getRect());
         ltoggle->getRect()->y = rect->y+yt; 			        
         ltoggle->getRect()->x = rect->x; 			        
-        ltoggle->setVisible(value); 
-        ltoggle->setLabelVisible(value);             
-        toggles.push_back(ltoggle);         
-        
+        ltoggle->setVisible(*value); 
+        ltoggle->setLabelVisible(*value);             
+        toggles.push_back(ltoggle);        
+
         parent->addWidget(ltoggle);
+        if(isOpen())
+        {
+            open(); 
+        }           
+        else
+        {
+            close();
+        }
     }    
     
     void removeToggle(string toggleName)
@@ -131,6 +142,15 @@ public:
                 break; 
             }
         }
+        for(int i = 0; i < selected.size(); i++)
+        {
+            ofxUILabelToggle *other = (ofxUILabelToggle *)selected[i];
+            if(other->getName() == toggleName)
+            {
+                selected.erase(selected.begin()+i);                                             
+                break; 
+            }
+        }                
         if(t != NULL)
         {
             parent->removeWidget(t);
@@ -192,8 +212,8 @@ public:
             {
                 ltoggle = new ofxUILabelToggle(0, ty, rect->getWidth(), false, tname, _size);                 
             }
-            ltoggle->setVisible(value); 
-            ltoggle->setLabelVisible(value);             
+            ltoggle->setVisible(*value); 
+            ltoggle->setLabelVisible(*value);             
 			toggles.push_back(ltoggle); 
             ty+=20; 
 		}        
@@ -252,8 +272,8 @@ public:
     {
         if(rect->inside(x, y) && hit)
         {
-            setValue(!value);
-            setToggleVisibility(value); 
+            setValue(!(*value));
+            setToggleVisibility(*value); 
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            
@@ -276,15 +296,16 @@ public:
     
     void open()
     {
-        setValue(true); 
-        setToggleVisibility(value); 
+        *value = true; 
+        setToggleVisibility(*value); 
     }
     
     void close()
     {
-        setValue(false); 
-        setToggleVisibility(value); 
+        *value = false; 
+        setToggleVisibility(*value); 
     }
+
     
     void setVisible(bool _visible)
     {
@@ -330,9 +351,9 @@ public:
 
         if(autoClose)
         {
-            setValue(!value);
+            setValue(!*value);
         }        
-        setToggleVisibility(value);         
+        setToggleVisibility(*value);         
 
         
         if(!allowMultiple)
@@ -382,7 +403,7 @@ public:
     
     bool isOpen()
     {
-        return value; 
+        return *value; 
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
