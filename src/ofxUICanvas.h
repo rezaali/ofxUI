@@ -79,6 +79,15 @@ public:
         setDrawBack(false); 
     }
     
+    ofxUICanvas(string title){
+        ofEnableSmoothing();
+        rect = new ofxUIRectangle(0, 0, 316, ofGetHeight());        
+        init(46, ofGetHeight());
+        addWidgetDown(new ofxUILabel(title, OFX_UI_FONT_LARGE));
+        addWidgetDown(new ofxUISpacer(0, 20));
+        addWidgetDown(new ofxUIFPSSlider(300, 20, 0, 1000, ofGetFrameRate(), "FPS"));
+    }
+    
     void init(int w, int h)
     {
         name = "OFX_UI_WIDGET_CANVAS"; 
