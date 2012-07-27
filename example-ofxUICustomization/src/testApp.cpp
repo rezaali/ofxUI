@@ -121,7 +121,6 @@ void testApp::setup()
     gui->setDrawWidgetPadding(drawPadding);          
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
-
 }
 
 //--------------------------------------------------------------

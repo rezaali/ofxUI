@@ -100,7 +100,7 @@ public:
 		enable_highlight_fill = false; 
         
 		GUIevent = new ofxUIEventArgs(this); 
-        
+
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect);
         
@@ -1550,6 +1550,630 @@ public:
 		ofNotifyEvent(newGUIEvent,*GUIevent,this);		
 	}
 	    
+    void setUIColors(ofColor &cb, ofColor &co, ofColor &coh, ofColor &cf, ofColor &cfh, ofColor &cp, ofColor &cpo)
+    {
+        setWidgetColor(OFX_UI_WIDGET_COLOR_BACK, cb);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_OUTLINE, co);                
+        setWidgetColor(OFX_UI_WIDGET_COLOR_OUTLINE_HIGHLIGHT, coh);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_FILL, cf);                
+        setWidgetColor(OFX_UI_WIDGET_COLOR_FILL_HIGHLIGHT, cfh);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_PADDED, cp);
+        setWidgetColor(OFX_UI_WIDGET_COLOR_PADDED_OUTLINE, cpo);
+        
+        setColorBack(cb);
+        setColorOutline(co);
+        setColorOutlineHighlight(coh);
+        setColorFill(cf);
+        setColorFillHighlight(cfh);
+        setColorPadded(cp);
+        setColorPaddedOutline(cpo); 
+    }
+    
+    void setTheme(int theme)
+    {
+        switch(theme)
+        {
+            case OFX_UI_THEME_DEFAULT:
+            {
+                ofColor cb = OFX_UI_COLOR_BACK; 
+                ofColor co = OFX_UI_COLOR_OUTLINE; 
+                ofColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
+                ofColor cf = OFX_UI_COLOR_FILL; 
+                ofColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
+                ofColor cp = OFX_UI_COLOR_PADDED;
+                ofColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_HACKER:
+            {
+                ofColor cb = ofColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.784314*255.0, 1*255.0, 0*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.980392*255.0, 0.00784314*255.0, 0.235294*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.0156863*255.0, 0*255.0, 0.0156863*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+                
+            case OFX_UI_THEME_HIPSTER:
+            {
+                ofColor cb = ofColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 1*255.0, 0.52549*255.0, 0.0666667*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.0313725*255.0, 0.101961*255.0, 0.188235*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.196078*255.0, 0.25098*255.0, 0.352941*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_DIETER:
+            {
+                ofColor cb = ofColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.980392*255.0, 0.294118*255.0, 0*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.980392*255.0, 0.980392*255.0, 0.980392*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.121569*255.0, 0.121569*255.0, 0.121569*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_BARBIE:
+            {
+                ofColor cb = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 ); 
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_WINDOWS:
+            {
+                ofColor cb = ofColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.054902*255.0, 0.305882*255.0, 0.678431*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.0627451*255.0, 0.498039*255.0, 0.788235*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.027451*255.0, 0.0352941*255.0, 0.239216*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MACOSX:
+            {
+                ofColor cb = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 1*255.0 );
+                ofColor cp = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_ZOOLANDER:
+            {
+                ofColor cb = ofColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.988235*255.0, 0.207843*255.0, 0.298039*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.988235*255.0, 0.968627*255.0, 0.772549*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.0392157*255.0, 0.74902*255.0, 0.737255*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.784314*255.0 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_VEGAN2:
+            {
+                ofColor cb = ofColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.917647*255.0, 0.992157*255.0, 0.901961*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 0.105882*255.0, 0.403922*255.0, 0.419608*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.317647*255.0, 0.584314*255.0, 0.282353*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.784314*255.0 );                                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_BERLIN:
+            {
+                ofColor cb = ofColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.196078*255.0 );
+                ofColor co = ofColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.392157*255.0 );
+                ofColor coh = ofColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.784314*255.0 );
+                ofColor cf = ofColor( 0.968627*255.0, 0.309804*255.0, 0.309804*255.0, 0.784314*255.0 );
+                ofColor cfh = ofColor( 1*255.0, 0.231373*255.0, 0.231373*255.0, 1*255.0 );
+                ofColor cp = ofColor( 0.105882*255.0, 0.12549*255.0, 0.14902*255.0, 0.392157*255.0 );
+                ofColor cpo = ofColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.784314*255.0 ); 
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_METALGEAR:
+            {
+                ofColor cb = ofColor( 51, 44, 44, 75 );
+                ofColor co = ofColor( 25, 26, 36, 100 );
+                ofColor coh = ofColor( 51, 44, 44, 200 );
+                ofColor cf = ofColor( 250, 101, 87, 200 );
+                ofColor cfh = ofColor( 255, 255, 255, 255 );
+                ofColor cp = ofColor( 0, 0, 0, 100 );
+                ofColor cpo = ofColor( 25, 26, 36, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_TEALLIME:
+            {
+                ofColor cb = ofColor( 27, 103, 107, 75 );
+                ofColor co = ofColor( 234, 253, 230, 100 );
+                ofColor coh = ofColor( 27, 103, 107, 200 );
+                ofColor cf = ofColor( 81, 149, 72, 200 );
+                ofColor cfh = ofColor( 136, 196, 37, 255 );
+                ofColor cp = ofColor( 190, 242, 2, 100 );
+                ofColor cpo = ofColor( 234, 253, 230, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_VEGAN:
+            {
+                ofColor cb = ofColor( 81, 149, 72, 75 );
+                ofColor co = ofColor( 27, 103, 107, 100 );
+                ofColor coh = ofColor( 81, 149, 72, 200 );
+                ofColor cf = ofColor( 136, 196, 37, 200 );
+                ofColor cfh = ofColor( 190, 242, 2, 255 );
+                ofColor cp = ofColor( 234, 253, 230, 100 );
+                ofColor cpo = ofColor( 27, 103, 107, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_RUSTIC:
+            {
+                ofColor cb = ofColor( 196, 182, 109, 75 );
+                ofColor co = ofColor( 247, 109, 60, 100 );
+                ofColor coh = ofColor( 196, 182, 109, 200 );
+                ofColor cf = ofColor( 213, 39, 5, 200 );
+                ofColor cfh = ofColor( 240, 211, 119, 255 );
+                ofColor cp = ofColor( 243, 232, 228, 100 );
+                ofColor cpo = ofColor( 247, 109, 60, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MIDNIGHT:
+            {
+                ofColor cb = ofColor( 11, 72, 107, 75 );
+                ofColor co = ofColor( 207, 240, 158, 100 );
+                ofColor coh = ofColor( 11, 72, 107, 200 );
+                ofColor cf = ofColor( 59, 134, 134, 200 );
+                ofColor cfh = ofColor( 121, 189, 154, 255 );
+                ofColor cp = ofColor( 168, 219, 168, 100 );
+                ofColor cpo = ofColor( 207, 240, 158, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINBLUE:
+            {
+                ofColor cb = ofColor( 254, 249, 240, 75 );
+                ofColor co = ofColor( 176, 248, 255, 100 );
+                ofColor coh = ofColor( 254, 249, 240, 200 );
+                ofColor cf = ofColor( 0, 188, 209, 200 );
+                ofColor cfh = ofColor( 118, 211, 222, 255 );
+                ofColor cp = ofColor( 174, 232, 251, 100 );
+                ofColor cpo = ofColor( 176, 248, 255, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_LIMESTONE:
+            {
+                ofColor cb = ofColor( 108, 144, 134, 75 );
+                ofColor co = ofColor( 252, 84, 99, 100 );
+                ofColor coh = ofColor( 108, 144, 134, 200 );
+                ofColor cf = ofColor( 169, 204, 24, 200 );
+                ofColor cfh = ofColor( 207, 73, 108, 255 );
+                ofColor cp = ofColor( 235, 234, 188, 100 );
+                ofColor cpo = ofColor( 252, 84, 99, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;                  
+                
+            case OFX_UI_THEME_SPEARMINT:
+            {
+                ofColor cb = ofColor( 25, 140, 9, 75 );
+                ofColor co = ofColor( 255, 197, 95, 100 );
+                ofColor coh = ofColor( 25, 140, 9, 200 );
+                ofColor cf = ofColor( 220, 250, 250, 200 );
+                ofColor cfh = ofColor( 239, 88, 141, 255 );
+                ofColor cp = ofColor( 254, 169, 18, 100 );
+                ofColor cpo = ofColor( 255, 197, 95, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;                  
+                
+            case OFX_UI_THEME_MINPINK:
+            {
+                ofColor cb = ofColor( 220, 250, 250, 75 );
+                ofColor co = ofColor( 25, 140, 9, 100 );
+                ofColor coh = ofColor( 220, 250, 250, 200 );
+                ofColor cf = ofColor( 239, 88, 141, 200 );
+                ofColor cfh = ofColor( 254, 169, 18, 255 );
+                ofColor cp = ofColor( 255, 197, 95, 100 );
+                ofColor cpo = ofColor( 25, 140, 9, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_PEPTOBISMOL:
+            {
+                ofColor cb = ofColor( 223, 21, 26, 75 );
+                ofColor co = ofColor( 0, 218, 60, 100 );
+                ofColor coh = ofColor( 223, 21, 26, 200 );
+                ofColor cf = ofColor( 244, 243, 40, 200 );
+                ofColor cfh = ofColor( 253, 134, 3, 255 );
+                ofColor cp = ofColor( 0, 203, 231, 100 );
+                ofColor cpo = ofColor( 0, 218, 60, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_BILEBLUE:
+            {
+                ofColor cb = ofColor( 253, 134, 3, 75 );
+                ofColor co = ofColor( 244, 243, 40, 100 );
+                ofColor coh = ofColor( 253, 134, 3, 200 );
+                ofColor cf = ofColor( 0, 203, 231, 200 );
+                ofColor cfh = ofColor( 0, 218, 60, 255 );
+                ofColor cp = ofColor( 223, 21, 26, 100 );
+                ofColor cpo = ofColor( 244, 243, 40, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_COOLCLAY:
+            {
+                ofColor cb = ofColor( 153, 228, 255, 75 );
+                ofColor co = ofColor( 75, 89, 107, 100 );
+                ofColor coh = ofColor( 153, 228, 255, 200 );
+                ofColor cf = ofColor( 247, 79, 79, 200 );
+                ofColor cfh = ofColor( 255, 59, 59, 255 );
+                ofColor cp = ofColor( 27, 32, 38, 100 );
+                ofColor cpo = ofColor( 75, 89, 107, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_BLUEBLUE:
+            {
+                ofColor cb = ofColor( 0, 173, 239, 75 );
+                ofColor co = ofColor( 255, 242, 0, 100 );
+                ofColor coh = ofColor( 0, 0, 0, 200 );
+                ofColor cf = ofColor( 0, 173, 239, 200 );
+                ofColor cfh = ofColor( 236, 0, 140, 255 );
+                ofColor cp = ofColor( 255, 242, 0, 100 );
+                ofColor cpo = ofColor( 0, 0, 0, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_PINKPANTHER:
+            {
+                ofColor cb = ofColor( 236, 0, 140, 75 );
+                ofColor co = ofColor( 0, 0, 0, 100 );
+                ofColor coh = ofColor( 0, 173, 239, 200 );
+                ofColor cf = ofColor( 236, 0, 140, 200 );
+                ofColor cfh = ofColor( 255, 242, 0, 255 );
+                ofColor cp = ofColor( 0, 0, 0, 100 );
+                ofColor cpo = ofColor( 0, 173, 239, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MAROON:
+            {
+                ofColor cb = ofColor( 101, 150, 158, 75 );
+                ofColor co = ofColor( 219, 217, 210, 100 );
+                ofColor coh = ofColor( 101, 150, 158, 200 );
+                ofColor cf = ofColor( 171, 20, 44, 200 );
+                ofColor cfh = ofColor( 189, 219, 222, 255 );
+                ofColor cp = ofColor( 205, 212, 108, 100 );
+                ofColor cpo = ofColor( 219, 217, 210, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_PINKLATTE:
+            {
+                ofColor cb = ofColor( 218, 216, 167, 75 );
+                ofColor co = ofColor( 127, 199, 175, 100 );
+                ofColor coh = ofColor( 218, 216, 167, 200 );
+                ofColor cf = ofColor( 255, 61, 127, 200 );
+                ofColor cfh = ofColor( 255, 158, 157, 255 );
+                ofColor cp = ofColor( 63, 184, 175, 100 );
+                ofColor cpo = ofColor( 127, 199, 175, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINGREEN:
+            {
+                ofColor cb = ofColor( 255, 255, 255, 75 );
+                ofColor co = ofColor( 242, 230, 194, 100 );
+                ofColor coh = ofColor( 255, 255, 255, 200 );
+                ofColor cf = ofColor( 111, 191, 162, 200 );
+                ofColor cfh = ofColor( 191, 184, 174, 255 );
+                ofColor cp = ofColor( 242, 199, 119, 100 );
+                ofColor cpo = ofColor( 242, 230, 194, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_HELLOYELLOW:
+            {
+                ofColor cb = ofColor( 255, 211, 0, 75 );
+                ofColor co = ofColor( 74, 186, 176, 100 );
+                ofColor coh = ofColor( 152, 33, 0, 200 );
+                ofColor cf = ofColor( 255, 211, 0, 200 );
+                ofColor cfh = ofColor( 255, 245, 158, 255 );
+                ofColor cp = ofColor( 74, 186, 176, 100 );
+                ofColor cpo = ofColor( 152, 33, 0, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_TEALTEAL:
+            {
+                ofColor cb = ofColor( 74, 186, 176, 75 );
+                ofColor co = ofColor( 255, 211, 0, 100 );
+                ofColor coh = ofColor( 255, 245, 158, 200 );
+                ofColor cf = ofColor( 74, 186, 176, 200 );
+                ofColor cfh = ofColor( 152, 33, 0, 255 );
+                ofColor cp = ofColor( 255, 211, 0, 100 );
+                ofColor cpo = ofColor( 255, 245, 158, 200 );            
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_RUSTICORANGE:
+            {
+                ofColor cb = ofColor( 107, 85, 48, 75 );
+                ofColor co = ofColor( 49, 48, 66, 100 );
+                ofColor coh = ofColor( 107, 85, 48, 200 );
+                ofColor cf = ofColor( 255, 109, 36, 200 );
+                ofColor cfh = ofColor( 255, 235, 107, 255 );
+                ofColor cp = ofColor( 42, 135, 50, 100 );
+                ofColor cpo = ofColor( 49, 48, 66, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_TEALSALMON:
+            {
+                ofColor cb = ofColor( 78, 133, 136, 75 );
+                ofColor co = ofColor( 56, 69, 59, 100 );
+                ofColor coh = ofColor( 78, 133, 136, 200 );
+                ofColor cf = ofColor( 255, 70, 84, 200 );
+                ofColor cfh = ofColor( 255, 213, 106, 255 );
+                ofColor cp = ofColor( 255, 254, 211, 100 );
+                ofColor cpo = ofColor( 56, 69, 59, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_CITRUSBLUE:
+            {
+                ofColor cb = ofColor( 57, 142, 182, 75 );
+                ofColor co = ofColor( 34, 104, 136, 100 );
+                ofColor coh = ofColor( 57, 142, 182, 200 );
+                ofColor cf = ofColor( 255, 162, 0, 200 );
+                ofColor cfh = ofColor( 255, 214, 0, 255 );
+                ofColor cp = ofColor( 255, 245, 0, 100 );
+                ofColor cpo = ofColor( 34, 104, 136, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_LIMEPURPLE:
+            {
+                ofColor cb = ofColor( 87, 54, 255, 75 );
+                ofColor co = ofColor( 38, 38, 38, 100 );
+                ofColor coh = ofColor( 87, 54, 255, 200 );
+                ofColor cf = ofColor( 231, 255, 54, 200 );
+                ofColor cfh = ofColor( 255, 54, 111, 255 );
+                ofColor cp = ofColor( 35, 116, 222, 100 );
+                ofColor cpo = ofColor( 38, 38, 38, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_LIMESTONE2:
+            {
+                ofColor cb = ofColor( 101, 98, 115, 75 );
+                ofColor co = ofColor( 89, 186, 169, 100 );
+                ofColor coh = ofColor( 101, 98, 115, 200 );
+                ofColor cf = ofColor( 216, 241, 113, 200 );
+                ofColor cfh = ofColor( 252, 255, 217, 255 );
+                ofColor cp = ofColor( 64, 18, 44, 100 );
+                ofColor cpo = ofColor( 89, 186, 169, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_COOLPURPLE:
+            {
+                ofColor cb = ofColor( 38, 137, 233, 75 );
+                ofColor co = ofColor( 11, 246, 147, 100 );
+                ofColor coh = ofColor( 38, 137, 233, 200 );
+                ofColor cf = ofColor( 233, 26, 157, 200 );
+                ofColor cfh = ofColor( 246, 182, 11, 255 );
+                ofColor cp = ofColor( 246, 242, 11, 100 );
+                ofColor cpo = ofColor( 11, 246, 147, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_GRAYRED:
+            {
+                ofColor cb = ofColor( 41, 34, 31, 75 );
+                ofColor co = ofColor( 19, 116, 125, 100 );
+                ofColor coh = ofColor( 41, 34, 31, 200 );
+                ofColor cf = ofColor( 252, 53, 76, 200 );
+                ofColor cfh = ofColor( 252, 247, 197, 255 );
+                ofColor cp = ofColor( 10, 191, 188, 100 );
+                ofColor cpo = ofColor( 19, 116, 125, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_METALGEAR2:
+            {
+                ofColor cb = ofColor( 205, 189, 174, 75 );
+                ofColor co = ofColor( 122, 91, 62, 100 );
+                ofColor coh = ofColor( 205, 189, 174, 200 );
+                ofColor cf = ofColor( 250, 75, 0, 200 );
+                ofColor cfh = ofColor( 250, 250, 250, 255 );
+                ofColor cp = ofColor( 31, 31, 31, 100 );
+                ofColor cpo = ofColor( 122, 91, 62, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_LIGHTPINK:
+            {
+                ofColor cb = ofColor( 158, 30, 76, 75 );
+                ofColor co = ofColor( 143, 143, 143, 100 );
+                ofColor coh = ofColor( 158, 30, 76, 200 );
+                ofColor cf = ofColor( 236, 236, 236, 200 );
+                ofColor cfh = ofColor( 255, 17, 104, 255 );
+                ofColor cp = ofColor( 37, 2, 15, 100 );
+                ofColor cpo = ofColor( 143, 143, 143, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINPINK2:
+            {
+                ofColor cb = ofColor( 236, 236, 236, 75 );
+                ofColor co = ofColor( 158, 30, 76, 100 );
+                ofColor coh = ofColor( 236, 236, 236, 200 );
+                ofColor cf = ofColor( 255, 17, 104, 200 );
+                ofColor cfh = ofColor( 37, 2, 15, 255 );
+                ofColor cp = ofColor( 143, 143, 143, 100 );
+                ofColor cpo = ofColor( 158, 30, 76, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MAXPINK:
+            {
+                ofColor cb = ofColor( 255, 20, 87, 75 );
+                ofColor co = ofColor( 10, 10, 10, 100 );
+                ofColor coh = ofColor( 227, 246, 255, 200 );
+                ofColor cf = ofColor( 255, 20, 87, 200 );
+                ofColor cfh = ofColor( 255, 216, 125, 255 );
+                ofColor cp = ofColor( 10, 10, 10, 100 );
+                ofColor cpo = ofColor( 227, 246, 255, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINYELLOW:
+            {
+                ofColor cb = ofColor( 229, 228, 218, 75 );
+                ofColor co = ofColor( 216, 210, 153, 100 );
+                ofColor coh = ofColor( 229, 228, 218, 200 );
+                ofColor cf = ofColor( 245, 224, 56, 200 );
+                ofColor cfh = ofColor( 23, 22, 92, 255 );
+                ofColor cp = ofColor( 190, 191, 158, 100 );
+                ofColor cpo = ofColor( 216, 210, 153, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINLIME:
+            {
+                ofColor cb = ofColor( 245, 225, 226, 75 );
+                ofColor co = ofColor( 225, 183, 237, 100 );
+                ofColor coh = ofColor( 245, 225, 226, 200 );
+                ofColor cf = ofColor( 185, 222, 81, 200 );
+                ofColor cfh = ofColor( 209, 227, 137, 255 );
+                ofColor cp = ofColor( 224, 72, 145, 100 );
+                ofColor cpo = ofColor( 225, 183, 237, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINORANGE:
+            {
+                ofColor cb = ofColor( 204, 204, 204, 75 );
+                ofColor co = ofColor( 111, 111, 111, 100 );
+                ofColor coh = ofColor( 204, 204, 204, 200 );
+                ofColor cf = ofColor( 255, 100, 0, 200 );
+                ofColor cfh = ofColor( 255, 255, 255, 255 );
+                ofColor cp = ofColor( 51, 51, 51, 100 );
+                ofColor cpo = ofColor( 111, 111, 111, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_GRAYDAY:
+            {
+                ofColor cb = ofColor( 177, 198, 204, 75 );
+                ofColor co = ofColor( 255, 255, 255, 100 );
+                ofColor coh = ofColor( 20, 20, 20, 200 );
+                ofColor cf = ofColor( 177, 198, 204, 200 );
+                ofColor cfh = ofColor( 255, 239, 94, 255 );
+                ofColor cp = ofColor( 255, 255, 255, 100 );
+                ofColor cpo = ofColor( 20, 20, 20, 200 );
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            case OFX_UI_THEME_MINBLACK:
+            {
+                ofColor cb = ofColor( 255, 255, 255, 75 );
+                ofColor co = ofColor( 209, 231, 81, 100 );
+                ofColor coh = ofColor( 255, 255, 255, 200 );
+                ofColor cf = ofColor( 0, 0, 0, 200 );
+                ofColor cfh = ofColor( 38, 173, 228, 255 );
+                ofColor cp = ofColor( 77, 188, 233, 100 );
+                ofColor cpo = ofColor( 209, 231, 81, 200 );                
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break;  
+                
+            default:
+            {
+                ofColor cb = OFX_UI_COLOR_BACK; 
+                ofColor co = OFX_UI_COLOR_OUTLINE; 
+                ofColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
+                ofColor cf = OFX_UI_COLOR_FILL; 
+                ofColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
+                ofColor cp = OFX_UI_COLOR_PADDED;
+                ofColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
+                setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
+            }
+                break; 
+        }
+    }
+    
 	void setWidgetColor(int _target, ofColor _color)
 	{
 		switch (_target) 
@@ -1615,7 +2239,11 @@ public:
 	
     void removeWidget(string _name)    
     {
-        //To Implement
+        ofxUIWidget *w = widgets_map[_name];
+        if(w != NULL)
+        {
+            removeWidget(w);
+        }
     }
     
 	void setDrawPadding(bool _draw_padded_rect)

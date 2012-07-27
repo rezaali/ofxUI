@@ -30,31 +30,35 @@
 class ofxUICircleSlider : public ofxUISlider
 {
 public:
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name)
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;         
         rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, w, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 		
+        init(w, w, _min, _max, &_value, _name, _size); 		
     }
     
-    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name)
+    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;                 
         rect = new ofxUIRectangle(0,0,w,w); 
-        init(w, w, _min, _max, _value, _name, OFX_UI_FONT_SMALL); 
-    }    
+        init(w, w, _min, _max, &_value, _name, _size); 
+    }        
     
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size)
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = true;                 
         rect = new ofxUIRectangle(x,y,w,w); 
         init(w, w, _min, _max, _value, _name, _size); 		
     }
     
-    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size)
+    ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = true;                 
         rect = new ofxUIRectangle(0,0,w,w); 
         init(w, w, _min, _max, _value, _name, _size); 
     }    
     
-    void init(float w, float h, float _min, float _max, float _value, string _name, int _size)
+    void init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
     {
         name = _name; 				
         kind = OFX_UI_WIDGET_CIRCLESLIDER;
@@ -64,7 +68,17 @@ public:
         
         draw_fill = true; 
         
-        value = _value;                                               //the widget's value
+        value = *_value;                                               //the widget's value
+        if(useReference)
+        {
+            valueRef = _value; 
+        }
+        else
+        {
+            valueRef = new float(); 
+            *valueRef = value; 
+        }
+        
 		max = _max; 
 		min = _min; 
         labelPrecision = 2;
@@ -127,8 +141,8 @@ public:
             ofFill(); 
             ofSetColor(color_fill_highlight); 
             ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
-//            ofSetColor(label->getColorFillHighlight());             
-//            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+            ofSetColor(label->getColorFillHighlight());             
+            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
         }        
     }
     
@@ -139,11 +153,11 @@ public:
             ofNoFill();
             ofSetColor(color_outline_highlight); 
             ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
-//            if(!draw_fill_highlight)
-//            {
-//                ofSetColor(label->getColorFill()); 
-//                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
-//            }
+            if(!draw_fill_highlight)
+            {
+                ofSetColor(label->getColorFill()); 
+                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+            }
         }
     }
     
@@ -172,6 +186,7 @@ public:
             }
             
             hitPoint = ofPoint(x,y);    
+            updateValueRef();
 			triggerEvent(this);             
             state = OFX_UI_STATE_DOWN;         
         }    

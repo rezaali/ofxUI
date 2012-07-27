@@ -21,10 +21,6 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-    ofxUIScrollableCanvas *gui; 
-
-    void guiEvent(ofxUIEventArgs &e);
-    
-    ofImage *img; 
-    
+        ofxUIScrollableCanvas *gui; 
+        void guiEvent(ofxUIEventArgs &e);    
 };

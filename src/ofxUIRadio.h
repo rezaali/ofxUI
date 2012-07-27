@@ -65,6 +65,7 @@ public:
 			ofxUIToggle *toggle = new ofxUIToggle(0,0, w, h, false, tname); 
 			toggles.push_back(toggle); 
 		}
+        active = NULL; 
         allowMultiple = false; 
     }
         
@@ -112,7 +113,8 @@ public:
 			ofxUIToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
 			{
-				t->setValue(true); 					
+				t->setValue(true); 			
+                active = t; 
 			}
 			else 
 			{
@@ -120,6 +122,14 @@ public:
 			}			
 		}
 	}
+    
+    void triggerSelf()
+    {
+		if(parent != NULL)
+		{
+			parent->triggerEvent(active); 
+		}        
+    }
 	
 	void setParent(ofxUIWidget *_parent)
 	{
@@ -191,7 +201,8 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	int orientation; 
-	vector<ofxUIToggle *> toggles; 		   
+	vector<ofxUIToggle *> toggles; 		
+    ofxUIToggle *active; 
     bool allowMultiple;
 }; 
 

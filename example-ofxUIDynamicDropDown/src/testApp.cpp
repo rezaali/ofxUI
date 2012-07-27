@@ -15,6 +15,7 @@ void testApp::setup()
     names.push_back("ONE");    names.push_back("TWO");    names.push_back("THREE");    names.push_back("FOUR");    names.push_back("FIVE");
     ddl = new ofxUIDropDownList(length-xInit, "DYNAMIC DROP DOWN", names, OFX_UI_FONT_MEDIUM); 
     ddl->setAllowMultiple(true);
+    ddl->setAutoClose(true);
     gui->addWidgetDown(ddl);
     
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 

@@ -32,39 +32,89 @@ class ofxUI2DPad : public ofxUIWidgetWithLabel
 public:
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _value, string _name)
     {
+        useReference = false;                         
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+        init(w, h, ofPoint(0,w), ofPoint(0,h), &_value, _name);
     }	
 
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
     {
+        useReference = false;                  
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _rangeX, _rangeY, _value, _name);
+        init(w, h, _rangeX, _rangeY, &_value, _name);
     }	
     
     ofxUI2DPad(float w, float h, ofPoint _value, string _name)
     {
+        useReference = false;                         
         rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+        init(w, h, ofPoint(0,w), ofPoint(0,h), &_value, _name);
     }
 	
     ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
     {
+        useReference = false;                         
         rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _rangeX, _rangeY, _value, _name);
+        init(w, h, _rangeX, _rangeY, &_value, _name);
     }
     
-    void init(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
+    ofxUI2DPad(float x, float y, float w, float h, ofPoint *_value, string _name)
+    {
+        useReference = true; 
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+    }	
+    
+    ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
+    {
+        useReference = true; 
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, _rangeX, _rangeY, _value, _name);
+    }	
+    
+    ofxUI2DPad(float w, float h, ofPoint *_value, string _name)
+    {
+        useReference = true;         
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+    }
+	
+    ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
+    {
+        useReference = true;         
+        rect = new ofxUIRectangle(0,0,w,h); 
+        init(w, h, _rangeX, _rangeY, _value, _name);
+    }      
+    
+    ~ofxUI2DPad()
+    {
+        if(!useReference)
+        {
+            delete valueRef; 
+        }        
+    }
+    
+    void init(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
     {
 		name = _name; 				
 		kind = OFX_UI_WIDGET_2DPAD; 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
 		paddedRect->setParent(rect); 
         draw_fill = true;                 
-        value = _value;                                               //the widget's value
-		
+        value = *_value;                                               //the widget's value
+        if(useReference)
+        {
+            valueRef = _value; 
+        }
+        else
+        {
+            valueRef = new ofPoint(); 
+            *valueRef = value; 
+        }
+
         rangeX = _rangeX; 
         rangeY = _rangeY; 
+		labelPrecision = 2;
         
 		value.x = ofMap(value.x, rangeX.x, rangeX.y, 0.0, 1.0);
 		value.y = ofMap(value.y, rangeY.x, rangeY.y, 0.0, 1.0);
@@ -87,7 +137,7 @@ public:
 			value.y = 0;
 		}
 		
-		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue().x,2) + ", " + ofToString(getScaledValue().y,2)), OFX_UI_FONT_SMALL); 		
+		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
 		label->setRectParent(rect);         
         label->setEmbedded(true);
@@ -97,6 +147,15 @@ public:
         increment = MIN(horizontalRange, verticalRange) / 10.0;
     }
     
+    virtual void update()
+    {
+        if(useReference)
+        {
+            value.x = ofMap(valueRef->x, rangeX.x, rangeX.y, 0.0, 1.0, true);
+            value.y = ofMap(valueRef->y, rangeY.x, rangeY.y, 0.0, 1.0, true);
+        }
+    }
+
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
@@ -137,7 +196,7 @@ public:
 			ofLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
 			ofLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
 			
-			label->drawString(rect->getX()+value.x*rect->getWidth()+OFX_UI_GLOBAL_WIDGET_SPACING, rect->getY()+value.y*rect->getHeight(), "(" +ofToString(getScaledValue().x,2) + ", " + ofToString(getScaledValue().y,2)+")"); 
+			label->drawString(rect->getX()+value.x*rect->getWidth()+OFX_UI_GLOBAL_WIDGET_SPACING, rect->getY()+value.y*rect->getHeight(), "(" +ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)+")"); 
 
         }        
     }   
@@ -227,8 +286,9 @@ public:
                     ofPoint p = getScaledValue();         
                     p.x+=increment; 
                     value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
-                    triggerEvent(this);										        
+                    updateValueRef();                                            
                     updateLabel();                     
+                    triggerEvent(this);			
                 }
 					break;
 					
@@ -237,8 +297,9 @@ public:
                     ofPoint p = getScaledValue();         
                     p.y +=increment; 
                     value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
-                    triggerEvent(this);										        
+                    updateValueRef();                                            
                     updateLabel();                     
+                    triggerEvent(this);	
                 }
 					break;
 					
@@ -247,8 +308,9 @@ public:
                     ofPoint p = getScaledValue();         
                     p.x-=increment; 
                     value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
-                    triggerEvent(this);										        
+                    updateValueRef();                                            
                     updateLabel();                     
+                    triggerEvent(this);		
                 }
 					break;
 					
@@ -257,8 +319,9 @@ public:
                     ofPoint p = getScaledValue();         
                     p.y -=increment; 
                     value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
-                    triggerEvent(this);										        
+                    updateValueRef();                        
                     updateLabel();                     
+                    triggerEvent(this);	
                 }
 					break;					
 					
@@ -301,12 +364,18 @@ public:
         }
 //		cout << "X: " << rect->percentInside(x, y).x << endl;		
 //		cout << "Y: " << rect->percentInside(x, y).y << endl;
+        updateValueRef();          							                
 		updateLabel(); 
 	}
 	
+    void updateValueRef()
+    {
+        (*valueRef) = getScaledValue();
+    }
+    
 	void updateLabel()
 	{
-		label->setLabel(name + ": " + ofToString(getScaledValue().x,2) + ", " + ofToString(getScaledValue().y,2)); 		
+		label->setLabel(name + ": " + ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)); 		
 	}
 	
     void stateChange()
@@ -371,9 +440,11 @@ public:
 		{
 			_value.y = rangeY.x;
 		}
+
 		                        
         value.x = ofMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0);
 		value.y = ofMap(_value.y, rangeY.x, rangeY.y, 0.0, 1.0);
+        updateValueRef();        
 		updateLabel(); 		
 	}
 	
@@ -414,7 +485,10 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	ofPoint value; 
+	ofPoint *valueRef;     
     float increment;
+    int labelPrecision;     
+    bool useReference; 
     ofPoint rangeX, rangeY; 
 }; 
 

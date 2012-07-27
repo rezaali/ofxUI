@@ -32,26 +32,43 @@ class ofxUIButton : public ofxUIWidgetWithLabel
 public:    
     ofxUIButton() {}
     
-    ofxUIButton(float x, float y, float w, float h, bool _value, string _name)
+    ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _name);
+        init(w, h, &_value, _name, _size);
     }
     
-    ofxUIButton(float w, float h, bool _value, string _name)
+    ofxUIButton(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = false;         
         rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _name);        
+        init(w, h, &_value, _name, _size);        
     }    
-
-    ofxUIButton(float w, float h, bool _value, string _name, int _size)
+    
+    ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
+        useReference = true;         
+        rect = new ofxUIRectangle(x,y,w,h); 
+        init(w, h, _value, _name, _size);
+    }
+    
+    ofxUIButton(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;         
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _value, _name, _size);        
     }    
-
     
-    virtual void init(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ~ofxUIButton()
+    {
+        if(!useReference)
+        {
+            delete value; 
+        }
+    }
+    
+    virtual void init(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
 		name = _name; 		
 		kind = OFX_UI_WIDGET_BUTTON; 		
@@ -63,9 +80,20 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect); 
         label->setEmbedded(true);		
-        setValue(_value); 
         drawLabel = true;
         label->setVisible(drawLabel);      
+        
+        if(useReference)
+        {
+            value = _value; 
+        }
+        else
+        {
+            value = new bool(); 
+            *value = *_value; 
+        }
+        
+        setValue(*_value);         
     }
         
     virtual void draw() 
@@ -244,7 +272,7 @@ public:
 	
 	bool getValue()
 	{
-		return value; 
+		return *value; 
 	}
     
     void setLabelVisible(bool _visible)
@@ -255,17 +283,18 @@ public:
 	
     virtual void setValue(bool _value)
 	{
-		value = _value;         
-        draw_fill = value; 
-        label->setDrawBack(value);         
+		*value = _value;         
+        draw_fill = *value; 
+        label->setDrawBack((*value));         
 	}
 	
 	void toggleValue() {
-	  setValue(!value);
+        setValue(!(*value));
 	}
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-    bool value; 
+    bool *value; 
+    bool useReference; 
     bool drawLabel; 
 }; 
 

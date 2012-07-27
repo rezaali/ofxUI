@@ -30,35 +30,71 @@
 class ofxUILabelButton : public ofxUIButton
 {
 public:
-    ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size)
+    ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
+        useReference = false;         
+        rect = new ofxUIRectangle(x,y,w,0); 
+        autoSize = false;         
+        init(&_value, _name, _size); 
+    }
+    
+    ofxUILabelButton(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
+    {
+        useReference = false;         
+        rect = new ofxUIRectangle(0,0,w,h); 
+        autoSize = false;         
+        init(&_value, _name, _size); 
+    }
+    
+    ofxUILabelButton(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        useReference = false;         
+        rect = new ofxUIRectangle(x,y,0,0); 
+        autoSize = true;         
+        init(&_value, _name, _size); 
+    }
+    
+    ofxUILabelButton(bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        useReference = false;         
+        rect = new ofxUIRectangle(0,0,0,0); 
+        autoSize = true;         
+        init(&_value, _name, _size); 
+    }
+    
+    ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        useReference = true; 
         rect = new ofxUIRectangle(x,y,w,0); 
         autoSize = false;         
         init(_value, _name, _size); 
     }
-
-    ofxUILabelButton(float w, bool _value, string _name, int _size, float h = 0)
+    
+    ofxUILabelButton(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
     {
+        useReference = true;         
         rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = false;         
         init(_value, _name, _size); 
     }
-
-    ofxUILabelButton(float x, float y, bool _value, string _name, int _size)
+    
+    ofxUILabelButton(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
+        useReference = true;         
         rect = new ofxUIRectangle(x,y,0,0); 
         autoSize = true;         
         init(_value, _name, _size); 
     }
-
-    ofxUILabelButton(bool _value, string _name, int _size)
+    
+    ofxUILabelButton(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
+        useReference = true;         
         rect = new ofxUIRectangle(0,0,0,0); 
         autoSize = true;         
         init(_value, _name, _size); 
-    }
+    }  
     
-    void init(bool _value, string _name, int _size)
+    void init(bool *_value, string _name, int _size)
     {
         name = _name; 		
         
@@ -70,7 +106,17 @@ public:
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);         
         
-        setValue(_value);         
+        if(useReference)
+        {
+            value = _value; 
+        }
+        else
+        {
+            value = new bool(); 
+            *value = *_value; 
+        }
+        
+        setValue(*_value);             
     }
 		
 	void setParent(ofxUIWidget *_parent)

@@ -180,8 +180,7 @@ public:
             image->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
             ofFill(); 
             ofSetColor(color_back); 
-            labelBackgroundRect->draw(); 
-            
+            labelBackgroundRect->draw();
         }
     }
     
@@ -223,6 +222,16 @@ public:
             ofSetColor(color_fill_highlight); 
             labelBackgroundRect->draw(); 
         }    
+    }
+    
+    void setImage(ofImage *_image)
+    {
+        if(image != NULL)
+        {
+        	image->clear();
+        	delete image;
+        }
+        image = _image; 
     }
     
     

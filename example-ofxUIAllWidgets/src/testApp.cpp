@@ -15,6 +15,11 @@ void testApp::setup()
     gui2->setDrawBack(false);
     gui3->setDrawBack(false);
     gui4->setDrawBack(false);    
+
+//    gui1->setDrawBack(true);
+//    gui2->setDrawBack(true);
+//    gui3->setDrawBack(true);
+//    gui4->setDrawBack(true);    
     
 //    gui1->setDrawPadding(false);
 //    gui2->setDrawPadding(false);
@@ -114,6 +119,7 @@ void testApp::exit()
 	delete gui1; 
 	delete gui2; 
     delete gui3; 
+    delete gui4; 
 	delete[] buffer; 
     delete img; 
 }
@@ -424,7 +430,7 @@ void testApp::setGUI4()
     gui4->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50, "BILABEL", "HOT", "COLD", OFX_UI_FONT_MEDIUM));
 
     gui4->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 				
-    gui4->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0, 100, 50, "MINIMAL",OFX_UI_FONT_MEDIUM));
+    gui4->addWidgetDown(new ofxUIMinimalSlider(length-xInit, dim, 0, 100, 50.0, "MINIMAL",OFX_UI_FONT_MEDIUM));
 
     gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));                 
     
@@ -433,7 +439,7 @@ void testApp::setGUI4()
     
     gui4->addWidgetDown(new ofxUISpacer(length-xInit, 2));             
     gui4->addWidgetDown(new ofxUILabel("FPS SLIDER", OFX_UI_FONT_MEDIUM)); 				
-    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0, 400, 0, "FPS SLIDER"));
+    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0.0, 400, 0.0, "FPS SLIDER"));
 
     vector<float> buffer; 
     for(int i = 0; i < 256; i++)

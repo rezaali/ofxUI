@@ -70,11 +70,15 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect);
         label->setEmbedded(true);
-        value = false;                                               //the widget's value
-        draw_fill = value; 
+        
+        value = new bool(); 
+        *value = false; 
+        draw_fill = *value;
+        
         allowMultiple = false; 
         initToggles(items, _size);         
         autoClose = false; 
+        singleSelected = NULL; 
     }
 
     void clearToggles()
@@ -106,15 +110,22 @@ public:
         {
             ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), rect->getHeight(), false, toggleName, size);                 
         }        
-        ltoggle->setParent(this);
         ltoggle->getRect()->setParent(this->getRect());
         ltoggle->getRect()->y = rect->y+yt; 			        
         ltoggle->getRect()->x = rect->x; 			        
-        ltoggle->setVisible(value); 
-        ltoggle->setLabelVisible(value);             
-        toggles.push_back(ltoggle);         
-        
+        ltoggle->setVisible(*value); 
+        ltoggle->setLabelVisible(*value);             
+        toggles.push_back(ltoggle);        
         parent->addWidget(ltoggle);
+        ltoggle->setParent(this);        
+        if(isOpen())
+        {
+            open(); 
+        }           
+        else
+        {
+            close();
+        }
     }    
     
     void removeToggle(string toggleName)
@@ -130,6 +141,15 @@ public:
                 break; 
             }
         }
+        for(int i = 0; i < selected.size(); i++)
+        {
+            ofxUILabelToggle *other = (ofxUILabelToggle *)selected[i];
+            if(other->getName() == toggleName)
+            {
+                selected.erase(selected.begin()+i);                                             
+                break; 
+            }
+        }                
         if(t != NULL)
         {
             parent->removeWidget(t);
@@ -191,8 +211,8 @@ public:
             {
                 ltoggle = new ofxUILabelToggle(0, ty, rect->getWidth(), false, tname, _size);                 
             }
-            ltoggle->setVisible(value); 
-            ltoggle->setLabelVisible(value);             
+            ltoggle->setVisible(*value); 
+            ltoggle->setLabelVisible(*value);             
 			toggles.push_back(ltoggle); 
             ty+=20; 
 		}        
@@ -251,8 +271,8 @@ public:
     {
         if(rect->inside(x, y) && hit)
         {
-            setValue(!value);
-            setToggleVisibility(value); 
+            setValue(!(*value));
+            setToggleVisibility(*value); 
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            
@@ -275,15 +295,16 @@ public:
     
     void open()
     {
-        value = true; 
-        setToggleVisibility(value); 
+        *value = true; 
+        setToggleVisibility(*value); 
     }
     
     void close()
     {
-        value = false; 
-        setToggleVisibility(value); 
+        *value = false; 
+        setToggleVisibility(*value); 
     }
+
     
     void setVisible(bool _visible)
     {
@@ -311,6 +332,14 @@ public:
 		return toggles; 
 	}
 
+    void triggerSelf()
+    {
+		if(parent != NULL)
+		{
+			parent->triggerEvent(singleSelected); 
+		}        
+    }
+    
     void triggerEvent(ofxUIWidget *child)
 	{        
         if(child == this)
@@ -321,9 +350,12 @@ public:
 
         if(autoClose)
         {
-            setValue(!value);
+            if(isOpen())
+            {
+                close();
+            }
         }        
-        setToggleVisibility(value);         
+
 
         
         if(!allowMultiple)
@@ -356,7 +388,8 @@ public:
 			ofxUILabelToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
 			{
-				t->setValue(true); 					
+				t->setValue(true); 		
+                singleSelected = t; 
 			}
 			else 
 			{
@@ -372,13 +405,14 @@ public:
     
     bool isOpen()
     {
-        return value; 
+        return *value; 
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize; 
     bool autoClose; 
     vector<ofxUILabelToggle *> toggles; 
+    ofxUILabelToggle *singleSelected; 
     vector<ofxUIWidget *> selected; 
     bool allowMultiple; 
     int size;     

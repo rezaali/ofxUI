@@ -34,17 +34,33 @@ public:
     
     ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name)
     {
+        useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, _value, _pathURL, _name);         
+        init(w, h, &_value, _pathURL, _name);         
     }
 
     ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name)
     {
+        useReference = false;         
         rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, &_value, _pathURL, _name);         
+    }
+        
+    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name)
+    {
+        useReference = true;         
+        rect = new ofxUIRectangle(x,y,w,h);
         init(w, h, _value, _pathURL, _name);         
     }
     
-    void init(float w, float h, bool _value, string _pathURL, string _name)
+    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name)
+    {
+        useReference = true;                 
+        rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, _value, _pathURL, _name);         
+    }    
+    
+    void init(float w, float h, bool *_value, string _pathURL, string _name)
     {
         name = _name; 		
 		kind = OFX_UI_WIDGET_IMAGEBUTTON; 		
@@ -52,7 +68,18 @@ public:
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
         
-        setValue(_value); 
+        if(useReference)
+        {
+            value = _value; 
+        }
+        else
+        {
+            value = new bool(); 
+            *value = *_value; 
+        }
+        
+        setValue(*_value); 
+        
         img = new ofImage(); 
         img->loadImage(_pathURL);         
     }
@@ -154,8 +181,8 @@ public:
 
     virtual void setValue(bool _value)
 	{
-		value = _value;         
-        draw_fill = value; 
+		*value = _value;         
+        draw_fill = *value; 
 	}	
     
     virtual void setVisible(bool _visible)

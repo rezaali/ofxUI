@@ -34,7 +34,6 @@ class testApp : public ofBaseApp
 	ofxUICanvas *gui3;
     ofxUIScrollableCanvas *gui4;
 
-    ofxUIMovingGraph *mg; 
     
 	bool hideGUI; 
 	
@@ -44,6 +43,7 @@ class testApp : public ofBaseApp
 	
 	void guiEvent(ofxUIEventArgs &e);
     
+    ofxUIMovingGraph *mg; 
     float *buffer; 
     ofImage *img; 
 };

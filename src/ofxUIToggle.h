@@ -32,17 +32,22 @@ class ofxUIToggle : public ofxUIButton
 public:
     ofxUIToggle() {}
     
-	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name) : ofxUIButton(x,y,w,h,_value,_name)
+	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton( x, y, w, h, _value, _name, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	        
     }
     
-	ofxUIToggle(float w, float h, bool _value, string _name) : ofxUIButton(w,h,_value, _name)
+	ofxUIToggle(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL): ofxUIButton( w, h, _value, _name, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	                
     }    
-
-	ofxUIToggle(float w, float h, bool _value, string _name, int _size) : ofxUIButton(w,h,_value, _name, _size)
+    
+	ofxUIToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton( x, y, w, h, _value, _name, _size )
+    {
+		kind = OFX_UI_WIDGET_TOGGLE; 	        
+    }
+    
+	ofxUIToggle(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL): ofxUIButton( w, h, _value, _name, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	                
     }    
@@ -123,7 +128,7 @@ public:
     {
         if(rect->inside(x, y) && hit)
         {
-            setValue(!value);
+            setValue(!(*value));
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            

@@ -60,10 +60,10 @@ public:
         kind = OFX_UI_WIDGET_SCROLLABLECANVAS;
         sRect = new ofxUIRectangle(rect->x, rect->y, rect->getWidth(), rect->getHeight());
         isScrolling = false; 
-        vel.set(0,0);
-        pos.set(0,0);
-        ppos.set(0,0);
-        acc.set(0,0);
+        vel.set(0); 
+        pos.set(0); 
+        ppos.set(0); 
+        acc.set(0); 
         damping = .90; 
         scrollX = false; 
         scrollY = true; 
@@ -76,9 +76,15 @@ public:
         hitWidget = false; 
         stickyDistance = 100;  
         hit = false; 
+        snapping = true; 
 #ifdef TARGET_OPENGLES
         touchId = -1; 
 #endif
+    }
+    
+    void setSnapping(bool _snapping)
+    {
+        snapping = _snapping; 
     }
     
     void setScrollArea(float x, float y, float w, float h)
@@ -119,7 +125,7 @@ public:
     {		     
         if(!isScrolling)
         {
-            if(scrollX)
+            if(scrollX && snapping)
             {
                 float dxLeft = rect->x - sRect->x; 
                 float dxRight = (sRect->x+sRect->getWidth()) - (rect->x+rect->getWidth()); 
@@ -160,7 +166,7 @@ public:
                 }                
             }
             
-            if(scrollY)
+            if(scrollY && snapping)
             {
                 float dyTop = rect->y - sRect->y; 
                 float dyBot = (sRect->y+sRect->getHeight()) - (rect->y+rect->getHeight()); 
@@ -207,7 +213,7 @@ public:
             if(scrollY) rect->y +=vel.y;             
             
             vel *=damping;    
-            acc.set(0,0);
+            acc.set(0); 
         }
         
 		for(int i = 0; i < widgets.size(); i++)
@@ -221,47 +227,95 @@ public:
         sRect->draw(); 
     }
     	
-#ifdef TARGET_OPENGLES 
+#ifdef TARGET_OPENGLES
     void touchDown(ofTouchEventArgs& touch)
-    {
-        if(touchId == -1)
-        {    
-            this->mousePressed(touch.x, touch.y, 0);
-            if(hit)
-            {
-                touchId = touch.id;    
-            }            
-        }    
+    {        
+        if(rect->inside(touch.x, touch.y))
+        {
+			for(int i = 0; i < widgets.size(); i++)
+			{
+                if(widgets[i]->isHit(touch.x, touch.y))
+                {            
+                    if(widgets[i]->isDraggable())
+                    {
+                        hitWidget = true;                                                                        
+                    }
+                    widgets[i]->touchDown(touch); 
+                }
+			}
+		}        
+        
+        if(sRect->inside(touch.x, touch.y) && touch.id == 0)
+        {
+            hit = true; 
+            isScrolling = false; 
+            vel.set(0);             
+        }
     }
     
     void touchMoved(ofTouchEventArgs& touch) 
     {
-        if(touchId == touch.id)
+        for(int i = 0; i < widgets.size(); i++)
         {
-            this->mouseDragged(touch.x, touch.y, 0); 
-        }       
+            if(widgets[i]->isVisible())	widgets[i]->touchMoved(touch);
+        }
+        
+        if(hit && touch.id == 0)
+        {
+            if(!hitWidget)
+            {
+                if(isScrolling != true)
+                {
+                    isScrolling = true; 
+                    ppos = ofPoint(touch.x,touch.y);
+                    vel.set(0); 
+                }
+                else
+                {
+                    pos = ofPoint(touch.x, touch.y);             
+                    vel = pos-ppos; 
+                    if(scrollX) rect->x +=vel.x; 
+                    if(scrollY) rect->y +=vel.y;             
+                    ppos = pos; 
+                }
+            }
+        }        
     }
     
     void touchUp(ofTouchEventArgs& touch) 
     {
-        if(touchId == touch.id)
+        for(int i = 0; i < widgets.size(); i++)
         {
-            this->mouseReleased(touch.x, touch.y, 0); 
-            touchId = -1;                      
+            if(widgets[i]->isVisible())	widgets[i]->touchUp(touch); 
         }
+        
+        hit = false; 
+        hitWidget = false; 
+        if(isScrolling)
+        {
+            isScrolling = false; 
+            pos = ofPoint(touch.x,touch.y);
+        }        
     }
     
     void touchCancelled(ofTouchEventArgs& touch) 
     {
-        if(touchId == touch.id)
+        for(int i = 0; i < widgets.size(); i++)
         {
-            this->mouseReleased(touch.x, touch.y, 0); 
-            touchId = -1;                
+            if(widgets[i]->isVisible())	widgets[i]->touchUp(touch); 
         }
+        
+        hit = false; 
+        hitWidget = false; 
+        if(isScrolling)
+        {
+            isScrolling = false; 
+            pos = ofPoint(touch.x,touch.y);
+        }        
     } 
     
-#endif	
-        
+#endif
+
     void mouseDragged(int x, int y, int button) 
     {	
         for(int i = 0; i < widgets.size(); i++)
@@ -293,7 +347,7 @@ public:
     
     void mousePressed(int x, int y, int button) 
     {
-        if(sRect->inside(x, y))
+        if(rect->inside(x, y))
         {
             hit = true; 
             for(int i = 0; i < widgets.size(); i++)
@@ -336,7 +390,8 @@ public:
 protected:
 
     ofxUIRectangle *sRect; 
-    bool isScrolling; 
+    bool isScrolling;
+    bool snapping; 
     bool scrollX, scrollY; 
     bool nearTop, nearBot, nearRight, nearLeft;
     bool hitWidget; 

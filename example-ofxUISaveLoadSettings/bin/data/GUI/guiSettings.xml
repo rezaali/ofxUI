@@ -1,12 +1,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>5.33473</Value>
+    <Value>225.126</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>GREEN</Name>
-    <Value>170.711</Value>
+    <Value>42.6778</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -102,6 +102,6 @@
 <Widget>
     <Kind>11</Kind>
     <Name>PAD</Name>
-    <XValue>101</XValue>
-    <YValue>48</YValue>
+    <XValue>180</XValue>
+    <YValue>98</YValue>
 </Widget>

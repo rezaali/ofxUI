@@ -149,6 +149,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4669357715BE905600F306CD /* Done */ = {
+			isa = PBXGroup;
+			children = (
+				F55D025C153EC7E500340848 /* ofxUIBiLabelSlider.h */,
+				F55D025F153EC7E500340848 /* ofxUICircleSlider.h */,
+				F55D0265153EC7E500340848 /* ofxUIImageButton.h */,
+				F55D0267153EC7E500340848 /* ofxUIImageToggle.h */,
+				F55D0269153EC7E500340848 /* ofxUILabelButton.h */,
+				F55D026A153EC7E500340848 /* ofxUILabelToggle.h */,
+				F55D026B153EC7E500340848 /* ofxUIMinimalSlider.h */,
+				F55D026D153EC7E500340848 /* ofxUINumberDialer.h */,
+				F55D026F153EC7E500340848 /* ofxUIRangeSlider.h */,
+				F55D0271153EC7E500340848 /* ofxUIRotarySlider.h */,
+				F55D0263153EC7E500340848 /* ofxUIFPSSlider.h */,
+				F55D0278153EC7E500340848 /* ofxUIToggleMatrix.h */,
+				F55D0277153EC7E500340848 /* ofxUIToggle.h */,
+				F55D025D153EC7E500340848 /* ofxUIButton.h */,
+				F55D0273153EC7E500340848 /* ofxUISlider.h */,
+				F55D027A153EC7E500340848 /* ofxUIWidget.h */,
+				F55D0279153EC7E500340848 /* ofxUIWaveform.h */,
+				F55D0276153EC7E500340848 /* ofxUITextInput.h */,
+				F55D0275153EC7E500340848 /* ofxUISpectrum.h */,
+				F55D0274153EC7E500340848 /* ofxUISpacer.h */,
+				F55D0272153EC7E500340848 /* ofxUIScrollableCanvas.h */,
+				F55D0270153EC7E500340848 /* ofxUIRectangle.h */,
+				F55D026E153EC7E500340848 /* ofxUIRadio.h */,
+				F55D026C153EC7E500340848 /* ofxUIMovingGraph.h */,
+				F55D0268153EC7E500340848 /* ofxUILabel.h */,
+				F55D0266153EC7E500340848 /* ofxUIImageSampler.h */,
+				F55D0264153EC7E500340848 /* ofxUIImage.h */,
+				F55D0262153EC7E500340848 /* ofxUIFPS.h */,
+				F55D0261153EC7E500340848 /* ofxUIEventArgs.h */,
+				F55D0260153EC7E500340848 /* ofxUIDropDownList.h */,
+				F55D025E153EC7E500340848 /* ofxUICanvas.h */,
+				F55D025B153EC7E500340848 /* ofxUI2DPad.h */,
+				F55D025A153EC7E500340848 /* ofxUI.h */,
+			);
+			name = Done;
+			sourceTree = "<group>";
+		};
+		4669357815BE905C00F306CD /* Not Done */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Not Done";
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,39 +315,8 @@
 		F55D0259153EC7E500340848 /* ofxUI */ = {
 			isa = PBXGroup;
 			children = (
-				F55D025A153EC7E500340848 /* ofxUI.h */,
-				F55D025B153EC7E500340848 /* ofxUI2DPad.h */,
-				F55D025C153EC7E500340848 /* ofxUIBiLabelSlider.h */,
-				F55D025D153EC7E500340848 /* ofxUIButton.h */,
-				F55D025E153EC7E500340848 /* ofxUICanvas.h */,
-				F55D025F153EC7E500340848 /* ofxUICircleSlider.h */,
-				F55D0260153EC7E500340848 /* ofxUIDropDownList.h */,
-				F55D0261153EC7E500340848 /* ofxUIEventArgs.h */,
-				F55D0262153EC7E500340848 /* ofxUIFPS.h */,
-				F55D0263153EC7E500340848 /* ofxUIFPSSlider.h */,
-				F55D0264153EC7E500340848 /* ofxUIImage.h */,
-				F55D0265153EC7E500340848 /* ofxUIImageButton.h */,
-				F55D0266153EC7E500340848 /* ofxUIImageSampler.h */,
-				F55D0267153EC7E500340848 /* ofxUIImageToggle.h */,
-				F55D0268153EC7E500340848 /* ofxUILabel.h */,
-				F55D0269153EC7E500340848 /* ofxUILabelButton.h */,
-				F55D026A153EC7E500340848 /* ofxUILabelToggle.h */,
-				F55D026B153EC7E500340848 /* ofxUIMinimalSlider.h */,
-				F55D026C153EC7E500340848 /* ofxUIMovingGraph.h */,
-				F55D026D153EC7E500340848 /* ofxUINumberDialer.h */,
-				F55D026E153EC7E500340848 /* ofxUIRadio.h */,
-				F55D026F153EC7E500340848 /* ofxUIRangeSlider.h */,
-				F55D0270153EC7E500340848 /* ofxUIRectangle.h */,
-				F55D0271153EC7E500340848 /* ofxUIRotarySlider.h */,
-				F55D0272153EC7E500340848 /* ofxUIScrollableCanvas.h */,
-				F55D0273153EC7E500340848 /* ofxUISlider.h */,
-				F55D0274153EC7E500340848 /* ofxUISpacer.h */,
-				F55D0275153EC7E500340848 /* ofxUISpectrum.h */,
-				F55D0276153EC7E500340848 /* ofxUITextInput.h */,
-				F55D0277153EC7E500340848 /* ofxUIToggle.h */,
-				F55D0278153EC7E500340848 /* ofxUIToggleMatrix.h */,
-				F55D0279153EC7E500340848 /* ofxUIWaveform.h */,
-				F55D027A153EC7E500340848 /* ofxUIWidget.h */,
+				4669357815BE905C00F306CD /* Not Done */,
+				4669357715BE905600F306CD /* Done */,
 			);
 			name = ofxUI;
 			path = ../src;
