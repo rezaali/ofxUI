@@ -107,6 +107,10 @@ public:
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
+        
+        widgetFontSize = OFX_UI_FONT_MEDIUM;
+        widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
+        widgetAlign = OFX_UI_ALIGN_LEFT;
     }
     
     void init(int w, int h, ofxUICanvas *sharedResources)
@@ -138,6 +142,10 @@ public:
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
+        
+        widgetFontSize = OFX_UI_FONT_MEDIUM;
+        widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
+        widgetAlign = OFX_UI_ALIGN_LEFT;
     }    
 
     void saveSettings(string fileName)
@@ -1474,6 +1482,28 @@ public:
 		}		
 	}
 	
+	void setWidgetFontSize(int _size)
+	{
+	    widgetFontSize = _size;
+	}
+	
+	void setWidgetPosition(ofxWidgetPosition _position, int _align = -1)
+	{
+	    widgetPosition = _position;
+	    if (_align == -1) 
+	    {
+	        if (_position == OFX_UI_WIDGET_POSITION_DOWN ||
+                _position == OFX_UI_WIDGET_POSITION_UP) 
+            {
+                widgetAlign = OFX_UI_ALIGN_LEFT;
+            }
+            else
+            {
+                widgetAlign = OFX_UI_ALIGN_FREE;
+            }
+	    }
+	}
+	
 	void triggerEvent(ofxUIWidget *child)
 	{        
         checkForKeyFocus(child); 
@@ -2257,6 +2287,10 @@ protected:
     
     string fontName;
 
+    int widgetFontSize;
+    ofxWidgetPosition widgetPosition;
+    ofxWidgetAlignment widgetAlign;
+    
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)    
     bool updateFont(ofxWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
         bool success = false;
