@@ -26,13 +26,13 @@ void testApp::setup()
     gui = new ofxUICanvas(0,0,length+xInit*2.0,ofGetHeight());     
 	gui->addWidgetDown(new ofxUILabel("SIMPLE EXAMPLE", OFX_UI_FONT_LARGE)); 
 
-    gui->addWidgetDown(new ofxUISpacer(length, 2)); 
+    gui->addSpacer(length, 2); 
     gui->addWidgetDown(new ofxUILabel("BACKGROUND CONTROL", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUISlider(95, dim, 0, 255, backgroundColor.r, "BGR")); 
     gui->addWidgetRight(new ofxUISlider(95, dim, 0, 255, backgroundColor.g, "BGG")); 
     gui->addWidgetRight(new ofxUISlider(95, dim, 0, 255, backgroundColor.b, "BGB"));     
     
-    gui->addWidgetDown(new ofxUISpacer(length, 2)); 
+    gui->addSpacer(length, 2); 
 
     gui->addWidgetDown(new ofxUILabel("CIRCLE CONTROL", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 255.0, red, "RED")); 
@@ -49,7 +49,7 @@ void testApp::setup()
     
     gui->addWidgetDown(new ofxUI2DPad(padWidth, padHeight, ofPoint(padWidth*.5, padHeight*.5), "POSITION")); 
 
-    gui->addWidgetDown(new ofxUISpacer(length, 2)); 
+    gui->addSpacer(length, 2); 
     gui->addWidgetDown(new ofxUILabel("HIDE & SHOW GUI BY PRESSING 'g'", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUILabel("MOUSE OVER A SLIDER AND", OFX_UI_FONT_MEDIUM));         
     gui->addWidgetDown(new ofxUILabel("PRESS UP, DOWN, LEFT, RIGHT", OFX_UI_FONT_MEDIUM));                 

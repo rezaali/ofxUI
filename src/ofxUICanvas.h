@@ -1406,6 +1406,12 @@ public:
         return widget;
     }         
     
+    ofxUISpacer* addSpacer(float w, float h, float x = 0, float y = 0)
+    {
+        ofxUISpacer* widget = new ofxUISpacer(w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
     void resetPlacer()
     {
         lastAdded = NULL; 
