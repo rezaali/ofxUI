@@ -6,8 +6,6 @@
 class ofxUISpacer : public ofxUIWidget
 {
 public:
-    ofxUISpacer() {}
-    
     ofxUISpacer(float w, float h, float x = 0, float y = 0)
     {
         init(w, h, x, y);
