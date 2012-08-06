@@ -18,11 +18,11 @@ void testApp::setup()
     
 	gui->addWidgetDown(new ofxUILabel("CUSTOM WIDGETS", OFX_UI_FONT_LARGE)); 
     
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM)); 
     gui->addWidgetDown(new ofxUINumberDialer(-99999.9, 99999.9, 10000.0, 2, "NDIALER", OFX_UI_FONT_MEDIUM)); 
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM)); 
     gui->addWidgetDown(new ofxUITextInput(length-xInit, "Text Input Large", "LARGE TEXT FIELD", OFX_UI_FONT_LARGE)); 
     gui->addWidgetDown(new ofxUITextInput(length-xInit, "Text Input Medium", "MEDIUM TEXT FIELD", OFX_UI_FONT_MEDIUM)); 
@@ -31,7 +31,7 @@ void testApp::setup()
     ofxUITextInput* textinput = (ofxUITextInput *) gui->getWidget("Text Input Autoclear"); 
     textinput->setAutoClear(false); 
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     buffer = new float[256];     
     for(int i = 0; i < 256; i++) { buffer[i] = ofNoise(i/100.0); }
     
@@ -40,7 +40,7 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabel("SPECTRUM GRAPH", OFX_UI_FONT_MEDIUM));        
     gui->addWidgetDown(new ofxUISpectrum(length-xInit, 64, buffer, 256, 0.0, 1.0, "SPECTRUM")); 
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     
     img = new ofImage(); 
     img->loadImage("of1.jpg"); 
@@ -59,7 +59,7 @@ void testApp::setup()
     gui->addWidgetSouthOf(new ofxUISpacer(length-xInit, 2), "OF LOGO 1"); 
     gui->addWidgetDown(new ofxUILabel("FPS LABEL", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUIFPS(OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));  
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("DROP DOWN LIST", OFX_UI_FONT_MEDIUM));     
     
     vector<string> items; items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM"); items.push_back("FOURTH ITEM");    

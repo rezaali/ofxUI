@@ -16,7 +16,7 @@ void testApp::setup()
     gui = new ofxUICanvas(0,0,length+xInit, ofGetHeight());
 	gui->addWidgetDown(new ofxUILabel("MORE WIDGETS", OFX_UI_FONT_LARGE)); 
     gui->addWidgetRight(new ofxUIFPS(OFX_UI_FONT_LARGE));
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
 	gui->addWidgetDown(new ofxUILabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM));         
     int bufferSize = 256; 
     vector<float> buffer; 
@@ -26,7 +26,7 @@ void testApp::setup()
     }
     mg = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "MOVING GRAPH")); 
         
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE)); 
     ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0, "MINIMAL", OFX_UI_FONT_MEDIUM)); 
     mslider->setLabelPrecision(0);
@@ -35,15 +35,15 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUITextInput(length-xInit, "TEXT INPUT FIELD", "INPUT FIELD", OFX_UI_FONT_LARGE));
     
     gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0, 100, 50.0, "LEFT", "CALM MODE", "CRAZY MODE", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("ENHANCED 2D PADS", OFX_UI_FONT_LARGE)); 
     gui->addWidgetDown(new ofxUI2DPad(length-xInit, 128, ofPoint(-100,100), ofPoint(100,-100), ofPoint(0,0), "2D PAD RANGE"));
     
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    gui->addSpacer(length-xInit, 2);
     mgX = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "X GRAPH")); 
     mgY = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "Y GRAPH")); 
     
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));     
+    gui->addSpacer(length-xInit, 2);
     vector<string> toggles; 
     toggles.push_back("FIRST");
     toggles.push_back("SECOND");
