@@ -44,6 +44,36 @@ public:
         init(_name, _min, _max, _value, w, h, x, y);
     }
     
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
+    {
+        useReference = false;         
+        init(_name, _min, _max, &_value, w, h, x, y);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
+    
+    ofxUISlider(float w, float h, float _min, float _max, float _value, string _name)
+    {
+        useReference = false;         
+        init(_name, _min, _max, &_value, w, h, 0, 0);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }    
+    
+    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true; 
+        init(_name, _min, _max, _value, w, h, x, y);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
+    
+    ofxUISlider(float w, float h, float _min, float _max, float *_value, string _name)
+    {
+        useReference = true; 
+        init(_name, _min, _max, _value, w, h, 0, 0);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
+    
     ~ofxUISlider()
     {
         if(!useReference)
