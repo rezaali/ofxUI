@@ -96,7 +96,7 @@ public:
             *valueRef = value; 
         }
 
-		max = _max; 
+		max = _max;
 		min = _min; 
         labelPrecision = 2;
         

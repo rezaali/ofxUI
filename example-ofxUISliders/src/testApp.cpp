@@ -6,7 +6,7 @@ void testApp::setup()
 	ofEnableSmoothing(); 
     ofSetCircleResolution(60);
     
-    red = 233; blue = 27; green = 52; 
+    red = 233.; blue = 27.; green = 52.;
 	
 	float dim = 24; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
@@ -21,7 +21,7 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim*.25, 0, 1000, 60.0, "FPS SLIDER"));
     gui->addSpacer(length-xInit, 1); 
 	gui->addWidgetDown(new ofxUILabel("NORMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
-    gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
+    gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED"));
     gui->addSpacer(length-xInit, 1); 
 	gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
@@ -48,7 +48,7 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUICircleSlider(dim*2, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
     gui->addSpacer(length-xInit, 1);     
 	gui->addWidgetDown(new ofxUILabel("IMAGE SLIDER", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUIImageSlider(length-xInit, dim, 0.0, 255.0, red, "slider.png", "RED"));     
+    gui->addWidgetDown(new ofxUIImageSlider(length-xInit, dim, 0.0, 255.0, red, "slider.png", "RED"));
 
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
