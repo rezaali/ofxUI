@@ -34,7 +34,7 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
 
-    w = gui->addFPSSlider("FPS SLIDER", length-xInit, dim/2.0, 60);
+    w = gui->addFPSSlider("FPS SLIDER", length-xInit, dim/2.0, 60.0);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
