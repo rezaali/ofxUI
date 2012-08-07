@@ -90,6 +90,14 @@ public:
         }
     }    
     
+    void clearSelected()
+    {
+        for(int i = 0; i < toggles.size(); i++)
+        {
+	        toggles[i]->setValue(false);
+        }            
+        selected.clear();
+    }
     
     void addToggle(string toggleName)
     {        
