@@ -28,35 +28,6 @@ void testApp::setup()
     gui->addSpacer(length, 2);
     gui->addLabel("BACKGROUND CONTROL");
     gui->addSpacer(length, 2);
-    gui->addFPSSlider(length, dim, 0.0, 120.0, 60.0, "FPS SLIDER");
-    gui->addSpacer(length, 2);
-    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.r, "BGR");
-    gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
-    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.g, "BGG");
-    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.b, "BGB");
-    gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
-    gui->addSpacer(length, 2);
-    
-    gui->addLabel("CIRCLE CONTROL");
-    gui->addSlider(length,dim, 0.0, 255.0, red, "RED");
-	gui->addSlider(length,dim, 0.0, 255.0, green, "GREEN");
-    gui->addSlider(length,dim, 0.0, 255.0, blue, "BLUE");
-    gui->addSlider(length,dim, 0.0, 255.0, alpha, "ALPHA");
-    gui->addSlider(length,dim, 0.0, 600.0, radius, "RADIUS");
-	gui->addSlider(length,dim, 3, 60, resolution, "RESOLUTION");
-    gui->addLabelToggle(length, drawFill, "DRAW FILL");
-    
-    float padWidth = length; 
-    float padHeight = length*((float)ofGetHeight()/(float)ofGetWidth()); 
-    
-    gui->addWidgetDown(new ofxUI2DPad(padWidth, padHeight, ofPoint(padWidth*.5, padHeight*.5), "POSITION")); 
-
-    gui->addSpacer(length, 2);
-    
-    
-    gui->addLabel("HIDE & SHOW GUI BY PRESSING 'g'");
-    gui->addLabel("MOUSE OVER A SLIDER AND");
-    gui->addLabel("PRESS UP, DOWN, LEFT, RIGHT");
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(backgroundColor); 
