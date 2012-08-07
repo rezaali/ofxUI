@@ -30,26 +30,11 @@
 class ofxUIFPSSlider : public ofxUISlider
 {
 public:        
-    ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name) : ofxUISlider(x, y, w, h, _min, _max, _value, _name)
+    ofxUIFPSSlider(string _name, float w, float h, float _max = 400.0, float x = 0, float y = 0)
+        : ofxUISlider(_name, 0.0, _max, 0.0, w, h, x, y)
     {
-        
     }
-    
-    ofxUIFPSSlider(float w, float h, float _min, float _max, float _value, string _name) : ofxUISlider(w, h, _min, _max, _value, _name)
-    {
-        
-    }    
-    
-    ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name) : ofxUISlider(x, y, w, h, _min, _max, _value, _name)
-    {
-        
-    }
-    
-    ofxUIFPSSlider(float w, float h, float _min, float _max, float *_value, string _name) : ofxUISlider(w, h, _min, _max, _value, _name)
-    {
-        
-    }   
-    
+
 	void update()
 	{
         setValue(ofGetFrameRate());   

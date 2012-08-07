@@ -32,33 +32,17 @@ class ofxUISlider : public ofxUIWidgetWithLabel
 public:
     ofxUISlider() {}
     
-    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
+    ofxUISlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
     {
-        useReference = false;         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, &_value, _name); 		
+        useReference = false;
+        init(_name, _min, _max, &_value, w, h, x, y);
     }
-    
-    ofxUISlider(float w, float h, float _min, float _max, float _value, string _name)
+
+    ofxUISlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
     {
-        useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, &_value, _name); 
-    }    
-    
-    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name)
-    {
-        useReference = true; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, _value, _name); 		
+        useReference = true;
+        init(_name, _min, _max, _value, w, h, x, y);
     }
-    
-    ofxUISlider(float w, float h, float _min, float _max, float *_value, string _name)
-    {
-        useReference = true; 
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, _value, _name); 
-    }        
     
     ~ofxUISlider()
     {
@@ -68,8 +52,9 @@ public:
         }
     }   
     
-    virtual void init(float w, float h, float _min, float _max, float *_value, string _name)
+    virtual void init(string _name, float _min, float _max, float *_value, float w, float h, float x, float y)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
         name = _name; 				
 		if(w > h)
 		{

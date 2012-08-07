@@ -1412,6 +1412,28 @@ public:
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
+    
+    ofxUISlider* addSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUISlider* addSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUIFPSSlider* addFPSSlider(string _name, float w, float h, float _max = 400, float x = 0, float y = 0)
+    {
+        ofxUIFPSSlider* widget = new ofxUIFPSSlider(_name, w, h, _max, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
     void resetPlacer()
     {
         lastAdded = NULL; 
