@@ -126,7 +126,8 @@ public:
 		
 		valuelow = ofMap(valuelow, min, max, 0.0, 1.0, true); 
 		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
-		
+		labelPrecision = 2;
+        
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
 			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)), _size); 

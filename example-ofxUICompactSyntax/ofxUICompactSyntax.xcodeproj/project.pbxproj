@@ -82,7 +82,6 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
-		F517084214E5389000C15F2F /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		F517084414E5389000C15F2F /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
 		F517084514E5389000C15F2F /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
 		F517084614E5389000C15F2F /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
@@ -232,9 +231,9 @@
 			children = (
 				F563EFB314C8B9F300354DA7 /* ofxUIWaveform.h */,
 				F563EFB014C8B9F300354DA7 /* ofxUISpectrum.h */,
-				F563EFAA14C8B9F300354DA7 /* ofxUILabel.h */,
 				F563EFA914C8B9F300354DA7 /* ofxUIImage.h */,
 				F563EFA814C8B9F300354DA7 /* ofxUIFPS.h */,
+				F563EFAA14C8B9F300354DA7 /* ofxUILabel.h */,
 				F54B5D3714D299DF00B90DAE /* ofxUISpacer.h */,
 			);
 			name = Inactive;
@@ -265,7 +264,6 @@
 		F517084114E5389000C15F2F /* ofxXmlSettings */ = {
 			isa = PBXGroup;
 			children = (
-				F517084214E5389000C15F2F /* install.xml */,
 				F517084314E5389000C15F2F /* libs */,
 				F517084814E5389000C15F2F /* src */,
 			);

@@ -291,15 +291,15 @@ void testApp::setGUI1()
 
     gui1->addSpacer(length-xInit, 2); 
     gui1->addWidgetDown(new ofxUILabel("V SLIDERS", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUISlider(dim,160, 0.0, 255.0, 150, "0")); 	
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "1")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "2")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "3")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "4")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "5")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "6")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "7")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150, "8")); 
+	gui1->addWidgetDown(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "0"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "1"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "2"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "3"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "4"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "5"));
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "6")); 
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "7")); 
+	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "8")); 
     
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL)); 
@@ -453,7 +453,8 @@ void testApp::setGUI4()
     gui4->addSpacer(length-xInit, 2);
     gui4->addWidgetDown(new ofxUILabel("IMAGE SAMPLER", OFX_UI_FONT_MEDIUM)); 				
     gui4->addWidgetDown(new ofxUIImageSampler(img->getWidth(), img->getHeight(), img, "SAMPLER"));
-    
+    gui4->addWidgetDown(new ofxUIMultiImageButton(dim*2, dim*2, false, "GUI/toggle.png", "IMAGE BUTTON"));
+    gui4->addWidgetDown(new ofxUIMultiImageToggle(dim*2, dim*2, false, "GUI/toggle.png", "IMAGE BUTTON"));
     
     
 	ofAddListener(gui4->newGUIEvent,this,&testApp::guiEvent);

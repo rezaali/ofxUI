@@ -108,7 +108,6 @@ public:
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
         
-        widgetFontSize = OFX_UI_FONT_MEDIUM;
         widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
         widgetAlign = OFX_UI_ALIGN_LEFT;
     }
@@ -142,8 +141,7 @@ public:
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
         hasKeyBoard = false; 
-        
-        widgetFontSize = OFX_UI_FONT_MEDIUM;
+            
         widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
         widgetAlign = OFX_UI_ALIGN_LEFT;
     }    
@@ -1406,12 +1404,129 @@ public:
         return widget;
     }         
     
-    ofxUISpacer* addSpacer(float w, float h, float x = 0, float y = 0)
+    ofxUISpacer* addSpacer(float w, float h)
     {
-        ofxUISpacer* widget = new ofxUISpacer(w, h, x, y);
+        ofxUISpacer* widget = new ofxUISpacer(w, h);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
+
+    ofxUISpacer* addSpacer(float w, float h, string name)
+    {
+        ofxUISpacer* widget = new ofxUISpacer(w, h, name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabel *addLabel(string name, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabel* widget = new ofxUILabel(name, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUILabel *addLabel(string name, string label, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabel* widget = new ofxUILabel(name, label, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIFPS *addFPS(int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUIFPS* widget = new ofxUIFPS(size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIFPSSlider* addFPSSlider(float w, float h, float min, float max, float value, string name)
+    {
+        ofxUIFPSSlider* widget = new ofxUIFPSSlider(w, h, min, max, value, name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUIFPSSlider* addFPSSlider(float w, float h, float min, float max, float *value, string name)
+    {
+        ofxUIFPSSlider* widget = new ofxUIFPSSlider(w, h, min, max, value, name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUISlider *addSlider(float w, float h, float min, float max, float value, string name)
+    {
+        ofxUISlider* widget = new ofxUISlider(w, h, min, max, value, name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUISlider *addSlider(float w, float h, float min, float max, float *value, string name)
+    {
+        ofxUISlider* widget = new ofxUISlider(w, h, min, max, value, name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelToggle *addLabelToggle(bool value, string name, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabelToggle* widget = new ofxUILabelToggle(value, name, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;        
+    }
+    
+    ofxUILabelToggle *addLabelToggle(bool *value, string name, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabelToggle* widget = new ofxUILabelToggle(value, name, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelToggle *addLabelToggle(float w, bool value, string name, int size = OFX_UI_FONT_MEDIUM, float h = 0)
+    {
+        ofxUILabelToggle* widget = new ofxUILabelToggle(w, value, name, size, h);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUILabelToggle *addLabelToggle(float w, bool *value, string name, int size = OFX_UI_FONT_MEDIUM, float h = 0)
+    {
+        ofxUILabelToggle* widget = new ofxUILabelToggle(w, value, name, size, h);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelButton *addLabelButton(bool value, string name, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabelButton* widget = new ofxUILabelButton(value, name, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelButton *addLabelButton(bool *value, string name, int size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUILabelButton* widget = new ofxUILabelButton(value, name, size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelButton *addLabelButton(float w, bool value, string name, int size = OFX_UI_FONT_MEDIUM, float h = 0)
+    {
+        ofxUILabelButton* widget = new ofxUILabelButton(w, value, name, size, h);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUILabelButton *addLabelButton(float w, bool *value, string name, int size = OFX_UI_FONT_MEDIUM, float h = 0)
+    {
+        ofxUILabelButton* widget = new ofxUILabelButton(w, value, name, size, h);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    
+
+    
+    
     void resetPlacer()
     {
         lastAdded = NULL; 
@@ -1437,12 +1552,7 @@ public:
 				break; 					
 		}		
 	}
-	
-	void setWidgetFontSize(int _size)
-	{
-	    widgetFontSize = _size;
-	}
-	
+		
 	void setWidgetPosition(ofxWidgetPosition _position, int _align = -1)
 	{
 	    widgetPosition = _position;
@@ -2243,7 +2353,6 @@ protected:
     
     string fontName;
 
-    int widgetFontSize;
     ofxWidgetPosition widgetPosition;
     ofxWidgetAlignment widgetAlign;
     

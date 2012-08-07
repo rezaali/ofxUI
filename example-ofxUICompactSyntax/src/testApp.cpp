@@ -23,27 +23,28 @@ void testApp::setup()
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
     float length = 320-xInit; 
 	
-    gui = new ofxUICanvas(0,0,length+xInit*2.0,ofGetHeight());     
-	gui->addWidgetDown(new ofxUILabel("SIMPLE EXAMPLE", OFX_UI_FONT_LARGE)); 
-
+    gui = new ofxUICanvas(0,0,length+xInit*2.0,ofGetHeight());
+    gui->addLabel("COMPACT SYNTAX", OFX_UI_FONT_LARGE);    
+    gui->addSpacer(length, 2);
+    gui->addLabel("BACKGROUND CONTROL");
+    gui->addSpacer(length, 2);
+    gui->addFPSSlider(length, dim, 0.0, 120.0, 60.0, "FPS SLIDER");
+    gui->addSpacer(length, 2);
+    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.r, "BGR");
+    gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
+    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.g, "BGG");
+    gui->addSlider(95, dim, 0.0, 255.0, backgroundColor.b, "BGB");
+    gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     gui->addSpacer(length, 2);
     
-    gui->addWidgetDown(new ofxUILabel("BACKGROUND CONTROL", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUISlider(95, dim, 0, 255, backgroundColor.r, "BGR")); 
-    gui->addWidgetRight(new ofxUISlider(95, dim, 0, 255, backgroundColor.g, "BGG")); 
-    gui->addWidgetRight(new ofxUISlider(95, dim, 0, 255, backgroundColor.b, "BGB"));     
-    
-    gui->addSpacer(length, 2); 
-
-    gui->addWidgetDown(new ofxUILabel("CIRCLE CONTROL", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 255.0, red, "RED")); 
-	gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 255.0, green, "GREEN")); 
-    gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 255.0, blue, "BLUE")); 	    
-    gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 255.0, alpha, "ALPHA")); 	        
-    gui->addWidgetDown(new ofxUISlider(length,dim, 0.0, 600.0, radius, "RADIUS")); 
-	gui->addWidgetDown(new ofxUISlider(length,dim, 3, 60, resolution, "RESOLUTION")); 
-
-    gui->addWidgetDown(new ofxUILabelToggle(drawFill, "DRAW FILL", OFX_UI_FONT_MEDIUM)); 
+    gui->addLabel("CIRCLE CONTROL");
+    gui->addSlider(length,dim, 0.0, 255.0, red, "RED");
+	gui->addSlider(length,dim, 0.0, 255.0, green, "GREEN");
+    gui->addSlider(length,dim, 0.0, 255.0, blue, "BLUE");
+    gui->addSlider(length,dim, 0.0, 255.0, alpha, "ALPHA");
+    gui->addSlider(length,dim, 0.0, 600.0, radius, "RADIUS");
+	gui->addSlider(length,dim, 3, 60, resolution, "RESOLUTION");
+    gui->addLabelToggle(length, drawFill, "DRAW FILL");
     
     float padWidth = length; 
     float padHeight = length*((float)ofGetHeight()/(float)ofGetWidth()); 
@@ -52,9 +53,10 @@ void testApp::setup()
 
     gui->addSpacer(length, 2);
     
-    gui->addWidgetDown(new ofxUILabel("HIDE & SHOW GUI BY PRESSING 'g'", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUILabel("MOUSE OVER A SLIDER AND", OFX_UI_FONT_MEDIUM));         
-    gui->addWidgetDown(new ofxUILabel("PRESS UP, DOWN, LEFT, RIGHT", OFX_UI_FONT_MEDIUM));                 
+    
+    gui->addLabel("HIDE & SHOW GUI BY PRESSING 'g'");
+    gui->addLabel("MOUSE OVER A SLIDER AND");
+    gui->addLabel("PRESS UP, DOWN, LEFT, RIGHT");
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(backgroundColor); 
