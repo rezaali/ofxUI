@@ -28,7 +28,7 @@ void testApp::setup()
         
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE)); 
-    ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0, "MINIMAL", OFX_UI_FONT_MEDIUM)); 
+    ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0.0, "MINIMAL", OFX_UI_FONT_MEDIUM));
     mslider->setLabelPrecision(0);
     gui->addWidgetDown(new ofxUISlider(length-xInit, 24, 0, 100, 50.0, "NORMAL"));
     gui->addWidgetDown(new ofxUIRangeSlider(length-xInit, 24, 0, 100, 25.0, 50.0, "RANGE"));    
