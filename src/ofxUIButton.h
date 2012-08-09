@@ -32,32 +32,47 @@ class ofxUIButton : public ofxUIWidgetWithLabel
 public:    
     ofxUIButton() {}
     
+    ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = false; 
+        init(_name, &_value, w, h, x, y, _size);
+    }
+
+    ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;         
+        init(_name, _value, w, h, x, y, _size);
+    }
+
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, &_value, _name, _size);
+        init(_name, &_value, w, h, x, y, _size);
+        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIButton(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, &_value, _name, _size);        
+        init(_name, &_value, w, h, 0, 0, _size);        
+        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
     ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _name, _size);
+        init(_name, _value, w, h, x, y, _size);
+        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIButton(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _name, _size);        
+        init(_name, _value, w, h, 0, 0, _size);
+        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
     ~ofxUIButton()
@@ -68,8 +83,10 @@ public:
         }
     }
     
-    virtual void init(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    virtual void init(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    //init(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)    
     {
+        rect = new ofxUIRectangle(x,y,w,h); 
 		name = _name; 		
 		kind = OFX_UI_WIDGET_BUTTON; 		
         

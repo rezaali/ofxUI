@@ -32,24 +32,47 @@ class ofxUIToggle : public ofxUIButton
 public:
     ofxUIToggle() {}
     
-	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton( x, y, w, h, _value, _name, _size )
+    ofxUIToggle(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) 
+        : ofxUIButton( _name, _value, w, h, x, y, _size )
     {
-		kind = OFX_UI_WIDGET_TOGGLE; 	        
+        kind = OFX_UI_WIDGET_TOGGLE;
     }
     
-	ofxUIToggle(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL): ofxUIButton( w, h, _value, _name, _size )
+    ofxUIToggle(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) 
+        : ofxUIButton( _name, _value, w, h, x, y, _size )
+    {
+        kind = OFX_UI_WIDGET_TOGGLE;
+    }
+
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
+	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) 
+	    : ofxUIButton( _name, _value, w, h, x, y, _size )
+    {
+		kind = OFX_UI_WIDGET_TOGGLE; 	        
+        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
+    
+	ofxUIToggle(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
+	    : ofxUIButton( _name, _value, w, h, 0, 0, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	                
+        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
-	ofxUIToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton( x, y, w, h, _value, _name, _size )
+	ofxUIToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) 
+	    : ofxUIButton( _name, _value, w, h, x, y, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	        
+        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-	ofxUIToggle(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL): ofxUIButton( w, h, _value, _name, _size )
+	ofxUIToggle(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+	    : ofxUIButton( _name, _value, w, h, 0, 0, _size )
     {
 		kind = OFX_UI_WIDGET_TOGGLE; 	                
+        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
     virtual void setDrawPadding(bool _draw_padded_rect)

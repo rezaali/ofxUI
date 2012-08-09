@@ -50,7 +50,7 @@ void testApp::setup()
     float padWidth = length; 
     float padHeight = length*((float)ofGetHeight()/(float)ofGetWidth()); 
     
-    gui->addWidgetDown(new ofxUI2DPad(padWidth, padHeight, ofPoint(0, ofGetWidth()), ofPoint(0, ofGetHeight()), &position, "POSITION")); 
+    gui->add2DPad("POSITION", ofPoint(0, ofGetWidth()), ofPoint(0, ofGetHeight()), &position, padWidth, padHeight);
 
     gui->addSpacer(length, 2); 
     gui->addWidgetDown(new ofxUILabel("HIDE & SHOW GUI BY PRESSING 'g'", OFX_UI_FONT_MEDIUM));     

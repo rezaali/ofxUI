@@ -46,6 +46,7 @@ public:
     
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
     {
         useReference = false;         

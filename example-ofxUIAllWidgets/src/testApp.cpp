@@ -304,22 +304,22 @@ void testApp::setGUI1()
 	gui1->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     
     gui1->addSpacer(length-xInit, 2);
-	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL)); 
-	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO VERTICAL", names, OFX_UI_ORIENTATION_VERTICAL)); 
+	gui1->addRadio("RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL, dim, dim); 
+	gui1->addRadio("RADIO VERTICAL", names, OFX_UI_ORIENTATION_VERTICAL, dim, dim); 
 
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUILabel("BUTTONS", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIButton( dim, dim, false, "DRAW GRID")); 	
+	gui1->addButton("DRAW GRID", false, dim, dim);
 	gui1->addWidgetDown(new ofxUILabel("TOGGLES", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIToggle( dim, dim, false, "D_GRID")); 	
+	gui1->addToggle( "D_GRID", false, dim, dim);
     
     gui1->addSpacer(length-xInit, 2);
     gui1->addWidgetDown(new ofxUILabel("RANGE SLIDER", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIRangeSlider(length-xInit,dim, 0.0, 255.0, 50.0, 100.0, "RSLIDER")); 	
+	gui1->addRangeSlider("RSLIDER", 0.0, 255.0, 50.0, 100.0, length-xInit,dim);
 
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUI2DPad(length-xInit,120, ofPoint((length-xInit)*.5,120*.5), "PAD")); 	
+	gui1->add2DPad("PAD", ofPoint(0,length-xInit), ofPoint(0,120), ofPoint((length-xInit)*.5,120*.5), length-xInit,120);
 
 
     
@@ -344,7 +344,9 @@ void testApp::setGUI2()
 
     gui2->addSpacer(length-xInit, 2);
 	gui2->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM));
-	gui2->addWidgetDown(new ofxUITextInput(length-xInit, "TEXT INPUT", "Input Text", OFX_UI_FONT_LARGE)); 	
+	gui2->setWidgetFontSize(OFX_UI_FONT_LARGE);
+	gui2->addTextInput("TEXT INPUT", "Input Text", length-xInit);
+	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
 
     gui2->addSpacer(length-xInit, 2);
     gui2->addWidgetDown(new ofxUILabel("WAVEFORM DISPLAY", OFX_UI_FONT_MEDIUM));     
