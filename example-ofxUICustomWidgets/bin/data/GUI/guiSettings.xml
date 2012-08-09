@@ -1,7 +1,7 @@
 <Widget>
     <Kind>8</Kind>
     <Name>NDIALER</Name>
-    <Value>2380.97</Value>
+    <Value>115</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
@@ -26,11 +26,11 @@
 <Widget>
     <Kind>28</Kind>
     <Name>OF LOGO 2</Name>
-    <XValue>0.354167</XValue>
-    <YValue>0.486111</YValue>
-    <RColor>66</RColor>
-    <GColor>32</GColor>
-    <BColor>0</BColor>
+    <XValue>0.5</XValue>
+    <YValue>0.5</YValue>
+    <RColor>188</RColor>
+    <GColor>152</GColor>
+    <BColor>116</BColor>
     <AColor>255</AColor>
 </Widget>
 <Widget>
@@ -41,7 +41,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>SECOND ITEM</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>

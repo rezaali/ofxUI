@@ -93,43 +93,99 @@ public:
             *value = min; 
         }
         precision = _precision; 
+        currentPrecisionZone = 1;
+        
         
         string minString = ofToString(min, precision); 
         string maxString = ofToString(max, precision);         
         if(minString.length() > maxString.length())
         {
             textstring = minString; 
-            numOfPrecisionZones = minString.length()-1;             //1 for the "-" sign
         }
         else
         {
-            textstring = maxString; 
-            numOfPrecisionZones = maxString.length(); 
+            textstring = "+"+maxString;
         }
-        
+
+        string temp = "";
         if(precision > 0)
         {
-            numOfPrecisionZones -= 1; 
+            temp+="..";
+            hasPeriod = 1;
+        }
+        else
+        {
+            temp += "+";            
+            hasPeriod = 0;
         }
         
-		displaystring = textstring; 
+        numOfPrecisionZones = textstring.length()-1;             //1 for the "-/+" sign & 1 for the "."
+        
+		displaystring = textstring;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-		paddedRect->setParent(rect); 
+		paddedRect->setParent(rect); 		
+                
+        for(int i = 0; i < numOfPrecisionZones; i++)
+        {
+            temp+="0";
+        }
 		
-		label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), textstring, _size); 
+        label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), temp, _size);
 		label->setParent(label); 
 		label->setRectParent(rect);
-        label->setEmbedded(true);        
+        label->setEmbedded(true);
+        label->setVisible(false);
+        draw_fill = true; 
     }
     
     virtual void update()
     {
         if(useReference)
-        {            
-            setTextString(ofToString(*value, precision));                      
+        {
+            setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));
         }
-    }    
+    }
+    
+    
+    virtual void drawFill()
+    {
+        if(draw_fill)
+        {
+            ofFill();
+            ofSetColor(color_fill);
+            float x = label->getRect()->getX();
+            float y = label->getRect()->getY()+label->getRect()->getHeight();
+            float w = label->getStringWidth("_");
+
+            for(int i = 0; i < displaystring.size(); i++)
+            {
+                float tw = label->getStringWidth(displaystring.substr(i,1));
+                float delta = w/2.0 - tw/2.0;
+                label->drawString(x+i*w+delta, y, displaystring.substr(i,1));
+            }            
+        }
+    }
+    
+    virtual void drawFillHighlight()
+    {
+        if(draw_fill_highlight)
+        {
+            ofFill();
+            ofSetColor(color_fill_highlight);
+            float x = label->getRect()->getX();
+            float y = label->getRect()->getY()+label->getRect()->getHeight();
+            float w = label->getStringWidth("_");            
+            ofRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
+            
+            for(int i = 0; i < displaystring.size(); i++)
+            {
+                float tw = label->getStringWidth(displaystring.substr(i,1));
+                float delta = w/2.0 - tw/2.0; 
+                label->drawString(x+i*w+delta, y, displaystring.substr(i,1));
+            }        
+        }
+    }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
 	{
@@ -141,7 +197,12 @@ public:
 	{
 		draw_padded_rect_outline = _draw_padded_rect_outline; 
         label->setDrawPaddingOutline(false);
-	}  
+	}
+    
+    void calculatePrecisionZone()
+    {
+        currentPrecisionZone = ceil(ofMap(hitPoint.x,rect->getX(),rect->getX()+rect->getWidth(),-1, displaystring.size()-1));
+    }
 	
     float getValue()
     {
@@ -159,15 +220,17 @@ public:
             _value = min; 
         }            
         *value = _value; 
-        setTextString(ofToString(*value, precision));         
+        setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));         
     }
     
     void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))
         {
-            state = OFX_UI_STATE_OVER;         			
-        }    
+            state = OFX_UI_STATE_OVER;
+            hitPoint = ofPoint(x,y);
+            calculatePrecisionZone();
+        }
         else
         {
             state = OFX_UI_STATE_NORMAL;        
@@ -189,7 +252,7 @@ public:
                 *value = min; 
             }                  
             hitPoint = ofPoint(x,y); 
-            setTextString(ofToString(*value, precision));     
+            setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
 			triggerEvent(this);             
             state = OFX_UI_STATE_DOWN;         
         }    
@@ -206,8 +269,20 @@ public:
         {
             hit = true; 
             hitPoint = ofPoint(x,y); 
-            currentPrecisionZone = ceil(ofMap(x,rect->getX(),rect->getX()+rect->getWidth(),0,numOfPrecisionZones));             
-            zoneMultiplier = pow(10.0,numOfPrecisionZones-currentPrecisionZone-precision);     
+            calculatePrecisionZone();
+
+            if(currentPrecisionZone == 0)
+            {
+                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
+            }
+            else if(currentPrecisionZone <= numOfPrecisionZones-precision)
+            {
+                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod-currentPrecisionZone);
+            }
+            else
+            {
+                zoneMultiplier = powf(10.0, numOfPrecisionZones-currentPrecisionZone-precision);
+            }            
             state = OFX_UI_STATE_DOWN;     
 			triggerEvent(this);            
         }    
@@ -254,7 +329,7 @@ public:
                         *value = min; 
                     }            
                     
-                    setTextString(ofToString(*value, precision));     
+                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -269,7 +344,7 @@ public:
                         *value = min; 
                     }     
                     
-                    setTextString(ofToString(*value, precision));     
+                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -284,7 +359,7 @@ public:
                         *value = min; 
                     }     
                     
-                    setTextString(ofToString(*value, precision));     
+                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -299,7 +374,7 @@ public:
                         *value = min; 
                     }      
                     
-                    setTextString(ofToString(*value, precision));     
+                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;					
                     
@@ -323,28 +398,32 @@ public:
     {        
         switch (state) {
             case OFX_UI_STATE_NORMAL:
-            {            
-                draw_fill_highlight = false;             
-                draw_outline_highlight = false;  
+            {
+                draw_fill = true;
+                draw_fill_highlight = false;
+                draw_outline_highlight = false;
 				label->unfocus(); 								
             }
                 break;
             case OFX_UI_STATE_OVER:
             {
-                draw_fill_highlight = false;            
+                draw_fill = false;
+                draw_fill_highlight = true;
                 draw_outline_highlight = true;  
 				label->focus(); 								
             }
                 break;
             case OFX_UI_STATE_DOWN:
             {
-                draw_fill_highlight = false;            
+                draw_fill = false;
+                draw_fill_highlight = true;
                 draw_outline_highlight = true;             
 				label->focus(); 					
             }
                 break;
             case OFX_UI_STATE_SUSTAINED:
             {
+                draw_fill = true;                 
                 draw_fill_highlight = false;            
                 draw_outline_highlight = false;                         
 				label->unfocus(); 								
@@ -372,17 +451,19 @@ public:
 		return textstring; 
 	}
 	
-	void setTextString(string s)	
+	void setTextString(string s)
 	{
-        textstring = s; 
-        displaystring = s; 
-        while(label->getStringWidth(displaystring) > rect->width-padding*4.0)
+        if(*value > 0)
         {
-            string::iterator it;
-            it=displaystring.begin();
-            displaystring.erase (it);                    
+            s = "+" + s; 
         }
-        label->setLabel(displaystring);         
+        else
+        {
+            s = "-" + s;
+        }
+        textstring = s;
+        displaystring = s;
+        label->setLabel(displaystring);
     }
 	
 	void setParent(ofxUIWidget *_parent)
@@ -398,27 +479,27 @@ public:
  		
 		paddedRect->height = rect->height+padding*2.0; 
 		paddedRect->width = rect->width+padding*2.0;         
-        setTextString(ofToString(*value, precision));                             
+        setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));
 	}	
     
     bool isDraggable()
     {
-        return true; 
+        return true;
     }
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	string textstring;  
-    string displaystring; 
+    string displaystring;
     int precision; 
 	float zoneMultiplier; 
 	float *value;  
     bool useReference;     
 	float max, min; 
     ofPoint hitPoint; 
-    int numOfPrecisionZones; 
+    int numOfPrecisionZones;
     int currentPrecisionZone;
-    
-}; 
+    int hasPeriod; 
+};
 
 #endif

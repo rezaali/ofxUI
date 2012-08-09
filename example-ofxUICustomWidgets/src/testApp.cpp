@@ -19,8 +19,8 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUILabel("CUSTOM WIDGETS", OFX_UI_FONT_LARGE)); 
     
     gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUINumberDialer(-99999.9, 99999.9, 10000.0, 2, "NDIALER", OFX_UI_FONT_MEDIUM)); 
+    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUINumberDialer(-255, 255, 128, 0, "NDIALER", OFX_UI_FONT_LARGE));
 
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM)); 
@@ -74,7 +74,7 @@ void testApp::setup()
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
     
-    gui->loadSettings("GUI/guiSettings.xml"); 
+//    gui->loadSettings("GUI/guiSettings.xml"); 
 }
 
 //--------------------------------------------------------------
