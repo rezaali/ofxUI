@@ -149,6 +149,8 @@ public:
         hasKeyBoard = false; 
     }    
 
+#ifndef OFX_UI_NO_XML
+
     void saveSettings(string fileName)
     {
         ofxXmlSettings *XML = new ofxXmlSettings(); 
@@ -368,7 +370,9 @@ public:
                 break;
         }        
     }
-     
+
+#endif
+	 
     ofTrueTypeFont *getFontLarge()
     {
         return font_large;
