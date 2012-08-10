@@ -18,10 +18,10 @@ void testApp::setup()
 	
     gui->addWidgetDown(new ofxUILabel("SLIDER WIDGETS", OFX_UI_FONT_LARGE));         
     gui->addSpacer(length-xInit, 1); 
-    gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim*.25, 0, 1000, 60.0, "FPS SLIDER"));
+    gui->addFPSSlider("FPS SLIDER", length-xInit, dim*.25, 1000);
     gui->addSpacer(length-xInit, 1); 
 	gui->addWidgetDown(new ofxUILabel("NORMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
-    gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
+    gui->addSlider("RED", 0.0, 255.0, red, length-xInit,dim);
     gui->addSpacer(length-xInit, 1); 
 	gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_MEDIUM)); 	
     gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
@@ -30,10 +30,12 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUIBiLabelSlider(length-xInit, 0.0, 255.0, blue, "BLUE", "LESS BLUE", "MORE BLUE", OFX_UI_FONT_MEDIUM));
     gui->addSpacer(length-xInit, 1); 
     gui->addWidgetDown(new ofxUILabel("VERTICAL SLIDERS", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUISlider(dim,80, 0.0, 255.0, 100, "1")); 	
-	gui->addWidgetRight(new ofxUISlider(dim,80, 0.0, 255.0, 150, "2")); 
-	gui->addWidgetRight(new ofxUISlider(dim,80, 0.0, 255.0, 200, "3")); 
-	gui->addWidgetRight(new ofxUIRangeSlider(dim, 80, 0, 255.0, 100.0, 200.0, "4")); 
+    gui->addSlider("1", 0.0, 255.0, 100, dim,80);
+    gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
+	gui->addSlider("2", 0.0, 255.0, 150, dim, 80); 
+	gui->addSlider("3", 0.0, 255.0, 200, dim, 80);
+	gui->addSlider("4", 0, 255.0, 100.0, 200.0, dim, 80);
+	gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     gui->addSpacer(length-xInit, 1);     
     gui->addWidgetDown(new ofxUILabel("RANGE SLIDER", OFX_UI_FONT_MEDIUM)); 
 	gui->addWidgetDown(new ofxUIRangeSlider(length-xInit,dim, 0.0, 255.0, 50.0, 100.0, "RSLIDER")); 

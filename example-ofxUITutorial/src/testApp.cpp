@@ -5,7 +5,7 @@ void testApp::setup()
 {
     gui = new ofxUICanvas(0,0,320,320);
     gui->addWidgetDown(new ofxUILabel("OFXUI TUTORIAL", OFX_UI_FONT_LARGE)); 
-    gui->addWidgetDown(new ofxUISlider(304,16,0.0,255.0,100.0,"BACKGROUND VALUE")); 
+    gui->addSlider("BACKGROUND VALUE",0.0,255.0,100.0,304,16);
     gui->addWidgetDown(new ofxUIToggle(32, 32, false, "FULLSCREEN"));
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
     gui->loadSettings("GUI/guiSettings.xml"); 

@@ -31,20 +31,29 @@
 class ofxUIRadio : public ofxUIWidgetWithLabel
 {
 public:
+    ofxUIRadio(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0)
+    {
+        init(_name, names, _orientation, w, h, x, y);
+    }
+    
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation)
     {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _name, names, _orientation);         
+        init(_name, names, _orientation, w, h, x, y);
+        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 
     ofxUIRadio(float w, float h, string _name, vector<string> names, int _orientation)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _name, names, _orientation);         
+        init(_name, names, _orientation, w, h, 0, 0);
+        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
-    void init(float w, float h, string _name, vector<string> names, int _orientation)
+    void init(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
 		name = _name; 		
 		kind = OFX_UI_WIDGET_RADIO; 		
         

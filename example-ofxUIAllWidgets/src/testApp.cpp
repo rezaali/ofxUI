@@ -285,39 +285,41 @@ void testApp::setGUI1()
 
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUILabel("H SLIDERS", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, red, "RED")); 
-	gui1->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, green, "GREEN")); 
-	gui1->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 255.0, blue, "BLUE")); 	
+	gui1->addSlider("RED", 0.0, 255.0, red, length-xInit, dim);
+	gui1->addSlider("GREEN", 0.0, 255.0, green, length-xInit,dim);
+	gui1->addSlider("BLUE", 0.0, 255.0, blue, length-xInit,dim);
 
     gui1->addSpacer(length-xInit, 2); 
     gui1->addWidgetDown(new ofxUILabel("V SLIDERS", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "0"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "1"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "2"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "3"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "4"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "5"));
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "6")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "7")); 
-	gui1->addWidgetRight(new ofxUISlider(dim,160, 0.0, 255.0, 150.0, "8")); 
+	gui1->addSlider("0", 0.0, 255.0, 150, dim, 160);
+	gui1->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
+	gui1->addSlider("1", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("2", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("3", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("4", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("5", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("6", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("7", 0.0, 255.0, 150, dim, 160);
+	gui1->addSlider("8", 0.0, 255.0, 150, dim, 160);
+	gui1->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     
     gui1->addSpacer(length-xInit, 2);
-	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL)); 
-	gui1->addWidgetDown(new ofxUIRadio( dim, dim, "RADIO VERTICAL", names, OFX_UI_ORIENTATION_VERTICAL)); 
+	gui1->addRadio("RADIO HORIZONTAL", names, OFX_UI_ORIENTATION_HORIZONTAL, dim, dim); 
+	gui1->addRadio("RADIO VERTICAL", names, OFX_UI_ORIENTATION_VERTICAL, dim, dim); 
 
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUILabel("BUTTONS", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIButton( dim, dim, false, "DRAW GRID")); 	
+	gui1->addButton("DRAW GRID", false, dim, dim);
 	gui1->addWidgetDown(new ofxUILabel("TOGGLES", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIToggle( dim, dim, false, "D_GRID")); 	
+	gui1->addToggle( "D_GRID", false, dim, dim);
     
     gui1->addSpacer(length-xInit, 2);
     gui1->addWidgetDown(new ofxUILabel("RANGE SLIDER", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUIRangeSlider(length-xInit,dim, 0.0, 255.0, 50.0, 100.0, "RSLIDER")); 	
+	gui1->addRangeSlider("RSLIDER", 0.0, 255.0, 50.0, 100.0, length-xInit,dim);
 
     gui1->addSpacer(length-xInit, 2);
 	gui1->addWidgetDown(new ofxUILabel("2D PAD", OFX_UI_FONT_MEDIUM)); 
-	gui1->addWidgetDown(new ofxUI2DPad(length-xInit,120, ofPoint((length-xInit)*.5,120*.5), "PAD")); 	
+	gui1->add2DPad("PAD", ofPoint(0,length-xInit), ofPoint(0,120), ofPoint((length-xInit)*.5,120*.5), length-xInit,120);
 
 
     
@@ -342,7 +344,9 @@ void testApp::setGUI2()
 
     gui2->addSpacer(length-xInit, 2);
 	gui2->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM));
-	gui2->addWidgetDown(new ofxUITextInput(length-xInit, "TEXT INPUT", "Input Text", OFX_UI_FONT_LARGE)); 	
+	gui2->setWidgetFontSize(OFX_UI_FONT_LARGE);
+	gui2->addTextInput("TEXT INPUT", "Input Text", length-xInit);
+	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
 
     gui2->addSpacer(length-xInit, 2);
     gui2->addWidgetDown(new ofxUILabel("WAVEFORM DISPLAY", OFX_UI_FONT_MEDIUM));     
@@ -439,7 +443,7 @@ void testApp::setGUI4()
     
     gui4->addSpacer(length-xInit, 2);
     gui4->addWidgetDown(new ofxUILabel("FPS SLIDER", OFX_UI_FONT_MEDIUM)); 				
-    gui4->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim, 0.0, 400, 0.0, "FPS SLIDER"));
+    gui4->addFPSSlider("FPS SLIDER", length-xInit, dim);
 
     vector<float> buffer; 
     for(int i = 0; i < 256; i++)

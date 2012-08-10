@@ -44,12 +44,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     
     cout << "WIDGET NAME: " << name << endl; 
     
-    if(name == "BACKGROUND VALUE")
-    {
-        ofxUISlider *slider = (ofxUISlider *) e.widget;    
-        ofBackground(slider->getScaledValue());
-    }
-    else if(name == "FULLSCREEN")
+    if(name == "FULLSCREEN")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
         ofSetFullscreen(toggle->getValue());   
