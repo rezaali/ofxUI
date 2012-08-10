@@ -26,7 +26,10 @@
 #define OFXUI
 
 #include "ofMain.h"
-#include "ofxXmlSettings.h"                                             //Using ofxXmlSettings to save and load state
+
+#ifndef OFX_UI_NO_XML
+	#include "ofxXmlSettings.h"                                             //Using ofxXmlSettings to save and load state
+#endif
 
 #define OFX_UI_STATE_NORMAL 0
 #define OFX_UI_STATE_OVER 1

@@ -121,3 +121,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 Notes: So you can see adding other kinds of widgets and reacting to them are done in a very similar manner. Explore the examples to check out how to access some of the more complex widgets, I hope you'll see thats its pretty intuitive. I tried my best to limit the amount of code that needs to be written, however I kept it open enough so people can be expressive with it. 
 
 If you lost your way somewhere in the tutorial, don't worry the whole project is included in the examples in the ofxUI addon folder!
+
+NOTES:
+
+If you don't need to save/load the gui settings and don't want to include ofxXmlSettings in your project, you can set the following define in your project build settings: OFX_UI_NO_XML
