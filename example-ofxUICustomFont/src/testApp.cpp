@@ -26,9 +26,9 @@ void testApp::setup()
 
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("BACKGROUND CONTROL", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUISlider(length-xInit, dim, 0, 255, backgroundColor.r, "BGR")); 
-    gui->addWidgetDown(new ofxUISlider(length-xInit, dim, 0, 255, backgroundColor.g, "BGG")); 
-    gui->addWidgetDown(new ofxUISlider(length-xInit, dim, 0, 255, backgroundColor.b, "BGB"));     
+    gui->addSlider("BGR", 0, 255, backgroundColor.r, length-xInit, dim);
+    gui->addSlider("BGR", 0, 255, backgroundColor.g, length-xInit, dim); 
+    gui->addSlider("BGR", 0, 255, backgroundColor.b, length-xInit, dim);
     
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabelToggle(drawPadding, "DRAW PADDING", OFX_UI_FONT_MEDIUM)); 

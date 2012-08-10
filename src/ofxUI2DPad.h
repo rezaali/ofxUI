@@ -30,60 +30,75 @@
 class ofxUI2DPad : public ofxUIWidgetWithLabel
 {
 public:
+    ofxUI2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = false;                  
+        init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
+    }	
+
+    ofxUI2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = true; 
+        init(_name, _rangeX, _rangeY, _value, w, h, x, y);
+    }	
+
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _value, string _name)
     {
         useReference = false;                         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), &_value, _name);
+        init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, x, y);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }	
 
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
     {
         useReference = false;                  
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _rangeX, _rangeY, &_value, _name);
+        init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }	
     
     ofxUI2DPad(float w, float h, ofPoint _value, string _name)
     {
         useReference = false;                         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), &_value, _name);
+        init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, 0, 0);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
     ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name)
     {
         useReference = false;                         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _rangeX, _rangeY, &_value, _name);
+        init(_name, _rangeX, _rangeY, &_value, w, h, 0, 0);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUI2DPad(float x, float y, float w, float h, ofPoint *_value, string _name)
     {
         useReference = true; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+        init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, x, y);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }	
     
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
     {
         useReference = true; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _rangeX, _rangeY, _value, _name);
+        init(_name, _rangeX, _rangeY, _value, w, h, x, y);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }	
     
     ofxUI2DPad(float w, float h, ofPoint *_value, string _name)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, ofPoint(0,w), ofPoint(0,h), _value, _name);
+        init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, 0, 0);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
     ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _rangeX, _rangeY, _value, _name);
+        init(_name, _rangeX, _rangeY, _value, w, h, 0, 0);
+        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }      
     
     ~ofxUI2DPad()
@@ -94,8 +109,9 @@ public:
         }        
     }
     
-    void init(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name)
+    void init(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, float w, float h, float x = 0, float y = 0)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
 		name = _name; 				
 		kind = OFX_UI_WIDGET_2DPAD; 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);

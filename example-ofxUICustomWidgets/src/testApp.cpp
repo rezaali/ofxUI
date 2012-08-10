@@ -98,47 +98,12 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
 	
-	if(name == "RED")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		red = slider->getScaledValue(); 
-        cout << "value: " << slider->getScaledValue() << endl; 
-	}
-	else if(name == "GREEN")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		green = slider->getScaledValue(); 
-        cout << "value: " << slider->getScaledValue() << endl; 
-	}	
-	else if(name == "BLUE")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		blue = slider->getScaledValue(); 		
-        cout << "value: " << slider->getScaledValue() << endl;         
-	}
-	else if(name == "OF LOGO 2")
+	if(name == "OF LOGO 2")
 	{
 		ofxUIImageSampler *sampler = (ofxUIImageSampler *) e.widget; 
         ofColor c = sampler->getColor();
         cout << "color value: " << (int)c.r << " " << (int)c.g << " " << (int)c.b << endl;
 	}    
-    else if(name == "RSLIDER")
-    {
-        ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) e.widget; 
-        cout << "valuelow: " << rslider->getScaledValueLow() << endl; 
-        cout << "valuehigh: " << rslider->getScaledValueHigh() << endl;   
-    }
-    else if(name == "PAD")
-    {
-        ofxUI2DPad *pad = (ofxUI2DPad *) e.widget; 
-        cout << "value x: " << pad->getScaledValue().x << endl; 
-        cout << "value y: " << pad->getScaledValue().y << endl;         
-    }
-    else if(name == "CSLIDER" || name == "CSLIDER 2")
-    {
-        ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) e.widget; 
-        cout << "value: " << rotslider->getScaledValue() << endl; 
-    }
 }
 //--------------------------------------------------------------
 void testApp::exit()
