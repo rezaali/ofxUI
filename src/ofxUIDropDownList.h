@@ -226,10 +226,25 @@ public:
 		}        
     }
     
+    void setLabelText(string labeltext)
+    {
+        label->setLabel(labeltext);
+        if(!autoSize)
+        {
+            ofxUIRectangle *labelrect = label->getRect();
+            float h = labelrect->getHeight();
+            float ph = rect->getHeight();
+            float w = labelrect->getWidth();
+            float pw = rect->getWidth();
+            labelrect->y = (int)(ph*.5 - h*.5);
+            labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
+        }
+    }
+    
     void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent;         
-        rect->height = label->getPaddingRect()->height+padding*2.0; 
+        rect->height = label->getPaddingRect()->height+padding*2.0;
 		ofxUIRectangle *labelrect = label->getRect(); 
         if(autoSize)
         {
@@ -249,7 +264,7 @@ public:
         }
 
 		float h = labelrect->getHeight(); 
-		float ph = rect->getHeight(); 	        
+		float ph = rect->getHeight();
         float w = labelrect->getWidth(); 
         float pw = rect->getWidth(); 
         
