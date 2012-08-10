@@ -742,13 +742,13 @@ public:
 	
 	virtual void mouseMoved(int x, int y ) 
     {
-        if(rect->inside(x, y))
-        {
+//        if(rect->inside(x, y))
+//        {
 			for(int i = 0; i < widgets.size(); i++)
 			{                
 				if(widgets[i]->isVisible()) widgets[i]->mouseMoved(x, y); 
 			}
-		}	
+//		}	
     }
     
     virtual void mouseDragged(int x, int y, int button) 
@@ -761,13 +761,13 @@ public:
     
     virtual void mousePressed(int x, int y, int button) 
     {
-        if(rect->inside(x, y))
-        {
+//        if(rect->inside(x, y))
+//        {
 			for(int i = 0; i < widgets.size(); i++)
 			{
 				if(widgets[i]->isVisible()) widgets[i]->mousePressed(x, y, button); 
 			}
-		}		
+//		}		
     }
     
     virtual void mouseReleased(int x, int y, int button) 

@@ -72,7 +72,10 @@ void testApp::setup()
     ddl->setAllowMultiple(true); 
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
-	ofBackground(red, green, blue); 
+	ofBackground(red, green, blue);
+    
+//    gui->setTheme(OFX_UI_THEME_BILEBLUE);
+    gui->autoSizeToFitWidgets();
     
 //    gui->loadSettings("GUI/guiSettings.xml"); 
 }
@@ -97,7 +100,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
-	
+	cout << name << endl; 
 	if(name == "OF LOGO 2")
 	{
 		ofxUIImageSampler *sampler = (ofxUIImageSampler *) e.widget; 
