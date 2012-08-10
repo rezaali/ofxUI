@@ -143,7 +143,7 @@ public:
     {
         if(useReference)
         {
-            setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));
+            setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));
         }
     }
     
@@ -220,7 +220,7 @@ public:
             _value = min; 
         }            
         *value = _value; 
-        setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));         
+        setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));         
     }
     
     void mouseMoved(int x, int y ) 
@@ -252,7 +252,7 @@ public:
                 *value = min; 
             }                  
             hitPoint = ofPoint(x,y); 
-            setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
+            setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));     
 			triggerEvent(this);             
             state = OFX_UI_STATE_DOWN;         
         }    
@@ -329,7 +329,7 @@ public:
                         *value = min; 
                     }            
                     
-                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
+                    setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -344,7 +344,7 @@ public:
                         *value = min; 
                     }     
                     
-                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
+                    setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -359,7 +359,7 @@ public:
                         *value = min; 
                     }     
                     
-                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
+                    setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;
                     
@@ -374,7 +374,7 @@ public:
                         *value = min; 
                     }      
                     
-                    setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));     
+                    setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));     
                     triggerEvent(this); 
                     break;					
                     
@@ -479,12 +479,21 @@ public:
  		
 		paddedRect->height = rect->height+padding*2.0; 
 		paddedRect->width = rect->width+padding*2.0;         
-        setTextString(ofToString(abs(*value), precision, numOfPrecisionZones, '0'));
+        setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));
 	}	
     
     bool isDraggable()
     {
         return true;
+    }
+
+    //Needed for people who aren't using the development version of of0071...will be removed in future versions.
+    
+    string numToString(float value, int precision, int width, char fill )
+    {
+        ostringstream out;
+        out << fixed << setfill(fill) << setw(width) << setprecision(precision) << value;
+        return out.str();
     }
 
     

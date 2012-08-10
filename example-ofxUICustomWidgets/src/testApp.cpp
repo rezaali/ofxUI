@@ -20,7 +20,7 @@ void testApp::setup()
     
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM));
-    gui->addWidgetDown(new ofxUINumberDialer(-255, 255, 128, 0, "NDIALER", OFX_UI_FONT_LARGE));
+    gui->addWidgetDown(new ofxUINumberDialer(-99999.0000, 99999.0000, 100.0, 4, "NDIALER", OFX_UI_FONT_LARGE));
 
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM)); 
