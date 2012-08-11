@@ -742,16 +742,23 @@ public:
 	
 	virtual void mouseMoved(int x, int y ) 
     {
-//        if(rect->inside(x, y))
-//        {
+        if(rect->inside(x, y))
+        {
 			for(int i = 0; i < widgets.size(); i++)
 			{                
 				if(widgets[i]->isVisible()) widgets[i]->mouseMoved(x, y); 
 			}
-//		}	
+		}
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible()) (*it).second->mouseMoved(x, y);
+            }
+        }    
     }
     
-    virtual void mouseDragged(int x, int y, int button) 
+    virtual void mouseDragged(int x, int y, int button)
     {		
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -761,13 +768,20 @@ public:
     
     virtual void mousePressed(int x, int y, int button) 
     {
-//        if(rect->inside(x, y))
-//        {
+        if(rect->inside(x, y))
+        {
 			for(int i = 0; i < widgets.size(); i++)
 			{
 				if(widgets[i]->isVisible()) widgets[i]->mousePressed(x, y, button); 
 			}
-//		}		
+		}
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible()) (*it).second->mousePressed(x, y, button);
+            }
+        }
     }
     
     virtual void mouseReleased(int x, int y, int button) 
@@ -990,6 +1004,21 @@ public:
     {
         centerWidgetsOnCanvas(); 
     }
+
+    virtual void addModalWidget(ofxUIWidget *widget)
+    {
+        widgetsAreModal[widget->getName()] = widget;                             
+    }
+
+    virtual void removeModalWidget(ofxUIWidget *widget)
+    {
+        map<string, ofxUIWidget*>::iterator it;
+        it=widgetsAreModal.find(widget->getName());
+        if(it != widgetsAreModal.end())
+        {
+            widgetsAreModal.erase(it);
+        }
+    }
     
     void removeWidget(ofxUIWidget *widget)
     {
@@ -1044,13 +1073,6 @@ public:
 
     void addWidget(ofxUIWidget *widget)
 	{
-//        if(widget->hasLabel())
-//        {
-//            ofxUIWidgetWithLabel *widgetWithLabel = (ofxUIWidgetWithLabel *) widget; 
-//            ofxUILabel *label = widgetWithLabel->getLabelWidget();
-//            setLabelFont(label);
-//        }
-//		else 
         if(widget->getKind() == OFX_UI_WIDGET_LABEL)
 		{
 			ofxUILabel *label = (ofxUILabel *) widget;
@@ -2349,9 +2371,10 @@ protected:
     int state; 
     bool hasSharedResources;
     
-    map<string, ofxUIWidget*> widgets_map;     
-	vector<ofxUIWidget*> widgets; 
-	vector<ofxUIWidget*> widgetsWithState;     
+    map<string, ofxUIWidget*> widgets_map;
+	vector<ofxUIWidget*> widgets;
+    map<string, ofxUIWidget*> widgetsAreModal;
+	vector<ofxUIWidget*> widgetsWithState;
 	ofxUIWidget *lastAdded; 
 	ofxUIWidget *activeFocusedWidget; 
 	bool enable_highlight_outline; 

@@ -58,8 +58,9 @@ public:
         color_padded_rect = OFX_UI_COLOR_PADDED;
         color_padded_rect_outline = OFX_UI_COLOR_PADDED_OUTLINE;     
         
-        dead = false; 
-        embedded = false; 
+        dead = false;
+        embedded = false;
+        modal = false;         
     }
     
     virtual ~ofxUIWidget() 
@@ -476,7 +477,40 @@ public:
         return false; 
     }
     
+    virtual bool isModal()
+    {
+        return modal;
+    }
+    
+    virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
+    {
+        modal = _modal; 
+        if(modal == true)
+        {
+            if(parent != NULL)
+            {
+                parent->addModalWidget(this);
+            }
+        }
+        else
+        {
+            if(parent != NULL)
+            {
+                parent->removeModalWidget(this);
+            }
+        }
+    }
 
+    virtual void addModalWidget(ofxUIWidget *widget)
+    {
+        
+    }
+    
+    virtual void removeModalWidget(ofxUIWidget *widget)
+    {
+        
+    }
+    
 protected:    
 	ofxUIWidget *parent; 
 	ofxUIRectangle *rect; 	
@@ -484,11 +518,12 @@ protected:
 	
     string name;            //State Properties
 	int kind; 
-	bool visible; 
-    int id;     
+	bool visible;
+    int id;
     bool hit; 
     int state; 
     bool embedded;
+    bool modal;
     
 	bool draw_back;         //Rendering Properties 
 	bool draw_outline; 

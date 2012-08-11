@@ -295,7 +295,6 @@ public:
         if(rect->inside(x, y) && hit)
         {
             setValue(!(*value));
-            setToggleVisibility(*value); 
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            
@@ -318,14 +317,12 @@ public:
     
     void open()
     {
-        *value = true; 
-        setToggleVisibility(*value); 
+        setValue(true);
     }
     
     void close()
     {
-        *value = false; 
-        setToggleVisibility(*value); 
+        setValue(false);
     }
 
     
@@ -377,9 +374,7 @@ public:
             {
                 close();
             }
-        }        
-
-
+        }
         
         if(!allowMultiple)
         {
@@ -426,9 +421,46 @@ public:
         allowMultiple = _allowMultiple; 
     }
     
+    virtual void setValue(bool _value)
+	{
+		*value = _value;
+        draw_fill = *value;
+        label->setDrawBack((*value));
+        setModal(*value);
+        setToggleVisibility(*value); 
+	}
+    
+    virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
+    {
+        modal = _modal;
+        if(modal == true)
+        {
+            if(parent != NULL)
+            {
+                parent->addModalWidget(this);
+                for(int i = 0; i < toggles.size(); i++)
+                {
+                    parent->addModalWidget(toggles[i]);
+                }
+            }
+        }
+        else
+        {
+            if(parent != NULL)
+            {
+                parent->removeModalWidget(this);
+                for(int i = 0; i < toggles.size(); i++)
+                {
+                    parent->removeModalWidget(toggles[i]);
+                }
+                
+            }
+        }
+    }
+    
     bool isOpen()
     {
-        return *value; 
+        return *value;
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

@@ -21,7 +21,7 @@
 <Widget>
     <Kind>12</Kind>
     <Name>Text Input Autoclear</Name>
-    <Value>Auto Clear Disabled</Value>
+    <Value>Auto Clear Disabled&#x1B;</Value>
 </Widget>
 <Widget>
     <Kind>28</Kind>
@@ -36,7 +36,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>FIRST ITEM</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
