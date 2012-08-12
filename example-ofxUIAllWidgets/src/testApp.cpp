@@ -346,6 +346,8 @@ void testApp::setGUI2()
 	gui2->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM));
 	gui2->setWidgetFontSize(OFX_UI_FONT_LARGE);
 	gui2->addTextInput("TEXT INPUT", "Input Text", length-xInit);
+    gui2->addWidgetDown(new ofxUILabel("AUTO CLEAR DISABLED", OFX_UI_FONT_MEDIUM));
+    gui2->addTextInput("TEXT INPUT2", "Input Text", length-xInit)->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
 
     gui2->addSpacer(length-xInit, 2);
