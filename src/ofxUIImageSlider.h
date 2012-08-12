@@ -33,17 +33,34 @@ class ofxUIImageSlider : public ofxUISlider         ///** I need to simplify thi
 public:    
     ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name)
     {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, _value, _pathURL, _name); 		
+        useReference = false;
+        rect = new ofxUIRectangle(x,y,w,h);
+        init(w, h, _min, _max, &_value, _pathURL, _name);
     }
     
     ofxUIImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, _value, _pathURL, _name); 
+        useReference = false;
+        rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, _min, _max, &_value, _pathURL, _name);
     }    
     
-    virtual void init(float w, float h, float _min, float _max, float _value, string _pathURL, string _name)
+    
+    ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+    {
+        useReference = true;
+        rect = new ofxUIRectangle(x,y,w,h);
+        init(w, h, _min, _max, _value, _pathURL, _name);
+    }
+    
+    ofxUIImageSlider(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+    {
+        useReference = true;
+        rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, _min, _max, _value, _pathURL, _name);
+    }
+    
+    virtual void init(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
     {
         name = _name; 				
 		if(w > h)
@@ -60,9 +77,19 @@ public:
         
         draw_fill = true; 
         
-        value = _value;                                               //the widget's value
+        value = *_value;                                               //the widget's value
+        if(useReference)
+        {
+            valueRef = _value;
+        }
+        else
+        {
+            valueRef = new float();
+            *valueRef = value;
+        }
+
 		max = _max; 
-		min = _min; 
+		min = _min;
         labelPrecision = 2;
         
 		if(value > max)

@@ -5,45 +5,42 @@
 
 class ofxUISpacer : public ofxUIWidget
 {
-public:
+public:            
     ofxUISpacer(float x, float y, float w, float h)
     {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h); 
+        init(x, y, w, h);
     }
     
     ofxUISpacer(float x, float y, float w, float h, string _name)
     {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h); 
-        name = _name; 
+        init(x, y, w, h);
+        name = _name;
     }
     
     ofxUISpacer(float w, float h)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h); 
-    }    
+        init(0, 0, w, h);
+    }
     
     ofxUISpacer(float w, float h, string _name)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h); 
-        name = _name; 
-    }        
+        init(0, 0, w, h);
+        name = _name;
+    }
     
-    void init(float w, float h)
+    void init(float x, float y, float w, float h)
     {
-        name = "OFX_UI_SPACER"; 				
-        kind = OFX_UI_WIDGET_SPACER; 
+        rect = new ofxUIRectangle(x,y,w,h);        
+        name = "OFX_UI_SPACER";
+        kind = OFX_UI_WIDGET_SPACER;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect);     
+		paddedRect->setParent(rect);
         
-        draw_fill = true; 
-        draw_back = false; 
+        draw_fill = true;
+        draw_back = false;
     }
-		
+    
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 

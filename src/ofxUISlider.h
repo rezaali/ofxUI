@@ -32,33 +32,48 @@ class ofxUISlider : public ofxUIWidgetWithLabel
 public:
     ofxUISlider() {}
     
+    ofxUISlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = false;
+        init(_name, _min, _max, &_value, w, h, x, y);
+    }
+
+    ofxUISlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = true;
+        init(_name, _min, _max, _value, w, h, x, y);
+    }
+    
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, &_value, _name); 		
+        init(_name, _min, _max, &_value, w, h, x, y);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUISlider(float w, float h, float _min, float _max, float _value, string _name)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, &_value, _name); 
+        init(_name, _min, _max, &_value, w, h, 0, 0);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
     ofxUISlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name)
     {
         useReference = true; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _min, _max, _value, _name); 		
+        init(_name, _min, _max, _value, w, h, x, y);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUISlider(float w, float h, float _min, float _max, float *_value, string _name)
     {
         useReference = true; 
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _min, _max, _value, _name); 
-    }        
+        init(_name, _min, _max, _value, w, h, 0, 0);
+        ofLogWarning("OFXUISLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ~ofxUISlider()
     {
@@ -68,8 +83,9 @@ public:
         }
     }   
     
-    virtual void init(float w, float h, float _min, float _max, float *_value, string _name)
+    virtual void init(string _name, float _min, float _max, float *_value, float w, float h, float x, float y)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
         name = _name; 				
 		if(w > h)
 		{
@@ -96,7 +112,7 @@ public:
             *valueRef = value; 
         }
 
-		max = _max; 
+		max = _max;
 		min = _min; 
         labelPrecision = 2;
         
