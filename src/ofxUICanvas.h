@@ -1072,8 +1072,11 @@ public:
 //            cout << "HAS LABEL" << endl;
             ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget; 
             ofxUILabel *label = wwl->getLabelWidget();
-            removeWidget(label);
-        }        
+            if(widget->getKind() != OFX_UI_WIDGET_LABEL && widget->getKind() != OFX_UI_WIDGET_FPS)
+            {
+                removeWidget(label);
+            }
+        }
 
         delete widget;
     }    
