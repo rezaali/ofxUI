@@ -81,6 +81,32 @@ public:
         singleSelected = NULL; 
     }
 
+    virtual void draw()
+    {
+        ofPushStyle();
+        
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        
+        drawPadded();
+        drawPaddedOutline();
+        
+//        if(isOpen())
+//        {
+//            ofSetColor(255, 0, 0);
+//            ofRect(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()*(toggles.size()+1));
+//        }
+        
+        drawBack();
+        
+        drawOutline();
+        drawOutlineHighlight();
+        
+        drawFill();
+        drawFillHighlight();
+        
+        ofPopStyle();
+    }
+    
     void clearToggles()
     {        
         while(toggles.size())
