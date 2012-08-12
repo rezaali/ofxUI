@@ -34,6 +34,7 @@ class ofxUICanvas : public ofxUIWidget
 public:	
     ~ofxUICanvas() 
     {
+        disable();
 		delete GUIevent; 
         if(!hasSharedResources)
         {
@@ -51,7 +52,7 @@ public:
 
     ofxUICanvas(ofRectangle r)
     {
-        rect =  new ofxUIRectangle(r);
+        rect = new ofxUIRectangle(r);
         init(r.width,r.height);
     }
     
