@@ -27,8 +27,9 @@ void testApp::setup()
     mg = (ofxUIMovingGraph *) gui->addWidgetDown(new ofxUIMovingGraph(length-xInit, 64, buffer, bufferSize, -100, 100, "MOVING GRAPH")); 
         
     gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE)); 
-    ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0.0, "MINIMAL", OFX_UI_FONT_MEDIUM)); 
+    gui->addWidgetDown(new ofxUILabel("MINIMAL SLIDER", OFX_UI_FONT_LARGE));
+    
+    ofxUISlider *mslider = (ofxUISlider*) gui->addWidgetDown(new ofxUIMinimalSlider(length-xInit, -100, 100, 0.0, "MINIMAL", OFX_UI_FONT_MEDIUM));
     mslider->setLabelPrecision(0);
     gui->addSlider("NORMAL", 0, 100, 50.0, length-xInit, 24);
     gui->addWidgetDown(new ofxUIRangeSlider(length-xInit, 24, 0, 100, 25.0, 50.0, "RANGE"));    

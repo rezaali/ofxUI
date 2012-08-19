@@ -346,6 +346,8 @@ void testApp::setGUI2()
 	gui2->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM));
 	gui2->setWidgetFontSize(OFX_UI_FONT_LARGE);
 	gui2->addTextInput("TEXT INPUT", "Input Text", length-xInit);
+    gui2->addWidgetDown(new ofxUILabel("AUTO CLEAR DISABLED", OFX_UI_FONT_MEDIUM));
+    gui2->addTextInput("TEXT INPUT2", "Input Text", length-xInit)->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
 
     gui2->addSpacer(length-xInit, 2);
@@ -397,7 +399,7 @@ void testApp::setGUI3()
 
     gui3->addSpacer(length-xInit, 2);
     gui3->addWidgetDown(new ofxUILabel("IMAGE BUTTON", OFX_UI_FONT_MEDIUM)); 				    
-    gui3->addWidgetDown(new ofxUIImageButton(dim*4.0, dim*4.0, false, "GUI/images/App.png","IMAGEBTN")); 
+    gui3->addWidgetDown(new ofxUIImageButton(dim*4.0, dim*4.0, false, "GUI/images/App.png","IMAGEBTN"));
     gui3->addWidgetDown(new ofxUILabel("IMAGE TOGGLE", OFX_UI_FONT_MEDIUM)); 				        
     gui3->addWidgetDown(new ofxUIImageToggle(dim*4.0, dim*4.0, false, "GUI/images/Preview.png","IMAGETGL")); 
 

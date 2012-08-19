@@ -25,11 +25,11 @@
 #ifndef OFXUI_LABEL
 #define OFXUI_LABEL
 
-#include "ofxUIWidget.h"
+#include "ofxUIWidgetWithLabel.h"
 
-class ofxUILabel : public ofxUIWidget
+class ofxUILabel : public ofxUIWidgetWithLabel
 {
-public:    
+public:
     ofxUILabel()
     {
         
@@ -98,7 +98,6 @@ public:
         autoSize = false;
     }   
     
-
     void init(string _name, string _label, int _size)
     {
 		name = _name;
@@ -150,12 +149,9 @@ public:
     
 	void drawString(float x, float y, string _string)
 	{
-        if(visible)
-        {
-            font->drawString(_string, floor(x), floor(y)); 
-        }
+        font->drawString(_string, floor(x), floor(y));
 	}
-
+    
     void drawStringShadow(float x, float y, string _string)
 	{
         if(visible)
@@ -175,6 +171,11 @@ public:
 	{
 		return font->stringHeight(s); 
 	}
+    
+    virtual ofxUILabel* getLabelWidget()
+    {
+        return this;
+    }
     
     void setLabel(string _label)
 	{

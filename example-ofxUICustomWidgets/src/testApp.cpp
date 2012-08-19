@@ -19,8 +19,8 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUILabel("CUSTOM WIDGETS", OFX_UI_FONT_LARGE)); 
     
     gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUINumberDialer(-99999.9, 99999.9, 10000.0, 2, "NDIALER", OFX_UI_FONT_MEDIUM)); 
+    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUINumberDialer(-99999.0000, 99999.0000, 100.0, 4, "NDIALER", OFX_UI_FONT_LARGE));
 
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM)); 
@@ -72,9 +72,12 @@ void testApp::setup()
     ddl->setAllowMultiple(true); 
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
-	ofBackground(red, green, blue); 
+	ofBackground(red, green, blue);
     
-    gui->loadSettings("GUI/guiSettings.xml"); 
+//    gui->setTheme(OFX_UI_THEME_BILEBLUE);
+    gui->autoSizeToFitWidgets();
+    
+//    gui->loadSettings("GUI/guiSettings.xml"); 
 }
 
 //--------------------------------------------------------------
@@ -97,7 +100,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
-	
+	cout << name << endl; 
 	if(name == "OF LOGO 2")
 	{
 		ofxUIImageSampler *sampler = (ofxUIImageSampler *) e.widget; 

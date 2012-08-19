@@ -34,6 +34,7 @@ class ofxUICanvas : public ofxUIWidget
 public:	
     ~ofxUICanvas() 
     {
+        disable();
 		delete GUIevent; 
         if(!hasSharedResources)
         {
@@ -47,6 +48,12 @@ public:
 			delete w; 
 		}
 		widgets.clear();             
+    }
+
+    ofxUICanvas(ofRectangle r)
+    {
+        rect = new ofxUIRectangle(r);
+        init(r.width,r.height);
     }
     
     ofxUICanvas(float x, float y, float w, float h) 
@@ -748,10 +755,17 @@ public:
 			{                
 				if(widgets[i]->isVisible()) widgets[i]->mouseMoved(x, y); 
 			}
-		}	
+		}
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible()) (*it).second->mouseMoved(x, y);
+            }
+        }    
     }
     
-    virtual void mouseDragged(int x, int y, int button) 
+    virtual void mouseDragged(int x, int y, int button)
     {		
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -767,7 +781,14 @@ public:
 			{
 				if(widgets[i]->isVisible()) widgets[i]->mousePressed(x, y, button); 
 			}
-		}		
+		}
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible()) (*it).second->mousePressed(x, y, button);
+            }
+        }
     }
     
     virtual void mouseReleased(int x, int y, int button) 
@@ -990,6 +1011,21 @@ public:
     {
         centerWidgetsOnCanvas(); 
     }
+
+    virtual void addModalWidget(ofxUIWidget *widget)
+    {
+        widgetsAreModal[widget->getName()] = widget;                             
+    }
+
+    virtual void removeModalWidget(ofxUIWidget *widget)
+    {
+        map<string, ofxUIWidget*>::iterator it;
+        it=widgetsAreModal.find(widget->getName());
+        if(it != widgetsAreModal.end())
+        {
+            widgetsAreModal.erase(it);
+        }
+    }
     
     void removeWidget(ofxUIWidget *widget)
     {
@@ -1036,32 +1072,32 @@ public:
 //            cout << "HAS LABEL" << endl;
             ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget; 
             ofxUILabel *label = wwl->getLabelWidget();
-            removeWidget(label);
-        }        
+            if(widget->getKind() != OFX_UI_WIDGET_LABEL && widget->getKind() != OFX_UI_WIDGET_FPS)
+            {
+                removeWidget(label);
+            }
+        }
 
         delete widget;
     }    
 
     void addWidget(ofxUIWidget *widget)
 	{
-//        if(widget->hasLabel())
-//        {
-//            ofxUIWidgetWithLabel *widgetWithLabel = (ofxUIWidgetWithLabel *) widget; 
-//            ofxUILabel *label = widgetWithLabel->getLabelWidget();
-//            setLabelFont(label);
-//        }
-//		else 
-        if(widget->getKind() == OFX_UI_WIDGET_LABEL)
-		{
-			ofxUILabel *label = (ofxUILabel *) widget;
-			setLabelFont(label); 
-		}
-		else if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)           
+        if(widget->hasLabel())
+        {
+            ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget;
+            ofxUILabel *label = wwl->getLabelWidget();
+            setLabelFont(label);
+            setWidgetColor(label);
+            if(widget->getKind() != OFX_UI_WIDGET_LABEL && widget->getKind() != OFX_UI_WIDGET_FPS)
+            {
+                pushbackWidget(label);
+            }
+        }        
+                
+        if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)
 		{
 			ofxUISlider *slider = (ofxUISlider *) widget;
-			ofxUILabel *label = (ofxUILabel *) slider->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 				
 
             if(widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER)
             {
@@ -1076,64 +1112,38 @@ public:
 		else if(widget->getKind() == OFX_UI_WIDGET_2DPAD)		
 		{
 			ofxUI2DPad *pad = (ofxUI2DPad *) widget;
-			ofxUILabel *label = (ofxUILabel *) pad->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 				
-
             widgetsWithState.push_back(widget);             
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_IMAGE)		
 		{
 			ofxUIImage *image = (ofxUIImage *) widget;
-			ofxUILabel *label = (ofxUILabel *) image->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 				
-		}	
+		}
 		else if(widget->getKind() == OFX_UI_WIDGET_IMAGESAMPLER)		
 		{
 			ofxUIImage *image = (ofxUIImage *) widget;
-			ofxUILabel *label = (ofxUILabel *) image->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 				
-            
             widgetsWithState.push_back(widget);                                     
 		}	        
 		else if(widget->getKind() == OFX_UI_WIDGET_RSLIDER_H || widget->getKind() == OFX_UI_WIDGET_RSLIDER_V)
 		{
 			ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget;
-			ofxUILabel *label = (ofxUILabel *) rslider->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 			
-            
-            widgetsWithState.push_back(widget);                         
+            widgetsWithState.push_back(widget);
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_ROTARYSLIDER)
 		{
 			ofxUIRotarySlider *rslider = (ofxUIRotarySlider *) widget;
-			ofxUILabel *label = (ofxUILabel *) rslider->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 				
-            
-            widgetsWithState.push_back(widget);                         
+            widgetsWithState.push_back(widget);
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_BUTTON || widget->getKind() ==  OFX_UI_WIDGET_LABELBUTTON || widget->getKind() == OFX_UI_WIDGET_LABELTOGGLE || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGEBUTTON || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGETOGGLE || widget->getKind() == OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
 		{
 			ofxUIButton *button = (ofxUIButton *) widget;
-			ofxUILabel *label = (ofxUILabel *) button->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 		
             if(widget->getKind() != OFX_UI_WIDGET_BUTTON && widget->getKind() != OFX_UI_WIDGET_LABELBUTTON && widget->getKind() != OFX_UI_WIDGET_MULTIIMAGEBUTTON && widget->getKind() != OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
             {
                 widgetsWithState.push_back(widget);                         
             }
 		}
         else if(widget->getKind() == OFX_UI_WIDGET_DROPDOWNLIST)            
-        { 
-			ofxUIDropDownList *list = (ofxUIDropDownList *) widget;
-			ofxUILabel *label = (ofxUILabel *) list->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 		
-            
+        {
+			ofxUIDropDownList *list = (ofxUIDropDownList *) widget;            
             vector<ofxUILabelToggle *> toggles = list->getToggles(); 
 			for(int i = 0; i < toggles.size(); i++)
 			{
@@ -1142,44 +1152,27 @@ public:
 				setLabelFont(l2); 	
                 pushbackWidget(l2); 					
                 pushbackWidget(t); 
-
                 widgetsWithState.push_back(t);             
 			}            
         }
 		else if(widget->getKind() == OFX_UI_WIDGET_TEXTINPUT)
 		{
 			ofxUITextInput *textinput = (ofxUITextInput *) widget;
-			ofxUILabel *label = (ofxUILabel *) textinput->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 	
-            
             widgetsWithState.push_back(widget);             
 		}		
 		else if(widget->getKind() == OFX_UI_WIDGET_NUMBERDIALER)
 		{
 			ofxUINumberDialer *numberDialer = (ofxUINumberDialer *) widget;
-			ofxUILabel *label = (ofxUILabel *) numberDialer->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 			
-            
             widgetsWithState.push_back(widget);                         
 		}		        
 		else if(widget->getKind() == OFX_UI_WIDGET_TOGGLE)
 		{
 			ofxUIToggle *toggle = (ofxUIToggle *) widget;
-			ofxUILabel *label = (ofxUILabel *) toggle->getLabel();
-			setLabelFont(label); 			
-			pushbackWidget(label); 			
-            
-            widgetsWithState.push_back(widget);                         
+            widgetsWithState.push_back(widget);
 		}
 		else if(widget->getKind() == OFX_UI_WIDGET_RADIO)
 		{
 			ofxUIRadio *radio = (ofxUIRadio *) widget;
-			ofxUILabel *label = (ofxUILabel *) radio->getLabel();			
-			setLabelFont(label); 
-			pushbackWidget(label); 				
-			
 			vector<ofxUIToggle *> toggles = radio->getToggles(); 
 			
 			for(int i = 0; i < toggles.size(); i++)
@@ -1196,10 +1189,6 @@ public:
         else if(widget->getKind() == OFX_UI_WIDGET_TOGGLEMATRIX)
 		{
 			ofxUIToggleMatrix *matrix = (ofxUIToggleMatrix *) widget;
-			ofxUILabel *label = (ofxUILabel *) matrix->getLabel();			
-			setLabelFont(label); 
-			pushbackWidget(label); 				
-			
 			vector<ofxUIToggle *> toggles = matrix->getToggles(); 
 			
 			for(int i = 0; i < toggles.size(); i++)
@@ -1213,16 +1202,12 @@ public:
                 widgetsWithState.push_back(t);                             
 			}
 		}
-		else if(widget->getKind() == OFX_UI_WIDGET_FPS)
-		{
-			ofxUILabel *fps = (ofxUILabel *) widget;
-			setLabelFont(fps); 
-		}
         else if(widget->getKind() == OFX_UI_WIDGET_IMAGETOGGLE)
         {
             widgetsWithState.push_back(widget);              
         }
-	
+
+        setWidgetColor(widget);
 		widget->setParent(this); 
 		widget->setRectParent(this->rect); 		
 		pushbackWidget(widget); 	
@@ -1604,7 +1589,7 @@ public:
         setColorFill(cf);
         setColorFillHighlight(cfh);
         setColorPadded(cp);
-        setColorPaddedOutline(cpo); 
+        setColorPaddedOutline(cpo);                
     }
     
     void setTheme(int theme)
@@ -2212,6 +2197,17 @@ public:
         }
     }
     
+    void setWidgetColor(ofxUIWidget *widget)
+    {
+        widget->setColorBack(color_back);
+        widget->setColorOutline(color_outline);
+        widget->setColorOutlineHighlight(color_outline_highlight);
+        widget->setColorFill(color_fill);
+        widget->setColorFillHighlight(color_fill_highlight);
+        widget->setColorPadded(color_padded_rect);
+        widget->setColorPaddedOutline(color_padded_rect_outline);
+    }
+    
 	void setWidgetColor(int _target, ofColor _color)
 	{
 		switch (_target) 
@@ -2349,9 +2345,10 @@ protected:
     int state; 
     bool hasSharedResources;
     
-    map<string, ofxUIWidget*> widgets_map;     
-	vector<ofxUIWidget*> widgets; 
-	vector<ofxUIWidget*> widgetsWithState;     
+    map<string, ofxUIWidget*> widgets_map;
+	vector<ofxUIWidget*> widgets;
+    map<string, ofxUIWidget*> widgetsAreModal;
+	vector<ofxUIWidget*> widgetsWithState;
 	ofxUIWidget *lastAdded; 
 	ofxUIWidget *activeFocusedWidget; 
 	bool enable_highlight_outline; 
@@ -2367,8 +2364,8 @@ protected:
     ofxWidgetPosition widgetPosition;
     ofxWidgetAlignment widgetAlign;
     ofxWidgetFontType widgetFontSize; 
-    
-    //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)    
+        
+    //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
     bool updateFont(ofxWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
         bool success = false;
         switch(_kind)
@@ -2440,4 +2437,3 @@ protected:
 };
 
 #endif
-
