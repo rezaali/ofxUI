@@ -31,7 +31,7 @@ public:
     ofxUIWidget() 
     {        
         name = "base"; 
-        id = -1; 
+        ID = -1;
         hit = false; 
         visible = true; 
 #ifdef TARGET_OPENGLES
@@ -453,12 +453,12 @@ public:
     
     void setID(int _id)
     {
-        id = _id; 
+        ID = _id;
     }
     
     int getID()
     {
-        return id;
+        return ID;
     }
     
     virtual void addWidget(ofxUIWidget *widget)
@@ -485,7 +485,7 @@ protected:
     string name;            //State Properties
 	int kind; 
 	bool visible; 
-    int id;     
+    int ID;
     bool hit; 
     int state; 
     bool embedded;
