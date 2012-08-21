@@ -30,32 +30,49 @@
 class ofxUIRangeSlider : public ofxUIWidgetWithLabel
 {
 public:
+    ofxUIRangeSlider(string _name, float _min, float _max, float _valuelow, float _valuehigh, float w, float h, 
+                     float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = false;                                 
+        init(_name, _min, _max, &_valuelow, &_valuehigh, w, h, x, y, _size);
+    }
+
+    ofxUIRangeSlider(string _name, float _min, float _max, float *_valuelow, float *_valuehigh, float w, float h, 
+                     float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true;                         
+        init(_name, _min, _max, _valuelow, _valuehigh, w, h, x, y, _size);
+    }
+
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+    
     ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false;                                 
-        rect = new ofxUIRectangle(x,y,w,h); 	        
-        init(w, h, _min, _max, &_valuelow, &_valuehigh, _name, _size); 
+        init(_name, _min, _max, &_valuelow, &_valuehigh, w, h, x, y, _size);
+        ofLogWarning("OFXUIRANGESLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIRangeSlider(float w, float h, float _min, float _max, float _valuelow, float _valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false;                                 
-        rect = new ofxUIRectangle(0,0,w,h); 	        
-        init(w, h, _min, _max, &_valuelow, &_valuehigh, _name, _size); 
+        init(_name, _min, _max, &_valuelow, &_valuehigh, w, h, 0, 0, _size);
+        ofLogWarning("OFXUIRANGESLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIRangeSlider(float x, float y, float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = true;                         
-        rect = new ofxUIRectangle(x,y,w,h); 	        
-        init(w, h, _min, _max, _valuelow, _valuehigh, _name, _size); 
+        init(_name, _min, _max, _valuelow, _valuehigh, w, h, x, y, _size);
+        ofLogWarning("OFXUIRANGESLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIRangeSlider(float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = true;                                 
-        rect = new ofxUIRectangle(0,0,w,h); 	        
-        init(w, h, _min, _max, _valuelow, _valuehigh, _name, _size); 
+        init(_name, _min, _max, _valuelow, _valuehigh, w, h, 0, 0, _size);
+        ofLogWarning("OFXUIRANGESLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ~ofxUIRangeSlider()    
@@ -67,8 +84,10 @@ public:
         }        
     }
     
-    void init(float w, float h, float _min, float _max, float *_valuelow, float *_valuehigh, string _name, int _size)
+    void init(string _name, float _min, float _max, float *_valuelow, float *_valuehigh, float w, float h, 
+              float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
         name = _name; 				
 		if(w > h)
 		{
@@ -126,7 +145,8 @@ public:
 		
 		valuelow = ofMap(valuelow, min, max, 0.0, 1.0, true); 
 		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
-		
+		labelPrecision = 2;
+        
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
 			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)), _size); 

@@ -32,16 +32,31 @@ class ofxUIMultiImageButton : public ofxUIButton
 public:        
     ofxUIMultiImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL)
     {
+        useReference = false;
         rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _pathURL, _name, _size);
+        init(w, h, &_value, _pathURL, _name, _size);
     }
     
     ofxUIMultiImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _pathURL, _name, _size);        
-    }    
+        useReference = false; 
+        rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, &_value, _pathURL, _name, _size);
+    }
         
+    ofxUIMultiImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL)
+    {
+        useReference = true;
+        rect = new ofxUIRectangle(x,y,w,h);
+        init(w, h, _value, _pathURL, _name, _size);
+    }
+    
+    ofxUIMultiImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
+    {
+        useReference = true; 
+        rect = new ofxUIRectangle(0,0,w,h);
+        init(w, h, _value, _pathURL, _name, _size);
+    }
     
     ~ofxUIMultiImageButton()
     {
@@ -50,7 +65,7 @@ public:
         delete on;
     }
     
-    void init(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
+    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
     {
 		name = _name; 		
 		kind = OFX_UI_WIDGET_MULTIIMAGEBUTTON;
@@ -62,7 +77,19 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect); 
         label->setEmbedded(true);		
-        setValue(_value); 
+
+        if(useReference)
+        {
+            value = _value;
+        }
+        else
+        {
+            value = new bool();
+            *value = *_value;
+        }
+        
+        setValue(*_value);
+        
         drawLabel = true;
         label->setVisible(drawLabel);      
         

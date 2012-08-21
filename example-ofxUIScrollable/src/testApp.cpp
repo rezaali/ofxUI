@@ -15,8 +15,8 @@ void testApp::setup()
 
     for(int i = 0; i < 30; i++)
     {
-        gui->addWidgetDown(new ofxUISlider(length-xInit, dim, 0, 100, i*3.3, "SLIDER " +ofToString(i)));
-        gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));
+        gui->addSlider("SLIDER " +ofToString(i), 0, 100, i*3.3, length-xInit, dim);
+        gui->addSpacer(length-xInit, 2);
     }
     
     vector<ofxUIWidget*> spacers = gui->getWidgetsOfType(OFX_UI_WIDGET_SPACER);

@@ -119,6 +119,14 @@ enum ofxWidgetAlignment
     OFX_UI_ALIGN_BOTTOM = 4
 };
 
+enum ofxWidgetPosition
+{
+	OFX_UI_WIDGET_POSITION_DOWN = 0,
+	OFX_UI_WIDGET_POSITION_UP = 1,
+	OFX_UI_WIDGET_POSITION_LEFT = 2,
+	OFX_UI_WIDGET_POSITION_RIGHT = 3
+};
+
 enum ofxWidgetFontType 
 {
 	OFX_UI_FONT_LARGE = 0, 

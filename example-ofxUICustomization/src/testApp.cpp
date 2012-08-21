@@ -22,7 +22,7 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
@@ -34,15 +34,15 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
 
-    w = gui->addWidgetDown(new ofxUIFPSSlider(length-xInit, dim/2.0, 0, 60, 0, "FPS SLIDER"));
+    w = gui->addFPSSlider("FPS SLIDER", length-xInit, dim/2.0, 60.0);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
-    w = gui->addWidgetDown(new ofxUISlider(length-xInit,dim, 0.0, 100, 50, "NORMAL SLIDER")); 
+    w = gui->addSlider("NORMAL SLIDER", 0.0, 100, 50, length-xInit,dim);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
@@ -50,7 +50,7 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     	
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
@@ -62,7 +62,7 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);    
     
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
 	w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
@@ -74,7 +74,7 @@ void testApp::setup()
     w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
 	w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
 
@@ -93,7 +93,7 @@ void testApp::setup()
     ofxUICircleSlider *cslider2 = (ofxUICircleSlider *) gui->getWidget("WEST EAST");
     cslider2->setInputDirection(OFX_UI_DIRECTION_WESTEAST);
     
-    w = gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    w = gui->addSpacer(length-xInit, 2);
 	w->setColorPadded(paddingColor);
     paddingColor.setHue(paddingColor.getHue()+5);
     

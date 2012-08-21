@@ -18,11 +18,11 @@ void testApp::setup()
     
 	gui->addWidgetDown(new ofxUILabel("CUSTOM WIDGETS", OFX_UI_FONT_LARGE)); 
     
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
-    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUINumberDialer(-99999.9, 99999.9, 10000.0, 2, "NDIALER", OFX_UI_FONT_MEDIUM)); 
+    gui->addSpacer(length-xInit, 2);
+    gui->addWidgetDown(new ofxUILabel("NUMBER DIALER", OFX_UI_FONT_MEDIUM));
+    gui->addWidgetDown(new ofxUINumberDialer(-99999.0000, 99999.0000, 100.0, 4, "NDIALER", OFX_UI_FONT_LARGE));
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("TEXT INPUT", OFX_UI_FONT_MEDIUM)); 
     gui->addWidgetDown(new ofxUITextInput(length-xInit, "Text Input Large", "LARGE TEXT FIELD", OFX_UI_FONT_LARGE)); 
     gui->addWidgetDown(new ofxUITextInput(length-xInit, "Text Input Medium", "MEDIUM TEXT FIELD", OFX_UI_FONT_MEDIUM)); 
@@ -31,7 +31,7 @@ void testApp::setup()
     ofxUITextInput* textinput = (ofxUITextInput *) gui->getWidget("Text Input Autoclear"); 
     textinput->setAutoClear(false); 
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     buffer = new float[256];     
     for(int i = 0; i < 256; i++) { buffer[i] = ofNoise(i/100.0); }
     
@@ -40,7 +40,7 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabel("SPECTRUM GRAPH", OFX_UI_FONT_MEDIUM));        
     gui->addWidgetDown(new ofxUISpectrum(length-xInit, 64, buffer, 256, 0.0, 1.0, "SPECTRUM")); 
 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2)); 
+    gui->addSpacer(length-xInit, 2);
     
     img = new ofImage(); 
     img->loadImage("of1.jpg"); 
@@ -59,7 +59,7 @@ void testApp::setup()
     gui->addWidgetSouthOf(new ofxUISpacer(length-xInit, 2), "OF LOGO 1"); 
     gui->addWidgetDown(new ofxUILabel("FPS LABEL", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUIFPS(OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUISpacer(length-xInit, 2));  
+    gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("DROP DOWN LIST", OFX_UI_FONT_MEDIUM));     
     
     vector<string> items; items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM"); items.push_back("FOURTH ITEM");    
@@ -72,9 +72,12 @@ void testApp::setup()
     ddl->setAllowMultiple(true); 
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
-	ofBackground(red, green, blue); 
+	ofBackground(red, green, blue);
     
-    gui->loadSettings("GUI/guiSettings.xml"); 
+//    gui->setTheme(OFX_UI_THEME_BILEBLUE);
+    gui->autoSizeToFitWidgets();
+    
+//    gui->loadSettings("GUI/guiSettings.xml"); 
 }
 
 //--------------------------------------------------------------
@@ -97,48 +100,13 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName(); 
 	int kind = e.widget->getKind(); 
-	
-	if(name == "RED")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		red = slider->getScaledValue(); 
-        cout << "value: " << slider->getScaledValue() << endl; 
-	}
-	else if(name == "GREEN")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		green = slider->getScaledValue(); 
-        cout << "value: " << slider->getScaledValue() << endl; 
-	}	
-	else if(name == "BLUE")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.widget; 
-		blue = slider->getScaledValue(); 		
-        cout << "value: " << slider->getScaledValue() << endl;         
-	}
-	else if(name == "OF LOGO 2")
+	cout << name << endl; 
+	if(name == "OF LOGO 2")
 	{
 		ofxUIImageSampler *sampler = (ofxUIImageSampler *) e.widget; 
         ofColor c = sampler->getColor();
         cout << "color value: " << (int)c.r << " " << (int)c.g << " " << (int)c.b << endl;
 	}    
-    else if(name == "RSLIDER")
-    {
-        ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) e.widget; 
-        cout << "valuelow: " << rslider->getScaledValueLow() << endl; 
-        cout << "valuehigh: " << rslider->getScaledValueHigh() << endl;   
-    }
-    else if(name == "PAD")
-    {
-        ofxUI2DPad *pad = (ofxUI2DPad *) e.widget; 
-        cout << "value x: " << pad->getScaledValue().x << endl; 
-        cout << "value y: " << pad->getScaledValue().y << endl;         
-    }
-    else if(name == "CSLIDER" || name == "CSLIDER 2")
-    {
-        ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) e.widget; 
-        cout << "value: " << rotslider->getScaledValue() << endl; 
-    }
 }
 //--------------------------------------------------------------
 void testApp::exit()

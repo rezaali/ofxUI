@@ -150,12 +150,9 @@ public:
     
 	void drawString(float x, float y, string _string)
 	{
-        if(visible)
-        {
-            font->drawString(_string, floor(x), floor(y)); 
-        }
+        font->drawString(_string, floor(x), floor(y));
 	}
-
+    
     void drawStringShadow(float x, float y, string _string)
 	{
         if(visible)
