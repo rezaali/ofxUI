@@ -30,72 +30,81 @@
 class ofxUILabelButton : public ofxUIButton
 {
 public:
+    ofxUILabelButton(string _name, bool _value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        useReference = false;
+        init(_name, &_value, w, h, x, y, _size);
+    }
+
+    ofxUILabelButton(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        useReference = true;
+        init(_name, _value, w, h, x, y, _size);
+    }
+
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+
     ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(x,y,w,0); 
-        autoSize = false;         
-        init(&_value, _name, _size); 
+        init(_name, &_value, w, 0, x, y, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelButton(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        autoSize = false;         
-        init(&_value, _name, _size); 
+        init(_name, &_value, w, h, 0, 0, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelButton(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
         useReference = false;         
-        rect = new ofxUIRectangle(x,y,0,0); 
-        autoSize = true;         
-        init(&_value, _name, _size); 
+        init(_name, &_value, 0, 0, x, y, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
-    {
-        useReference = false;         
-        rect = new ofxUIRectangle(0,0,0,0); 
-        autoSize = true;         
-        init(&_value, _name, _size); 
-    }
+//    ofxUILabelButton(bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+//    {
+//        useReference = false;         
+//        init(_name, &_value, 0, 0, 0, 0, _size);
+//        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//    }
     
     ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
         useReference = true; 
-        rect = new ofxUIRectangle(x,y,w,0); 
-        autoSize = false;         
-        init(_value, _name, _size); 
+        init(_name, _value, w, 0, x, y, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelButton(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        autoSize = false;         
-        init(_value, _name, _size); 
+        init(_name, _value, w, h, 0, 0, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelButton(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
     {
         useReference = true;         
-        rect = new ofxUIRectangle(x,y,0,0); 
-        autoSize = true;         
-        init(_value, _name, _size); 
+        init(_name, _value, 0, 0, x, y, _size);
+        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
-    {
-        useReference = true;         
-        rect = new ofxUIRectangle(0,0,0,0); 
-        autoSize = true;         
-        init(_value, _name, _size); 
-    }  
+//    ofxUILabelButton(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+//    {
+//        useReference = true;         
+//        init(_name, _value, 0, 0, 0, 0, _size);
+//        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//    }  
     
-    void init(bool *_value, string _name, int _size)
+    virtual void init(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
     {
+        rect = new ofxUIRectangle(x,y,w,h);
+        autoSize = w == 0 ? true : false;
         name = _name; 		
         
         label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
