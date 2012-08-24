@@ -1525,6 +1525,13 @@ public:
         return widget;
     }
 
+    ofxUILabelToggle* addLabelToggle(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0)
+    {
+        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, w, h, x, y, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
     ofxUILabelButton* addLabelButton(string _name, bool _value, float w = 0, float h = 0, float x = 0, float y = 0)
     {
         ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize);
@@ -1532,6 +1539,13 @@ public:
         return widget;
     }
     
+    ofxUILabelButton* addLabelButton(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0)
+    {
+        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items, float w = 0, float x = 0, float y = 0)
     {
         ofxUIDropDownList* widget = new ofxUIDropDownList(_name, items, w, x, y, widgetFontSize);
