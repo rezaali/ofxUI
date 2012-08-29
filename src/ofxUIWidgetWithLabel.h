@@ -26,7 +26,8 @@
 #define OFXUI_WIDGETWITHLABEL
 
 #include "ofxUIWidget.h"
-#include "ofxUILabel.h"
+
+class ofxUILabel; 
 
 class ofxUIWidgetWithLabel : public ofxUIWidget           
 {

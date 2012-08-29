@@ -97,6 +97,10 @@ public:
         }
         if(clicked)
 		{
+            ofNoFill();
+            ofSetColor(color_outline_highlight);
+            rect->draw();
+            
 			float h = label->getRect()->height; 
 			
 			float ph = rect->getHeight(); 
@@ -133,8 +137,7 @@ public:
         }    
         else
         {
-            state = OFX_UI_STATE_NORMAL;        
-            unClick(); 
+            state = OFX_UI_STATE_NORMAL;
         }
         stateChange();         
     }
@@ -148,7 +151,6 @@ public:
         else
         {
             state = OFX_UI_STATE_NORMAL;  
-            unClick(); 
         }
         stateChange();     
     }
@@ -174,7 +176,11 @@ public:
         }    
         else
         {
-            state = OFX_UI_STATE_NORMAL;        
+            state = OFX_UI_STATE_NORMAL;
+            if(clicked)
+            {
+                unClick();  
+            }
         }
         stateChange();         
     }
@@ -230,6 +236,7 @@ public:
                         displaystring = textstring;                         
 						label->setLabel(displaystring); 
 					}
+                    clicked = false; 
 					break;
 					
 				case OF_KEY_RIGHT:
@@ -264,7 +271,7 @@ public:
 			}
 		}
     }
-    
+        
     void unClick()
     {
         if(clicked)
@@ -272,7 +279,7 @@ public:
             clicked = false;          
 			triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS; 
 			triggerEvent(this);             
-        }     
+        }
     }
     void stateChange()
     {        

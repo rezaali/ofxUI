@@ -62,7 +62,7 @@ public:
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }    
 
-    void mouseMoved(int x, int y ) 
+    void mouseMoved(int x, int y )
     {
         if(rect->inside(x, y))
         {

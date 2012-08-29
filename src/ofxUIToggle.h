@@ -166,6 +166,13 @@ public:
         stateChange();     
         hit = false; 
     }
+    
+    virtual void setValue(bool _value)
+	{
+		*value = _value;
+        draw_fill = *value;
+        label->setDrawBack((*value));
+	}    
 }; 
 
 #endif
