@@ -30,36 +30,42 @@
 class ofxUIDropDownList : public ofxUIToggle
 {
 public:    
+    ofxUIDropDownList(string _name, vector<string> items, float w = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        init(_name, items, w, x, y, _size);
+    }
+    
+    // DON'T USE THE NEXT CONSTRUCTORS
+    // This is maintained for backward compatibility and will be removed on future releases
+
     ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size)
     {
-        rect = new ofxUIRectangle(x,y,w,0);                     
-        autoSize = false;         
-        init(_name, items, _size);         
+        init(_name, items, w, x, y, _size);
+        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
     ofxUIDropDownList(float w, string _name, vector<string> items, int _size)
     {
-        rect = new ofxUIRectangle(0,0,w,0);                     
-        autoSize = false;         
-        init(_name, items, _size);         
+        init(_name, items, w, 0, 0, _size);
+        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }    
     
     ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size)
     {
-        rect = new ofxUIRectangle(x,y,0,0); 
-        autoSize = true; 
-        init(_name, items, _size);         
+        init(_name, items, 0, x, y, _size);
+        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
-    ofxUIDropDownList(string _name, vector<string> items, int _size)
-    {
-        rect = new ofxUIRectangle(0,0,0,0); 
-        autoSize = true; 
-        init(_name, items, _size);         
-    }    
+//    ofxUIDropDownList(string _name, vector<string> items, int _size)
+//    {
+//        init(_name, items, 0, 0, 0, _size);
+//        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//    }    
     
-    void init(string _name, vector<string> items, int _size)
+    void init(string _name, vector<string> items, float w = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
     {
+        rect = new ofxUIRectangle(x,y,w,0);
+        autoSize = w == 0 ? true : false;
 		name = _name; 		        
 		kind = OFX_UI_WIDGET_DROPDOWNLIST; 		        
 		paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
