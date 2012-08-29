@@ -90,12 +90,6 @@ public:
         drawPadded();
         drawPaddedOutline();
         
-//        if(isOpen())
-//        {
-//            ofSetColor(255, 0, 0);
-//            ofRect(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()*(toggles.size()+1));
-//        }
-        
         drawBack();
         
         drawOutline();
@@ -482,7 +476,7 @@ public:
                 
             }
         }
-    }
+    }    
     
     bool isOpen()
     {

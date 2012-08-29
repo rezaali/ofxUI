@@ -30,56 +30,74 @@
 class ofxUIMinimalSlider : public ofxUISlider
 {
 public:
+    
+    ofxUIMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = false;
+        init(_name, _min, _max, &_value, w, h, x, y);
+    }
+    
+    ofxUIMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
+    {
+        useReference = true;
+        init(_name, _min, _max, _value, w, h, x, y);
+    }
+    
     ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false;                                         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        autoSize = false; 
-        init(w, h, _min, _max, &_value, _name, _size); 		
+        init(_name, _min, _max, &_value, w, h, x, y, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
-        useReference = false;                                         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        autoSize = false; 
-        init(w, h, _min, _max, &_value, _name, _size); 
+        useReference = false;                                          
+        init(_name, _min, _max, &_value, w, h, 0, 0, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }    
     
     ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = false;                                                 
-        rect = new ofxUIRectangle(0,0,w,0); 
-        autoSize = true; 
-        init(w, 0, _min, _max, &_value, _name, _size); 
+        init(_name, _min, _max, &_value, w, 0, 0, 0, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }    
     
     ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
-        useReference = true;                                         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        autoSize = false; 
-        init(w, h, _min, _max, _value, _name, _size); 		
+        useReference = true;
+        init(_name, _min, _max, _value, w, h, x, y, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
     ofxUIMinimalSlider(float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
-        useReference = true;                                         
-        rect = new ofxUIRectangle(0,0,w,h); 
-        autoSize = false; 
-        init(w, h, _min, _max, _value, _name, _size); 
-    } 
+        useReference = true;
+        init(_name, _min, _max, _value, w, h, 0, 0, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+    }
     
     ofxUIMinimalSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         useReference = true;                                                 
-        rect = new ofxUIRectangle(0,0,w,0); 
-        autoSize = true; 
-        init(w, 0, _min, _max, _value, _name, _size); 
-    } 
+        init(_name, _min, _max, _value, w, 0, 0, 0, _size);
+        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+    }
     
-    void init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
+
+    void init(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int _size = OFX_UI_FONT_SMALL)
     {
+        if(h < .1)
+        {
+            autoSize = true;
+        }
+        else
+        {
+            autoSize = false; 
+        }
+        
+        rect = new ofxUIRectangle(x,y,w,h);
         name = _name; 				
         kind = OFX_UI_WIDGET_MINIMALSLIDER;
         

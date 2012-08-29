@@ -1439,7 +1439,21 @@ public:
         return widget;
     }
     
-    ofxUIRangeSlider* addRangeSlider(string _name, float _min, float _max, float _valuelow, float _valuehigh, 
+    ofxUISlider* addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUISlider* addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIRangeSlider* addRangeSlider(string _name, float _min, float _max, float _valuelow, float _valuehigh,
                                      float w, float h, float x = 0, float y = 0)
     {
         ofxUIRangeSlider* widget = new ofxUIRangeSlider(_name, _min, _max, _valuelow, _valuehigh, w, h, x, y, widgetFontSize);
@@ -2333,8 +2347,10 @@ protected:
     {
         widget->setID(uniqueIDs); 
         uniqueIDs++;
-        widgets.push_back(widget);    
-		widgets_map[widget->getName()] = widget;                             
+
+        vector<ofxUIWidget*>::iterator it;
+        widgets.push_back(widget);
+		widgets_map[widget->getName()] = widget;
     }
     
 	ofTrueTypeFont *font_large; 	
