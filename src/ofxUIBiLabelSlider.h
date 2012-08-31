@@ -142,7 +142,7 @@ public:
 		rlabel->setParent(rlabel); 
 		rlabel->setRectParent(rect); 	
 
-        increment = 1.0;         
+        increment = fabs(max - min) / 10.0;
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)

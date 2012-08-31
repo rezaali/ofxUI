@@ -160,7 +160,7 @@ public:
 		label->setRectParent(rect); 		
         label->setEmbedded(true);
         
-        increment = 0.01; 	
+        increment = fabs(max - min) / 10.0;
     }
     
     virtual void update()

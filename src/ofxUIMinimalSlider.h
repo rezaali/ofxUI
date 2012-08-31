@@ -138,7 +138,7 @@ public:
 		label->setParent(label); 
 		label->setRectParent(rect); 	
         label->setEmbedded(true);        
-        increment = 1.0;         
+        increment = fabs(max - min) / 10.0;
     }
     
     virtual void drawFill()

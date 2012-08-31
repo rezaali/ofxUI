@@ -146,18 +146,21 @@ public:
 		
 		if(value.y > 1)
 		{
-			value.y = 1; 
+			value.y = 1;
 		}
 		else if(value.y < 0)
 		{
-			value.y = 0; 
+			value.y = 0;
 		}
 		
 		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
 		label->setRectParent(rect);         
         label->setEmbedded(true);
-        increment = 1.0; 
+        
+        float horizontalRange = abs(rangeX.x - rangeX.y);
+        float verticalRange = abs(rangeY.x - rangeY.y);
+        increment = MIN(horizontalRange, verticalRange) / 10.0;
     }
     
     virtual void update()
@@ -447,12 +450,13 @@ public:
 		
 		if(_value.y > rangeY.y)
 		{
-			_value.y = rangeY.y; 
+			_value.y = rangeY.y;
 		}
 		else if(_value.y < rangeY.x)
 		{
-			_value.y = rangeY.x; 
+			_value.y = rangeY.x;
 		}
+
 		                        
         value.x = ofMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0);
 		value.y = ofMap(_value.y, rangeY.x, rangeY.y, 0.0, 1.0);
