@@ -93,7 +93,8 @@ enum ofxWidgetType
     OFX_UI_WIDGET_MULTIIMAGESLIDER_V = 33,
     OFX_UI_WIDGET_IMAGESLIDER_H = 34,
     OFX_UI_WIDGET_IMAGESLIDER_V = 35, 
-    OFX_UI_WIDGET_CUSTOMIMAGEBUTTON = 36
+    OFX_UI_WIDGET_CUSTOMIMAGEBUTTON = 36,
+    OFX_UI_WIDGET_TEXTAREA = 37
 };
 
 enum ofxWidgetOrientation
@@ -232,6 +233,7 @@ enum ofxUIThemeType
 #include "ofxUIRadio.h"
 #include "ofxUI2DPad.h"
 #include "ofxUITextInput.h"
+#include "ofxUITextArea.h"
 #include "ofxUINumberDialer.h"
 #include "ofxUILabelButton.h"
 #include "ofxUILabelToggle.h"

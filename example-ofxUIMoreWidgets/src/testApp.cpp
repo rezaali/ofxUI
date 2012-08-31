@@ -9,14 +9,22 @@ void testApp::setup()
 	
 	float dim = 16; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
-    float length = 320-xInit; 
+    float length = 320-xInit;
 	
     drawPadding = false; 
     
     gui = new ofxUICanvas(0,0,length+xInit, ofGetHeight());
-	gui->addWidgetDown(new ofxUILabel("MORE WIDGETS", OFX_UI_FONT_LARGE)); 
+
+	gui->addWidgetDown(new ofxUILabel("MORE WIDGETS", OFX_UI_FONT_LARGE));
     gui->addWidgetRight(new ofxUIFPS(OFX_UI_FONT_LARGE));
     gui->addSpacer(length-xInit, 2);
+    
+    string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block and if there is overflow it adds an ellipse, like so blah blah blah blah blah blah blah blah blah yad yad yad yad yad yad";
+    
+    gui->addWidgetDown(new ofxUITextArea("textarea", textString, length-xInit, 128, 0, 0, OFX_UI_FONT_SMALL));
+    
+    gui->addSpacer(length-xInit, 2);    
+    
 	gui->addWidgetDown(new ofxUILabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM));         
     int bufferSize = 256; 
     vector<float> buffer; 
@@ -56,6 +64,9 @@ void testApp::setup()
     gui->addWidgetDown(new ofxUILabelButton(length-xInit, false, "LABEL BTN", OFX_UI_FONT_LARGE));
     gui->addWidgetDown(new ofxUILabelToggle(length-xInit, false, "LABEL TGL", OFX_UI_FONT_LARGE));    
     gui->addWidgetDown(new ofxUIToggleMatrix(32, 32, 1, 2, "MTX"));    
+
+    
+    
     
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
     

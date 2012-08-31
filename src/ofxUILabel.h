@@ -172,6 +172,11 @@ public:
 		return font->stringHeight(s); 
 	}
     
+    float getLineHeight()
+	{
+		return font->getLineHeight();
+	}
+    
     virtual ofxUILabel* getLabelWidget()
     {
         return this;

@@ -61,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		46327DC115F124E100D5F525 /* ofxUITextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUITextArea.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -239,6 +240,7 @@
 				F563EFA914C8B9F300354DA7 /* ofxUIImage.h */,
 				F563EFA814C8B9F300354DA7 /* ofxUIFPS.h */,
 				F54B5D3714D299DF00B90DAE /* ofxUISpacer.h */,
+				46327DC115F124E100D5F525 /* ofxUITextArea.h */,
 			);
 			name = Inactive;
 			sourceTree = "<group>";
