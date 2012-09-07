@@ -463,8 +463,7 @@ public:
 	
     void setVisible(bool _visible)
     {
-//        visible = _visible;
-        ofxUIWidget::setVisible(_visible);
+        visible = _visible;
         if(visible)
         {
             enable();
@@ -478,7 +477,6 @@ public:
     
 	void toggleVisible()
 	{
-        ofxUIWidget::toggleVisible();        
 		if(isEnabled())
 		{
 			disable(); 
@@ -497,7 +495,8 @@ public:
 	{
         if(!isEnabled())
         {            
-            enabled = true; 
+            enabled = true;
+            visible = true; 
             enableAppEventCallbacks();        
     #ifdef TARGET_OPENGLES
             enableTouchEventCallbacks();
@@ -513,7 +512,8 @@ public:
 	{
         if(isEnabled())
         {                    
-            enabled = false; 
+            enabled = false;
+            visible = false;
             disableAppEventCallbacks();        
     #ifdef TARGET_OPENGLES
             disableTouchEventCallbacks();
