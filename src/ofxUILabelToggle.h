@@ -172,7 +172,7 @@ public:
         }
         else
         {
-            while(labelrect->width+padding*4.0 > rect->width)
+            while(labelrect->width+padding*4.0 > rect->width && label->getLabel().size() > 0)
             {
                 string labelstring = label->getLabel();
                 string::iterator it;
