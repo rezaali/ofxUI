@@ -21,7 +21,7 @@ void testApp::setup()
     
     string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block and if there is overflow it adds an ellipse, like so blah blah blah blah blah blah blah blah blah yad yad yad yad yad yad";
     
-    gui->addWidgetDown(new ofxUITextArea("textarea", textString, length-xInit, 128, 0, 0, OFX_UI_FONT_SMALL));
+    gui->addWidgetDown(new ofxUITextArea("textarea", textString, length-xInit, 128));
     
     gui->addSpacer(length-xInit, 2);    
     

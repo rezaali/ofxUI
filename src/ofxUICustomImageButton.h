@@ -32,34 +32,38 @@ class ofxUICustomImageButton : public ofxUIButton
 public:
     ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight)
     {
+        useReference = false;
         rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = true;         
-        init(_value, _pathURL, _name, _size, _labelWidth, _labelHeight); 
+        init(&_value, _pathURL, _name, _size, _labelWidth, _labelHeight);
     }    
 
     ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, bool centerLabel = false)
     {
-        rect = new ofxUIRectangle(0,0,w,h); 
+        useReference = false;
+        rect = new ofxUIRectangle(0,0,w,h);
         int _labelWidth = w; 
         int _labelHeight = 0; 
         autoSize = centerLabel;         
-        init(_value, _pathURL, _name, _size, _labelWidth, _labelHeight); 
+        init(&_value, _pathURL, _name, _size, _labelWidth, _labelHeight); 
     }    
     
     ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight)
     {
+        useReference = false;
         rect = new ofxUIRectangle(0,0,w,h); 
         autoSize = true;         
-        init(_value, _img, _name, _size, _labelWidth, _labelHeight); 
+        init(&_value, _img, _name, _size, _labelWidth, _labelHeight); 
     }    
     
     ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, bool centerLabel = false)
     {
+        useReference = false;        
         rect = new ofxUIRectangle(0,0,w,h); 
-        int _labelWidth = w; 
+        int _labelWidth = w;
         int _labelHeight = 0; 
         autoSize = centerLabel;         
-        init(_value, _img, _name, _size, _labelWidth, _labelHeight); 
+        init(&_value, _img, _name, _size, _labelWidth, _labelHeight); 
     }    
 
     
@@ -69,7 +73,7 @@ public:
         delete image; 
     }
     
-    void init(bool _value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight)
+    void init(bool *_value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight)
     {
         name = _name; 		                
         draw_outline = false; 
@@ -101,10 +105,20 @@ public:
         rect->setWidth(image->getWidth()); 
         rect->setHeight(image->getHeight());
         
+        if(useReference)
+        {
+            value = _value;
+        }
+        else
+        {
+            value = new bool();
+            *value = *_value;
+        }
+        
         setValue(_value);         
     }
     
-    void init(bool _value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight)
+    void init(bool *_value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight)
     {
         name = _name; 		                
         draw_outline = false; 
@@ -123,6 +137,16 @@ public:
 		labelBackgroundRect->setParent(rect);                 
         
         image = _img; 
+        
+        if(useReference)
+        {
+            value = _value;
+        }
+        else
+        {
+            value = new bool();
+            *value = *_value;
+        }
         
         setValue(_value);         
     }    

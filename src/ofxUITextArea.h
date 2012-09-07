@@ -49,6 +49,15 @@ public:
 		label->setParent(label);
 		label->setRectParent(rect);
         label->setEmbedded(true);
+        
+        if(h == 0)
+        {
+            autoSize = true;
+        }
+        else
+        {
+            autoSize = false; 
+        }
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -74,7 +83,7 @@ public:
             ofSetColor(color_fill);
             for(int i = 0; i < textLines.size(); i++)
             {
-                label->drawString(rect->getX()+padding, rect->getY()+label->getStringHeight("|")*(i+1), textLines[i]);
+                label->drawString(rect->getX()+padding*2, rect->getY()+label->getStringHeight("|")*(i+1)+padding, textLines[i]);
             }
 
         }
@@ -138,9 +147,9 @@ public:
                     if(strncmp(&textstring.at(i), " ",1) == 0)
                     {
                         tempHeight = (textLines.size()+1)*label->getStringHeight("|");
-                        cout << tempHeight << endl;
-                        cout << rectHeightLimit << endl;
-                        if(tempHeight >= rectHeightLimit)
+//                        cout << tempHeight << endl;
+//                        cout << rectHeightLimit << endl;
+                        if(!autoSize && tempHeight >= rectHeightLimit)
                         {
                             textLines.push_back(line);
                             textLines[textLines.size()-1]+="...";
@@ -163,20 +172,20 @@ public:
             }		
         }
         
+        if(autoSize)
+        {
+            rect->setHeight(label->getStringHeight("|")*textLines.size()+padding*3);
+        }
+        
         if(overheight)
         {
-            rect->setHeight(MAX(rect->getHeight(),label->getStringHeight("|")*textLines.size()+padding));
+            rect->setHeight(MAX(rect->getHeight(),label->getStringHeight("|")*textLines.size()+padding*3));
         }
     }
 
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent;
-        if(rect->height == 0)
-        {
-            rect->height = label->getPaddingRect()->height+padding*2.0;
-        }
-
         formatTextString();
         label->setLabel(textstring);
         label->setVisible(false);
@@ -186,6 +195,7 @@ public:
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	string textstring;
     vector<string> textLines;
+    bool autoSize; 
 };
 
 #endif

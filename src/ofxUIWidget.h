@@ -148,7 +148,7 @@ public:
     
     virtual void drawPadded()
     {
-		if(draw_padded_rect)
+		if(draw_padded_rect && !embedded)
 		{
             ofFill();
             ofSetColor(color_padded_rect); 
@@ -158,7 +158,7 @@ public:
     
     virtual void drawPaddedOutline()
     {
-        if(draw_padded_rect_outline)
+        if(draw_padded_rect_outline && !embedded)
 		{
             ofNoFill();
             ofSetColor(color_padded_rect_outline); 
@@ -511,6 +511,27 @@ public:
         
     }
     
+    virtual void addEmbeddedWidget(ofxUIWidget *widget)
+    {
+        widget->setEmbedded(true);
+        embeddedWidgets.push_back(widget);        
+    }
+    
+    virtual int getEmbeddedWidgetsSize()
+    {
+        return embeddedWidgets.size();
+    }
+    
+    ofxUIWidget *getEmbeddedWidget(int index)
+    {
+        return embeddedWidgets[index%embeddedWidgets.size()];
+    }
+    
+    virtual void clearEmbeddedWidgets()
+    {
+        embeddedWidgets.clear();        //does not deallocate widgets, just deletes the pointers and sets the size to zero
+    }
+    
 protected:    
 	ofxUIWidget *parent; 
 	ofxUIRectangle *rect; 	
@@ -544,6 +565,8 @@ protected:
 	bool draw_padded_rect_outline;     
     ofColor color_padded_rect; 
 	ofColor color_padded_rect_outline;
+    
+    vector<ofxUIWidget *> embeddedWidgets; 
     
 #ifdef TARGET_OPENGLES          //iOS Mode
     int touchId;     
