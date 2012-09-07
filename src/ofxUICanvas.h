@@ -463,7 +463,8 @@ public:
 	
     void setVisible(bool _visible)
     {
-        visible = _visible; 
+//        visible = _visible;
+        ofxUIWidget::setVisible(_visible);
         if(visible)
         {
             enable();
@@ -477,6 +478,7 @@ public:
     
 	void toggleVisible()
 	{
+        ofxUIWidget::toggleVisible();        
 		if(isEnabled())
 		{
 			disable(); 
