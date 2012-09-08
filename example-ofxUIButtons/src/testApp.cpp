@@ -36,11 +36,11 @@ void testApp::setup()
     radio->activateToggle("SOCKS"); 
     
     gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUILabelButton(false, "LABEL BUTTON", OFX_UI_FONT_MEDIUM)); 
+    gui->addLabelButton("LABEL BUTTON", false); 
     gui->addWidgetEastOf(new ofxUILabel("<- Automagically Sized", OFX_UI_FONT_SMALL),"LABEL BUTTON"); 
-    gui->addWidgetSouthOf(new ofxUILabelButton(length-xInit, false, "SPECIFIED WIDTH BUTTON", OFX_UI_FONT_MEDIUM), "LABEL BUTTON"); 
-    gui->addWidgetDown(new ofxUILabelToggle(false, "LABEL TOGGLE", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUILabelToggle(length-xInit, false, "SPECIFIED WIDTH TOGGLE", OFX_UI_FONT_MEDIUM));         
+    gui->addWidgetSouthOf(new ofxUILabelButton(length-xInit, false, "SPECIFIED WIDTH BUTTON", OFX_UI_FONT_MEDIUM), "LABEL BUTTON");
+    gui->addLabelToggle("LABEL TOGGLE", false);     
+    gui->addLabelToggle("SPECIFIED WIDTH TOGGLE", false, length-xInit);
     
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUIToggleMatrix(dim, dim, 3, 3, "3X3 MATRIX")); 

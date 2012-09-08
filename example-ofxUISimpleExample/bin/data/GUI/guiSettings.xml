@@ -36,7 +36,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RADIUS</Name>
-    <Value>580.769</Value>
+    <Value>357.692</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -51,6 +51,6 @@
 <Widget>
     <Kind>11</Kind>
     <Name>POSITION</Name>
-    <XValue>167</XValue>
-    <YValue>154</YValue>
+    <XValue>215</XValue>
+    <YValue>218</YValue>
 </Widget>

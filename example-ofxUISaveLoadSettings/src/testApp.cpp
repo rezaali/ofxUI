@@ -325,15 +325,15 @@ void testApp::setGUI2()
 
     gui2->addSpacer(length-xInit, 2);         
     gui2->addWidgetDown(new ofxUILabel("LABEL BUTTON", OFX_UI_FONT_MEDIUM));
-    gui2->addWidgetDown(new ofxUILabelButton(length-xInit, false, "LABEL BUTTON", OFX_UI_FONT_MEDIUM));     
-    gui2->addWidgetDown(new ofxUILabelButton(false, "AUTOSIZE BUTTON", OFX_UI_FONT_MEDIUM));     
-    gui2->addWidgetDown(new ofxUILabelButton(false, "MEDIUM BUTTON", OFX_UI_FONT_MEDIUM));     
+    gui2->addLabelButton("LABEL BUTTON", false, length-xInit);
+    gui2->addLabelButton("AUTOSIZE BUTTON", false, length-xInit);
+    gui2->addLabelButton("MEDIUM BUTTON", false, length-xInit);
     
     gui2->addSpacer(length-xInit, 2);             
-    gui2->addWidgetDown(new ofxUILabel("LABEL TOGGLES", OFX_UI_FONT_MEDIUM));	
-    gui2->addWidgetDown(new ofxUILabelToggle(length-xInit, false, "LABEL TOGGLE", OFX_UI_FONT_MEDIUM));     
-    gui2->addWidgetDown(new ofxUILabelToggle(false, "AUTOSIZE TOGGLE", OFX_UI_FONT_MEDIUM));     
-    gui2->addWidgetDown(new ofxUILabelToggle(false, "MEDIUM TOGGLE", OFX_UI_FONT_MEDIUM));     
+    gui2->addLabel("LABEL TOGGLES");	
+    gui2->addLabelToggle("LABEL TOGGLE", false, length-xInit);     
+
+    gui2->addLabelToggle("AUTOSIZE TOGGLE", false);
     
 	ofAddListener(gui2->newGUIEvent,this,&testApp::guiEvent);
 }
