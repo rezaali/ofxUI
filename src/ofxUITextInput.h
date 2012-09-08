@@ -228,7 +228,14 @@ public:
 					break;
 					
 				case OF_KEY_RETURN:
-					triggerType = OFX_UI_TEXTINPUT_ON_ENTER; 					
+					if(autoclear)
+					{
+						triggerType = OFX_UI_TEXTINPUT_ON_ENTER;
+					}
+					else
+					{
+						triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
+					}
 					triggerEvent(this); 			
 					if(autoclear)
 					{
