@@ -52,6 +52,17 @@ public:
         return label;
     }
     
+    virtual void toggleColors()
+    {
+        ofColor fill = getColorFill();
+        float af = fill.a;
+        ofColor back = getColorBack();
+        float ab = back.a;
+        
+        setColorFill(ofColor(back, af));
+        setColorBack(ofColor(fill, ab));
+    }
+    
 protected:    
     ofxUILabel *label;
 };

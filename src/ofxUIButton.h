@@ -29,16 +29,19 @@
 
 class ofxUIButton : public ofxUIWidgetWithLabel
 {
-public:    
-    ofxUIButton() {}
+public:
+    ofxUIButton() : ofxUIWidgetWithLabel()
+    {
     
-    ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    }
+    
+    ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = false; 
         init(_name, &_value, w, h, x, y, _size);
     }
 
-    ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
+    ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, _value, w, h, x, y, _size);
@@ -47,28 +50,28 @@ public:
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
     
-    ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = false; 
         init(_name, &_value, w, h, x, y, _size);
         ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUIButton(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIButton(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = false;         
         init(_name, &_value, w, h, 0, 0, _size);        
         ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }    
     
-    ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, _value, w, h, x, y, _size);
         ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUIButton(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIButton(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, _value, w, h, 0, 0, _size);
@@ -87,13 +90,13 @@ public:
     //init(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)    
     {
         rect = new ofxUIRectangle(x,y,w,h); 
-		name = _name; 		
+		name = string(_name);  		
 		kind = OFX_UI_WIDGET_BUTTON; 		
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
         
-		label = new ofxUILabel(w+padding*2.0,0, (name+" LABEL"), name, _size); 
+		label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
 		label->setParent(label); 
 		label->setRectParent(rect); 
         label->setEmbedded(true);		
@@ -147,7 +150,7 @@ public:
 
     virtual void mouseMoved(int x, int y) 
     {
-        if(rect->inside(x, y))
+        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             state = OFX_UI_STATE_OVER;         
         }    
@@ -162,7 +165,7 @@ public:
     {
         if(hit)
         {
-            if(rect->inside(x, y))
+            if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
             {                
                 state = OFX_UI_STATE_DOWN;         
             }    
@@ -179,7 +182,7 @@ public:
     
     virtual void mousePressed(int x, int y, int button) 
     {
-        if(rect->inside(x, y))
+        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             hit = true;
             state = OFX_UI_STATE_DOWN;         
@@ -200,7 +203,7 @@ public:
 #ifdef TARGET_OPENGLES
             state = OFX_UI_STATE_NORMAL;        
 #else            
-            if(rect->inside(x, y))
+            if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
             {
                 state = OFX_UI_STATE_OVER; 
             }
@@ -300,14 +303,43 @@ public:
 	
     virtual void setValue(bool _value)
 	{
-		*value = _value;         
-        draw_fill = *value; 
-        label->setDrawBack((*value));         
+		*value = _value;
+        draw_fill = *value;
+        label->setDrawBack((*value));
 	}
 	
 	void toggleValue() {
         setValue(!(*value));
 	}
+    
+    virtual bool isHit(float x, float y)
+    {
+        if(visible)
+        {
+            return (rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)));
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    void setLabelPosition(ofxWidgetPosition pos)
+    {
+        switch (pos)
+        {
+            case OFX_UI_WIDGET_POSITION_LEFT:
+                label->getRect()->x = - label->getRect()->getWidth() - padding;
+                break;
+                
+            case OFX_UI_WIDGET_POSITION_RIGHT:
+                label->getRect()->x = rect->getWidth() + padding;
+                break;
+                
+            default:
+                break;
+        }
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool *value; 

@@ -31,28 +31,28 @@
 class ofxUINumberDialer : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = false;                                 
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_min, _max, &_value, _precision, _name, _size); 
     }
     
-    ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = false;                                 
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_min, _max, &_value, _precision, _name, _size); 
     }    
     
-    ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = true;                                         
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_min, _max, _value, _precision, _name, _size); 
     }
     
-    ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = true;                                  
         rect = new ofxUIRectangle(0,0,0,0); 
@@ -69,7 +69,7 @@ public:
     
     void init(float _min, float _max, float *_value, int _precision, string _name, int _size)
     {
-		name = _name; 		
+		name = string(_name);  		
 		kind = OFX_UI_WIDGET_NUMBERDIALER;  		
         
         if(useReference)
@@ -202,6 +202,18 @@ public:
     void calculatePrecisionZone()
     {
         currentPrecisionZone = ceil(ofMap(hitPoint.x,rect->getX(),rect->getX()+rect->getWidth(),-1, displaystring.size()-1));
+        if(currentPrecisionZone == 0)
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
+        }
+        else if(currentPrecisionZone <= numOfPrecisionZones-precision)
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod-currentPrecisionZone);
+        }
+        else
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-currentPrecisionZone-precision);
+        }
     }
 	
     float getValue()
@@ -230,6 +242,7 @@ public:
             state = OFX_UI_STATE_OVER;
             hitPoint = ofPoint(x,y);
             calculatePrecisionZone();
+            
         }
         else
         {
@@ -269,20 +282,7 @@ public:
         {
             hit = true; 
             hitPoint = ofPoint(x,y); 
-            calculatePrecisionZone();
-
-            if(currentPrecisionZone == 0)
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
-            }
-            else if(currentPrecisionZone <= numOfPrecisionZones-precision)
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod-currentPrecisionZone);
-            }
-            else
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-currentPrecisionZone-precision);
-            }            
+            calculatePrecisionZone();             
             state = OFX_UI_STATE_DOWN;     
 			triggerEvent(this);            
         }    

@@ -31,13 +31,13 @@
 class ofxUIToggleMatrix : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIToggleMatrix(float x, float y, float w, float h, int _rows, int _cols, string _name)
+    ofxUIToggleMatrix(float x, float y, float w, float h, int _rows, int _cols, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _rows, _cols, _name); 
     }
     
-    ofxUIToggleMatrix(float w, float h, int _rows, int _cols, string _name)
+    ofxUIToggleMatrix(float w, float h, int _rows, int _cols, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _rows, _cols, _name); 
@@ -45,7 +45,7 @@ public:
     
     void init(float w, float h, int _rows, int _cols, string _name)
     {
-        name = _name; 		
+        name = string(_name);  		
 		kind = OFX_UI_WIDGET_TOGGLEMATRIX; 		
 		rows = _rows; 
         cols = _cols; 
@@ -197,7 +197,12 @@ public:
 
 	vector<ofxUIToggle *> getToggles()
 	{
-		return toggles; 
+		return toggles;
+	}
+
+	vector<ofxUIToggle *> *getTogglesPtr()
+	{
+		return &toggles;
 	}
 	
 	void triggerEvent(ofxUIWidget *child)

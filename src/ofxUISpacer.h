@@ -6,32 +6,32 @@
 class ofxUISpacer : public ofxUIWidget
 {
 public:            
-    ofxUISpacer(float x, float y, float w, float h)
+    ofxUISpacer(float x, float y, float w, float h) : ofxUIWidget()
     {
         init(x, y, w, h);
     }
     
-    ofxUISpacer(float x, float y, float w, float h, string _name)
+    ofxUISpacer(float x, float y, float w, float h, string _name) : ofxUIWidget()
     {
         init(x, y, w, h);
-        name = _name;
+        name = string(_name); 
     }
     
-    ofxUISpacer(float w, float h)
+    ofxUISpacer(float w, float h) : ofxUIWidget()
     {
         init(0, 0, w, h);
     }
     
-    ofxUISpacer(float w, float h, string _name)
+    ofxUISpacer(float w, float h, string _name) : ofxUIWidget()
     {
         init(0, 0, w, h);
-        name = _name;
+        name = string(_name); 
     }
     
     void init(float x, float y, float w, float h)
     {
         rect = new ofxUIRectangle(x,y,w,h);        
-        name = "OFX_UI_SPACER";
+        name = string("OFX_UI_SPACER");
         kind = OFX_UI_WIDGET_SPACER;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);

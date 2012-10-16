@@ -30,7 +30,7 @@
 class ofxUITextInput : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUITextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUITextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM) : ofxUIWidgetWithLabel()
     {
         init(_name, _textstring, w, h, x, y, _size);
     }
@@ -38,13 +38,13 @@ public:
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
     
-    ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size, float h = 0)
+    ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size, float h = 0) : ofxUIWidgetWithLabel() 
     {
         init(_name, _textstring, w, h, x, y, _size);
         ofLogWarning("OFXUITEXTINPUT: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUITextInput(float w, string _name, string _textstring, int _size, float h = 0)
+    ofxUITextInput(float w, string _name, string _textstring, int _size, float h = 0) : ofxUIWidgetWithLabel()
     {
         init(_name, _textstring, w, h, 0, 0, _size);
         ofLogWarning("OFXUITEXTINPUT: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
@@ -53,7 +53,7 @@ public:
     void init(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
     {
         rect = new ofxUIRectangle(x,y,w,h); 
-		name = _name; 		
+		name = string(_name);  		
 		kind = OFX_UI_WIDGET_TEXTINPUT; 		
 		textstring = _textstring; 
 		defaultstring = _textstring; 

@@ -31,13 +31,13 @@
 class ofxUIMultiImageSlider : public ofxUISlider
 {
 public:    
-    ofxUIMultiImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIMultiImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _min, _max, _value, _pathURL, _name, _size); 		
     }
     
-    ofxUIMultiImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUIMultiImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _min, _max, _value, _pathURL, _name, _size); 
@@ -45,7 +45,7 @@ public:
     
     virtual void init(float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size)
     {
-        name = _name; 				
+        name = string(_name);  				
 		if(w > h)
 		{
 			kind = OFX_UI_WIDGET_MULTIIMAGESLIDER_H;  			

@@ -30,7 +30,7 @@
 class ofxUIImageToggle : public ofxUIImageButton
 {
 public:
-    ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name)
+    ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name) : ofxUIImageButton()
     {
         useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -38,7 +38,7 @@ public:
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }
 
-    ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name)
+    ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name) : ofxUIImageButton()
     {
         useReference = false; 
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -46,7 +46,7 @@ public:
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }
     
-    ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name)
+    ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name) : ofxUIImageButton()
     {
         useReference = true;         
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -54,7 +54,7 @@ public:
 		kind = OFX_UI_WIDGET_IMAGETOGGLE; 		
     }
     
-    ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name)
+    ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name) : ofxUIImageButton()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(0,0,w,h); 

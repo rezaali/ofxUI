@@ -31,14 +31,14 @@
 class ofxUIImageSlider : public ofxUISlider         ///** I need to simplify this widget to only use one image as the handle of the slider
 {
 public:    
-    ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name)
+    ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name) : ofxUISlider()
     {
         useReference = false;
         rect = new ofxUIRectangle(x,y,w,h);
         init(w, h, _min, _max, &_value, _pathURL, _name);
     }
     
-    ofxUIImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name)
+    ofxUIImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name) : ofxUISlider()
     {
         useReference = false;
         rect = new ofxUIRectangle(0,0,w,h);
@@ -46,23 +46,23 @@ public:
     }    
     
     
-    ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+    ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name) : ofxUISlider()
     {
         useReference = true;
         rect = new ofxUIRectangle(x,y,w,h);
         init(w, h, _min, _max, _value, _pathURL, _name);
     }
     
-    ofxUIImageSlider(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+    ofxUIImageSlider(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name) : ofxUISlider()
     {
         useReference = true;
         rect = new ofxUIRectangle(0,0,w,h);
         init(w, h, _min, _max, _value, _pathURL, _name);
     }
     
-    virtual void init(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+    virtual void init(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name) 
     {
-        name = _name; 				
+        name = string(_name);  				
 		if(w > h)
 		{
 			kind = OFX_UI_WIDGET_IMAGESLIDER_H;  			

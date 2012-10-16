@@ -30,79 +30,79 @@
 class ofxUILabel : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUILabel()
+    ofxUILabel() : ofxUIWidgetWithLabel() 
     {
         
     }
     
-    ofxUILabel(float x, float y, string _name, string _label, int _size)
+    ofxUILabel(float x, float y, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _label, _size); 		
         autoSize = true;
     }
 
-    ofxUILabel(float x, float y, string _name, int _size)
+    ofxUILabel(float x, float y, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _name, _size); 		
         autoSize = true;
     }
 
-    ofxUILabel(string _name, string _label, int _size)
+    ofxUILabel(string _name, string _label, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _label, _size); 		
         autoSize = true;        
     }	
 
-    ofxUILabel(string _name, int _size)
+    ofxUILabel(string _name, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _name, _size); 		
         autoSize = true;
     }   
     
-    ofxUILabel(float x, float y, float w, string _name, string _label, int _size)
+    ofxUILabel(float x, float y, float w, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,0); 
         init(_name, _label, _size); 		
         autoSize = false;
     }
     
-    ofxUILabel(float x, float y, float w, string _name, int _size)
+    ofxUILabel(float x, float y, float w, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,0); 
         init(_name, _name, _size); 		
         autoSize = false;
     }
     
-    ofxUILabel(float w, string _name, string _label, int _size)
+    ofxUILabel(float w, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,0); 
         init(_name, _label, _size); 		
         autoSize = false;        
     }	
     
-    ofxUILabel(float w, string _name, int _size)
+    ofxUILabel(float w, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,0); 
         init(_name, _name, _size); 		
         autoSize = false;
     }   
 
-    ofxUILabel(float w, string _name, int _size, float h)
+    ofxUILabel(float w, string _name, int _size, float h) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(_name, _name, _size); 		
         autoSize = false;
     }   
     
-    void init(string _name, string _label, int _size)
+    void init(string _name, string _label, int _size) 
     {
-		name = _name;
+		name = string(_name);
 		kind = OFX_UI_WIDGET_LABEL; 
-		label = _label; 		 				
+		label = string(_label);
 		size = _size;		
 
 		font = NULL;                 
@@ -144,7 +144,7 @@ public:
     {      
         ofFill(); 
         ofSetColor(color_back);     
-        font->drawString(label, floor(rect->getX())+1+xOffset, floor(rect->getY()+rect->getHeight())+1+yOffset);         
+        font->drawString(label, floor(rect->getX())+1+xOffset, floor(rect->getY()+rect->getHeight())+1+yOffset);
     }
     
 	void drawString(float x, float y, string _string)
@@ -154,12 +154,9 @@ public:
     
     void drawStringShadow(float x, float y, string _string)
 	{
-        if(visible)
-        {
-            ofFill(); 
-            ofSetColor(color_back);     
-            font->drawString(_string, floor(x)+1, floor(y)+1);                     
-        }
+        ofFill();
+        ofSetColor(color_back);     
+        font->drawString(_string, floor(x)+1, floor(y)+1);
 	}
     
 	float getStringWidth(string s)
@@ -184,11 +181,11 @@ public:
     
     void setLabel(string _label)
 	{
-		label = _label; 		
+		label = _label;
         if(autoSize)
         {
             float w = font->stringWidth(label); 
-            float h = font->stringHeight(label); 		
+            float h = font->stringHeight("1");          //otherwise we get some funky non-uniform spacing :(
             rect->setWidth(w); 
             rect->setHeight(h); 		 
             paddedRect->setWidth(w+padding*3.0); 
@@ -205,7 +202,7 @@ public:
                 label.erase (it);                    
             }                        
             float w = (int)font->stringWidth(label); 
-            float h = (int)font->stringHeight(label); 		
+            float h = (int)font->stringHeight("1");     //otherwise we get some funky non-uniform spacing :(
             if(rect->getHeight() > 0)
             {
                 yOffset = (int)-h*.5;                
@@ -221,7 +218,7 @@ public:
         }
 	}
         
-    string getLabel()
+    string& getLabel()
     {
         return label; 
     }

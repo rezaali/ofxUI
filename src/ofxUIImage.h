@@ -30,26 +30,26 @@
 class ofxUIImage : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name)
+    ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _image, _name); 
     }
     
-    ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name, bool _showLabel)
+    ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _image, _name); 
         showLabel = _showLabel; 
     }
     
-    ofxUIImage(float w, float h, ofImage *_image, string _name)
+    ofxUIImage(float w, float h, ofImage *_image, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _image, _name); 
     }    
 
-    ofxUIImage(float w, float h, ofImage *_image, string _name, bool _showLabel)
+    ofxUIImage(float w, float h, ofImage *_image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _image, _name); 
@@ -58,7 +58,7 @@ public:
     
     void init(float w, float h, ofImage *_image, string _name)
     {
-		name = _name; 				
+		name = string(_name);  				
 		kind = OFX_UI_WIDGET_IMAGE; 
         showLabel = true; 
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);

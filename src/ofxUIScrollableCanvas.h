@@ -26,6 +26,7 @@
 #define OFXUI_SCROLLABLE_CANVAS
 
 #include "ofxUICanvas.h"
+#include "ofFbo.h"
 
 class ofxUIScrollableCanvas : public ofxUICanvas
 {    
@@ -60,7 +61,7 @@ public:
         kind = OFX_UI_WIDGET_SCROLLABLECANVAS;
         sRect = new ofxUIRectangle(rect->x, rect->y, rect->getWidth(), rect->getHeight());
         isScrolling = false; 
-        vel.set(0); 
+        vel.set(0);
         pos.set(0); 
         ppos.set(0); 
         acc.set(0); 
@@ -74,12 +75,26 @@ public:
         nearLeft = false;
         
         hitWidget = false; 
-        stickyDistance = 100;  
+        stickyDistance = 100;
         hit = false; 
         snapping = true; 
 #ifdef TARGET_OPENGLES
         touchId = -1; 
 #endif
+//        initFbo(sRect->getWidth(),sRect->getHeight());        
+    }
+
+//    void initFbo(int w, int h)
+//    {
+//        fbo.allocate(w, h); 
+//        fbo.begin();
+//        ofClear(0,0,0,0);
+//        fbo.end();
+//    }
+    
+    void setDamping(float _damping)
+    {
+        damping = _damping; 
     }
     
     void setSnapping(bool _snapping)
@@ -92,7 +107,8 @@ public:
         sRect->x = x; 
         sRect->y = y; 
         sRect->setWidth(w);
-        sRect->setHeight(h);                
+        sRect->setHeight(h);
+//        initFbo(w,h);
     }
     
     void setScrollAreaToScreen()
@@ -100,19 +116,22 @@ public:
         sRect->x = 0; 
         sRect->y = 0; 
         sRect->setWidth(ofGetWidth());
-        sRect->setHeight(ofGetHeight());                        
+        sRect->setHeight(ofGetHeight());
+//        initFbo(sRect->getWidth(),sRect->getHeight());
     }
     
     void setScrollAreaToScreenWidth()
     {
         sRect->x = 0; 
-        sRect->setWidth(ofGetWidth());        
-    }    
+        sRect->setWidth(ofGetWidth());
+//        initFbo(sRect->getWidth(),sRect->getHeight());        
+    }
 
     void setScrollAreaToScreenHeight()
     {
-        sRect->y = 0;         
-        sRect->setHeight(ofGetHeight());                                
+        sRect->y = 0;
+        sRect->setHeight(ofGetHeight());
+//        initFbo(sRect->getWidth(),sRect->getHeight());        
     }
     
     void setScrollableDirections(bool _scrollX, bool _scrollY)
@@ -170,18 +189,15 @@ public:
             {
                 float dyTop = rect->y - sRect->y; 
                 float dyBot = (sRect->y+sRect->getHeight()) - (rect->y+rect->getHeight()); 
+                if(fabs(dyBot) < stickyDistance)
+                {
+                    nearTop = false;
+                    nearBot = true;
+                }
                 if(fabs(dyTop) < stickyDistance)
                 {
-                    nearTop = true;                     
-                }            
-                else if(fabs(dyBot) < stickyDistance)
-                {
-                    nearBot = true; 
-                }
-                else
-                {
-                    nearTop = false; 
-                    nearBot = false;                     
+                    nearTop = true;
+                    nearBot = false;
                 }
                    
                 if(dyTop > 0)
@@ -194,23 +210,27 @@ public:
                     acc.y += (-dyTop)/10.0;
                     acc.y -=vel.y*(1.0-damping);                     
                 }
-                else if(dyBot > 0)
+                
+                if(dyBot > 0)
                 {
                     acc.y += (dyBot)/10.0;
                     acc.y -=vel.y*(1.0-damping); 	
-                }                                     
+                }
                 else if(nearBot)
                 {
                     acc.y += (dyBot)/10.0;
                     acc.y -=vel.y*(1.0-damping); 	
                 }
+                
+                nearTop = false;
+                nearBot = false;
             }
             
-            acc.limit(10);
-            vel +=acc; 
-            vel.limit(50);
-            if(scrollX) rect->x +=vel.x; 
-            if(scrollY) rect->y +=vel.y;             
+            acc.limit(50);
+            vel +=acc;
+            vel.limit(100);
+            if(scrollX && fabs(vel.x) > 1.0) rect->x += floor(vel.x);
+            if(scrollY && fabs(vel.y) > 1.0) rect->y += floor(vel.y);
             
             vel *=damping;    
             acc.set(0); 
@@ -222,9 +242,60 @@ public:
 		}		
     }
     
+    virtual void draw()
+    {
+//        fbo.begin(); 
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//        ofClearAlpha();
+        
+        ofPushStyle();
+		glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+        ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+        ofSetRectMode(OF_RECTMODE_CORNER);
+        ofSetLineWidth(1.0);
+        
+        drawPadded();
+        
+        drawPaddedOutline();
+        
+        drawBack();
+        
+        drawFill();
+        
+        drawFillHighlight();
+        
+        drawOutline();
+        
+        drawOutlineHighlight();
+        
+		for(int i = widgets.size()-1; i >= 0; i--)
+		{
+            if(widgets[i]->isVisible() && widgets[i]->getRect()->rIntersects(*sRect))
+            {
+                widgets[i]->draw();
+            }
+		}
+		
+		glDisable(GL_DEPTH_TEST);
+        ofPopStyle();
+//        fbo.end();
+//        
+//        ofSetColor(255);
+//        fbo.draw(sRect->getX(), sRect->getY());
+    }
+    
+    virtual void setPosition(int x, int y)
+    {
+        rect->x = x;
+        rect->y = y;
+        sRect->x = x;
+        sRect->y = y; 
+    }
+
     void drawScrollableRect()
     {
-        sRect->draw(); 
+        sRect->draw();
     }
     	
 #ifdef TARGET_OPENGLES
@@ -386,10 +457,14 @@ public:
         }
     }	
 
+    ofxUIRectangle *getSRect()
+    {
+        return sRect; 
+    }
 
 protected:
-
-    ofxUIRectangle *sRect; 
+//    ofFbo fbo;    //experimental 
+    ofxUIRectangle *sRect;
     bool isScrolling;
     bool snapping; 
     bool scrollX, scrollY; 

@@ -30,13 +30,13 @@
 class ofxUILabelButton : public ofxUIButton
 {
 public:
-    ofxUILabelButton(string _name, bool _value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(string _name, bool _value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = false;
         init(_name, &_value, w, h, x, y, _size);
     }
 
-    ofxUILabelButton(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = true;
         init(_name, _value, w, h, x, y, _size);
@@ -45,21 +45,21 @@ public:
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
 
-    ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = false;         
         init(_name, &_value, w, 0, x, y, _size);
         ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
+    ofxUILabelButton(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0) : ofxUIButton()
     {
         useReference = false;         
         init(_name, &_value, w, h, 0, 0, _size);
         ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = false;         
         init(_name, &_value, 0, 0, x, y, _size);
@@ -73,28 +73,28 @@ public:
 //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
 //    }
     
-    ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = true; 
         init(_name, _value, w, 0, x, y, _size);
         ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0)
+    ofxUILabelButton(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0) : ofxUIButton()
     {
         useReference = true;         
         init(_name, _value, w, h, 0, 0, _size);
         ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUILabelButton(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUILabelButton(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
     {
         useReference = true;         
         init(_name, _value, 0, 0, x, y, _size);
         ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-//    ofxUILabelButton(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM)
+//    ofxUILabelButton(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIButton()
 //    {
 //        useReference = true;         
 //        init(_name, _value, 0, 0, 0, 0, _size);
@@ -105,12 +105,13 @@ public:
     {
         rect = new ofxUIRectangle(x,y,w,h);
         autoSize = w == 0 ? true : false;
-        name = _name; 		
+        name = string(_name);  		
         
         label = new ofxUILabel(0,0,(name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect);         
         label->setEmbedded(true);
+
 		kind = OFX_UI_WIDGET_LABELBUTTON; 	
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);         
@@ -177,8 +178,15 @@ public:
 		labelrect->y = (int)(ph*.5 - h*.5); 
         labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
 		paddedRect->height = rect->height+padding*2.0;  
-        paddedRect->width = rect->width+padding*2.0;  
-	}	
+        paddedRect->width = rect->width+padding*2.0;        
+	}
+    
+    virtual void setValue(bool _value)
+	{
+		*value = _value;
+        draw_fill = *value;
+        label->setDrawBack((*value));
+	}
     
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
