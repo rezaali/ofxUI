@@ -202,7 +202,7 @@ public:
             this->mouseReleased(touch.x, touch.y, 0); 
             touchId = -1;                
         }
-    }         
+    }
     
     void touchDoubleTap(ofTouchEventArgs& touch)
     {

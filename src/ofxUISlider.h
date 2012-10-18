@@ -150,6 +150,7 @@ public:
         if(useReference)
         {
             value = ofMap(*valueRef, min, max, 0.0, 1.0, true);
+            updateLabel(); 
         }
     }
 

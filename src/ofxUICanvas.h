@@ -1834,10 +1834,10 @@ public:
     }
     
 	void triggerEvent(ofxUIWidget *child)
-	{        
-        checkForKeyFocus(child); 
-		GUIevent->widget = child; 		
-		ofNotifyEvent(newGUIEvent,*GUIevent,this);		
+	{
+        checkForKeyFocus(child);
+        GUIevent->widget = child; 		
+        ofNotifyEvent(newGUIEvent,*GUIevent,this);
 	}
 	    
     void setUIColors(ofColor &cb, ofColor &co, ofColor &coh, ofColor &cf, ofColor &cfh, ofColor &cp, ofColor &cpo)
