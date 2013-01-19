@@ -31,28 +31,28 @@
 class ofxUINumberDialer : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = false;                                 
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_min, _max, &_value, _precision, _name, _size); 
     }
     
-    ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = false;                                 
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_min, _max, &_value, _precision, _name, _size); 
     }    
     
-    ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = true;                                         
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_min, _max, _value, _precision, _name, _size); 
     }
     
-    ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size)
+    ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
     {
         useReference = true;                                  
         rect = new ofxUIRectangle(0,0,0,0); 
@@ -69,7 +69,7 @@ public:
     
     void init(float _min, float _max, float *_value, int _precision, string _name, int _size)
     {
-		name = _name; 		
+		name = string(_name);  		
 		kind = OFX_UI_WIDGET_NUMBERDIALER;  		
         
         if(useReference)
@@ -131,6 +131,7 @@ public:
             temp+="0";
         }
 		
+        displayLabel = false; 
         label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), temp, _size);
 		label->setParent(label); 
 		label->setRectParent(rect);
@@ -157,7 +158,12 @@ public:
             float x = label->getRect()->getX();
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");
-
+            
+            if(displayLabel)
+            {
+                label->drawString(x+rect->getWidth(), y, name);
+            }
+            
             for(int i = 0; i < displaystring.size(); i++)
             {
                 float tw = label->getStringWidth(displaystring.substr(i,1));
@@ -177,6 +183,11 @@ public:
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");            
             ofRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
+            
+            if(displayLabel)
+            {
+                label->drawString(x+rect->getWidth(), y, name);
+            }
             
             for(int i = 0; i < displaystring.size(); i++)
             {
@@ -202,6 +213,18 @@ public:
     void calculatePrecisionZone()
     {
         currentPrecisionZone = ceil(ofMap(hitPoint.x,rect->getX(),rect->getX()+rect->getWidth(),-1, displaystring.size()-1));
+        if(currentPrecisionZone == 0)
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
+        }
+        else if(currentPrecisionZone <= numOfPrecisionZones-precision)
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod-currentPrecisionZone);
+        }
+        else
+        {
+            zoneMultiplier = powf(10.0, numOfPrecisionZones-currentPrecisionZone-precision);
+        }
     }
 	
     float getValue()
@@ -230,6 +253,7 @@ public:
             state = OFX_UI_STATE_OVER;
             hitPoint = ofPoint(x,y);
             calculatePrecisionZone();
+            
         }
         else
         {
@@ -269,20 +293,7 @@ public:
         {
             hit = true; 
             hitPoint = ofPoint(x,y); 
-            calculatePrecisionZone();
-
-            if(currentPrecisionZone == 0)
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
-            }
-            else if(currentPrecisionZone <= numOfPrecisionZones-precision)
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod-currentPrecisionZone);
-            }
-            else
-            {
-                zoneMultiplier = powf(10.0, numOfPrecisionZones-currentPrecisionZone-precision);
-            }            
+            calculatePrecisionZone();             
             state = OFX_UI_STATE_DOWN;     
 			triggerEvent(this);            
         }    
@@ -496,9 +507,22 @@ public:
         return out.str();
     }
 
+    void setDisplayLabel(bool _displayLabel)
+    {
+        displayLabel = _displayLabel;
+        if(displayLabel)
+        {
+            paddedRect->width = rect->width+padding*2.0 + label->getStringWidth(name)+padding*3.0;
+        }
+        else
+        {
+            paddedRect->width = rect->width+padding*2.0;
+        }
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	string textstring;  
+    bool displayLabel;
+	string textstring;
     string displaystring;
     int precision; 
 	float zoneMultiplier; 

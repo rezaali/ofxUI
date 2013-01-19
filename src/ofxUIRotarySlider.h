@@ -30,28 +30,28 @@
 class ofxUIRotarySlider : public ofxUIWidgetWithLabel
 {
 public:    
-    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name)
+    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;           
 		rect = new ofxUIRectangle(x,y,w,w); 
         init(w, _min, _max, &_value, _name); 
     }
     
-    ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name)
+    ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;           
 		rect = new ofxUIRectangle(0,0,w,w); 
         init(w, _min, _max, &_value, _name); 
     }
     
-    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name)
+    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;                         
 		rect = new ofxUIRectangle(x,y,w,w); 
         init(w, _min, _max, _value, _name); 
     }
     
-    ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name)
+    ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;                         
 		rect = new ofxUIRectangle(0,0,w,w); 
@@ -68,7 +68,7 @@ public:
     
     void init(float w, float _min, float _max, float *_value, string _name)
     {
-		name = _name; 				
+		name = string(_name);  				
         kind = OFX_UI_WIDGET_ROTARYSLIDER;  			
 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, w+padding);

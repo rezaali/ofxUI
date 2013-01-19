@@ -52,6 +52,36 @@ public:
         return label;
     }
     
+    virtual void toggleColors()
+    {
+        ofColor fill = getColorFill();
+        float af = fill.a;
+        ofColor back = getColorBack();
+        float ab = back.a;
+        
+        setColorFill(ofColor(back, af));
+        setColorBack(ofColor(fill, ab));
+    }
+    
+    virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
+    {
+        modal = _modal;
+        if(modal == true)
+        {
+            if(parent != NULL)
+            {
+                parent->addModalWidget(this);
+            }
+        }
+        else
+        {
+            if(parent != NULL)
+            {
+                parent->removeModalWidget(this);            
+            }
+        }    
+    }
+    
 protected:    
     ofxUILabel *label;
 };

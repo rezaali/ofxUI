@@ -30,30 +30,33 @@
 class ofxUIImageButton : public ofxUIButton
 {
 public:
-    ofxUIImageButton() {}
+    ofxUIImageButton() : ofxUIButton()
+    {
     
-    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name)
+    }
+    
+    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name) : ofxUIButton()
     {
         useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h);
         init(w, h, &_value, _pathURL, _name);         
     }
 
-    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name)
+    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name) : ofxUIButton()
     {
         useReference = false;         
         rect = new ofxUIRectangle(0,0,w,h);
         init(w, h, &_value, _pathURL, _name);         
     }
         
-    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name)
+    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name) : ofxUIButton()
     {
         useReference = true;         
         rect = new ofxUIRectangle(x,y,w,h);
         init(w, h, _value, _pathURL, _name);         
     }
     
-    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name)
+    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name) : ofxUIButton()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(0,0,w,h);
@@ -62,12 +65,12 @@ public:
     
     void init(float w, float h, bool *_value, string _pathURL, string _name)
     {
-        name = _name; 		
+        name = string(_name);  		
 		kind = OFX_UI_WIDGET_IMAGEBUTTON; 		
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
-        
+                
         if(useReference)
         {
             value = _value; 
@@ -107,7 +110,6 @@ public:
 
     virtual void drawBack()
     {
-                    
         if(draw_back)
         {
             ofFill(); 
@@ -145,6 +147,81 @@ public:
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }   
+    
+    virtual void mouseMoved(int x, int y)
+    {
+        if(rect->inside(x, y))
+        {
+            state = OFX_UI_STATE_OVER;
+        }
+        else
+        {
+            state = OFX_UI_STATE_NORMAL;
+        }
+        stateChange();
+    }
+    
+    virtual void mouseDragged(int x, int y, int button)
+    {
+        if(hit)
+        {
+            if(rect->inside(x, y))
+            {
+                state = OFX_UI_STATE_DOWN;
+            }
+            else
+            {
+                hit = false;
+                state = OFX_UI_STATE_NORMAL;
+                setValue(false);
+                triggerEvent(this);
+            }
+            stateChange();
+        }
+    }
+    
+    virtual void mousePressed(int x, int y, int button)
+    {
+        if(rect->inside(x, y))
+        {
+            hit = true;
+            state = OFX_UI_STATE_DOWN;
+            setValue(true);
+			triggerEvent(this);
+        }
+        else
+        {
+            state = OFX_UI_STATE_NORMAL;
+        }
+        stateChange();
+    }
+    
+    virtual void mouseReleased(int x, int y, int button)
+    {
+        if(hit)
+        {
+#ifdef TARGET_OPENGLES
+            state = OFX_UI_STATE_NORMAL;
+#else
+            if(rect->inside(x, y))
+            {
+                state = OFX_UI_STATE_OVER;
+            }
+            else
+            {
+                state = OFX_UI_STATE_NORMAL;
+            }
+#endif
+            setValue(false);
+			triggerEvent(this);
+        }
+        else
+        {
+            state = OFX_UI_STATE_NORMAL;
+        }
+        stateChange();
+        hit = false;
+    }
     
     void stateChange()
     {        
@@ -186,14 +263,27 @@ public:
 
     virtual void setValue(bool _value)
 	{
-		*value = _value;         
-        draw_fill = *value; 
+		*value = _value;
+        draw_fill = *value;        
 	}	
     
     virtual void setVisible(bool _visible)
     {
         visible = _visible; 
     }
+    
+    virtual bool isHit(float x, float y)
+    {
+        if(visible)
+        {
+            return rect->inside(x, y); 
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

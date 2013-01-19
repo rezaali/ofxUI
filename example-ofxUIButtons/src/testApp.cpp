@@ -36,6 +36,7 @@ void testApp::setup()
     radio->activateToggle("SOCKS"); 
     
     gui->addSpacer(length-xInit, 2);
+    
     gui->addLabelButton("LABEL BUTTON", false); 
     gui->addWidgetEastOf(new ofxUILabel("<- Automagically Sized", OFX_UI_FONT_SMALL),"LABEL BUTTON"); 
     gui->addWidgetSouthOf(new ofxUILabelButton(length-xInit, false, "SPECIFIED WIDTH BUTTON", OFX_UI_FONT_MEDIUM), "LABEL BUTTON");
@@ -110,10 +111,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
         ofxUILabelToggle *toggle = (ofxUILabelToggle *) e.widget; 
         cout << name << "\t value: " << toggle->getValue() << endl;                 
     }
-	
-    
-    
-	if(name == "B1")
+	else if(name == "B1")
 	{
         ofxUIButton *button = (ofxUIButton *) e.widget; 
         cout << "value: " << button->getValue() << endl; 

@@ -30,28 +30,28 @@
 class ofxUICircleSlider : public ofxUISlider
 {
 public:
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;         
         rect = new ofxUIRectangle(x,y,w,w); 
         init(w, w, _min, _max, &_value, _name, _size); 		
     }
     
-    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                 
         rect = new ofxUIRectangle(0,0,w,w); 
         init(w, w, _min, _max, &_value, _name, _size); 
     }        
     
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(x,y,w,w); 
         init(w, w, _min, _max, _value, _name, _size); 		
     }
     
-    ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
+    ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(0,0,w,w); 
@@ -60,7 +60,7 @@ public:
     
     void init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
     {
-        name = _name; 				
+        name = string(_name);  				
         kind = OFX_UI_WIDGET_CIRCLESLIDER;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);

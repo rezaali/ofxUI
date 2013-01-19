@@ -29,15 +29,14 @@ class ofxUIWidget
 {
 public:
     ofxUIWidget() 
-    {        
-        name = "base"; 
+    {
+        name = string("base");
         ID = -1;
         hit = false; 
         visible = true; 
 #ifdef TARGET_OPENGLES
         touchId = -1; 
 #endif
-        
         state = OFX_UI_STATE_NORMAL; 
         draw_back = true; 
         draw_outline = false; 
@@ -58,7 +57,6 @@ public:
         color_padded_rect = OFX_UI_COLOR_PADDED;
         color_padded_rect_outline = OFX_UI_COLOR_PADDED_OUTLINE;     
         
-        dead = false;
         embedded = false;
 		modal = false;
     }
@@ -204,7 +202,7 @@ public:
             this->mouseReleased(touch.x, touch.y, 0); 
             touchId = -1;                
         }
-    }         
+    }
     
     void touchDoubleTap(ofTouchEventArgs& touch)
     {
@@ -243,14 +241,14 @@ public:
 	
 	virtual void setName(string _name)
 	{
-		name = _name; 
+		name = string(_name);  
 	}
     
 	virtual void setState(int _state)
     {
         state = _state; 
     }
-    
+    //--------------------------------------------------------------------------------
 	virtual void setDrawPadding(bool _draw_padded_rect)
 	{
 		draw_padded_rect = _draw_padded_rect; 
@@ -285,7 +283,42 @@ public:
 	{
 		draw_outline_highlight = draw_outline_highlight; 
 	}
+    //--------------------------------------------------------------------------------
+	virtual bool getDrawPadding()
+	{
+		return draw_padded_rect; 
+	}
+    
+    virtual bool getDrawPaddingOutline()
+	{
+		return draw_padded_rect_outline; 
+	}
+
+	virtual bool getDrawBack()
+	{
+		return draw_back; 
+	}
+    
+	virtual bool getDrawOutline()
+	{
+		return draw_outline; 
+	}
+    
+	virtual bool getDrawFill()
+	{
+		return draw_fill; 
+	}
 	
+	virtual bool getDrawFillHighLight()
+	{
+		return draw_fill_highlight; 
+	}
+	
+	virtual bool getDrawOutlineHighLight()
+	{
+		return draw_outline_highlight;
+	}
+    
 	virtual void setColorBack(ofColor _color_back)
 	{
 		color_back = _color_back; 
@@ -356,8 +389,6 @@ public:
 		return color_fill_highlight; 
 	}
 	
-
-	
     virtual int getKind()
 	{
 		return kind; 
@@ -395,9 +426,9 @@ public:
         }
     }
     
-	virtual string getName()
+	virtual string& getName()
 	{
-		return name; 
+		return name;
 	}
 	
 	virtual void triggerEvent(ofxUIWidget *child)
@@ -571,8 +602,6 @@ protected:
 #ifdef TARGET_OPENGLES          //iOS Mode
     int touchId;     
 #endif
-    
-    bool dead; 
 };
 
 #endif

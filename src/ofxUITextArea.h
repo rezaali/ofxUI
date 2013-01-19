@@ -30,7 +30,7 @@
 class ofxUITextArea : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUITextArea(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUITextArea(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM) : ofxUIWidgetWithLabel()
     {
         init(_name, _textstring, w, h, x, y, _size);
     }
@@ -38,10 +38,11 @@ public:
     void init(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
     {
         rect = new ofxUIRectangle(x,y,w,h);
-		name = _name;
+		name = string(_name); 
 		kind = OFX_UI_WIDGET_TEXTAREA;
-		textstring = _textstring;
-        
+		textstring = _textstring;        
+        setDrawFill(true);
+        drawShadow = false; 
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);
         		
@@ -56,7 +57,7 @@ public:
         }
         else
         {
-            autoSize = false; 
+            autoSize = false;
         }
     }
     
@@ -79,16 +80,29 @@ public:
             ofFill();
             ofSetColor(color_back);
             rect->draw();
-
-            ofSetColor(color_fill);
-            for(int i = 0; i < textLines.size(); i++)
-            {
-                label->drawString(rect->getX()+padding*2, rect->getY()+label->getStringHeight("|")*(i+1)+padding, textLines[i]);
-            }
-
         }
     }
     
+    virtual void drawFill()
+    {
+        if(draw_fill)
+        {
+            if(drawShadow)
+            {
+                ofSetColor(color_back);
+                for(int i = 0; i < textLines.size(); i++)
+                {
+                    label->drawStringShadow(rect->getX()+padding*2, rect->getY()+offsetY+lineSpaceSize*(i+1), textLines[i]);
+                }
+            }
+            
+            ofSetColor(color_fill);
+            for(int i = 0; i < textLines.size(); i++)
+            {
+                label->drawString(rect->getX()+padding*2, rect->getY()+offsetY+lineSpaceSize*(i+1), textLines[i]);
+            }
+        }
+    }
 		
     void setVisible(bool _visible)
     {
@@ -104,6 +118,7 @@ public:
 	
 	void setTextString(string s)
 	{
+        textLines.clear();        
         textstring = s;
         formatTextString();
 	}
@@ -112,74 +127,81 @@ public:
     {
         float rectWidthLimit = rect->getWidth()-padding*6;
         float rectHeightLimit = rect->getHeight()-label->getLineHeight()-padding;
-
-        if(label->getStringWidth(textstring) <= rectWidthLimit)
-        {
-            return;
-        }
-        
-        float tempWidth;
-        float tempHeight;
-        textLines.clear();
-        string line = "";
-        size_t i=0;
-        
         bool overheight = false;
         
-        while (i < textstring.size() && !overheight) //if not at the end of the string && not over the rect's height
+        lineSpaceSize = label->getStringHeight("|")*1.25;
+        offsetY = floor(padding*.5);
+        
+        if(label->getStringWidth(textstring) <= rectWidthLimit)
         {
-            tempWidth = label->getStringWidth(line);
-            if(tempWidth < rectWidthLimit)
+            if(textstring.size() > 0)
             {
-                line+=textstring.at(i);
-                i++;
-                if(i == textstring.size())
-                {
-                    textLines.push_back(line);
-                }
+                textLines.push_back(textstring);
             }
-            else
+        }
+        else
+        {        
+            float tempWidth;
+            float tempHeight;
+            textLines.clear();
+            string line = "";
+            size_t i=0;                    
+            
+            while (i < textstring.size() && !overheight) //if not at the end of the string && not over the rect's height
             {
-                bool notFound = true;
-                
-                while (notFound && !overheight)
+                tempWidth = label->getStringWidth(line);
+                if(tempWidth < rectWidthLimit)
                 {
-                    if(strncmp(&textstring.at(i), " ",1) == 0)
+                    line+=textstring.at(i);
+                    i++;
+                    if(i == textstring.size())
                     {
-                        tempHeight = (textLines.size()+1)*label->getStringHeight("|");
-//                        cout << tempHeight << endl;
-//                        cout << rectHeightLimit << endl;
-                        if(!autoSize && tempHeight >= rectHeightLimit)
-                        {
-                            textLines.push_back(line);
-                            textLines[textLines.size()-1]+="...";
-                            overheight = true;
-                        }
-                        notFound = false; 
-                        if(!overheight)
-                        {
-                            textLines.push_back(line);
-                            line.clear();
-                            i++; 
-                        }
+                        textLines.push_back(line);
                     }
-                    else 
-                    {
-                        i--; 											
-                        line.erase(line.end()-1); 
-                    }					
                 }
-            }		
+                else
+                {
+                    bool notFound = true;
+                    
+                    while (notFound && !overheight)
+                    {
+                        if(strncmp(&textstring.at(i), " ",1) == 0)
+                        {
+                            tempHeight = (textLines.size()+1)*lineSpaceSize;
+    //                        cout << tempHeight << endl;
+    //                        cout << rectHeightLimit << endl;
+                            if(!autoSize && tempHeight >= rectHeightLimit)
+                            {
+                                textLines.push_back(line);
+                                textLines[textLines.size()-1]+="...";
+                                overheight = true;
+                            }
+                            notFound = false; 
+                            if(!overheight)
+                            {
+                                textLines.push_back(line);
+                                line.clear();
+                                i++; 
+                            }
+                        }
+                        else 
+                        {
+                            i--; 											
+                            line.erase(line.end()-1); 
+                        }					
+                    }
+                }		
+            }
         }
         
         if(autoSize)
         {
-            rect->setHeight(label->getStringHeight("|")*textLines.size()+padding*3);
+            rect->setHeight(lineSpaceSize*textLines.size()+offsetY*6);
         }
         
         if(overheight)
         {
-            rect->setHeight(MAX(rect->getHeight(),label->getStringHeight("|")*textLines.size()+padding*3));
+            rect->setHeight(MAX(rect->getHeight(),lineSpaceSize*textLines.size()+offsetY*6));
         }
     }
 
@@ -189,13 +211,21 @@ public:
         formatTextString();
         label->setLabel(textstring);
         label->setVisible(false);
-		paddedRect->height = rect->height+padding*2.0;				        
+		paddedRect->height = rect->height+padding*2.0;
 	}
+    
+    void setDrawShadow(bool _drawShadow)
+    {
+        drawShadow = _drawShadow;
+    }
 	
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	string textstring;
     vector<string> textLines;
-    bool autoSize; 
+    bool autoSize;
+    bool drawShadow; 
+    int lineSpaceSize;
+    int offsetY; 
 };
 
 #endif

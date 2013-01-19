@@ -30,7 +30,7 @@
 class ofxUICustomImageButton : public ofxUIButton
 {
 public:
-    ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight)
+    ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight) : ofxUIButton()
     {
         useReference = false;
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -38,7 +38,7 @@ public:
         init(&_value, _pathURL, _name, _size, _labelWidth, _labelHeight);
     }    
 
-    ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, bool centerLabel = false)
+    ofxUICustomImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size, bool centerLabel = false) : ofxUIButton()
     {
         useReference = false;
         rect = new ofxUIRectangle(0,0,w,h);
@@ -48,7 +48,7 @@ public:
         init(&_value, _pathURL, _name, _size, _labelWidth, _labelHeight); 
     }    
     
-    ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight)
+    ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight) : ofxUIButton()
     {
         useReference = false;
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -56,7 +56,7 @@ public:
         init(&_value, _img, _name, _size, _labelWidth, _labelHeight); 
     }    
     
-    ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, bool centerLabel = false)
+    ofxUICustomImageButton(float w, float h, bool _value, ofImage *_img, string _name, int _size, bool centerLabel = false) : ofxUIButton()
     {
         useReference = false;        
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -75,7 +75,7 @@ public:
     
     void init(bool *_value, string _pathURL, string _name, int _size, int _labelWidth, int _labelHeight)
     {
-        name = _name; 		                
+        name = string(_name);  		                
         draw_outline = false; 
         draw_outline_highlight = false;         
         
@@ -120,7 +120,7 @@ public:
     
     void init(bool *_value, ofImage *_img, string _name, int _size, int _labelWidth, int _labelHeight)
     {
-        name = _name; 		                
+        name = string(_name);  		                
         draw_outline = false; 
         draw_outline_highlight = false;         
         

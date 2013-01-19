@@ -30,7 +30,7 @@
 class ofxUIFPSSlider : public ofxUISlider
 {
 public:        
-    ofxUIFPSSlider(string _name, float w, float h, float _max = 400.0, float x = 0, float y = 0)
+    ofxUIFPSSlider(string _name, float w, float h, float _max = 400.0, float x = 0, float y = 0) 
         : ofxUISlider(_name, 0.0, _max, 0.0, w, h, x, y)
     {
     }

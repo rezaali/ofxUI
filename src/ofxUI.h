@@ -36,17 +36,24 @@
 #define OFX_UI_STATE_DOWN 2
 #define OFX_UI_STATE_SUSTAINED 3
 
-#define OFX_UI_GLOBAL_PADDING 4
-#define OFX_UI_GLOBAL_WIDGET_SPACING 8
+#define OFX_UI_GLOBAL_PADDING 2
+#define OFX_UI_GLOBAL_WIDGET_SPACING 4
 
 #define OFX_UI_COLOR_BACK ofColor(0, 25)                                //the rect's back color
 #define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                //the rect's outline color 
 #define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofColor(255, 255, 255, 200)      //the rect's onMouseOver outline highlight color         
 #define OFX_UI_COLOR_FILL ofColor(255, 255, 255, 200)                   //the rect's fill color 
 #define OFX_UI_COLOR_FILL_HIGHLIGHT ofColor(255, 255, 255, 255)         //the rect's onMouseDown highlight color 
-
 #define OFX_UI_COLOR_PADDED ofColor(0, 100)                             //the rect's padded color
-#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)         //the rect's padded outline color 
+#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)         //the rect's padded outline color
+
+#define OFX_UI_COLOR_BACK_ALPHA 25
+#define OFX_UI_COLOR_OUTLINE_ALPHA 100
+#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT_ALPHA 200
+#define OFX_UI_COLOR_FILL_ALPHA 200
+#define OFX_UI_COLOR_FILL_HIGHLIGHT_ALPHA 255
+#define OFX_UI_COLOR_PADDED_ALPHA 100
+#define OFX_UI_COLOR_PADDED_OUTLINE_ALPHA 200
 
 #define OFX_UI_DRAW_PADDING false
 #define OFX_UI_DRAW_PADDING_OUTLINE false
@@ -198,13 +205,7 @@ enum ofxUIThemeType
     OFX_UI_THEME_MINBLACK
 };
 
-
-
-//#ifdef TARGET_ANDROID
-//#define OFX_UI_FONT_NAME "newmediafett.ttf"
-//#else
 #define OFX_UI_FONT_NAME "GUI/NewMedia Fett.ttf"
-//#endif
 
 #define OFX_UI_FONT_RESOLUTION 150
 #define OFX_UI_FONT_LARGE_SIZE 10

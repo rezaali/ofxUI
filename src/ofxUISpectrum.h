@@ -30,13 +30,13 @@
 class ofxUISpectrum : public ofxUIWidget
 {
 public:
-    ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
+    ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w,h,_buffer, _bufferSize, _min, _max, _name); 
     }
     
-    ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
+    ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w,h,_buffer, _bufferSize, _min, _max, _name); 
@@ -44,7 +44,7 @@ public:
 
     void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
     {
-		name = _name; 				
+		name = string(_name);  				
 		kind = OFX_UI_WIDGET_SPECTRUM; 
 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);

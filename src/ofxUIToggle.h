@@ -30,7 +30,10 @@
 class ofxUIToggle : public ofxUIButton
 {
 public:
-    ofxUIToggle() {}
+    ofxUIToggle() : ofxUIButton()
+    {
+    
+    }
     
     ofxUIToggle(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) 
         : ofxUIButton( _name, _value, w, h, x, y, _size )
@@ -109,7 +112,7 @@ public:
     
     virtual void mouseMoved(int x, int y ) 
     {
-        if(rect->inside(x, y))
+        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             state = OFX_UI_STATE_OVER;         
         }    
@@ -135,7 +138,7 @@ public:
     
     virtual void mousePressed(int x, int y, int button) 
     {
-        if(rect->inside(x, y))
+        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             hit = true;             
             state = OFX_UI_STATE_DOWN;         
@@ -149,7 +152,7 @@ public:
     
     virtual void mouseReleased(int x, int y, int button) 
     {
-        if(rect->inside(x, y) && hit)
+        if((rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y))) && hit)
         {
             setValue(!(*value));
 #ifdef TARGET_OPENGLES
@@ -172,7 +175,7 @@ public:
 		*value = _value;
         draw_fill = *value;
         label->setDrawBack((*value));
-	}    
+	}
 }; 
 
 #endif

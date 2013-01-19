@@ -30,7 +30,7 @@
 class ofxUIBiLabelSlider : public ofxUISlider
 {
 public:
-    ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                 
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -38,7 +38,7 @@ public:
         init(w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size); 		
     }
     
-    ofxUIBiLabelSlider(float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                 
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -46,7 +46,7 @@ public:
         init(w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size); 
     }    
     
-    ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                 
         rect = new ofxUIRectangle(x,y,w,0); 
@@ -54,7 +54,7 @@ public:
         init(w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size); 		
     }
     
-    ofxUIBiLabelSlider(float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                 
         rect = new ofxUIRectangle(0,0,w,0); 
@@ -62,7 +62,7 @@ public:
         init(w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size); 
     }    
     
-    ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -70,7 +70,7 @@ public:
         init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size); 		
     }
     
-    ofxUIBiLabelSlider(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                         
         rect = new ofxUIRectangle(0,0,w,h); 
@@ -78,7 +78,7 @@ public:
         init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size); 
     }    
     
-    ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                         
         rect = new ofxUIRectangle(x,y,w,0); 
@@ -86,7 +86,7 @@ public:
         init(w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size); 		
     }
     
-    ofxUIBiLabelSlider(float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL)
+    ofxUIBiLabelSlider(float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                         
         rect = new ofxUIRectangle(0,0,w,0); 
@@ -96,7 +96,7 @@ public:
     
     void init(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size)
     {
-        name = _name; 	
+        name = string(_name);  	
         leftLabel = _leftLabel; 
         rightLabel = _rightLabel; 
         kind = OFX_UI_WIDGET_BILABELSLIDER; 

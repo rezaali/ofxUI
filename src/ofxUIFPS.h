@@ -30,7 +30,7 @@
 class ofxUIFPS : public ofxUILabel
 {
 public:    
-    ofxUIFPS(float x, float y, int _size)
+    ofxUIFPS(float x, float y, int _size) : ofxUILabel()
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init("FPS", "FPS: 60.000", _size); 
@@ -39,7 +39,7 @@ public:
         autoSize = true; 
     }
     
-    ofxUIFPS(int _size)
+    ofxUIFPS(int _size) : ofxUILabel()
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init("FPS", "FPS: 60.000", _size); 
