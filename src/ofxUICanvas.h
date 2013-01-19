@@ -191,7 +191,7 @@ public:
         setDrawFill(styler->getDrawFill());
         setDrawFillHighLight(styler->getDrawFillHighLight());
         setDrawPadding(styler->getDrawPadding());
-        setDrawPaddingOutline(styler->getDrawPaddingOutline());
+        setDrawPaddingOutline(styler->getDrawPaddingOutline());        
     }
     
 #ifndef OFX_UI_NO_XML
@@ -1729,6 +1729,13 @@ public:
         return widget;
     }
     
+    ofxUIToggleMatrix* addToggleMatrix(string _name, int _rows, int _cols, float w, float h)
+    {
+        ofxUIToggleMatrix* widget = new ofxUIToggleMatrix(w, h, _rows, _cols, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+                                       
     ofxUI2DPad* add2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, float w, float h, float x = 0, float y = 0)
     {
         ofxUI2DPad* widget = new ofxUI2DPad(_name, _rangeX, _rangeY, _value, w, h, x, y);

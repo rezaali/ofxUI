@@ -36,8 +36,8 @@
 #define OFX_UI_STATE_DOWN 2
 #define OFX_UI_STATE_SUSTAINED 3
 
-#define OFX_UI_GLOBAL_PADDING 4
-#define OFX_UI_GLOBAL_WIDGET_SPACING 8
+#define OFX_UI_GLOBAL_PADDING 2
+#define OFX_UI_GLOBAL_WIDGET_SPACING 4
 
 #define OFX_UI_COLOR_BACK ofColor(0, 25)                                //the rect's back color
 #define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                //the rect's outline color 

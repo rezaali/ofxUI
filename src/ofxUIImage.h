@@ -72,7 +72,8 @@ public:
 		label = new ofxUILabel(0,h+padding,(name+" LABEL"),name, OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
 		label->setRectParent(rect);    
-        label->setEmbedded(true);        
+        label->setEmbedded(true);
+        cropImageToFitRect = false; 
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -94,8 +95,15 @@ public:
 			if(image != NULL)
 			{			   
 				ofFill(); 
-				ofSetColor(255); 		
-				image->draw(rect->getX(), rect->getY(), rect->width, rect->height); 
+				ofSetColor(255);
+                if(cropImageToFitRect)
+                {
+                    image->drawSubsection(rect->getX(), rect->getY(), rect->width, rect->height, 0, 0, rect->width, rect->height);
+                }
+                else
+                {
+                    image->draw(rect->getX(), rect->getY(), rect->width, rect->height);
+                }
 			}
         }
     }        
@@ -104,8 +112,13 @@ public:
     {
         visible = _visible; 
         label->setVisible(showLabel);             
-    }    
-				
+    }
+		
+    void setCropImageToFitRect(bool _cropImageToFitRect)
+    {
+        cropImageToFitRect = _cropImageToFitRect;
+    }
+    
 	ofxUILabel *getLabel()
 	{
 		return label; 
@@ -137,8 +150,9 @@ public:
     
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	ofImage *image; 
-    bool showLabel; 
+	ofImage *image;
+    bool showLabel;
+    bool cropImageToFitRect; 
 }; 
 
 #endif

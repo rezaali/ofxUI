@@ -140,8 +140,37 @@ public:
         scrollY = _scrollY;
     }
     
+    void setStickDistance(float _stickyDistance)
+    {
+        stickyDistance = _stickyDistance; 
+    }
+    
+    void dampenX()
+    {
+        if(nearRight || nearLeft)
+        {
+            acc.x -=vel.x*(.5);
+        }
+        else
+        {
+            acc.x -=vel.x*(1.0-damping);
+        }        
+    }
+    
+    void dampenY()
+    {
+        if(nearTop || nearBot)
+        {
+            acc.y -=vel.y*(.5);
+        }
+        else
+        {
+            acc.y -=vel.y*(1.0-damping);
+        }
+    }
+    
     void update()
-    {		     
+    {
         if(!isScrolling)
         {
             if(scrollX && snapping)
@@ -166,22 +195,22 @@ public:
                 if(dxLeft > 0)
                 {
                     acc.x += (-dxLeft)/10.0;
-                    acc.x -=vel.x*(1.0-damping); 
+                    dampenX();
                 }
                 else if(nearLeft)
                 {
                     acc.x += (-dxLeft)/10.0;
-                    acc.x -=vel.x*(1.0-damping); 
+                    dampenX();
                 }                
                 else if(dxRight > 0)
                 {
                     acc.x += (dxRight)/10.0;
-                    acc.x -=vel.x*(1.0-damping); 	
+                    dampenX();
                 }
                 else if(nearRight)
                 {
                     acc.x += (dxRight)/10.0;
-                    acc.x -=vel.x*(1.0-damping); 	
+                    dampenX(); 
                 }                
             }
             
@@ -203,23 +232,23 @@ public:
                 if(dyTop > 0)
                 {
                     acc.y += (-dyTop)/10.0;
-                    acc.y -=vel.y*(1.0-damping); 
+                    dampenY();
                 }
                 else if(nearTop)
                 {
                     acc.y += (-dyTop)/10.0;
-                    acc.y -=vel.y*(1.0-damping);                     
+                    dampenY();
                 }
                 
                 if(dyBot > 0)
                 {
                     acc.y += (dyBot)/10.0;
-                    acc.y -=vel.y*(1.0-damping); 	
+                    dampenY();
                 }
                 else if(nearBot)
                 {
                     acc.y += (dyBot)/10.0;
-                    acc.y -=vel.y*(1.0-damping); 	
+                    dampenY(); 
                 }
                 
                 nearTop = false;
@@ -233,7 +262,7 @@ public:
             if(scrollY && fabs(vel.y) > 1.0) rect->y += floor(vel.y);
             
             vel *=damping;    
-            acc.set(0); 
+            acc.set(0);
         }
         
 		for(int i = 0; i < widgets.size(); i++)

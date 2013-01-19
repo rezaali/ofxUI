@@ -131,6 +131,7 @@ public:
             temp+="0";
         }
 		
+        displayLabel = false; 
         label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), temp, _size);
 		label->setParent(label); 
 		label->setRectParent(rect);
@@ -157,7 +158,12 @@ public:
             float x = label->getRect()->getX();
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");
-
+            
+            if(displayLabel)
+            {
+                label->drawString(x+rect->getWidth(), y, name);
+            }
+            
             for(int i = 0; i < displaystring.size(); i++)
             {
                 float tw = label->getStringWidth(displaystring.substr(i,1));
@@ -177,6 +183,11 @@ public:
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");            
             ofRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
+            
+            if(displayLabel)
+            {
+                label->drawString(x+rect->getWidth(), y, name);
+            }
             
             for(int i = 0; i < displaystring.size(); i++)
             {
@@ -496,9 +507,22 @@ public:
         return out.str();
     }
 
+    void setDisplayLabel(bool _displayLabel)
+    {
+        displayLabel = _displayLabel;
+        if(displayLabel)
+        {
+            paddedRect->width = rect->width+padding*2.0 + label->getStringWidth(name)+padding*3.0;
+        }
+        else
+        {
+            paddedRect->width = rect->width+padding*2.0;
+        }
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	string textstring;  
+    bool displayLabel;
+	string textstring;
     string displaystring;
     int precision; 
 	float zoneMultiplier; 

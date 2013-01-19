@@ -33,12 +33,14 @@ class ofxUIMultiImageSlider : public ofxUISlider
 public:    
     ofxUIMultiImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
+        useReference = false;
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _min, _max, _value, _pathURL, _name, _size); 		
     }
     
     ofxUIMultiImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
+        useReference = false; 
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _min, _max, _value, _pathURL, _name, _size); 
     }    
@@ -64,7 +66,7 @@ public:
 		max = _max; 
 		min = _min; 
         labelPrecision = 2;
-        
+                                                       //the widget's value
 		if(value > max)
 		{
 			value = max; 
@@ -74,7 +76,10 @@ public:
 			value = min; 
 		}
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+        valueRef = new float();
+        *valueRef = value;
+
+		value = ofMap(value, min, max, 0.0, 1.0, true);
         
 		if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_H)
 		{
