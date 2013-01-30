@@ -49,57 +49,57 @@ public:
     {
         useReference = false;                         
         init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, x, y);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }	
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
 
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                  
         init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }	
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ofxUI2DPad(float w, float h, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                         
         init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, 0, 0);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
     ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                         
         init(_name, _rangeX, _rangeY, &_value, w, h, 0, 0);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUI2DPad(float x, float y, float w, float h, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true; 
         init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, x, y);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }	
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true; 
         init(_name, _rangeX, _rangeY, _value, w, h, x, y);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }	
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ofxUI2DPad(float w, float h, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, 0, 0);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
     ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, _rangeX, _rangeY, _value, w, h, 0, 0);
-        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }      
+//        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ~ofxUI2DPad()
     {

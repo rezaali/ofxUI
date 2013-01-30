@@ -41,19 +41,19 @@ public:
     ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size) : ofxUIToggle()
     {
         init(_name, items, w, x, y, _size);
-        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
     ofxUIDropDownList(float w, string _name, vector<string> items, int _size) : ofxUIToggle()
     {
         init(_name, items, w, 0, 0, _size);
-        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
-    }    
+//        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+    }
     
     ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size) : ofxUIToggle()
     {
         init(_name, items, 0, x, y, _size);
-        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
 //    ofxUIDropDownList(string _name, vector<string> items, int _size)
