@@ -49,70 +49,70 @@ public:
     {
         useReference = false; 
         init(_name, &_value, w, 0, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {
         useReference = false; 
         init(_name, &_value, w, h, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0) : ofxUIToggle()
     {
         useReference = false;         
         init(_name, &_value, w, h, 0, 0, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {				
         useReference = false;         
         init(_name, &_value, 0, 0, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {				
         useReference = false;         
         init(_name, &_value, 0, 0, 0, 0, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {
         useReference = true;         
         init(_name, _value, w, 0, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {
         useReference = true;         
         init(_name, _value, w, h, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0) : ofxUIToggle()
     {
         useReference = true;                 
         init(_name, _value, w, h, 0, 0, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {				
         useReference = true;          
         init(_name, _value, 0, 0, x, y, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUILabelToggle(bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
     {	
         useReference = true;                 
         init(_name, _value, 0, 0, 0, 0, _size);
-        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUILABELTOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     virtual void init(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)

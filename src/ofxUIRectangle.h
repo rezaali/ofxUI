@@ -143,7 +143,7 @@ public:
     void draw()
     {
         if(parent != NULL)
-        {            
+        {
             ofRect(parent->getX()+x, parent->getY()+y, width, height); 
         }
         else

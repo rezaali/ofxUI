@@ -38,6 +38,11 @@
 
 #define OFX_UI_GLOBAL_PADDING 2
 #define OFX_UI_GLOBAL_WIDGET_SPACING 4
+#define OFX_UI_GLOBAL_CANVAS_SIZE 211
+#define OFX_UI_GLOBAL_SLIDER_HEIGHT 16
+#define OFX_UI_GLOBAL_WAVEFORM_HEIGHT 64
+#define OFX_UI_GLOBAL_BUTTON_DIMENSION 16
+#define OFX_UI_GLOBAL_SPACING_HEIGHT 1
 
 #define OFX_UI_COLOR_BACK ofColor(0, 25)                                //the rect's back color
 #define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                //the rect's outline color 

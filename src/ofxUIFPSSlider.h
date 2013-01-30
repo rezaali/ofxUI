@@ -41,26 +41,26 @@ public:
     ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name) 
         : ofxUISlider(_name, _min, _max, _value, w, h, x, y)
     {
-        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIFPSSlider(float w, float h, float _min, float _max, float _value, string _name) 
         : ofxUISlider(_name, _min, _max, _value, w, h, 0, 0)
     {
-        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }    
+//        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name) 
         : ofxUISlider(_name, _min, _max, _value, w, h, x, y)
     {
-        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIFPSSlider(float w, float h, float _min, float _max, float *_value, string _name) 
         : ofxUISlider(_name, _min, _max, _value, w, h, 0, 0)
     {
-        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }   
+//        ofLogWarning("OFXUIFPSSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
 
 	void update()
 	{

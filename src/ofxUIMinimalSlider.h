@@ -47,42 +47,42 @@ public:
     {
         useReference = false;                                         
         init(_name, _min, _max, &_value, w, h, x, y, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
     ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                                          
         init(_name, _min, _max, &_value, w, h, 0, 0, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
-    }    
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+    }
     
     ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;                                                 
         init(_name, _min, _max, &_value, w, 0, 0, 0, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
-    }    
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+    }
     
     ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;
         init(_name, _min, _max, _value, w, h, x, y, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
     ofxUIMinimalSlider(float w, float h, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;
         init(_name, _min, _max, _value, w, h, 0, 0, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
     ofxUIMinimalSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;                                                 
         init(_name, _min, _max, _value, w, 0, 0, 0, _size);
-        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
+//        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");        
     }
     
 

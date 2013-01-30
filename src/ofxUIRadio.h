@@ -42,14 +42,14 @@ public:
     ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation) : ofxUIWidgetWithLabel()
     {
         init(_name, names, _orientation, w, h, x, y);
-        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+//        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 
     ofxUIRadio(float w, float h, string _name, vector<string> names, int _orientation) : ofxUIWidgetWithLabel()
     {
         init(_name, names, _orientation, w, h, 0, 0);
-        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }    
+//        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
+    }
     
     void init(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0)
     {
