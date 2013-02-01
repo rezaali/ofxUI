@@ -132,9 +132,12 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-		ofxUIRectangle *labelrect = label->getRect(); 
+		ofxUIRectangle *labelrect = label->getRect();
 
-        float tWidth = cols*(toggles[0]->getRect()->width)+cols*padding; 
+        label->setParent(this);
+        labelrect->setParent(rect);
+        
+        float tWidth = cols*(toggles[0]->getRect()->width)+cols*padding;
 		float tHeight = rows*(toggles[0]->getRect()->height)+rows*padding; 
 
         for(int i = 0; i < toggles.size(); i++)
@@ -145,16 +148,16 @@ public:
         }
         
         labelrect->x = 0; 
-        labelrect->y = tHeight+padding; 
+        labelrect->y = tHeight;
 
-        tWidth+=padding; 
         if(label->getPaddingRect()->width > tWidth)
         {
             tWidth = label->getPaddingRect()->width; 
         }
-        
-		paddedRect->width = tWidth; 	
-		paddedRect->height = tHeight+padding+label->getPaddingRect()->height; 			
+        rect->setWidth(tWidth);
+        rect->setHeight(tHeight+labelrect->getHeight());
+		paddedRect->width = rect->getWidth()+padding;
+		paddedRect->height = rect->getHeight()+padding*2;
 	}	
     
     void setAllToggles(bool _value)
