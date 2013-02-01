@@ -13,6 +13,7 @@ void testApp::setup()
     green = 52; 
     alpha = 200; 
     radius = 150;
+    noiseScale = .1; 
     drawFill = true;     
     backgroundColor = ofColor(233, 52, 27); 
     resolution = 30;
@@ -33,9 +34,9 @@ void testApp::setup()
     gui->add2DPad("CENTER", ofPoint(0,ofGetWidth()), ofPoint(0, ofGetHeight()), &position);
     gui->addLabelToggle("DRAWFILL", &drawFill);
     gui->autoSizeToFitWidgets();
-    ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);
-    
+    ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);    
     gui->loadSettings("GUI/guiSettings.xml");
+    gui->setVisible(false); 
 }
 
 //--------------------------------------------------------------
@@ -48,9 +49,12 @@ void testApp::update()
 void testApp::draw()
 {
 	ofBackground(backgroundColor);
-	ofPushStyle(); 
+	ofPushStyle();
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-
+    ofSetColor(255,200);
+    ofDrawBitmapString("RIGHT CLICK TO ENABLE GUI", 10,20);
+    ofDrawBitmapString("HIDE GUI BY CLICK OUTSIDE OF GUI", 10,40);
+    
     ofSetColor(red, green, blue, alpha);
     if(drawFill)
     {
@@ -110,8 +114,18 @@ void testApp::mouseDragged(int x, int y, int button)
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button)
-{
-
+{ 
+    if(button == 2)
+    {
+        gui->setPosition(x, y);
+        gui->setVisible(true); 
+        return;
+    }
+    
+    if(!gui->isHit(x, y))
+    {
+        gui->setVisible(false); 
+    }
 }
 
 //--------------------------------------------------------------

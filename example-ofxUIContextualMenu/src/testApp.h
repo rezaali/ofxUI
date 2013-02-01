@@ -30,7 +30,19 @@ class testApp : public ofBaseApp
     ofColor backgroundColor; 
     float radius; 
     int resolution;
-    ofPoint position;    
+    ofPoint position;
+    
+    float noiseScale; 
+    float *buffer;
+    vector<float> xPos;
+    vector<float> yPos;
+    
+    ofxUIMovingGraph *xGraph;
+    ofxUIMovingGraph *yGraph;
+    
+    int bufferSize;
+    
+    ofImage *image; 
 };
 
 #endif
