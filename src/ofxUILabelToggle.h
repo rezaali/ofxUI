@@ -166,6 +166,9 @@ public:
         }
 		ofxUIRectangle *labelrect = label->getRect(); 
         
+        label->setParent(this);
+        labelrect->setParent(rect);
+                
         if(autoSize)
         {
             rect->width = label->getPaddingRect()->width+padding*2.0;             
@@ -192,7 +195,7 @@ public:
 		labelrect->y = (int)(ph*.5 - h*.5); 
         labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
 		paddedRect->height = rect->height+padding*2.0;
-        paddedRect->width = rect->width+padding*2.0;        
+        paddedRect->width = rect->width+padding*2.0;
 	}
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;

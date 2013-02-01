@@ -151,7 +151,11 @@ public:
         {
             rect->height = label->getPaddingRect()->height+padding*2.0; 
         }    
-		ofxUIRectangle *labelrect = label->getRect(); 
+		ofxUIRectangle *labelrect = label->getRect();
+        
+        label->setParent(this);
+        labelrect->setParent(rect);
+        
         if(autoSize)
         {
             rect->width = label->getPaddingRect()->width+padding*2.0;             

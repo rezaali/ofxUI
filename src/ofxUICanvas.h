@@ -1105,7 +1105,7 @@ public:
     void autoSizeToFitWidgets()
     {        
         float maxWidth = 0;
-        float maxHeight = 0;
+        float maxHeight = 0; 
 
         for(int i = 0; i < widgets.size(); i++)
         {
@@ -1117,11 +1117,11 @@ public:
                 
                 if(widgetwidth > maxWidth)
                 {
-                    maxWidth = wr->x+widgets[i]->getPaddingRect()->getWidth();
+                    maxWidth = wr->getX()+widgets[i]->getPaddingRect()->getWidth() - rect->getX(); 
                 }                        
                 if(widgetheight > maxHeight)
                 {
-                    maxHeight = wr->y+widgets[i]->getPaddingRect()->getHeight();
+                    maxHeight = wr->getY()+widgets[i]->getPaddingRect()->getHeight() - rect->getY();
                 }        
             }
         }
