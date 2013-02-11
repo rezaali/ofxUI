@@ -68,20 +68,18 @@ public:
         init(w,h, sharedResources);
     }
     
-    ofxUICanvas() : ofxUIWidget() 
-    {
-        float w = OFX_UI_GLOBAL_CANVAS_SIZE;
-        float h = OFX_UI_GLOBAL_CANVAS_SIZE;
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w,h);
+    ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH) : ofxUIWidget()
+    {        
+        rect = new ofxUIRectangle(0,0,defaultWidthSize,defaultHeightSize);
+        init(defaultWidthSize, defaultHeightSize);
+        setGlobalCanvasWidth(defaultWidthSize);
     }
     
-    ofxUICanvas(ofxUICanvas *sharedResources) : ofxUIWidget() 
+    ofxUICanvas(ofxUICanvas *sharedResources, float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH) : ofxUIWidget()
     {
-        float w = OFX_UI_GLOBAL_CANVAS_SIZE;
-        float h = OFX_UI_GLOBAL_CANVAS_SIZE; 
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w,h, sharedResources);
+        rect = new ofxUIRectangle(0,0,defaultWidthSize,defaultHeightSize);
+        init(defaultWidthSize, defaultHeightSize, sharedResources);
+        setGlobalCanvasWidth(defaultWidthSize);
     }
     
     ofxUICanvas(std::string title) : ofxUIWidget()
@@ -118,7 +116,13 @@ public:
 		font = font_medium; 
 		lastAdded = NULL; 
         uniqueIDs = 0;         
-        widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
+        widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING;
+        globalCanvasWidth = OFX_UI_GLOBAL_CANVAS_WIDTH;
+        globalSliderHeight = OFX_UI_GLOBAL_SLIDER_HEIGHT;
+        globalGraphHeight = OFX_UI_GLOBAL_GRAPH_HEIGHT;
+        globalButtonDimension = OFX_UI_GLOBAL_BUTTON_DIMENSION;
+        globalSpacerHeight = OFX_UI_GLOBAL_SPACING_HEIGHT;
+        
         hasKeyBoard = false; 
         
         widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
@@ -1205,6 +1209,7 @@ public:
 
     void addWidget(ofxUIWidget *widget)
 	{
+        widget->setPadding(padding);
         for(int i = 0; i < widget->getEmbeddedWidgetsSize(); i++)
         {
             ofxUIWidget *child = widget->getEmbeddedWidget(i);
@@ -1510,6 +1515,10 @@ public:
    
     ofxUISpacer* addSpacer(float h = OFX_UI_GLOBAL_SPACING_HEIGHT)
     {
+        if(h != globalSpacerHeight)
+        {
+            h = globalSpacerHeight; 
+        }
         ofxUISpacer* widget = new ofxUISpacer(rect->getWidth()-widgetSpacing*2, h);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
@@ -1517,6 +1526,10 @@ public:
     
     ofxUISpacer* addSpacer(string name, float h = OFX_UI_GLOBAL_SPACING_HEIGHT)
     {
+        if(h != globalSpacerHeight)
+        {
+            h = globalSpacerHeight;
+        }
         ofxUISpacer* widget = new ofxUISpacer(rect->getWidth()-widgetSpacing*2, h, name);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
@@ -1559,7 +1572,7 @@ public:
     
     ofxUISlider* addSlider(string _name, float _min, float _max, float _value)
     {
-        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1573,7 +1586,7 @@ public:
 
     ofxUISlider* addSlider(string _name, float _min, float _max, float *_value)
     {
-        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1602,7 +1615,7 @@ public:
 
     ofxUISlider* addMinimalSlider(string _name, float _min, float _max, float _value)
     {
-        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1616,7 +1629,7 @@ public:
     
     ofxUISlider* addMinimalSlider(string _name, float _min, float _max, float *_value)
     {
-        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1630,7 +1643,7 @@ public:
     
     ofxUIRangeSlider* addRangeSlider(string _name, float _min, float _max, float _valuelow, float _valuehigh)
     {
-        ofxUIRangeSlider* widget = new ofxUIRangeSlider(_name, _min, _max, _valuelow, _valuehigh, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUIRangeSlider* widget = new ofxUIRangeSlider(_name, _min, _max, _valuelow, _valuehigh, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1645,7 +1658,7 @@ public:
 
     ofxUIRangeSlider* addRangeSlider(string _name, float _min, float _max, float *_valuelow, float *_valuehigh)
     {
-        ofxUIRangeSlider* widget = new ofxUIRangeSlider(_name, _min, _max, _valuelow, _valuehigh, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, 0, 0);
+        ofxUIRangeSlider* widget = new ofxUIRangeSlider(_name, _min, _max, _valuelow, _valuehigh, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }    
@@ -1660,7 +1673,7 @@ public:
 
     ofxUIFPSSlider* addFPSSlider(string _name, float _max = 400)
     {
-        ofxUIFPSSlider* widget = new ofxUIFPSSlider(_name, rect->getWidth()-widgetSpacing*2, OFX_UI_GLOBAL_SLIDER_HEIGHT, _max, 0, 0);
+        ofxUIFPSSlider* widget = new ofxUIFPSSlider(_name, rect->getWidth()-widgetSpacing*2, globalSliderHeight, _max, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1674,7 +1687,7 @@ public:
     
     ofxUIRadio* addRadio(string _name, vector<string> names, int _orientation = OFX_UI_ORIENTATION_VERTICAL)
     {
-        ofxUIRadio* widget = new ofxUIRadio(_name, names, _orientation, OFX_UI_GLOBAL_BUTTON_DIMENSION, OFX_UI_GLOBAL_BUTTON_DIMENSION, 0, 0);
+        ofxUIRadio* widget = new ofxUIRadio(_name, names, _orientation, globalButtonDimension, globalButtonDimension, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1688,7 +1701,7 @@ public:
     
     ofxUIButton* addButton(string _name, bool _value)
     {
-        ofxUIButton* widget = new ofxUIButton(_name, _value, OFX_UI_GLOBAL_BUTTON_DIMENSION, OFX_UI_GLOBAL_BUTTON_DIMENSION, 0, 0);
+        ofxUIButton* widget = new ofxUIButton(_name, _value, globalButtonDimension, globalButtonDimension, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1702,7 +1715,7 @@ public:
     
     ofxUIButton* addButton(string _name, bool *_value)
     {
-        ofxUIButton* widget = new ofxUIButton(_name, _value, OFX_UI_GLOBAL_BUTTON_DIMENSION, OFX_UI_GLOBAL_BUTTON_DIMENSION, 0, 0);
+        ofxUIButton* widget = new ofxUIButton(_name, _value, globalButtonDimension, globalButtonDimension, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1716,7 +1729,7 @@ public:
 
     ofxUIToggle* addToggle(string _name, bool _value)
     {
-        ofxUIToggle* widget = new ofxUIToggle(_name, _value, OFX_UI_GLOBAL_BUTTON_DIMENSION, OFX_UI_GLOBAL_BUTTON_DIMENSION, 0, 0);
+        ofxUIToggle* widget = new ofxUIToggle(_name, _value, globalButtonDimension, globalButtonDimension, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1730,7 +1743,7 @@ public:
 
     ofxUIToggle* addToggle(string _name, bool *_value)
     {
-        ofxUIToggle* widget = new ofxUIToggle(_name, _value, OFX_UI_GLOBAL_BUTTON_DIMENSION, OFX_UI_GLOBAL_BUTTON_DIMENSION, 0, 0);
+        ofxUIToggle* widget = new ofxUIToggle(_name, _value, globalButtonDimension, globalButtonDimension, 0, 0);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
@@ -1744,7 +1757,7 @@ public:
     
     ofxUIToggleMatrix* addToggleMatrix(string _name, int _rows, int _cols)
     {
-        float dim = OFX_UI_GLOBAL_BUTTON_DIMENSION;        
+        float dim = globalButtonDimension;        
         float width = rect->getWidth()-widgetSpacing*2; 
         if(_cols*dim+_cols*padding > width)
         {
@@ -1877,8 +1890,12 @@ public:
         return widget;
     }
 
-    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_WAVEFORM_HEIGHT)
+    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT)
     {
+        if(_h != globalGraphHeight)
+        {
+            _h = globalGraphHeight;
+        }
         ofxUIWaveform* widget = new ofxUIWaveform(rect->getWidth()-widgetSpacing*2, _h, _buffer, _bufferSize, _min, _max, _name);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
@@ -1891,8 +1908,12 @@ public:
         return widget;
     }
 
-    ofxUISpectrum* addSpectrum(string _name, float *_buffer, int _bufferSize, float _min = 0.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_WAVEFORM_HEIGHT)
+    ofxUISpectrum* addSpectrum(string _name, float *_buffer, int _bufferSize, float _min = 0.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT)
     {
+        if(_h != globalGraphHeight)
+        {
+            _h = globalGraphHeight;
+        }
         ofxUISpectrum* widget = new ofxUISpectrum(rect->getWidth()-widgetSpacing*2, _h, _buffer, _bufferSize, _min, _max, _name);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
@@ -1905,8 +1926,12 @@ public:
         return widget;
     }
 
-    ofxUIMovingGraph* addMovingGraph(string _name, vector<float> _buffer, int _bufferSize, float _min, float _max, float _h = OFX_UI_GLOBAL_WAVEFORM_HEIGHT)
+    ofxUIMovingGraph* addMovingGraph(string _name, vector<float> _buffer, int _bufferSize, float _min, float _max, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT)
     {
+        if(_h != globalGraphHeight)
+        {
+            _h = globalGraphHeight;
+        }        
         ofxUIMovingGraph* widget = new ofxUIMovingGraph(rect->getWidth()-widgetSpacing*2, _h, _buffer, _bufferSize, _min, _max, _name);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
@@ -1979,6 +2004,95 @@ public:
         return widget;
     }
     
+    ofxUICircleSlider* addCircleSlider(string _name, float _min, float _max, float _value)
+    {
+        ofxUICircleSlider* widget = new ofxUICircleSlider(rect->getWidth()-widgetSpacing*2, _min, _max, _value, _name, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUICircleSlider* addCircleSlider(string _name, float _min, float _max, float _value, float w, float x = 0, float y = 0)
+    {
+        ofxUICircleSlider* widget = new ofxUICircleSlider(x, y, w, _min, _max, _value, _name, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUICircleSlider* addCircleSlider(string _name, float _min, float _max, float *_value)
+    {
+        ofxUICircleSlider* widget = new ofxUICircleSlider(0, 0, rect->getWidth()-widgetSpacing*2, _min, _max, _value, _name, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUICircleSlider* addCircleSlider(string _name, float _min, float _max, float *_value, float w, float x = 0, float y = 0)
+    {
+        ofxUICircleSlider* widget = new ofxUICircleSlider(x, y, w, _min, _max, _value, _name, widgetFontSize);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIValuePlotter* addValuePlotter(string _name, int _bufferSize, float _min, float _max, float *_value, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT)
+    {
+        if(_h != globalGraphHeight)
+        {
+            _h = globalGraphHeight;
+        }
+        ofxUIValuePlotter* widget = new ofxUIValuePlotter(rect->getWidth()-widgetSpacing*2, _h, _bufferSize, _min, _max, _value, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIValuePlotter* addValuePlotter(string _name, int _bufferSize, float _min, float _max, float *_value, float _w, float _h)
+    {
+        ofxUIValuePlotter* widget = new ofxUIValuePlotter(_w, _h, _bufferSize, _min, _max, _value, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    
+    ofxUI2DGraph *add2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _bufferSize, float * _xValues, float * _yValues)
+    {
+        ofxUI2DGraph* widget = new ofxUI2DGraph(_name, _rangeX, _rangeY, _bufferSize, _xValues, _yValues, rect->getWidth()-widgetSpacing*2, rect->getWidth()-widgetSpacing*2); 
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUI2DGraph *add2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _bufferSize, float * _xValues, float * _yValues, float _w, float _h, float _x = 0, float _y = 0)
+    {
+        ofxUI2DGraph* widget = new ofxUI2DGraph(_name, _rangeX, _rangeY, _bufferSize, _xValues, _yValues, _w, _h, _x, _y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIImageToggle *addImageToggle(string _name, string _path, bool *_value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIImageToggle *widget = new ofxUIImageToggle(x, y, w, h, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;        
+    }
+
+    ofxUIImageToggle *addImageToggle(string _name, string _path, bool _value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIImageToggle *widget = new ofxUIImageToggle(x, y, w, h, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+
+    ofxUIImageToggle *addImageToggle(string _name, string _path, bool *_value)
+    {
+        ofxUIImageToggle *widget = new ofxUIImageToggle(globalButtonDimension, globalButtonDimension, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIImageToggle *addImageToggle(string _name, string _path, bool _value)
+    {
+        ofxUIImageToggle *widget = new ofxUIImageToggle(globalButtonDimension, globalButtonDimension, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
     void resetPlacer()
     {
         lastAdded = NULL; 
@@ -2004,6 +2118,72 @@ public:
 				break; 					
 		}		
 	}
+    
+    void setRetinaResolution()
+    {
+        setGlobalCanvasWidth(OFX_UI_GLOBAL_CANVAS_WIDTH*2);
+        setPadding(OFX_UI_GLOBAL_PADDING*2);
+        setWidgetSpacing(OFX_UI_GLOBAL_WIDGET_SPACING*2);        
+        setFontSize(OFX_UI_FONT_LARGE, OFX_UI_FONT_LARGE_SIZE*2);
+        setFontSize(OFX_UI_FONT_MEDIUM, OFX_UI_FONT_MEDIUM_SIZE*2);
+        setFontSize(OFX_UI_FONT_SMALL, OFX_UI_FONT_SMALL_SIZE*2);
+        setGlobalButtonDimension(OFX_UI_GLOBAL_BUTTON_DIMENSION*4);
+        setGlobalSliderHeight(OFX_UI_GLOBAL_SLIDER_HEIGHT*4);
+        setGlobalSpacerHeight(OFX_UI_GLOBAL_SPACING_HEIGHT*2);
+        setGlobalGraphHeight(OFX_UI_GLOBAL_GRAPH_HEIGHT*2);
+    }
+    
+    void setGlobalSliderHeight(float _globalSliderHeight)
+    {
+        globalSliderHeight = _globalSliderHeight;
+    }
+    
+    void setGlobalGraphHeight(float _globalGraphHeight)
+    {
+        globalGraphHeight = _globalGraphHeight;
+    }
+    
+    void setGlobalButtonDimension(float _globalButtonDimension)
+    {
+        globalButtonDimension = _globalButtonDimension;
+    }
+    
+    void setGlobalSpacerHeight(float _globalSpacerHeight)
+    {
+        globalSpacerHeight = _globalSpacerHeight;
+    }
+    
+    float getGlobalSliderHeight()
+    {
+        return globalSliderHeight;
+    }
+    
+    float getGlobalGraphHeight()
+    {
+        return globalGraphHeight;
+    }
+    
+    float getGlobalButtonDimension()
+    {
+        return globalButtonDimension;
+    }
+    
+    float getGlobalSpacerHeight()
+    {
+        return globalSpacerHeight;
+    }
+    
+    void setGlobalCanvasWidth(float _globalCanvasWidth)
+    {
+        globalCanvasWidth = _globalCanvasWidth;
+        rect->setWidth(globalCanvasWidth);
+        paddedRect->setWidth(globalCanvasWidth+padding*2);
+    }
+    
+    float getGlobalCanvasWidth()
+    {
+        return globalCanvasWidth; 
+    }
 		
 	void setWidgetPosition(ofxWidgetPosition _position, int _align = -1)
 	{
@@ -2890,7 +3070,13 @@ protected:
     int uniqueIDs; 
     bool hasKeyBoard; 
     
-    float widgetSpacing; 
+    
+    float widgetSpacing;
+    float globalCanvasWidth;
+    float globalSliderHeight;
+    float globalGraphHeight;
+    float globalButtonDimension;
+    float globalSpacerHeight;
     
     string fontName;
 

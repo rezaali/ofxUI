@@ -281,7 +281,7 @@ public:
 	
 	virtual void setDrawOutlineHighLight(bool _draw_outline_hightlight)
 	{
-		draw_outline_highlight = draw_outline_highlight; 
+		draw_outline_highlight = _draw_outline_hightlight; 
 	}
     //--------------------------------------------------------------------------------
 	virtual bool getDrawPadding()

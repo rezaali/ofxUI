@@ -117,7 +117,7 @@ public:
 
 		max = _max;
 		min = _min; 
-        labelPrecision = 2;
+        labelPrecision = 2;    
         
 		if(value > max)
 		{
@@ -368,8 +368,9 @@ public:
         else if(value < 0.0)
         {
             value = 0.0;
-        }        
-        updateValueRef();        
+        }
+                
+        updateValueRef();
 		updateLabel(); 
 	}
     
@@ -522,7 +523,7 @@ public:
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	float value, increment; 
+    float value, increment;
     float *valueRef; 
     bool useReference;     
 	float max, min;  

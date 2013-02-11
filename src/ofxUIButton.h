@@ -298,7 +298,15 @@ public:
     void setLabelVisible(bool _visible)
     {
         drawLabel = _visible; 
-        label->setVisible(drawLabel); 
+        label->setVisible(drawLabel);
+        if(!drawLabel)
+        {
+            paddedRect->width = rect->width+padding*2.0;
+        }
+        else
+        {
+            paddedRect->width += label->getPaddingRect()->width+padding;
+        }
     }
 	
     virtual void setValue(bool _value)

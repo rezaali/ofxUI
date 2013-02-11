@@ -68,6 +68,20 @@ public:
         inc = rect->getWidth()/((float)bufferSize-1.0);         
     }
     
+    
+    virtual void drawBack()
+    {
+        if(draw_back)
+        {
+            ofFill();
+            ofSetColor(color_back);
+            rect->draw();
+            
+            ofLine(rect->getX(), rect->getY()+rect->getHalfHeight(), rect->getX()+rect->getWidth(), rect->getY()+rect->getHalfHeight());
+        }
+    }
+    
+    
     virtual void drawFill()
     {
         if(draw_fill)
@@ -83,8 +97,8 @@ public:
 			}
             if(buffer != NULL)
             {
-                glPushMatrix();
-                glTranslatef(rect->getX(), rect->getY()+scale, 0);
+                ofPushMatrix(); 
+                ofTranslate(rect->getX(), rect->getY()+scale, 0);
                 ofSetLineWidth(1.5); 
                 ofBeginShape();		
                 for (int i = 0; i < bufferSize; i++)
@@ -93,7 +107,7 @@ public:
                 }
                 ofEndShape();
                 ofSetLineWidth(1); 
-                glPopMatrix();
+                ofPopMatrix(); 
             }
         }
     }

@@ -74,8 +74,8 @@ public:
 			{
 				ofSetColor(color_fill); 		 	
 			}
-            glPushMatrix();
-            glTranslatef(rect->getX(), rect->getY()+scale, 0);
+            ofPushMatrix(); 
+            ofTranslate(rect->getX(), rect->getY()+scale, 0);
             ofSetLineWidth(1.5); 
             ofBeginShape();		
             for (int i = 0; i < bufferSize; i++)
@@ -84,8 +84,7 @@ public:
             }
             ofEndShape();
             ofSetLineWidth(1); 
-            glPopMatrix();
-            
+            ofPopMatrix();            
         }
     }
 		        

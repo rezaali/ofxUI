@@ -497,6 +497,13 @@ public:
     {
         return true; 
     }
+    
+    void setLabelPrecision(int _precision)
+    {
+        labelPrecision = _precision;
+        updateValueRef();
+        updateLabel();
+    }
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

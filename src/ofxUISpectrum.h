@@ -84,8 +84,8 @@ public:
 			}
             if(buffer != NULL)
             {
-                glPushMatrix();
-                glTranslatef(rect->getX(), rect->getY()+scale, 0); 
+                ofPushMatrix();
+                ofTranslate(rect->getX(), rect->getY()+scale, 0); 
                 ofBeginShape();		
                 ofVertex(0, 0); 
                 for (int i = 0; i < bufferSize; i++)
@@ -94,7 +94,7 @@ public:
                 }
                 ofVertex((bufferSize-1)*inc, 0);
                 ofEndShape(true);
-                glPopMatrix();						
+                ofPopMatrix(); 
             }
         }
     }
