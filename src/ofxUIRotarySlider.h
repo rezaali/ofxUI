@@ -457,6 +457,41 @@ public:
         return true; 
     }
 
+    void setMax(float _max)
+    {
+        setMaxAndMin(_max, min);
+    }
+    
+    float getMax()
+    {
+        return max;
+    }
+    
+    void setMin(float _min)
+    {
+        setMaxAndMin(max, _min);
+    }
+    
+    float getMin()
+    {
+        return min;
+    }
+    
+    ofVec2f getMaxAndMind()
+    {
+        return ofVec2f(max, min);
+    }
+    
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max;
+        min = _min;
+		
+		value = ofMap(value, 0, 1.0, min, max, true);
+		value = ofMap(value, min, max, 0.0, 1.0, true);
+        updateValueRef();
+        updateLabel();
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float value, increment; 

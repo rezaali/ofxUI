@@ -44,11 +44,11 @@ public:
     
     void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
     {
-		name = string(_name);  				
-		kind = OFX_UI_WIDGET_WAVEFORM; 
-		
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect); 
+        name = string(_name);  				
+        kind = OFX_UI_WIDGET_WAVEFORM; 
+
+        paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
+        paddedRect->setParent(rect); 
 		
         draw_fill = true; 
         
@@ -61,11 +61,11 @@ public:
             buffer = NULL; 
         }
         
-		bufferSize = _bufferSize; 
-		max = _max; 
-		min = _min; 		
-		scale = rect->getHeight()*.5; 
-        inc = rect->getWidth()/((float)bufferSize-1.0);         
+        bufferSize = _bufferSize; 
+        max = _max; 
+        min = _min; 		
+        scale = rect->getHeight()*.5;
+        inc = rect->getWidth()/((float)bufferSize-1.0);
     }
     
     
@@ -115,7 +115,38 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-	}	
+	}
+    
+    void setMax(float _max)
+    {
+        max = _max;
+    }
+    
+    float getMax()
+    {
+        return max;
+    }
+    
+    void setMin(float _min)
+    {
+        min = _min;
+    }
+    
+    float getMin()
+    {
+        return min;
+    }
+    
+    ofVec2f getMaxAndMind()
+    {
+        return ofVec2f(max, min);
+    }
+    
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max;
+        min = _min;
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float *buffer; 

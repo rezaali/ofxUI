@@ -102,7 +102,38 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-	}	
+	}
+    
+    void setMax(float _max)
+    {
+        max = _max;
+    }
+    
+    float getMax()
+    {
+        return max;
+    }
+    
+    void setMin(float _min)
+    {
+        min = _min;
+    }
+    
+    float getMin()
+    {
+        return min;
+    }
+    
+    ofVec2f getMaxAndMind()
+    {
+        return ofVec2f(max, min);
+    }
+    
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max;
+        min = _min;
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	float *buffer; 
