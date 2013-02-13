@@ -38,9 +38,9 @@
 
 #define OFX_UI_GLOBAL_PADDING 2
 #define OFX_UI_GLOBAL_WIDGET_SPACING 4
-#define OFX_UI_GLOBAL_CANVAS_SIZE 211
+#define OFX_UI_GLOBAL_CANVAS_WIDTH 211
 #define OFX_UI_GLOBAL_SLIDER_HEIGHT 16
-#define OFX_UI_GLOBAL_WAVEFORM_HEIGHT 64
+#define OFX_UI_GLOBAL_GRAPH_HEIGHT 64
 #define OFX_UI_GLOBAL_BUTTON_DIMENSION 16
 #define OFX_UI_GLOBAL_SPACING_HEIGHT 1
 
@@ -66,6 +66,8 @@
 #define OFX_UI_TEXTINPUT_ON_ENTER 0 
 #define OFX_UI_TEXTINPUT_ON_FOCUS 1
 #define OFX_UI_TEXTINPUT_ON_UNFOCUS 2
+
+#define OFX_UI_NUM_OF_THEMES 45
 
 enum ofxWidgetType
 {
@@ -108,7 +110,9 @@ enum ofxWidgetType
     OFX_UI_WIDGET_CUSTOMIMAGEBUTTON = 36,
     OFX_UI_WIDGET_TEXTAREA = 37,
     OFX_UI_WIDGET_CUSTOMWIDGET = 38,
-    OFX_UI_WIDGET_BASE_DRAWS = 39
+    OFX_UI_WIDGET_BASE_DRAWS = 39,
+    OFX_UI_WIDGET_VALUEPLOTTER = 40,
+    OFX_UI_WIDGET_2DGRAPH = 41
 };
 
 enum ofxWidgetOrientation
@@ -240,6 +244,7 @@ enum ofxUIThemeType
 #include "ofxUIMultiImageToggle.h"
 #include "ofxUIRadio.h"
 #include "ofxUI2DPad.h"
+#include "ofxUI2DGraph.h"
 #include "ofxUITextInput.h"
 #include "ofxUITextArea.h"
 #include "ofxUINumberDialer.h"
@@ -254,6 +259,7 @@ enum ofxUIThemeType
 #include "ofxUIWaveform.h"
 #include "ofxUISpectrum.h"
 #include "ofxUIMovingGraph.h"
+#include "ofxUIValuePlotter.h"
 #include "ofxUIImage.h"
 #include "ofxUIBaseDraws.h"
 #include "ofxUIImageSampler.h"

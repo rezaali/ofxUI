@@ -113,7 +113,7 @@ public:
         if(draw_back)
         {
             ofFill(); 
-            ofSetColor(color_back); 
+            ofSetColor(color_fill); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }
@@ -123,7 +123,7 @@ public:
         if(draw_fill)
         {
             ofFill(); 
-            ofSetColor(color_fill); 
+            ofSetColor(color_back); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }

@@ -186,9 +186,9 @@ public:
         {
             float w = font->stringWidth(label); 
             float h = font->stringHeight("1");          //otherwise we get some funky non-uniform spacing :(
-            rect->setWidth(w); 
+            rect->setWidth(w);
             rect->setHeight(h); 		 
-            paddedRect->setWidth(w+padding*3.0); 
+            paddedRect->setWidth(w+padding*4.0);
             paddedRect->setHeight(h+padding*2.0);
             xOffset = 0;
             yOffset = 0;
@@ -212,8 +212,8 @@ public:
                 rect->setHeight(h);
                 yOffset = 0; 
             }
-            paddedRect->height = rect->getHeight()+padding*2.0;             
-            paddedRect->width = rect->getWidth()+padding*2.0;
+            paddedRect->height = rect->getHeight()+padding*2.0;
+            paddedRect->width = rect->getWidth()+padding*4.0;
             xOffset = (int) (rect->width*.5 - w*.5);
         }
 	}

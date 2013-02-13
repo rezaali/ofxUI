@@ -42,6 +42,7 @@ public:
 		kind = OFX_UI_WIDGET_TEXTAREA;
 		textstring = _textstring;        
         setDrawFill(true);
+        setDrawBack(false);
         drawShadow = false; 
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);
@@ -92,14 +93,14 @@ public:
                 ofSetColor(color_back);
                 for(int i = 0; i < textLines.size(); i++)
                 {
-                    label->drawStringShadow(rect->getX()+padding*2, rect->getY()+offsetY+lineSpaceSize*(i+1), textLines[i]);
+                    label->drawStringShadow(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
                 }
             }
             
             ofSetColor(color_fill);
             for(int i = 0; i < textLines.size(); i++)
             {
-                label->drawString(rect->getX()+padding*2, rect->getY()+offsetY+lineSpaceSize*(i+1), textLines[i]);
+                label->drawString(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
             }
         }
     }
@@ -129,8 +130,10 @@ public:
         float rectHeightLimit = rect->getHeight()-label->getLineHeight()-padding;
         bool overheight = false;
         
-        lineSpaceSize = label->getStringHeight("|")*1.25;
-        offsetY = floor(padding*.5);
+        lineHeight = label->getStringHeight("1");
+        lineSpaceSize = padding*2;
+        
+        offsetY = floor(padding*.125);
         
         if(label->getStringWidth(textstring) <= rectWidthLimit)
         {
@@ -167,7 +170,7 @@ public:
                     {
                         if(strncmp(&textstring.at(i), " ",1) == 0)
                         {
-                            tempHeight = (textLines.size()+1)*lineSpaceSize;
+                            tempHeight = (textLines.size()+1)*(lineHeight+lineSpaceSize);
     //                        cout << tempHeight << endl;
     //                        cout << rectHeightLimit << endl;
                             if(!autoSize && tempHeight >= rectHeightLimit)
@@ -196,12 +199,12 @@ public:
         
         if(autoSize)
         {
-            rect->setHeight(lineSpaceSize*textLines.size()+offsetY*6);
+            rect->setHeight((lineHeight+lineSpaceSize)*textLines.size()-lineSpaceSize);
         }
         
         if(overheight)
         {
-            rect->setHeight(MAX(rect->getHeight(),lineSpaceSize*textLines.size()+offsetY*6));
+            rect->setHeight(MAX(rect->getHeight(),(lineHeight+lineSpaceSize)*textLines.size()-lineSpaceSize));
         }
     }
 
@@ -225,6 +228,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     bool autoSize;
     bool drawShadow; 
     int lineSpaceSize;
+    int lineHeight; 
     int offsetY; 
 };
 
