@@ -92,8 +92,8 @@ public:
         addWidgetDown(new ofxUIFPSSlider(300, 20, 0, 1000, ofGetFrameRate(), "FPS"));
     }
     
-    void init(int w, int h)
-    {
+    void init(int w, int h, ofxUICanvas *sharedResources = NULL)
+    {        
         name = string("OFX_UI_WIDGET_CANVAS");
 		kind = OFX_UI_WIDGET_CANVAS; 
 		
@@ -106,13 +106,24 @@ public:
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect);
         
-        font_large = new ofTrueTypeFont();
-        font_medium = new ofTrueTypeFont();
-        font_small = new ofTrueTypeFont();
+        if(sharedResources != NULL)
+        {
+            hasSharedResources = true;
+            font_large = sharedResources->getFontLarge();
+            font_medium = sharedResources->getFontMedium();
+            font_small = sharedResources->getFontSmall();
+        }
+        else
+        {
+            hasSharedResources = false;
+            font_large = new ofTrueTypeFont();
+            font_medium = new ofTrueTypeFont();
+            font_small = new ofTrueTypeFont();            
         
-        fontName = string(OFX_UI_FONT_NAME);
-        setFont(fontName,true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
-                
+            fontName = string(OFX_UI_FONT_NAME);
+            setFont(fontName,true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
+        }
+        
 		font = font_medium; 
 		lastAdded = NULL; 
         uniqueIDs = 0;         
@@ -134,41 +145,6 @@ public:
 		enable();        
     }
     
-    void init(int w, int h, ofxUICanvas *sharedResources)
-    {
-        name = string("OFX_UI_WIDGET_CANVAS"); 
-		kind = OFX_UI_WIDGET_CANVAS;
-		
-		enable_highlight_outline = false; 
-		enable_highlight_fill = false; 
-                
-        autoDraw = true;
-        autoUpdate = true;
-
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect);
-
-        hasSharedResources = true; 
-        font_large = sharedResources->getFontLarge();
-        font_medium = sharedResources->getFontMedium();
-        font_small = sharedResources->getFontSmall();
-        
-        fontName = string(OFX_UI_FONT_NAME); 
-        
-		font = font_medium; 
-		lastAdded = NULL; 
-        uniqueIDs = 0;         
-        widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING; 
-        hasKeyBoard = false; 
-            
-        widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
-        widgetAlign = OFX_UI_ALIGN_LEFT;
-        
-		GUIevent = new ofxUIEventArgs(this);
-		enabled = false;
-		enable();
-    }
-
     void copyCanvasStyle(ofxUICanvas *styler)
     {
         setUIColors(styler->getWidgetColorBack(),
@@ -196,10 +172,25 @@ public:
         setDrawPaddingOutline(styler->getDrawPaddingOutline());        
     }
     
+    void copyCanvasProperties(ofxUICanvas *styler)
+    {
+        setGlobalCanvasWidth(styler->getRect()->getWidth());
+        setGlobalButtonDimension(styler->getGlobalButtonDimension());
+        setGlobalSliderHeight(styler->getGlobalSliderHeight());
+        setGlobalSpacerHeight(styler->getGlobalSpacerHeight());
+        setGlobalGraphHeight(styler->getGlobalGraphHeight());
+
+        setPadding(styler->getPadding());
+        setWidgetSpacing(styler->getWidgetSpacing());
+        
+        setWidgetPosition(styler->getWidgetPosition());
+        setWidgetFontSize(styler->getWidgetFontSize());        
+    }
+    
 #ifndef OFX_UI_NO_XML
 
     void saveSettings(string fileName)
-    {
+    {        
         ofxXmlSettings *XML = new ofxXmlSettings(); 
         for(int i = 0; i < widgetsWithState.size(); i++)
         {                
@@ -1820,61 +1811,63 @@ public:
         return widget;
     }
     
-    ofxUILabelToggle* addLabelToggle(string _name, bool _value)
+    ofxUILabelToggle* addLabelToggle(string _name, bool _value, bool _justifyLeft = false)
     {
-        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize);
+        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUILabelToggle* addLabelToggle(string _name, bool _value, float w, float h = 0, float x = 0, float y = 0)
+    ofxUILabelToggle* addLabelToggle(string _name, bool _value, float w, float h = 0, float x = 0, float y = 0, bool _justifyLeft = false)
     {
-        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, w, h, x, y, widgetFontSize);
+        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, w, h, x, y, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
 
-    ofxUILabelToggle* addLabelToggle(string _name, bool *_value)
+    ofxUILabelToggle* addLabelToggle(string _name, bool *_value, bool _justifyLeft = false)
     {
-        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize);
+        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUILabelToggle* addLabelToggle(string _name, bool *_value, float w, float h = 0, float x = 0, float y = 0)
+    ofxUILabelToggle* addLabelToggle(string _name, bool *_value, float w, float h = 0, float x = 0, float y = 0, bool _justifyLeft = false)
     {
-        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, w, h, x, y, widgetFontSize);
+        ofxUILabelToggle* widget = new ofxUILabelToggle(_name, _value, w, h, x, y, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
 
-    ofxUILabelButton* addLabelButton(string _name, bool _value)
+    //
+    ofxUILabelButton* addLabelButton(string _name, bool _value, bool _justifyLeft = false)
     {
-        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize);
+        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUILabelButton* addLabelButton(string _name, bool _value, float w, float h = 0, float x = 0, float y = 0)
+    ofxUILabelButton* addLabelButton(string _name, bool _value, float w, float h = 0, float x = 0, float y = 0, bool _justifyLeft = false)
     {
-        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize);
+        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUILabelButton* addLabelButton(string _name, bool *_value)
+    ofxUILabelButton* addLabelButton(string _name, bool *_value, bool _justifyLeft = false)
     {
-        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize);
+        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, rect->getWidth()-widgetSpacing*2, 0, 0, 0, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUILabelButton* addLabelButton(string _name, bool *_value, float w, float h = 0, float x = 0, float y = 0)
+    ofxUILabelButton* addLabelButton(string _name, bool *_value, float w, float h = 0, float x = 0, float y = 0, bool _justifyLeft = false)
     {
-        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize);
+        ofxUILabelButton* widget = new ofxUILabelButton(_name, _value, w, h, x, y, widgetFontSize, _justifyLeft);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
+    //
 
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items)
     {
@@ -2093,6 +2086,41 @@ public:
         return widget;
     }
     
+    ofxUIImageButton *addImageButton(string _name, string _path, bool *_value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIImageButton *widget = new ofxUIImageButton(x, y, w, h, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIImageButton *addImageButton(string _name, string _path, bool _value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIImageButton *widget = new ofxUIImageButton(x, y, w, h, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIImageButton *addImageButton(string _name, string _path, bool *_value)
+    {
+        ofxUIImageButton *widget = new ofxUIImageButton(globalButtonDimension, globalButtonDimension, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIImageButton *addImageButton(string _name, string _path, bool _value)
+    {
+        ofxUIImageButton *widget = new ofxUIImageButton(globalButtonDimension, globalButtonDimension, _value, _path, _name);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }    
+    
+    ofxUITextArea* addTextArea(string _name, string _textstring, int _size = OFX_UI_FONT_MEDIUM)
+    {
+        ofxUITextArea *widget = new ofxUITextArea(_name, _textstring, rect->getWidth()-widgetSpacing*2, 0, 0, 0, _size);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;        
+    }
+    
     void resetPlacer()
     {
         lastAdded = NULL; 
@@ -2205,6 +2233,16 @@ public:
     void setWidgetFontSize(ofxWidgetFontType _widgetFontSize)
     {
         widgetFontSize = _widgetFontSize;
+    }
+    
+    ofxWidgetPosition getWidgetPosition()
+    {
+        return widgetPosition;
+    }
+    
+    ofxWidgetFontType getWidgetFontSize()
+    {
+        return widgetFontSize; 
     }
     
 	void triggerEvent(ofxUIWidget *child)
