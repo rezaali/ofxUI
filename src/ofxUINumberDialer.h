@@ -449,7 +449,7 @@ public:
     void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(visible); 
+        label->setVisible(false);
     }
     
 	ofxUILabel *getLabel()

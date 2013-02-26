@@ -1,17 +1,19 @@
-<Widget>
-    <Kind>4</Kind>
-    <Name>FPS</Name>
-    <Value>59.727512360</Value>
-</Widget>
+<Canvas>
+    <Kind>42</Kind>
+    <Name>OFX_UI_WIDGET_CANVAS</Name>
+    <IsMinified>1</IsMinified>
+    <XPosition>148.000000000</XPosition>
+    <YPosition>135.000000000</YPosition>
+</Canvas>
 <Widget>
     <Kind>4</Kind>
     <Name>RADIUS</Name>
-    <Value>114.310348511</Value>
+    <Value>121.847297668</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>65.320198059</Value>
+    <Value>95.467979431</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -31,8 +33,8 @@
 <Widget>
     <Kind>11</Kind>
     <Name>CENTER</Name>
-    <XValue>382.108398438</XValue>
-    <YValue>327.881774902</YValue>
+    <XValue>325.359619141</XValue>
+    <YValue>489.300506592</YValue>
 </Widget>
 <Widget>
     <Kind>17</Kind>

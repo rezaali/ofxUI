@@ -241,7 +241,7 @@ public:
     virtual void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(drawLabel);
+        label->setVisible((drawLabel && visible));
     }
     
 	ofxUILabel *getLabel()
@@ -276,7 +276,7 @@ public:
     void setLabelVisible(bool _visible)
     {
         drawLabel = _visible; 
-        label->setVisible(drawLabel);
+        label->setVisible((drawLabel && visible));
         if(!drawLabel)
         {
             paddedRect->width = rect->width+padding*2.0;

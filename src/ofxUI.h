@@ -112,7 +112,8 @@ enum ofxWidgetType
     OFX_UI_WIDGET_CUSTOMWIDGET = 38,
     OFX_UI_WIDGET_BASE_DRAWS = 39,
     OFX_UI_WIDGET_VALUEPLOTTER = 40,
-    OFX_UI_WIDGET_2DGRAPH = 41
+    OFX_UI_WIDGET_2DGRAPH = 41,
+    OFX_UI_WIDGET_SUPERCANVAS = 42
 };
 
 enum ofxWidgetOrientation
@@ -266,5 +267,6 @@ enum ofxUIThemeType
 #include "ofxUIImageSampler.h"
 #include "ofxUICanvas.h"
 #include "ofxUIScrollableCanvas.h"
+#include "ofxUISuperCanvas.h"
 
 #endif

@@ -188,18 +188,16 @@ public:
             float h = font->stringHeight("1");          //otherwise we get some funky non-uniform spacing :(
             rect->setWidth(w);
             rect->setHeight(h); 		 
-            paddedRect->setWidth(w+padding*4.0);
+            paddedRect->setWidth(w+padding*2.0);
             paddedRect->setHeight(h+padding*2.0);
             xOffset = 0;
             yOffset = 0;
         }
         else
-        {
+        {                    
             while(getStringWidth(label) > rect->width-padding*4.0)
             {
-                string::iterator it;
-                it=label.begin();
-                label.erase (it);                    
+                label = label.substr(0, label.size()-1);
             }                        
             float w = (int)font->stringWidth(label); 
             float h = (int)font->stringHeight("1");     //otherwise we get some funky non-uniform spacing :(
@@ -213,8 +211,9 @@ public:
                 yOffset = 0; 
             }
             paddedRect->height = rect->getHeight()+padding*2.0;
-            paddedRect->width = rect->getWidth()+padding*4.0;
-            xOffset = (int) (rect->width*.5 - w*.5);
+            paddedRect->width = rect->getWidth()+padding*2.0;
+//            xOffset = (int) (rect->width*.5 - w*.5);
+            xOffset = 0;
         }
 	}
     

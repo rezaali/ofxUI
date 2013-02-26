@@ -337,7 +337,7 @@ public:
         for(int i = 0; i < toggles.size(); i++)
         {
             ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
-            toggle->setVisible(visible); 
+            toggle->setVisible((visible && isOpen()));
         }
     }
     

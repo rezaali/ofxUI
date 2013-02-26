@@ -26,7 +26,6 @@
 #define OFXUI_SCROLLABLE_CANVAS
 
 #include "ofxUICanvas.h"
-#include "ofFbo.h"
 
 class ofxUIScrollableCanvas : public ofxUICanvas
 {    

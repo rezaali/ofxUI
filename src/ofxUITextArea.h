@@ -62,18 +62,6 @@ public:
         }
     }
     
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect;
-        label->setDrawPadding(false);
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline;
-        label->setDrawPaddingOutline(false);
-	}
-    
     virtual void drawBack()
     {
         if(draw_back)
@@ -108,7 +96,7 @@ public:
     void setVisible(bool _visible)
     {
         visible = _visible;
-        label->setVisible(visible);
+        label->setVisible(false);
     }
     
     string getTextString()
@@ -212,7 +200,6 @@ public:
 	{
 		parent = _parent;
         formatTextString();
-        label->setLabel(textstring);
         label->setVisible(false);
 		paddedRect->height = rect->height+padding*2.0;
 	}

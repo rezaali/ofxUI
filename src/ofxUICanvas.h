@@ -195,7 +195,7 @@ public:
     
 #ifndef OFX_UI_NO_XML
 
-    void saveSettings(string fileName)
+    virtual void saveSettings(string fileName)
     {        
         ofxXmlSettings *XML = new ofxXmlSettings(); 
         for(int i = 0; i < widgetsWithState.size(); i++)
@@ -213,7 +213,7 @@ public:
         delete XML; 
     }
     
-    void writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
+    virtual void writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
     {
         int kind = widget->getKind();        
         switch (kind) {
@@ -297,7 +297,7 @@ public:
         }
     }
     
-    void loadSettings(string fileName)
+    virtual void loadSettings(string fileName)
     {
         ofxXmlSettings *XML = new ofxXmlSettings(); 
         XML->loadFile(fileName); 
@@ -318,7 +318,7 @@ public:
         delete XML; 
     }
     
-    void loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
+    virtual void loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
     {
         int kind = widget->getKind();        
         switch (kind) 
@@ -731,27 +731,27 @@ public:
         
 #ifdef TARGET_OPENGLES
 	
-    void onTouchDown(ofTouchEventArgs &data)
+    virtual void onTouchDown(ofTouchEventArgs &data)
     {
 		touchDown(data); 
     }
     
-    void onTouchMoved(ofTouchEventArgs &data) 
+    virtual void onTouchMoved(ofTouchEventArgs &data) 
     {
 		touchMoved(data); 
     }
 
-    void onTouchUp(ofTouchEventArgs &data) 
+    virtual void onTouchUp(ofTouchEventArgs &data) 
     {
 		touchUp(data); 
     }
 	
-    void onTouchDoubleTap(ofTouchEventArgs &data)
+    virtual void onTouchDoubleTap(ofTouchEventArgs &data)
     {
 		touchDoubleTap(data); 
     }
 	
-	void onTouchCancelled(ofTouchEventArgs &data)
+	virtual void onTouchCancelled(ofTouchEventArgs &data)
     {
 		touchCancelled(data); 
     }
@@ -828,22 +828,22 @@ public:
 	
 #else	
     
-    void onMouseReleased(ofMouseEventArgs& data) 
+    virtual void onMouseReleased(ofMouseEventArgs& data)
     { 
         mouseReleased(data.x, data.y, data.button); 
     }
     
-    void onMousePressed(ofMouseEventArgs& data) 
-    { 
+    virtual void onMousePressed(ofMouseEventArgs& data)
+    {
         mousePressed(data.x, data.y, data.button); 
     }
     
-    void onMouseMoved(ofMouseEventArgs& data) 
+    virtual void onMouseMoved(ofMouseEventArgs& data) 
     { 
         mouseMoved(data.x, data.y); 
     }
     
-    void onMouseDragged(ofMouseEventArgs& data) 
+    virtual void onMouseDragged(ofMouseEventArgs& data)
     { 
         mouseDragged(data.x, data.y, data.button); 
     }
