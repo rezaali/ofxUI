@@ -28,7 +28,7 @@
 #include "ofxUISlider.h"
 #include "ofxUIRectangle.h"
 
-class ofxUIMultiImageSlider : public ofxUISlider
+class ofxUIMultiImageSlider : public ofxUISlider //delete this guy, use image slider instead
 {
 public:    
     ofxUIMultiImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()

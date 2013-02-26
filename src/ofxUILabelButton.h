@@ -148,10 +148,11 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-        if(rect->height == 0)
+        float compareHeight = label->getPaddingRect()->height+padding*2.0;
+        if(rect->height == 0 || rect->height < compareHeight)
         {
-            rect->height = label->getPaddingRect()->height+padding*2.0; 
-        }    
+            rect->height = compareHeight;
+        }
 		ofxUIRectangle *labelrect = label->getRect();
         
         label->setParent(this);
@@ -201,6 +202,11 @@ public:
         label->setDrawBack((*value));
 	}
     
+    void setLabelVisible(bool _visible)
+    {
+        drawLabel = _visible;
+        label->setVisible(drawLabel);
+    }    
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize;

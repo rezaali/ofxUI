@@ -28,87 +28,63 @@
 #include "ofxUIWidgetWithLabel.h"
 #include "ofxUIToggle.h"
 
-class ofxUIRadio : public ofxUIWidgetWithLabel
+class ofxUIRadio : public ofxUIWidget
 {
 public:
-    ofxUIRadio(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0) : ofxUIWidgetWithLabel()
+    ofxUIRadio(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) : ofxUIWidget()
     {
-        init(_name, names, _orientation, w, h, x, y);
+        init(_name, names, _orientation, w, h, x, y, _size);
     }
     
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
     
-    ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation) : ofxUIWidgetWithLabel()
+    ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation, int _size = OFX_UI_FONT_SMALL) : ofxUIWidget()
     {
-        init(_name, names, _orientation, w, h, x, y);
+        init(_name, names, _orientation, w, h, x, y, _size);
 //        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 
-    ofxUIRadio(float w, float h, string _name, vector<string> names, int _orientation) : ofxUIWidgetWithLabel()
+    ofxUIRadio(float w, float h, string _name, vector<string> names, int _orientation, int _size = OFX_UI_FONT_SMALL) : ofxUIWidget()
     {
-        init(_name, names, _orientation, w, h, 0, 0);
+        init(_name, names, _orientation, w, h, 0, 0, _size);
 //        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    void init(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0)
+    void init(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
     {
         rect = new ofxUIRectangle(x,y,w,h);
 		name = string(_name);  		
 		kind = OFX_UI_WIDGET_RADIO; 		
         
-        draw_back = false; 
+        draw_back = false;
         orientation = _orientation; 
 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
-		
-		label = new ofxUILabel(0,0,(name+" LABEL"), name, OFX_UI_FONT_MEDIUM); 
-		label->setParent(label); 
-		label->setRectParent(rect); 
-        label->setEmbedded(true);
         
-		for(int i = 0; i < names.size(); i++)
-		{
-			string tname = names[i]; 
-			ofxUIToggle *toggle = new ofxUIToggle(0,0, w, h, false, tname); 
-			toggles.push_back(toggle); 
-		}
+        if(names.size() == 0)
+        {
+            setEmbedded(true); 
+        }
+        else
+        {
+            for(int i = 0; i < names.size(); i++)
+            {
+                string tname = names[i];
+                ofxUIToggle *toggle = new ofxUIToggle(0,0, w, h, false, tname, _size);
+                toggle->setEmbedded(true);
+                toggles.push_back(toggle);
+            }
+        }
+        
         active = NULL; 
         allowMultiple = false; 
     }
-        
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-        label->setDrawPadding(false);
-		for(int i = 0; i < toggles.size(); i++)
-		{
-			ofxUIToggle *t = toggles[i]; 			
-            t->setDrawPadding(false);             
-        }           
-	}
     
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-        label->setDrawPaddingOutline(false);
-		for(int i = 0; i < toggles.size(); i++)
-		{
-			ofxUIToggle *t = toggles[i]; 			
-            t->setDrawPaddingOutline(false);             
-        }        
-	}  
-    
-	ofxUILabel *getLabel()
-	{
-		return label; 
-	}
-	    
     void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(visible); 
 		for(int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
@@ -144,36 +120,34 @@ public:
 	{
 		parent = _parent; 
 		
-		float tWidth = label->getPaddingRect()->width; 
-		float tHeight = label->getPaddingRect()->height; 
+		float tWidth = 0;
+		float tHeight = 0;
 
 		float xt = 0; 
-		float yt = label->getPaddingRect()->height;
+		float yt = 0; 
 		
 		for(int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
-			t->setParent(this); 
-			t->getRect()->setParent(this->getRect()); 
-			
-			
+			t->setParent(this);
+			t->setRectParent(this->getRect());
 			if(orientation == OFX_UI_ORIENTATION_HORIZONTAL)
 			{
-				t->getRect()->x = xt; 
-				t->getRect()->y = yt; 				
-				xt+=t->getPaddingRect()->width; 
-				tHeight = label->getPaddingRect()->height+t->getPaddingRect()->height; 								
+				t->getRect()->x = xt;
+				t->getRect()->y = 0;
+				xt+=t->getPaddingRect()->width;
+				tHeight = t->getPaddingRect()->height; 								
 			}			
 			else 
 			{
-				xt+=t->getPaddingRect()->width; 				
-				t->getRect()->y = yt; 			
+                t->getRect()->x = 0;
+                t->getRect()->y = yt;
 				if(t->getPaddingRect()->width > tWidth)
 				{
 					tWidth = t->getPaddingRect()->width; 
 				}
-				tHeight+=t->getPaddingRect()->height; 				
-				yt +=t->getPaddingRect()->getHeight(); 
+				tHeight+=t->getPaddingRect()->getHeight(); 
+				yt +=t->getPaddingRect()->getHeight();
 			}			
 		}
         
@@ -184,11 +158,22 @@ public:
                 tWidth = xt; 
             }
         }
-        rect->setHeight(tHeight);
-		tHeight += padding; 
-		paddedRect->width = tWidth; 	
-		paddedRect->height = tHeight; 			
-	}	
+        paddedRect->x = -padding;
+        paddedRect->y = -padding;
+
+        rect->setWidth(tWidth - padding);
+        rect->setHeight(tHeight - padding);
+        if(isEmbedded())
+        {
+            paddedRect->width = tWidth;
+            paddedRect->height = tHeight; 
+        }
+        else
+        {
+            paddedRect->width = tWidth+padding;
+            paddedRect->height = tHeight+padding;
+        }
+	}
 	
 	vector<ofxUIToggle *> getToggles()
 	{
@@ -205,14 +190,20 @@ public:
 		{
 			parent->triggerEvent(child); 
 		}
-	}	
-    
+	}
+
+    //allows any toggle to become part of this radio, muahahahaha
+    void addToggle(ofxUIToggle *toggle)
+    {
+        toggle->setParent(this);
+        toggles.push_back(toggle);
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
 	int orientation; 
 	vector<ofxUIToggle *> toggles; 		
     ofxUIToggle *active; 
-    bool allowMultiple;
+    bool allowMultiple;    
 }; 
 
 #endif

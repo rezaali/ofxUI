@@ -515,31 +515,34 @@ public:
     
     virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
     {
-        modal = _modal; 
-        if(modal == true)
+        modal = _modal;
+        if(parent != NULL)
         {
-            if(parent != NULL)
+            if(modal)
             {
                 parent->addModalWidget(this);
             }
-        }
-        else
-        {
-            if(parent != NULL)
+            else
             {
                 parent->removeModalWidget(this);
             }
         }
     }
-
+    
     virtual void addModalWidget(ofxUIWidget *widget)
     {
-        
+        if(parent != NULL)
+        {
+            parent->addModalWidget(widget);
+        }
     }
     
     virtual void removeModalWidget(ofxUIWidget *widget)
     {
-        
+        if(parent != NULL)
+        {
+            parent->removeModalWidget(widget);
+        }
     }
     
     virtual void addEmbeddedWidget(ofxUIWidget *widget)

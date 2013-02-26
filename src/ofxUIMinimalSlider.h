@@ -31,16 +31,16 @@ class ofxUIMinimalSlider : public ofxUISlider
 {
 public:
     
-    ofxUIMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0) : ofxUISlider()
+    ofxUIMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = false;
-        init(_name, _min, _max, &_value, w, h, x, y);
+        init(_name, _min, _max, &_value, w, h, x, y, _size);
     }
     
-    ofxUIMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0) : ofxUISlider()
+    ofxUIMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
     {
         useReference = true;
-        init(_name, _min, _max, _value, w, h, x, y);
+        init(_name, _min, _max, _value, w, h, x, y, _size);
     }
     
     ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
@@ -105,7 +105,7 @@ public:
 		paddedRect->setParent(rect);     
         
         draw_fill = true; 
-        
+        showValue = true; 
         value = *_value;                                               //the widget's value
         
         if(useReference)
@@ -153,7 +153,7 @@ public:
     
     virtual void drawFillHighlight()
     {
-        if(draw_fill_highlight)
+        if(draw_fill_highlight && showValue)
         {
             ofFill(); 
             ofSetColor(color_fill_highlight); 
@@ -165,7 +165,7 @@ public:
     
     virtual void drawOutlineHighlight()
     {
-        if(draw_outline_highlight)
+        if(draw_outline_highlight && showValue)
         {
             ofNoFill();
             ofSetColor(color_outline_highlight); 
@@ -213,24 +213,35 @@ public:
             labelstring.erase (it); 
             label->setLabel(labelstring);
         }            
-        if(autoSize || rect->getHeight() < label->getPaddingRect()->getHeight())
+        if(autoSize || rect->getHeight() <= label->getPaddingRect()->getHeight())
         {
-            rect->setHeight(label->getPaddingRect()->getHeight());             
+            rect->setHeight(label->getPaddingRect()->getHeight()+padding*2.0);             
         }
         
 		float h = labelrect->getHeight(); 
 		float ph = rect->getHeight(); 	
         
 		labelrect->y = (int)(ph*.5 - h*.5);
-        labelrect->x = padding;
+        labelrect->x = padding*2.0;
 		paddedRect->setHeight(rect->getHeight()+padding*2.0);  
         paddedRect->setWidth(rect->getWidth()+padding*2.0);
         updateValueRef();
         updateLabel(); 
 	}	
     
+    virtual void setShowValue(bool _showValue)
+    {
+        showValue = _showValue;
+    }
+    
+    bool getShowValue()
+    {
+        return showValue;
+    }
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-    bool autoSize;     
+    bool autoSize;
+    bool showValue; 
 }; 
 
 #endif

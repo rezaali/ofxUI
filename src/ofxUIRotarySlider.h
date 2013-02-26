@@ -30,32 +30,32 @@
 class ofxUIRotarySlider : public ofxUIWidgetWithLabel
 {
 public:    
-    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = false;           
 		rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, _min, _max, &_value, _name); 
+        init(w, _min, _max, &_value, _name, _size);
     }
     
-    ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = false;           
 		rect = new ofxUIRectangle(0,0,w,w); 
-        init(w, _min, _max, &_value, _name); 
+        init(w, _min, _max, &_value, _name, _size);
     }
     
-    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = true;                         
 		rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, _min, _max, _value, _name); 
+        init(w, _min, _max, _value, _name, _size);
     }
     
-    ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIWidgetWithLabel()
     {
         useReference = true;                         
 		rect = new ofxUIRectangle(0,0,w,w); 
-        init(w, _min, _max, _value, _name); 
+        init(w, _min, _max, _value, _name, _size);
     }    
     
     ~ofxUIRotarySlider()
@@ -66,7 +66,7 @@ public:
         }        
     }
     
-    void init(float w, float _min, float _max, float *_value, string _name)
+    void init(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL)
     {
 		name = string(_name);  				
         kind = OFX_UI_WIDGET_ROTARYSLIDER;  			
@@ -104,7 +104,7 @@ public:
 		
 		value = ofMap(value, min, max, 0.0, 1.0, true); 
         
-        label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue(),2)), OFX_UI_FONT_SMALL); 		
+        label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue(),2)), _size); 		
 		label->setParent(label); 
 		label->setRectParent(rect); 		
         label->setEmbedded(true);        
@@ -491,6 +491,20 @@ public:
 		value = ofMap(value, min, max, 0.0, 1.0, true);
         updateValueRef();
         updateLabel();
+    }
+    
+    
+    virtual bool isHit(float x, float y)
+    {
+        float d = ofDist(x, y, rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight()); 
+        if(visible &&  d < outerRadius && d > innerRadius)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

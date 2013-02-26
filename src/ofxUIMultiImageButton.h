@@ -30,7 +30,7 @@
 class ofxUIMultiImageButton : public ofxUIButton
 {
 public:        
-    ofxUIMultiImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL) : ofxUIButton()
+    ofxUIMultiImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size= OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = false;
         rect = new ofxUIRectangle(x,y,w,h); 
@@ -44,7 +44,7 @@ public:
         init(w, h, &_value, _pathURL, _name, _size);
     }
         
-    ofxUIMultiImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL) : ofxUIButton()
+    ofxUIMultiImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size= OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = true;
         rect = new ofxUIRectangle(x,y,w,h);
@@ -76,7 +76,7 @@ public:
 		label = new ofxUILabel(w,0, (name+" LABEL"), name, _size); 
 		label->setParent(label); 
 		label->setRectParent(rect); 
-        label->setEmbedded(true);		
+        label->setEmbedded(true);
 
         if(useReference)
         {
@@ -90,7 +90,7 @@ public:
         
         setValue(*_value);
         
-        drawLabel = true;
+        drawLabel = false;
         label->setVisible(drawLabel);      
         
         string coreURL = _pathURL;

@@ -44,13 +44,13 @@
 #define OFX_UI_GLOBAL_BUTTON_DIMENSION 16
 #define OFX_UI_GLOBAL_SPACING_HEIGHT 1
 
-#define OFX_UI_COLOR_BACK ofColor(0, 25)                                //the rect's back color
-#define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                //the rect's outline color 
-#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofColor(255, 255, 255, 200)      //the rect's onMouseOver outline highlight color         
-#define OFX_UI_COLOR_FILL ofColor(255, 255, 255, 200)                   //the rect's fill color 
-#define OFX_UI_COLOR_FILL_HIGHLIGHT ofColor(255, 255, 255, 255)         //the rect's onMouseDown highlight color 
-#define OFX_UI_COLOR_PADDED ofColor(0, 100)                             //the rect's padded color
-#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)         //the rect's padded outline color
+#define OFX_UI_COLOR_BACK ofColor(0, 25)                                    //the rect's back color
+#define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                    //the rect's outline color
+#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofColor(255, 255, 255, 200)          //the rect's onMouseOver outline highlight color
+#define OFX_UI_COLOR_FILL ofColor(255, 255, 255, 200)                       //the rect's fill color
+#define OFX_UI_COLOR_FILL_HIGHLIGHT ofColor(255, 255, 255, 255)             //the rect's onMouseDown highlight color
+#define OFX_UI_COLOR_PADDED ofColor(0, 100)                                 //the rect's padded color
+#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)                       //the rect's padded outline color
 
 #define OFX_UI_COLOR_BACK_ALPHA 25
 #define OFX_UI_COLOR_OUTLINE_ALPHA 100
@@ -135,7 +135,8 @@ enum ofxWidgetAlignment
 	OFX_UI_ALIGN_FREE = 1,
 	OFX_UI_ALIGN_RIGHT = 2,    
     OFX_UI_ALIGN_TOP = 3, 
-    OFX_UI_ALIGN_BOTTOM = 4
+    OFX_UI_ALIGN_BOTTOM = 4,
+    OFX_UI_ALIGN_CENTER = 5
 };
 
 enum ofxWidgetPosition
@@ -265,6 +266,5 @@ enum ofxUIThemeType
 #include "ofxUIImageSampler.h"
 #include "ofxUICanvas.h"
 #include "ofxUIScrollableCanvas.h"
-
 
 #endif

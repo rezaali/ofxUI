@@ -116,7 +116,8 @@ public:
 		kind = OFX_UI_WIDGET_2DPAD; 		
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
 		paddedRect->setParent(rect); 
-        draw_fill = true;                 
+        draw_fill = true;
+        draw_outline = true; 
         value = *_value;                                               //the widget's value
         if(useReference)
         {
@@ -490,7 +491,8 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-		paddedRect->height += label->getPaddingRect()->height; 
+        label->getRect()->setY(rect->getHeight()+padding);
+        paddedRect->height += label->getPaddingRect()->height+padding;
 	}	
     
     bool isDraggable()

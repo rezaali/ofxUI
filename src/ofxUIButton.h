@@ -99,10 +99,10 @@ public:
 		label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
 		label->setParent(label); 
 		label->setRectParent(rect); 
-        label->setEmbedded(true);		
+        label->setEmbedded(true);
         drawLabel = true;
         label->setVisible(drawLabel);      
-        
+
         if(useReference)
         {
             value = _value; 
@@ -115,39 +115,17 @@ public:
         
         setValue(*_value);         
     }
-        
-    virtual void draw() 
+    
+    virtual void drawFill()
     {
-        ofPushStyle(); 
-        
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        
-        drawPadded();
-        drawPaddedOutline();        
-        
-        drawBack();
-        
-        drawOutline();
-        drawOutlineHighlight();
-        
-        drawFill();
-        drawFillHighlight();
-        
-        ofPopStyle();
+        if(*value)
+        {
+            ofFill();
+            ofSetColor(color_fill);
+            rect->draw();
+        }
     }
     
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-        label->setDrawPadding(false);
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-        label->setDrawPaddingOutline(false);
-	}  
-
     virtual void mouseMoved(int x, int y) 
     {
         if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
@@ -173,21 +151,21 @@ public:
             {
                 hit = false;
                 state = OFX_UI_STATE_NORMAL;        
-                setValue(false); 
+                toggleValue();
                 triggerEvent(this);
             }
             stateChange();     
         }
     }
     
-    virtual void mousePressed(int x, int y, int button) 
+    virtual void mousePressed(int x, int y, int button)
     {
         if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             hit = true;
             state = OFX_UI_STATE_DOWN;         
-            setValue(true); 
-			triggerEvent(this); 			
+            toggleValue();
+			triggerEvent(this);
         }    
         else
         {
@@ -212,8 +190,8 @@ public:
                 state = OFX_UI_STATE_NORMAL;                         
             }
 #endif 
-            setValue(false); 
-			triggerEvent(this); 
+            toggleValue();            
+			triggerEvent(this);
         }    
         else
         {
@@ -263,7 +241,7 @@ public:
     virtual void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(visible); 
+        label->setVisible(drawLabel);
     }
     
 	ofxUILabel *getLabel()
@@ -277,7 +255,7 @@ public:
 		ofxUIRectangle *labelrect = label->getRect(); 
 		float h = labelrect->getHeight(); 
 		float ph = rect->getHeight(); 
-		
+		labelrect->x = rect->getWidth()+padding*2.0;
 		labelrect->y = ph/2.0 - h/2.0; 
         
         if(!drawLabel)
@@ -286,7 +264,7 @@ public:
         }
         else
         {            
-            paddedRect->width += label->getPaddingRect()->width+padding; 	
+            paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
         }
 	}	
 	
@@ -305,7 +283,7 @@ public:
         }
         else
         {
-            paddedRect->width += label->getPaddingRect()->width+padding;
+            paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
         }
     }
 	
@@ -337,11 +315,11 @@ public:
         switch (pos)
         {
             case OFX_UI_WIDGET_POSITION_LEFT:
-                label->getRect()->x = - label->getRect()->getWidth() - padding;
+                label->getRect()->x = - label->getRect()->getWidth() - padding*2;
                 break;
                 
             case OFX_UI_WIDGET_POSITION_RIGHT:
-                label->getRect()->x = rect->getWidth() + padding;
+                label->getRect()->x = rect->getWidth() + padding*2;
                 break;
                 
             default:

@@ -67,6 +67,7 @@ public:
 		paddedRect->setParent(rect);     
         
         draw_fill = true; 
+        draw_outline = true;
         
         value = *_value;                                               //the widget's value
         if(useReference)
@@ -276,6 +277,18 @@ public:
         
         labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
     }	
+    
+    virtual bool isHit(float x, float y)
+    {
+        if(visible && ofDist(x, y, rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight()) < rect->getHalfWidth())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
 protected:
     ofxWidgetInputDirection inputDirection; 

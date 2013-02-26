@@ -61,6 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9E4CE0F316D5A2C50032EB58 /* ofxUIMultiImageSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxUIMultiImageSlider.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
@@ -270,6 +271,7 @@
 			children = (
 				F5641C64156D6E5D00D9025E /* ofxUIMultiImageToggle.h */,
 				F5641C65156D6E5D00D9025E /* ofxUIMultiImageButton.h */,
+				9E4CE0F316D5A2C50032EB58 /* ofxUIMultiImageSlider.h */,
 				F52CD4C3153CC2FD00635309 /* ofxUI.h */,
 				F52CD4C4153CC2FD00635309 /* ofxUI2DPad.h */,
 				F52CD4C5153CC2FD00635309 /* ofxUIBiLabelSlider.h */,

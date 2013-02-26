@@ -3,10 +3,16 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
+    ofEnableTextureEdgeHack();
+//    middle.loadImage("sliderhandle.png");
+    middle.loadImage("slidertrack.png");
+    middle.getTextureReference().setTextureWrap(GL_REPEAT, GL_REPEAT);
+    middle.update();
+    
 	ofEnableSmoothing(); 
     ofSetCircleResolution(60);
     
-    red = 233.; blue = 27.; green = 52.;
+    red = 100; blue = 100; green = 100;
 	
 	float dim = 24; 
 	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
@@ -50,8 +56,9 @@ void testApp::setup()
 	gui->addWidgetDown(new ofxUICircleSlider(dim*2, 0.0, 255.0, green, "GREEN", OFX_UI_FONT_MEDIUM));
     gui->addSpacer(length-xInit, 1);     
 	gui->addWidgetDown(new ofxUILabel("IMAGE SLIDER", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUIImageSlider(length-xInit, dim, 0.0, 255.0, red, "slider.png", "RED"));
-
+    gui->addWidgetDown(new ofxUIImageSlider(length-xInit, 42, 0.0, 255.0, red, "slider.png", "IMAGE SLIDER"));
+    gui->setColorBack(ofColor(255,100));
+    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
 }
@@ -64,12 +71,16 @@ void testApp::update()
 
 //--------------------------------------------------------------
 void testApp::draw()
-{    
+{
 	ofBackground(red, green, blue, 255); 
 	
 	ofPushStyle(); 
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);     
-	ofPopStyle(); 
+
+    
+    ofSetColor(255);
+    middle.getTextureReference().drawSubsection(ofGetWidth()*.5, ofGetHeight()*.5, middle.getWidth()*10, middle.getHeight(), middle.getWidth(),0,1,middle.getHeight());
+	ofPopStyle();
 }
 //--------------------------------------------------------------
 void testApp::guiEvent(ofxUIEventArgs &e)
@@ -147,7 +158,7 @@ void testApp::keyReleased(int key){
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y )
 { 
-	
+//	gui->getRect()->setHeight(y);
 }
 
 //--------------------------------------------------------------

@@ -207,28 +207,6 @@ public:
     {                 
         return selected;         
     }
-    
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-        label->setDrawPadding(false);
-//        for(int i = 0; i < toggles.size(); i++)s
-//        {
-//            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
-//            toggle->setDrawPadding(false);
-//        }
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-        label->setDrawPaddingOutline(false);
-//        for(int i = 0; i < toggles.size(); i++)
-//        {
-//            ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
-//            toggle->setDrawPaddingOutline(false);
-//        }
-    }  
 
     void initToggles(vector<string> &items, int _size)
     {
@@ -305,15 +283,15 @@ public:
 			ofxUILabelToggle *t = toggles[i]; 			
 			t->setParent(this); 
 			t->getRect()->setParent(this->getRect()); 
-        
+            t->getRect()->x = 0;
             t->getRect()->y = yt; 			
             yt +=t->getRect()->getHeight();         
             if(autoSize)
             {
                 t->getRect()->setWidth(rect->getWidth());
             }
-            t->getPaddingRect()->setWidth(paddedRect->getWidth()); 
-		}			
+            t->getPaddingRect()->setWidth(paddedRect->getWidth());
+		}
 	}	    
     
     void mouseReleased(int x, int y, int button) 
@@ -459,28 +437,21 @@ public:
     virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
     {
         modal = _modal;
-        if(modal == true)
+        if(parent != NULL)
         {
-            if(parent != NULL)
+            if(modal)
             {
                 parent->addModalWidget(this);
-                for(int i = 0; i < toggles.size(); i++)
-                {
-                    parent->addModalWidget(toggles[i]);
-                }
             }
-        }
-        else
-        {
-            if(parent != NULL)
+            else
             {
                 parent->removeModalWidget(this);
-                for(int i = 0; i < toggles.size(); i++)
-                {
-                    parent->removeModalWidget(toggles[i]);
-                }
-                
             }
+        }
+        
+        for(int i = 0; i < toggles.size(); i++)
+        {
+            toggles[i]->setModal(modal);
         }
     }    
     

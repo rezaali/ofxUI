@@ -130,10 +130,24 @@ public:
         }
         
         track = new ofImage();         //back
-        track->loadImage(coreURL+"track"+extension);
-
+        track->loadImage(coreURL+"track"+extension);            
+        
+        trackleft = new ofImage();         //back
+        trackleft->loadImage(coreURL+"trackleft"+extension);
+        tlaspect = (float)trackleft->getWidth()/(float)trackleft->getHeight();
+        
+        trackright = new ofImage();         //back
+        trackright->loadImage(coreURL+"trackright"+extension);
+        traspect = (float)trackright->getWidth()/(float)trackright->getHeight();
+        
         progress = new ofImage();      //fill
         progress->loadImage(coreURL+"progress"+extension);        
+
+        progressright = new ofImage();      //fill
+        progressright->loadImage(coreURL+"progressright"+extension);
+
+        progressleft = new ofImage();      //fill
+        progressleft->loadImage(coreURL+"progressleft"+extension);
         
         handle = new ofImage();        //handle
         handle->loadImage(coreURL+"handle"+extension);
@@ -146,19 +160,26 @@ public:
         
         if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
         {
-            imageRect = new ofxUIRectangle(handleHalfWidth,0,rect->getWidth()-handle->getWidth(), rect->getHeight());
+            ratio = rect->getHeight() / (float) track->getHeight();
+            imageRect = new ofxUIRectangle(handleHalfWidth*ratio,0,rect->getWidth()-handle->getWidth()*ratio, rect->getHeight());
+
         }
         else
         {
-            imageRect = new ofxUIRectangle(0,handleHalfHeight,rect->getWidth(), rect->getHeight()-handle->getHeight());            
+            ratio = rect->getWidth() /  (float) track->getWidth();
+            imageRect = new ofxUIRectangle(0,handleHalfHeight*ratio,rect->getWidth(), rect->getHeight()-handle->getHeight()*ratio);
         }
         imageRect->setParent(rect);     
     }
     
     ~ofxUIImageSlider()
     {
-        delete track; 
-        delete progress; 
+        delete track;
+        delete trackleft;
+        delete trackright;
+        delete progress;
+        delete progressright;
+        delete progressleft;
         delete handle; 
         delete handleDown;
         delete imageRect; 
@@ -169,8 +190,14 @@ public:
     {
         if(draw_back)
         {
-            ofSetColor(255); 
-            track->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
+            if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
+            {
+                ofSetColor(255);
+                
+                trackleft->draw(rect->getX(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());                
+                trackright->draw(rect->getX()+rect->getWidth()-traspect*rect->getHeight(), rect->getY(), traspect*rect->getHeight(), rect->getHeight());
+                track->draw(rect->getX()+rect->getHeight()*tlaspect-1, rect->getY(), rect->getWidth()-rect->getHeight()*tlaspect - rect->getHeight()*traspect + 1, rect->getHeight());
+            }
         }
     }
     
@@ -195,18 +222,19 @@ public:
         {			 
             ofSetColor(255); 
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
-			{	
-                progress->drawSubsection(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight(), 0,0);
-                ofSetRectMode(OF_RECTMODE_CENTER);
-                handle->draw(imageRect->getX()+imageRect->getWidth()*value, imageRect->getY()+imageRect->getHalfHeight());                    
-                ofSetRectMode(OF_RECTMODE_CORNER);
-			}
-			else 
 			{
-                progress->drawSubsection(rect->getX(), rect->getY()+(1.0-value)*rect->getHeight(), rect->getWidth(), rect->getHeight(), 0, (1.0-value)*rect->getHeight());                
-                ofSetRectMode(OF_RECTMODE_CENTER);                
-                handle->draw(imageRect->getX()+imageRect->getHalfWidth(), imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value);                                            
-                ofSetRectMode(OF_RECTMODE_CORNER);            
+                if(value > 0.00)
+                    progressleft->draw(rect->getX(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
+
+                progress->draw(rect->getX()+rect->getHeight()*tlaspect - 1,rect->getY(),(rect->getWidth() - 2.0*rect->getHeight()*tlaspect)*value + 1, rect->getHeight());
+
+                if(value > .99)
+                    progressright->draw(rect->getX()+rect->getWidth() - tlaspect*rect->getHeight(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
+
+                ofSetRectMode(OF_RECTMODE_CENTER);
+                ofSetColor(255); 
+                handle->draw(imageRect->getX()+value*imageRect->getWidth(), rect->getY()+rect->getHalfHeight(), ratio*handle->getWidth(), ratio*handle->getHeight());
+                ofSetRectMode(OF_RECTMODE_CORNER);
 			}
         }
     }
@@ -217,19 +245,25 @@ public:
         {
             ofSetColor(255); 
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
-			{			   
-                progress->drawSubsection(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight(), 0,0);
+			{
+                if(value > 0.00)
+                progressleft->draw(rect->getX(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
+                
+                progress->draw(rect->getX()+rect->getHeight()*tlaspect-1,rect->getY(),(rect->getWidth() - 2.0*rect->getHeight()*tlaspect)*value + 1, rect->getHeight());
+                
+                if(value > .99)
+                    progressright->draw(rect->getX()+rect->getWidth() - tlaspect*rect->getHeight(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
+                
                 ofSetRectMode(OF_RECTMODE_CENTER);
-                handleDown->draw(imageRect->getX()+imageRect->getWidth()*value, imageRect->getY()+imageRect->getHalfHeight());                    
+                ofSetColor(255);
+                handleDown->draw(imageRect->getX()+value*imageRect->getWidth(), rect->getY()+rect->getHalfHeight(), ratio*handle->getWidth(), ratio*handle->getHeight());
                 ofSetRectMode(OF_RECTMODE_CORNER);
 			}
 			else 
 			{
-                progress->drawSubsection(rect->getX(), rect->getY()+(1.0-value)*rect->getHeight(), rect->getWidth(), rect->getHeight(), 0, (1.0-value)*rect->getHeight());                
-                ofSetRectMode(OF_RECTMODE_CENTER);                
-                handleDown->draw(imageRect->getX()+imageRect->getHalfWidth(), imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value);                                            
-                ofSetRectMode(OF_RECTMODE_CORNER);            
-			}	
+             
+			
+            }
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_V)
 			{
 				label->drawString(imageRect->getX()+imageRect->getWidth()+padding, label->getRect()->getHeight()/2.0+imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value, ofToString(getScaledValue(),labelPrecision)); 
@@ -313,7 +347,17 @@ public:
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     ofImage *track;         //back
+    
+    ofImage *trackleft;         //back
+    float tlaspect;
+    ofImage *trackright;         //back
+    float traspect;
+    
+    float ratio; 
+    
     ofImage *progress;      //fill
+    ofImage *progressright;      //fill
+    ofImage *progressleft;      //fill
     ofImage *handle;        //handle
     ofImage *handleDown;    //handleOver State    
     int handleHalfWidth; 

@@ -35,42 +35,49 @@ public:
     
     }
     
-    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name) : ofxUIButton()
+    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = false; 
         rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, &_value, _pathURL, _name);         
+        init(w, h, &_value, _pathURL, _name, _size);
     }
 
-    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name) : ofxUIButton()
+    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = false;         
         rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, &_value, _pathURL, _name);         
+        init(w, h, &_value, _pathURL, _name, _size);         
     }
         
-    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name) : ofxUIButton()
+    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = true;         
         rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, _value, _pathURL, _name);         
+        init(w, h, _value, _pathURL, _name, _size);         
     }
     
-    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name) : ofxUIButton()
+    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
     {
         useReference = true;                 
         rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, _value, _pathURL, _name);         
+        init(w, h, _value, _pathURL, _name, _size);         
     }    
     
-    void init(float w, float h, bool *_value, string _pathURL, string _name)
+    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
     {
         name = string(_name);  		
 		kind = OFX_UI_WIDGET_IMAGEBUTTON; 		
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect); 
-                
+        
+        label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
+		label->setParent(label);
+		label->setRectParent(rect);
+        label->setEmbedded(true);
+        drawLabel = false;
+        label->setVisible(drawLabel);
+        
         if(useReference)
         {
             value = _value; 
@@ -86,34 +93,18 @@ public:
         img = new ofImage(); 
         img->loadImage(_pathURL);         
     }
-	
-    virtual bool hasLabel()
-    {
-        return false;
-    }
-
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-	}  
     
     virtual ~ofxUIImageButton()
     {
         delete img; 
     }
-	
 
     virtual void drawBack()
     {
-        if(draw_back)
+        if(draw_back && !draw_fill)
         {
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofFill();
+            ofSetColor(color_back);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }
@@ -123,7 +114,7 @@ public:
         if(draw_fill)
         {
             ofFill(); 
-            ofSetColor(color_back); 
+            ofSetColor(color_fill); 
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }
@@ -143,147 +134,10 @@ public:
         if(draw_outline_highlight)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight); 
+            ofSetColor(color_outline_highlight);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }   
-    
-    virtual void mouseMoved(int x, int y)
-    {
-        if(rect->inside(x, y))
-        {
-            state = OFX_UI_STATE_OVER;
-        }
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;
-        }
-        stateChange();
-    }
-    
-    virtual void mouseDragged(int x, int y, int button)
-    {
-        if(hit)
-        {
-            if(rect->inside(x, y))
-            {
-                state = OFX_UI_STATE_DOWN;
-            }
-            else
-            {
-                hit = false;
-                state = OFX_UI_STATE_NORMAL;
-                setValue(false);
-                triggerEvent(this);
-            }
-            stateChange();
-        }
-    }
-    
-    virtual void mousePressed(int x, int y, int button)
-    {
-        if(rect->inside(x, y))
-        {
-            hit = true;
-            state = OFX_UI_STATE_DOWN;
-            setValue(true);
-			triggerEvent(this);
-        }
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;
-        }
-        stateChange();
-    }
-    
-    virtual void mouseReleased(int x, int y, int button)
-    {
-        if(hit)
-        {
-#ifdef TARGET_OPENGLES
-            state = OFX_UI_STATE_NORMAL;
-#else
-            if(rect->inside(x, y))
-            {
-                state = OFX_UI_STATE_OVER;
-            }
-            else
-            {
-                state = OFX_UI_STATE_NORMAL;
-            }
-#endif
-            setValue(false);
-			triggerEvent(this);
-        }
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;
-        }
-        stateChange();
-        hit = false;
-    }
-    
-    void stateChange()
-    {        
-        switch (state) {
-            case OFX_UI_STATE_NORMAL:
-            {            
-                draw_fill_highlight = false;             
-                draw_outline_highlight = false;  
-            }
-                break;
-            case OFX_UI_STATE_OVER:
-            {
-                draw_fill_highlight = false;            
-                draw_outline_highlight = true;  
-            }
-                break;
-            case OFX_UI_STATE_DOWN:
-            {
-                draw_fill_highlight = true;            
-                draw_outline_highlight = false;             
-            }
-                break;
-            case OFX_UI_STATE_SUSTAINED:
-            {
-                draw_fill_highlight = false;            
-                draw_outline_highlight = false;                         
-            }
-                break;            
-                
-            default:
-                break;
-        }        
-    }
-	
-	void setParent(ofxUIWidget *_parent)
-	{
-		parent = _parent; 
-	}	
-
-    virtual void setValue(bool _value)
-	{
-		*value = _value;
-        draw_fill = *value;        
-	}	
-    
-    virtual void setVisible(bool _visible)
-    {
-        visible = _visible; 
-    }
-    
-    virtual bool isHit(float x, float y)
-    {
-        if(visible)
-        {
-            return rect->inside(x, y); 
-        }
-        else
-        {
-            return false;
-        }
-    }
-
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 

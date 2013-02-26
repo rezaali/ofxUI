@@ -27,71 +27,71 @@
 
 #include "ofxUIWidgetWithLabel.h"
 
-class ofxUILabel : public ofxUIWidgetWithLabel
+class ofxUILabel : public ofxUIWidget
 {
 public:
-    ofxUILabel() : ofxUIWidgetWithLabel() 
+    ofxUILabel() : ofxUIWidget()
     {
         
     }
     
-    ofxUILabel(float x, float y, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float x, float y, string _name, string _label, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _label, _size); 		
         autoSize = true;
     }
 
-    ofxUILabel(float x, float y, string _name, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float x, float y, string _name, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(x,y,0,0); 
         init(_name, _name, _size); 		
         autoSize = true;
     }
 
-    ofxUILabel(string _name, string _label, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(string _name, string _label, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _label, _size); 		
         autoSize = true;        
     }	
 
-    ofxUILabel(string _name, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(string _name, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,0,0); 
         init(_name, _name, _size); 		
         autoSize = true;
     }   
     
-    ofxUILabel(float x, float y, float w, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float x, float y, float w, string _name, string _label, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(x,y,w,0); 
         init(_name, _label, _size); 		
         autoSize = false;
     }
     
-    ofxUILabel(float x, float y, float w, string _name, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float x, float y, float w, string _name, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(x,y,w,0); 
         init(_name, _name, _size); 		
         autoSize = false;
     }
     
-    ofxUILabel(float w, string _name, string _label, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float w, string _name, string _label, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,w,0); 
         init(_name, _label, _size); 		
         autoSize = false;        
     }	
     
-    ofxUILabel(float w, string _name, int _size) : ofxUIWidgetWithLabel()
+    ofxUILabel(float w, string _name, int _size) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,w,0); 
         init(_name, _name, _size); 		
         autoSize = false;
     }   
 
-    ofxUILabel(float w, string _name, int _size, float h) : ofxUIWidgetWithLabel()
+    ofxUILabel(float w, string _name, int _size, float h) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(_name, _name, _size); 		
@@ -217,7 +217,17 @@ public:
             xOffset = (int) (rect->width*.5 - w*.5);
         }
 	}
-        
+    
+    bool getAutoSize()
+    {
+        return autoSize;
+    }
+    
+    void setAutoSize(bool _autoSize)
+    {
+        autoSize = _autoSize;
+    }
+    
     string& getLabel()
     {
         return label; 

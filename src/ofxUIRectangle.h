@@ -234,7 +234,13 @@ public:
         return (getRelativeMinX() < rect.getMaxX() && getRelativeMaxX() > rect.getMinX() &&
                 getRelativeMinY() < rect.getMaxY() && getRelativeMaxY() > rect.getMinY());
     }
-    
+
+    //give an input rect, let me know if I am inside of it (completely, no overflow)
+    bool rInside(const ofRectangle& rect)
+    {
+        return (getRelativeMinX() > rect.getMinX() && getRelativeMaxX() < rect.getMaxX() &&
+                getRelativeMinY() > rect.getMinY() && getRelativeMaxY() < rect.getMaxY());
+    }
 
 protected: 
     float halfwidth;

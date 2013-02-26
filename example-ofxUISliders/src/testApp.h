@@ -25,7 +25,9 @@ class testApp : public ofBaseApp
 	ofxUICanvas *gui;   	
 	void guiEvent(ofxUIEventArgs &e);
     bool drawPadding; 
-	float red, green, blue; 	
+	float red, green, blue;
+    
+    ofImage middle; 
 };
 
 #endif

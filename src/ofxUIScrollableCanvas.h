@@ -60,12 +60,13 @@ public:
     {
         kind = OFX_UI_WIDGET_SCROLLABLECANVAS;
         sRect = new ofxUIRectangle(rect->x, rect->y, rect->getWidth(), rect->getHeight());
-        isScrolling = false; 
+        paddedRect->setParent(sRect);
+        isScrolling = false;
         vel.set(0);
         pos.set(0); 
         ppos.set(0); 
-        acc.set(0); 
-        damping = .90; 
+        acc.set(0);
+        damping = .75;
         scrollX = false; 
         scrollY = true; 
         
@@ -75,23 +76,14 @@ public:
         nearLeft = false;
         
         hitWidget = false; 
-        stickyDistance = 100;
+        stickyDistance = 32;
         hit = false; 
         snapping = true; 
 #ifdef TARGET_OPENGLES
         touchId = -1; 
 #endif
-//        initFbo(sRect->getWidth(),sRect->getHeight());        
     }
 
-//    void initFbo(int w, int h)
-//    {
-//        fbo.allocate(w, h); 
-//        fbo.begin();
-//        ofClear(0,0,0,0);
-//        fbo.end();
-//    }
-    
     void setDamping(float _damping)
     {
         damping = _damping; 
@@ -108,7 +100,8 @@ public:
         sRect->y = y; 
         sRect->setWidth(w);
         sRect->setHeight(h);
-//        initFbo(w,h);
+        paddedRect->setWidth(w+padding*2);
+        paddedRect->setHeight(h+padding*2);
     }
     
     void setScrollAreaToScreen()
@@ -117,21 +110,30 @@ public:
         sRect->y = 0; 
         sRect->setWidth(ofGetWidth());
         sRect->setHeight(ofGetHeight());
-//        initFbo(sRect->getWidth(),sRect->getHeight());
     }
     
     void setScrollAreaToScreenWidth()
     {
         sRect->x = 0; 
         sRect->setWidth(ofGetWidth());
-//        initFbo(sRect->getWidth(),sRect->getHeight());        
     }
 
     void setScrollAreaToScreenHeight()
     {
         sRect->y = 0;
         sRect->setHeight(ofGetHeight());
-//        initFbo(sRect->getWidth(),sRect->getHeight());        
+    }
+    
+    void setScrollAreaHeight(float _height)
+    {
+        sRect->setHeight(_height);
+        paddedRect->setHeight(_height+padding*2);
+    }
+
+    void setScrollAreaWidth(float _width)
+    {
+        sRect->setWidth(_width);
+        paddedRect->setWidth(_width+padding*2);
     }
     
     void setScrollableDirections(bool _scrollX, bool _scrollY)
@@ -265,20 +267,87 @@ public:
             acc.set(0);
         }
         
-		for(int i = 0; i < widgets.size(); i++)
+		for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
 		{
-			widgets[i]->update();
+			(*it)->update();
 		}		
+    }
+    
+    virtual void drawBack()
+    {
+        if(draw_back)
+        {
+            ofFill();
+            ofSetColor(color_back);
+            sRect->draw();            
+        }
+    }
+    
+    virtual void drawOutline()
+    {
+        if(draw_outline)
+        {
+            ofNoFill();
+            ofSetColor(color_outline);
+            sRect->draw();
+        }
+    }
+    
+    virtual void drawOutlineHighlight()
+    {
+        if(draw_outline_highlight)
+        {
+            ofNoFill();
+            ofSetColor(color_outline_highlight);
+            sRect->draw();
+        }
+    }
+    
+    virtual void drawFill()
+    {
+        if(draw_fill)
+        {
+            ofFill();
+            ofSetColor(color_fill);
+            sRect->draw();
+        }
+    }
+    
+    virtual void drawFillHighlight()
+    {
+        if(draw_fill_highlight)
+        {
+            ofFill();
+            ofSetColor(color_fill_highlight);
+            sRect->draw();
+        }
+    }
+    
+    virtual void drawPadded()
+    {
+		if(draw_padded_rect && !embedded)
+		{
+            ofFill();
+            ofSetColor(color_padded_rect);
+			paddedRect->draw();
+		}
+    }
+    
+    virtual void drawPaddedOutline()
+    {
+        if(draw_padded_rect_outline && !embedded)
+		{
+            ofNoFill();
+            ofSetColor(color_padded_rect_outline);
+			paddedRect->draw();
+		}
     }
     
     virtual void draw()
     {
-//        fbo.begin(); 
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//        ofClearAlpha();
-        
         ofPushStyle();
-		glDisable(GL_DEPTH_TEST);
+        
+        glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         ofSetRectMode(OF_RECTMODE_CORNER);
@@ -298,20 +367,15 @@ public:
         
         drawOutlineHighlight();
         
-		for(int i = widgets.size()-1; i >= 0; i--)
-		{
-            if(widgets[i]->isVisible() && widgets[i]->getRect()->rIntersects(*sRect))
+        for(vector<ofxUIWidget *>::reverse_iterator it = widgets.rbegin(); it != widgets.rend(); ++it)
+        {
+            if((*it)->isVisible() && (*it)->getRect()->rInside(*sRect))
             {
-                widgets[i]->draw();
+                (*it)->draw();
             }
 		}
-		
-		glDisable(GL_DEPTH_TEST);
+        
         ofPopStyle();
-//        fbo.end();
-//        
-//        ofSetColor(255);
-//        fbo.draw(sRect->getX(), sRect->getY());
     }
     
     virtual void setPosition(int x, int y)
@@ -322,6 +386,17 @@ public:
         sRect->y = y; 
     }
 
+    virtual void setDimensions(float _width, float _height)
+    {
+        sRect->setWidth(MIN(_width, ofGetWidth() - sRect->getX()));
+        sRect->setHeight(MIN(_height, ofGetHeight() - sRect->getY()));
+        rect->setWidth(_width);
+        rect->setHeight(_height);
+        paddedRect->width = rect->width+padding*2;
+        paddedRect->height = rect->height+padding*2;
+    }
+
+    
     void drawScrollableRect()
     {
         sRect->draw();
@@ -330,17 +405,17 @@ public:
 #ifdef TARGET_OPENGLES
     void touchDown(ofTouchEventArgs& touch)
     {        
-        if(rect->inside(touch.x, touch.y))
+        if(sRect->inside(touch.x, touch.y))
         {
-			for(int i = 0; i < widgets.size(); i++)
+			for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
 			{
-                if(widgets[i]->isHit(touch.x, touch.y))
+                if((*it)->isHit(touch.x, touch.y))
                 {            
-                    if(widgets[i]->isDraggable())
+                    if((*it)->isDraggable())
                     {
                         hitWidget = true;                                                                        
                     }
-                    widgets[i]->touchDown(touch); 
+                    (*it)->touchDown(touch); 
                 }
 			}
 		}        
@@ -355,9 +430,9 @@ public:
     
     void touchMoved(ofTouchEventArgs& touch) 
     {
-        for(int i = 0; i < widgets.size(); i++)
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            if(widgets[i]->isVisible())	widgets[i]->touchMoved(touch);
+            if((*it)->isVisible())	(*it)->touchMoved(touch);
         }
         
         if(hit && touch.id == 0)
@@ -384,9 +459,9 @@ public:
     
     void touchUp(ofTouchEventArgs& touch) 
     {
-        for(int i = 0; i < widgets.size(); i++)
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            if(widgets[i]->isVisible())	widgets[i]->touchUp(touch); 
+            if((*it)->isVisible())	(*it)->touchUp(touch); 
         }
         
         hit = false; 
@@ -400,9 +475,9 @@ public:
     
     void touchCancelled(ofTouchEventArgs& touch) 
     {
-        for(int i = 0; i < widgets.size(); i++)
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            if(widgets[i]->isVisible())	widgets[i]->touchUp(touch); 
+            if((*it)->isVisible())	(*it)->touchUp(touch); 
         }
         
         hit = false; 
@@ -418,9 +493,9 @@ public:
 
     void mouseDragged(int x, int y, int button) 
     {	
-        for(int i = 0; i < widgets.size(); i++)
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            if(widgets[i]->isVisible())	widgets[i]->mouseDragged(x, y, button); 
+            if((*it)->isVisible())	(*it)->mouseDragged(x, y, button); 
         }
         
         if(hit)
@@ -447,20 +522,20 @@ public:
     
     void mousePressed(int x, int y, int button) 
     {
-        if(rect->inside(x, y))
+        if(sRect->inside(x, y))
         {
             hit = true; 
-            for(int i = 0; i < widgets.size(); i++)
+            for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
             {
-                if(widgets[i]->isVisible())
+                if((*it)->isVisible())
                 {
-                    if(widgets[i]->isHit(x, y))
+                    if((*it)->isHit(x, y))
                     {            
-                        if(widgets[i]->isDraggable())
+                        if((*it)->isDraggable())
                         {
                             hitWidget = true;                                                                        
                         }
-                        widgets[i]->mousePressed(x, y, button); 
+                        (*it)->mousePressed(x, y, button); 
                     }
                 }
             }       
@@ -472,9 +547,9 @@ public:
     
     void mouseReleased(int x, int y, int button) 
     {	
-        for(int i = 0; i < widgets.size(); i++)
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            if(widgets[i]->isVisible()) widgets[i]->mouseReleased(x, y, button); 
+            if((*it)->isVisible()) (*it)->mouseReleased(x, y, button); 
         }            
         
         hit = false; 
@@ -491,8 +566,27 @@ public:
         return sRect; 
     }
 
+    
+    virtual bool isHit(int x, int y)
+    {
+        if(isEnabled() && sRect->inside(x, y))
+        {
+            return true;
+        }
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible() && (*it).second->isHit(x, y))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 protected:
-//    ofFbo fbo;    //experimental 
     ofxUIRectangle *sRect;
     bool isScrolling;
     bool snapping; 
