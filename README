@@ -1,4 +1,4 @@
-ofxUI is an addon for openFrameworks (version 07) that easily allows for the creation of user interfaces aka GUIs. ofxUI also takes care of widget layout, spacing, font loading, saving and loading settings, and widget callbacks. ofxUI can be easily customized (colors, font & widget sizes, padding, layout, etc).
+ofxUI is an addon for openFrameworks (version 073+) that easily allows for the creation of user interfaces aka GUIs. ofxUI also takes care of widget layout, spacing, font loading, saving and loading settings, and widget callbacks. ofxUI can be easily customized (colors, font & widget sizes, padding, layout, etc).
 
 ofxUI contains a collection of minimally designed graphical user interface (GUI) widgets (Buttons, Toggles, Image Buttons, Label Buttons, Button Matrices, Drop Down Menus, Sliders (rotary, range, vertical, horizontal), Number Dials, 2D Pads, Labels, FPS labels, and Text Input Areas). 
 
@@ -12,7 +12,7 @@ This UI library was inspired & influenced by:
 - Apple's User Interface 
 
 Additionally, I was motived to write my own since I wanted something like ControlP5 (which is easy to get up and running) for Processing for OF. I use ControlP5 a lot and love its minimal aesthetic. I also love simpleGUI for Cinder, but since I primarily code using OF, I developed ofxUI with the intentions that it needs to be minimally designed, intuitive to use, easily integrated, flexible and customizable.
-ofxUI was / is developed by Reza Ali (www.syedrezaali.com || syed.reza.ali@gmail.com || @rezaali). It has been tested on OSX  and iOS (OF 07). It should work on linux and windows, since its only dependency is openFrameworks & ofxXmlSettings. ofxUI is open source under an MIT License, therefore you can use it in commercial and non-commercial projects. If you do end up using it, please let me know. I would love to see examples of it out there in the wild. If you plan to use it in a commercial project please consider donating to help support this addon and future releases/fixes/features (http://www.syedrezaali.com/blog/?p=2172).
+ofxUI was / is developed by Reza Ali (www.syedrezaali.com || syed.reza.ali@gmail.com || @rezaali). It has been tested on OSX  and iOS (OF 073+). It should work on linux and windows, since its only dependency is openFrameworks & ofxXmlSettings. ofxUI is open source under an MIT License, therefore you can use it in commercial and non-commercial projects. If you do end up using it, please let me know. I would love to see examples of it out there in the wild. If you plan to use it in a commercial project please consider donating to help support this addon and future releases/fixes/features (http://www.syedrezaali.com/blog/?p=2172).
 
 On a personal note: I designed ofxUI so that if I present my work to a client or put out an App on the App store, it would have a decent aesthetic and be presentable to non-hackers/programmers. I really like the widgets in MaxMsp, so I wanted to have something similar so when I prototype in C++ I could easily go about creating a UI that is pleasing to use and works robustly. 
 
@@ -23,7 +23,7 @@ When I first started programming with C++ it was difficult for me to use the oth
 
 TUTORIAL: 
 
-This tutorial will provide step by step instructions on how to integrate ofxUI with a project your are working on, for simplicity I will assume we are starting from an empty project. For this we are going to be assuming you are using openFrameworks 07 for OSX, however these instructions should be easily adaptable for iOS.
+This tutorial will provide step by step instructions on how to integrate ofxUI with a project your are working on, for simplicity I will assume we are starting from an empty project. For this we are going to be assuming you are using openFrameworks 073+ for OSX, however these instructions should be easily adaptable for iOS.
 
 1. After downloading ofxUI, place it in your openframeworks addons folder. 
 
