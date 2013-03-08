@@ -1160,6 +1160,17 @@ public:
 //        cout << "Widget to find: " << widget->getName() << endl; 
 //        cout << endl; 
         
+        if(widget->isModal())
+        {
+            map<string, ofxUIWidget*>::iterator it;
+            it=widgetsAreModal.find(widget->getName());            
+
+            if(it != widgetsAreModal.end())
+            {
+                widgetsAreModal.erase(it);
+            }
+        }
+        
         //for the map
         map<string, ofxUIWidget*>::iterator it;        
         it=widgets_map.find(widget->getName());

@@ -143,7 +143,7 @@ public:
         else
         {
             ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), rect->getHeight(), false, toggleName, size);                 
-        }        
+        }
         ltoggle->getRect()->setParent(this->getRect());
         ltoggle->getRect()->y = rect->y+yt; 			        
         ltoggle->getRect()->x = rect->x; 			        
@@ -151,7 +151,8 @@ public:
         ltoggle->setLabelVisible(*value);             
         toggles.push_back(ltoggle);        
         parent->addWidget(ltoggle);
-        ltoggle->setParent(this);        
+        ltoggle->setParent(this);
+        ltoggle->setModal(modal);        
         if(isOpen())
         {
             open(); 

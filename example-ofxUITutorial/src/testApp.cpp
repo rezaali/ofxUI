@@ -3,12 +3,15 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-    gui = new ofxUICanvas(0,0,320,320);
-    gui->addWidgetDown(new ofxUILabel("OFXUI TUTORIAL", OFX_UI_FONT_LARGE)); 
-    gui->addSlider("BACKGROUND VALUE",0.0,255.0,100.0,304,16);
-    gui->addWidgetDown(new ofxUIToggle(32, 32, false, "FULLSCREEN"));
+    gui = new ofxUICanvas();
+    
+    gui->addLabel("OFXUI TUTORIAL", OFX_UI_FONT_LARGE);
+    gui->addSpacer(); 
+    gui->addSlider("BACKGROUND VALUE",0.0,255.0,100.0); 
+    gui->addToggle("FULLSCREEN", false);
+    gui->autoSizeToFitWidgets(); 
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent); 
-    gui->loadSettings("GUI/guiSettings.xml"); 
+    gui->loadSettings("GUI/guiSettings.xml");
     
 }
 

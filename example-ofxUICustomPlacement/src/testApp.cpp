@@ -30,7 +30,7 @@ void testApp::setup()
     gui->addWidgetLeft(new ofxUIToggle(dim, dim, true, "NEW")); 
     
     gui->addWidgetSouthOf(new ofxUISlider("RED", 0.0, 255.0, red, 320,dim), "PAD");     
-
+    gui->autoSizeToFitWidgets(); 
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(red, green, blue); 
 }

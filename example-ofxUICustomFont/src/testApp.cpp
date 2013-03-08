@@ -22,7 +22,7 @@ void testApp::setup()
     gui->setFontSize(OFX_UI_FONT_MEDIUM, 14);           
     gui->setFontSize(OFX_UI_FONT_SMALL, 10);            //SUPER IMPORTANT NOTE: CALL THESE FUNTIONS BEFORE ADDING ANY WIDGETS, THIS AFFECTS THE SPACING OF THE GUI
     
-    gui->addWidgetDown(new ofxUILabel("CUSTOM FONT EXAMPLE", OFX_UI_FONT_LARGE)); 
+    gui->addWidgetDown(new ofxUILabel("CUSTOM FONT", OFX_UI_FONT_LARGE)); 
 
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("BACKGROUND CONTROL", OFX_UI_FONT_MEDIUM));     
@@ -37,7 +37,8 @@ void testApp::setup()
     gui->addSpacer(length-xInit, 2);
     gui->addWidgetDown(new ofxUILabel("HIDE & SHOW GUI", OFX_UI_FONT_MEDIUM));     
     gui->addWidgetDown(new ofxUILabel("BY PRESSING 'g'", OFX_UI_FONT_MEDIUM));     
-        
+
+    gui->autoSizeToFitWidgets(); 
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
 	ofBackground(backgroundColor); 
 }

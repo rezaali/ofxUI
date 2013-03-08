@@ -66,9 +66,9 @@ void testApp::setup()
     vector<string> items2; items2.push_back("FIFTH ITEM"); items2.push_back("SIXTH ITEM"); items2.push_back("SEVENTH ITEM"); items2.push_back("EIGTHTH ITEM");
     
     
-    gui->addDropDownList("DROP DOWN", items);
+    gui->addDropDownList("DROP DOWN", items, length/2.0 - xInit);
     gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
-    gui->addDropDownList("ALLOW MULTIPLE", items2);
+    gui->addDropDownList("ALLOW MULTIPLE", items2, length/2.0 - xInit);
     gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
 
     ofxUIDropDownList* ddl = (ofxUIDropDownList *) gui->getWidget("ALLOW MULTIPLE");

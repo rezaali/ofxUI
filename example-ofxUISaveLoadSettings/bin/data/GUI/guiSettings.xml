@@ -1,62 +1,62 @@
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>225.126</Value>
+    <Value>225.126007080</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>GREEN</Name>
-    <Value>8.53556</Value>
+    <Value>8.535559654</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BLUE</Name>
-    <Value>52.2803</Value>
+    <Value>52.280300140</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>0</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>1</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>2</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>3</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>4</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>5</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>6</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>7</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>5</Kind>
     <Name>8</Name>
-    <Value>150</Value>
+    <Value>150.000000000</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -96,12 +96,12 @@
 <Widget>
     <Kind>6</Kind>
     <Name>RSLIDER</Name>
-    <HighValue>210.188</HighValue>
-    <LowValue>50</LowValue>
+    <HighValue>210.188003540</HighValue>
+    <LowValue>50.000000000</LowValue>
 </Widget>
 <Widget>
     <Kind>11</Kind>
     <Name>PAD</Name>
-    <XValue>5</XValue>
-    <YValue>90</YValue>
+    <XValue>88.000000000</XValue>
+    <YValue>18.000000000</YValue>
 </Widget>

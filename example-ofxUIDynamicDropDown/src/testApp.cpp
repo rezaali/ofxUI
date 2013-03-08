@@ -19,7 +19,7 @@ void testApp::setup()
 //    ddl->setAutoClose(true);
     gui->addWidgetDown(ddl);
     gui->setTheme(OFX_UI_THEME_BARBIE);
-    
+    gui->autoSizeToFitWidgets(); 
 //    gui->setDrawWidgetPadding(true);
     ofAddListener(gui->newGUIEvent, this, &testApp::guiEvent);
 }

@@ -1,38 +1,38 @@
 <Widget>
     <Kind>4</Kind>
     <Name>FPS</Name>
-    <Value>59.727512360</Value>
+    <Value>60.075820923</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>RADIUS</Name>
-    <Value>114.310348511</Value>
+    <Value>236.157638550</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>65.320198059</Value>
+    <Value>255.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>GREEN</Name>
-    <Value>81.650245667</Value>
+    <Value>255.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BLUE</Name>
-    <Value>124.359603882</Value>
+    <Value>255.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>ALPHA</Name>
-    <Value>208.522171021</Value>
+    <Value>255.000000000</Value>
 </Widget>
 <Widget>
     <Kind>11</Kind>
     <Name>CENTER</Name>
-    <XValue>382.108398438</XValue>
-    <YValue>327.881774902</YValue>
+    <XValue>499.389160156</XValue>
+    <YValue>428.768463135</YValue>
 </Widget>
 <Widget>
     <Kind>17</Kind>
