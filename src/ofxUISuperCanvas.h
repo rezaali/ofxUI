@@ -59,6 +59,8 @@ public:
     {
         kind = OFX_UI_WIDGET_SUPERCANVAS;
         canvasTitle = new ofxUILabel(rect->getWidth()-widgetSpacing*2, _label, _size);
+        canvasTitle->setEmbedded(true); 
+        headerWidgets.push_back(canvasTitle);
         addWidgetPosition(canvasTitle, widgetPosition, widgetAlign);
         deltaTime = .35;
         lastHitTime = ofGetElapsedTimef(); 
@@ -86,7 +88,7 @@ public:
         }
     }
     
-    void isMinified()
+    bool isMinified()
     {
         return bIsMinified; 
     }
@@ -120,7 +122,7 @@ public:
     
     virtual void onTouchMoved(ofTouchEventArgs &data)
     {
-        if(touchId = data.id)
+        if(touchId == data.id)
         {
             if(bTitleLabelHit)
             {
@@ -256,15 +258,33 @@ public:
     }
     
 #endif
+
+    //These header widgets are meant to stay visible when minified...
+    void addWidgetToHeader(ofxUIWidget *widget)
+    {
+        widget->setEmbedded(true); 
+        headerWidgets.push_back(widget); 
+    }
     
 protected:
     void minify()
     {
         for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            (*it)->setVisible(false);
+            ofxUIWidget *w = (*it);
+            if(w != NULL)
+            {
+                w->setVisible(false);
+            }
 		}
-        canvasTitle->setVisible(true);
+        for(vector<ofxUIWidget *>::iterator it = headerWidgets.begin(); it != headerWidgets.end(); ++it)
+        {
+            ofxUIWidget *w = (*it);
+            if(w != NULL)
+            {
+                w->setVisible(true);
+            }
+		}        
         autoSizeToFitWidgets();
     }
     
@@ -272,12 +292,18 @@ protected:
     {
         for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
         {
-            (*it)->setVisible(true);
+            ofxUIWidget *w = (*it);
+            if(w != NULL)
+            {
+                w->setVisible(true);
+            }
 		}
         autoSizeToFitWidgets();
     }
     
     ofxUILabel *canvasTitle;
+    vector<ofxUIWidget *> headerWidgets;
+    
     ofPoint hitPoint; 
     float deltaTime;
     float lastHitTime;

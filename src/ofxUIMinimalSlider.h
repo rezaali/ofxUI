@@ -134,7 +134,7 @@ public:
 		value = ofMap(value, min, max, 0.0, 1.0, true); 
         
         label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size); 	
-        label->setDrawBack(true);        
+        label->setDrawBack(false);
 		label->setParent(label); 
 		label->setRectParent(rect); 	
         label->setEmbedded(true);        

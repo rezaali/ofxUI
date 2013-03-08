@@ -47,6 +47,13 @@ public:
         return true; 
     }
     
+    void setVisible(bool _visible)
+    {
+        visible = _visible;
+        ofxUIWidget *labelWidget = (ofxUIWidget *) label;
+        labelWidget->setVisible(visible);        
+    }
+    
     virtual ofxUILabel* getLabelWidget()
     {
         return label;

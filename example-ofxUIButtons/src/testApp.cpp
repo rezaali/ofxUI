@@ -4,60 +4,60 @@
 void testApp::setup()
 {
 	ofSetVerticalSync(true); 
-	ofEnableSmoothing(); 
-    
-    red = 233; blue = 27; green = 52; 
+	ofEnableSmoothing();
 	
-	float dim = 32; 
-	float xInit = OFX_UI_GLOBAL_WIDGET_SPACING; 
-    float length = 320-xInit; 
-	
-    drawPadding = false; 
+    drawPadding = false;
+    gui = new ofxUICanvas();
+	gui->addLabel("BUTTONS/TOGGLES", OFX_UI_FONT_LARGE);
+    gui->addSpacer();
+	gui->addLabel("BUTTONS", OFX_UI_FONT_MEDIUM);
+    gui->addButton("B1", false, 44, 44);
+    gui->addButton("B2", false);
+    gui->addSpacer();
+	gui->addLabel("TOGGLES", OFX_UI_FONT_MEDIUM); 	
+    gui->addToggle("T1", false, 44, 44);
+    gui->addToggle("T2", false);
+    gui->addSpacer();
     
-    gui = new ofxUICanvas(0,0,length+xInit,ofGetHeight());     
-    
-	gui->addWidgetDown(new ofxUILabel("BUTTON & TOGGLE WIDGETS", OFX_UI_FONT_LARGE)); 
-    
-    gui->addSpacer(length-xInit, 2);
-	gui->addWidgetDown(new ofxUILabel("BUTTONS", OFX_UI_FONT_MEDIUM)); 	
-    gui->addWidgetDown(new ofxUIButton(dim*2, dim*2, false, "B1"));     
-    gui->addWidgetRight(new ofxUIButton(dim*1, dim*1, false, "B2"));     
-    
-    gui->addWidgetSouthOf(new ofxUISpacer(length-xInit, 2), "B1"); 
-	gui->addWidgetDown(new ofxUILabel("TOGGLES", OFX_UI_FONT_MEDIUM)); 	
-    gui->addWidgetDown(new ofxUIToggle(dim*2, dim*2, false, "T1"));     
-    gui->addWidgetRight(new ofxUIToggle(dim*1, dim*1, false, "T2"));     
-
-    gui->addWidgetSouthOf(new ofxUISpacer(length-xInit, 2), "T1");     
     vector<string> hnames; hnames.push_back("OPEN"); hnames.push_back("FRAME"); hnames.push_back("WORKS");
-	gui->addWidgetDown(new ofxUIRadio(dim, dim, "HORIZONTAL RADIO", hnames, OFX_UI_ORIENTATION_HORIZONTAL));     
+	gui->addLabel("HORIZONTAL RADIO", OFX_UI_FONT_MEDIUM); 	
+	gui->addRadio("HR", hnames, OFX_UI_ORIENTATION_HORIZONTAL);
+    
+    gui->addSpacer();
+    
     vector<string> vnames; vnames.push_back("ROCKS"); vnames.push_back("MY"); vnames.push_back("SOCKS");
-    ofxUIRadio *radio = (ofxUIRadio *) gui->addWidgetDown(new ofxUIRadio(dim, dim, "VERTICAL RADIO", vnames, OFX_UI_ORIENTATION_VERTICAL)); 
-    radio->activateToggle("SOCKS"); 
+    gui->addLabel("VERTICAL RADIO", OFX_UI_FONT_MEDIUM);
+    ofxUIRadio *radio = gui->addRadio("VR", vnames, OFX_UI_ORIENTATION_VERTICAL);
+    radio->activateToggle("SOCKS");
     
-    gui->addSpacer(length-xInit, 2);
+    gui->addSpacer(); 
     
-    gui->addLabelButton("LABEL BUTTON", false); 
-    gui->addWidgetEastOf(new ofxUILabel("<- Automagically Sized", OFX_UI_FONT_SMALL),"LABEL BUTTON"); 
-    gui->addWidgetSouthOf(new ofxUILabelButton(length-xInit, false, "SPECIFIED WIDTH BUTTON", OFX_UI_FONT_MEDIUM), "LABEL BUTTON");
-    gui->addLabelToggle("LABEL TOGGLE", false);     
-    gui->addLabelToggle("SPECIFIED WIDTH TOGGLE", false, length-xInit);
+    gui->addLabelButton("LABEL BTN", false);
+    gui->addLabelButton("JUSTIFIED LEFT BTN", false, true);
     
-    gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUIToggleMatrix(dim, dim, 3, 3, "3X3 MATRIX")); 
-    gui->addWidgetRight(new ofxUIToggleMatrix(dim, dim, 3, 3, "DISABLE MULTIPLE"));     
+    gui->addLabelToggle("LABEL TGL", false);
+    gui->addLabelToggle("JUSTIFIED LEFT TGL", false, true);
+    
+    gui->addSpacer(); 
+    gui->addToggleMatrix("3X3 MATRIX", 3, 3); 
+    gui->addToggleMatrix("DISABLE MULTIPLE", 3, 3);
 
-    ofxUIToggleMatrix* mtx = (ofxUIToggleMatrix *)gui->getWidget("DISABLE MULTIPLE"); 
+    ofxUIToggleMatrix* mtx = (ofxUIToggleMatrix *) gui->getWidget("DISABLE MULTIPLE"); 
     mtx->setAllowMultiple(false); 
-    gui->addWidgetSouthOf(new ofxUIToggleMatrix(dim,dim,1,6,"CUSTOM SIZE"), "3X3 MATRIX");
+    gui->addToggleMatrix("CUSTOM SIZE", 1,6);
 
-    gui->addSpacer(length-xInit, 2);
-    gui->addWidgetDown(new ofxUILabel("IMAGE BUTTON & TOGGLE", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUIImageButton(dim*2, dim*2, false, "GUI/pause.png", "IMAGE BUTTON")); 
-    gui->addWidgetRight(new ofxUIImageToggle(dim*2, dim*2, false, "GUI/play.png", "IMAGE TOGGLE"));  
-    
+    gui->addSpacer(); 
+    gui->addLabel("IMAGE BUTTON/TOGGLE", OFX_UI_FONT_MEDIUM); 
+    gui->addImageButton("IMAGE BUTTON", "GUI/pause.png", false, 44, 44);
+    gui->addImageToggle("IMAGE TOGGLE", "GUI/play.png", false, 44, 44);
+    gui->autoSizeToFitWidgets();    
     ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);	
-	ofBackground(red, green, blue); 
+
+    red = 0; blue = 0; green = 0;
+	ofBackground(red, green, blue);
+
+    gui->setColorBack(ofColor(255,100));
+    gui->setWidgetColor(OFX_UI_WIDGET_COLOR_BACK, ofColor(255,100));
 }
 
 //--------------------------------------------------------------
@@ -68,7 +68,7 @@ void testApp::update()
 
 //--------------------------------------------------------------
 void testApp::draw()
-{    
+{
 	ofBackground(red, green, blue, 255); 
 	
 	ofPushStyle(); 

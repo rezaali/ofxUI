@@ -1129,7 +1129,7 @@ public:
         centerWidgetsOnCanvas(true, true);
     }
 
-    virtual virtual void addModalWidget(ofxUIWidget *widget)
+    virtual void addModalWidget(ofxUIWidget *widget)
     {
         widgetsAreModal[widget->getName()] = widget;
     }
@@ -1683,28 +1683,28 @@ public:
         return widget;
     }
     
-    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float _value, int size = OFX_UI_FONT_MEDIUM)
+    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float _value, int size = OFX_UI_FONT_SMALL)
     {
         ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0, size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
 
-    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0, int size = OFX_UI_FONT_MEDIUM)
+    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0, int size = OFX_UI_FONT_SMALL)
     {
         ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float *_value, int size = OFX_UI_FONT_MEDIUM)
+    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float *_value, int size = OFX_UI_FONT_SMALL)
     {
         ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0, size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0, int size = OFX_UI_FONT_MEDIUM)
+    ofxUIMinimalSlider* addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0, int size = OFX_UI_FONT_SMALL)
     {
         ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
@@ -1876,16 +1876,16 @@ public:
         return widget;
     }
     
-    ofxUITextInput* addTextInput(string _name, string _textstring)
+    ofxUITextInput* addTextInput(string _name, string _textstring, int _size = OFX_UI_FONT_MEDIUM)
     {
-        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2);
+        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2, _size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0)
+    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
     {
-        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, w, h, x, y);
+        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, w, h, x, y, _size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }

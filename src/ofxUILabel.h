@@ -199,11 +199,11 @@ public:
             {
                 label = label.substr(0, label.size()-1);
             }                        
-            float w = (int)font->stringWidth(label); 
+//            float w = (int)font->stringWidth(label); 
             float h = (int)font->stringHeight("1");     //otherwise we get some funky non-uniform spacing :(
             if(rect->getHeight() > 0)
             {
-                yOffset = (int)-h*.5;                
+                yOffset = 0; 
             }
             else
             {

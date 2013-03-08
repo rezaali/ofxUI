@@ -154,7 +154,7 @@ public:
 	{
 		*value = _value;
         draw_fill = *value;
-        label->setDrawBack((*value));
+//        label->setDrawBack((*value));
 	}
 }; 
 

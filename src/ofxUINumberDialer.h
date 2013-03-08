@@ -132,7 +132,7 @@ public:
         }
 		
         displayLabel = false; 
-        label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), temp, _size);
+        label = new ofxUILabel(padding,0,(name+" LABEL"), temp, _size);
 		label->setParent(label); 
 		label->setRectParent(rect);
         label->setEmbedded(true);
@@ -197,18 +197,6 @@ public:
             }        
         }
     }
-    
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-        label->setDrawPadding(false);
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-        label->setDrawPaddingOutline(false);
-	}
     
     void calculatePrecisionZone()
     {
@@ -481,8 +469,9 @@ public:
 	{
 		parent = _parent; 
         rect->height = label->getPaddingRect()->height+padding*2.0; 
-        rect->width = label->getPaddingRect()->width+padding*2.0; 
-		ofxUIRectangle *labelrect = label->getRect(); 
+        rect->width = label->getPaddingRect()->width+padding*3.0;
+		ofxUIRectangle *labelrect = label->getRect();
+        labelrect->setX(padding*2.0);
 		float h = labelrect->getHeight(); 
 		float ph = rect->getHeight(); 	
 		

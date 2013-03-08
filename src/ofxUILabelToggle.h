@@ -125,10 +125,10 @@ public:
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect); 
         
-        label = new ofxUILabel((name+" LABEL"), name, _size); 
+        label = new ofxUILabel((name+" LABEL"), name, _size);
 		label->setParent(label); 
 		label->setRectParent(rect); 
-        label->setEmbedded(true);    
+        label->setEmbedded(true);
         
         if(useReference)
         {
@@ -185,7 +185,7 @@ public:
                 it--; 
                 labelstring.erase (it); 
                 label->setLabel(labelstring);
-            }                        
+            }
         }
 
 		float h = labelrect->getHeight(); 
@@ -215,6 +215,13 @@ public:
         drawLabel = _visible;
         label->setVisible(drawLabel);
     }
+    
+    void setVisible(bool _visible)
+    {
+        visible = _visible;
+        label->setVisible((visible && drawLabel));
+    }
+
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     bool autoSize; 

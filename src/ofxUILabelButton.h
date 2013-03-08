@@ -206,7 +206,13 @@ public:
     {
         drawLabel = _visible;
         label->setVisible(drawLabel);
-    }    
+    }
+    
+    void setVisible(bool _visible)
+    {
+        visible = _visible;
+        label->setVisible((visible && drawLabel));
+    }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize;

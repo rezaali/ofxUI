@@ -32,19 +32,19 @@ class ofxUIFPS : public ofxUIWidgetWithLabel
 public:    
     ofxUIFPS(float x, float y, int _size) : ofxUIWidgetWithLabel()
     {
-        init(x, y, "FPS", "FPS: 120", _size);
+        init(x, y, "FPS", "FPS: 000", _size);
     }
     
     ofxUIFPS(int _size) : ofxUIWidgetWithLabel()
     {
-        init(0, 0, "FPS", "FPS: 120", _size);
+        init(0, 0, "FPS", "FPS: 000", _size);
     }
     
     void init(float x, float y, string _name, string _label, int _size)
     {
         rect = new ofxUIRectangle(x,y,0,0);
 		name = string(_name);
-		kind = OFX_UI_WIDGET_LABELBUTTON;
+		kind = OFX_UI_WIDGET_FPS; 
         paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
 		paddedRect->setParent(rect);
 
@@ -61,12 +61,7 @@ public:
 	void update()
 	{
 		label->setLabel(name + ": " + ofToString(ofGetFrameRate(), labelPrecision));
-        rect->setHeight(label->getRect()->getHeight());
-        rect->setWidth(label->getRect()->getWidth());
-		paddedRect->setHeight(rect->getHeight()+padding*2.0);
-        paddedRect->setWidth(rect->getWidth()+padding*2.0);        
-	}
-	    
+	}	    
     
     void setLabelPrecision(int _precision) {
         labelPrecision = _precision;
@@ -78,10 +73,7 @@ public:
         ofxUIRectangle *labelrect = label->getRect();
         
         rect->setHeight(label->getRect()->getHeight());
-        rect->setWidth(label->getRect()->getWidth()); 
-        
-		float h = labelrect->getHeight();
-		float ph = rect->getHeight();
+        rect->setWidth(label->getRect()->getWidth());         
         
 		labelrect->y = 0;
         labelrect->x = 0;
