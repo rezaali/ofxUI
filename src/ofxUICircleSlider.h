@@ -93,7 +93,7 @@ public:
 			value = min; 
 		}
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
                 
         label = new ofxUILabel(0,w+padding,(name+" LABEL"), name, _size); 	
         label->setDrawBack(false);
@@ -109,9 +109,9 @@ public:
     {
         if(draw_back)
         {
-            ofFill(); 
-            ofSetColor(color_back); 
-            ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
+            ofxUIFill(); 
+            ofxUISetColor(color_back); 
+            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
         }
     }
     
@@ -120,8 +120,8 @@ public:
         if(draw_outline)
         {
             ofNoFill();
-            ofSetColor(color_outline); 
-            ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
+            ofxUISetColor(color_outline); 
+            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
         } 
     }
     
@@ -129,9 +129,9 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 
-            ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
+            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
         }
     }
     
@@ -139,11 +139,11 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
-            ofSetColor(label->getColorFillHighlight());             
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
+            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
+            ofxUISetColor(label->getColorFillHighlight());             
+            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
         }        
     }
     
@@ -152,12 +152,12 @@ public:
         if(draw_outline_highlight)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight); 
-            ofCircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
+            ofxUISetColor(color_outline_highlight); 
+            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
             if(!draw_fill_highlight)
             {
-                ofSetColor(label->getColorFill()); 
-                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+                ofxUISetColor(label->getColorFill()); 
+                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
             }
         }
     }
@@ -186,7 +186,7 @@ public:
                     break;
             }
             
-            hitPoint = ofPoint(x,y);    
+            hitPoint = ofxUIVec2f(x,y);    
             updateValueRef();
 			triggerEvent(this);             
             state = OFX_UI_STATE_DOWN;         
@@ -203,7 +203,7 @@ public:
         if(rect->inside(x, y))
         {
             hit = true; 
-            hitPoint = ofPoint(x,y); 
+            hitPoint = ofxUIVec2f(x,y); 
             state = OFX_UI_STATE_DOWN;     
 			triggerEvent(this);            
         }    
@@ -245,7 +245,7 @@ public:
         }                        
     }
     
-    void setInputDirection(ofxWidgetInputDirection _inputDirection)
+    void setInputDirection(ofxUIWidgetInputDirection _inputDirection)
     {
         inputDirection = _inputDirection; 
     }
@@ -291,8 +291,8 @@ public:
     }
     
 protected:
-    ofxWidgetInputDirection inputDirection; 
-    ofPoint hitPoint;     
+    ofxUIWidgetInputDirection inputDirection;
+    ofxUIVec2f hitPoint;
 }; 
 
 #endif

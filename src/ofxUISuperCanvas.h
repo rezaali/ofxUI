@@ -30,7 +30,7 @@
 class ofxUISuperCanvas : public ofxUICanvas
 {
 public:    
-    ofxUISuperCanvas(string _label, ofRectangle r, int _size = OFX_UI_FONT_MEDIUM) : ofxUICanvas(r)
+    ofxUISuperCanvas(string _label, ofxUIRectangle r, int _size = OFX_UI_FONT_MEDIUM) : ofxUICanvas(r)
     {
         superInit(_label, _size);
     }
@@ -67,7 +67,7 @@ public:
         bIsMinified = false;        
         lastHitTime = 0;
         bTitleLabelHit = false;
-        hitPoint = ofPoint(0.0, 0.0);
+        hitPoint = ofxUIVec2f(0.0, 0.0);
     }
     
     void setDeltaTime(float _deltaTime)
@@ -304,7 +304,7 @@ protected:
     ofxUILabel *canvasTitle;
     vector<ofxUIWidget *> headerWidgets;
     
-    ofPoint hitPoint; 
+    ofxUIVec2f hitPoint;
     float deltaTime;
     float lastHitTime;
     bool bIsMinified;

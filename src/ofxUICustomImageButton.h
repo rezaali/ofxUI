@@ -200,10 +200,10 @@ public:
     {
         if(draw_back)
         {
-            ofSetColor(255);
+            ofxUISetColor(255);
             image->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
-            ofFill(); 
-            ofSetColor(color_back); 
+            ofxUIFill(); 
+            ofxUISetColor(color_back); 
             labelBackgroundRect->draw();
         }
     }
@@ -213,7 +213,7 @@ public:
 //        if(draw_outline)
 //        {
 //            ofNoFill();
-//            ofSetColor(color_outline); 
+//            ofxUISetColor(color_outline); 
 //            rect->draw(); 
 //        } 
     }
@@ -223,7 +223,7 @@ public:
 //        if(draw_outline_highlight)
 //        {
 //            ofNoFill();
-//            ofSetColor(color_outline_highlight); 
+//            ofxUISetColor(color_outline_highlight); 
 //            rect->draw();          
 //        }
     }    
@@ -232,8 +232,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
             labelBackgroundRect->draw(); 
         }
     }
@@ -242,8 +242,8 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
             labelBackgroundRect->draw(); 
         }    
     }

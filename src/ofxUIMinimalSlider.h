@@ -131,7 +131,7 @@ public:
 			value = min; 
 		}
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
         
         label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size); 	
         label->setDrawBack(false);
@@ -145,9 +145,9 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 
-            ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }
     }
     
@@ -155,11 +155,11 @@ public:
     {
         if(draw_fill_highlight && showValue)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
-            ofSetColor(label->getColorFillHighlight());             
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUISetColor(label->getColorFillHighlight());             
+            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
         }        
     }
     
@@ -168,12 +168,12 @@ public:
         if(draw_outline_highlight && showValue)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight); 
+            ofxUISetColor(color_outline_highlight); 
             rect->draw();                      
             if(!draw_fill_highlight)
             {
-                ofSetColor(label->getColorFill()); 
-                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofToString(getScaledValue(),labelPrecision)); 
+                ofxUISetColor(label->getColorFill()); 
+                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
             }
         }
     }

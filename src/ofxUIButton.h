@@ -120,8 +120,8 @@ public:
     {
         if(*value)
         {
-            ofFill();
-            ofSetColor(color_fill);
+            ofxUIFill();
+            ofxUISetColor(color_fill);
             rect->draw();
         }
     }
@@ -310,7 +310,7 @@ public:
         }
     }
     
-    void setLabelPosition(ofxWidgetPosition pos)
+    void setLabelPosition(ofxUIWidgetPosition pos)
     {
         switch (pos)
         {

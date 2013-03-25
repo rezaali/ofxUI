@@ -73,14 +73,14 @@ public:
     {
         if(draw_fill)
         {			
-			ofFill(); 
+			ofxUIFill(); 
 			if(draw_fill_highlight)
 			{
-				ofSetColor(color_fill_highlight); 
+				ofxUISetColor(color_fill_highlight); 
 			}        
 			else 
 			{
-				ofSetColor(color_fill); 		 	
+				ofxUISetColor(color_fill); 		 	
 			}
             if(buffer != NULL)
             {
@@ -90,7 +90,7 @@ public:
                 ofVertex(0, 0); 
                 for (int i = 0; i < bufferSize; i++)
                 {				
-                    ofVertex(inc*(float)i, ofMap(buffer[i], min, max, 0, -scale, true)); 
+                    ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, 0, -scale, true)); 
                 }
                 ofVertex((bufferSize-1)*inc, 0);
                 ofEndShape(true);

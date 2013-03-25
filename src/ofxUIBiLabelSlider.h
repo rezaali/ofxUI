@@ -129,7 +129,7 @@ public:
 			value = min; 
 		}
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
         
         label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size); 	
         label->setDrawBack(false);
@@ -163,18 +163,18 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 
-            ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUIFill();
+            ofxUISetColor(color_fill);
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }
     }
     virtual void drawFillHighlight()
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-            ofRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUIFill();
+            ofxUISetColor(color_fill_highlight); 
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
         }        
     }
     
@@ -206,7 +206,6 @@ public:
 		ofxUIRectangle *labelrect = label->getRect(); 
         ofxUIRectangle *rightlabelrect = rlabel->getRect(); 
         
-        
         if(autoSize || rect->height < label->getPaddingRect()->height)
         {
             rect->height = label->getPaddingRect()->height;                 
@@ -220,7 +219,6 @@ public:
         rightlabelrect->y = labelrect->y;
         rightlabelrect->x = rect->getWidth()-rightlabelrect->getWidth()-padding*2.0; 
         labelrect->x = padding;
-
 
 		paddedRect->height = rect->getHeight()+padding*2.0;  
         paddedRect->width = rect->width+padding*2.0;  

@@ -25,9 +25,7 @@
 #ifndef OFXUI_RECTANGLE
 #define OFXUI_RECTANGLE
 
-#include "ofMain.h"
-
-class ofxUIRectangle : public ofRectangle
+class ofxUIRectangle 
 {
 
 public:
@@ -48,7 +46,7 @@ public:
         setParent(NULL); 
     }
     
-    ofxUIRectangle(ofRectangle const & r)
+    ofxUIRectangle(ofxUIRectangle const & r)
     {
         x = r.x;
         y = r.y;
@@ -58,7 +56,27 @@ public:
         halfheight = height*.5;
         setParent(NULL); 
     }
+       
+    void set(float px, float py, float w, float h)
+    {
+        x		= px;
+        y		= py;
+        width	= w;
+        height	= h;
+        halfwidth = width*.5;
+        halfheight = height*.5;        
+    }
     
+    void setX(float px)
+    {
+        x = px;
+    }
+    
+    void setY(float py)
+    {
+        y = py;
+    }
+
     void setParent(ofxUIRectangle *_parent)
     {
         parent = _parent; 
@@ -76,6 +94,26 @@ public:
         halfwidth = width*.5; 
 	}
 	
+    float getMinX() const
+    {
+        return MIN(x, x + width);  // - width
+    }
+    
+    float getMaxX() const
+    {
+        return MAX(x, x + width);  // - width
+    }
+    
+    float getMinY() const
+    {
+        return MIN(y, y + height);  // - height
+    }
+    
+    float getMaxY() const
+    {
+        return MAX(y, y + height);  // - height
+    }    
+
     bool inside(ofPoint p)
     {
         if(parent !=NULL)
@@ -118,7 +156,7 @@ public:
         return false;    
     }
 	
-	ofVec2f percentInside(float px, float py)				//Assumes your already inside rect 
+	ofxUIVec2f percentInside(float px, float py)				//Assumes your already inside rect
 	{
 		if(parent != NULL)
 		{
@@ -126,29 +164,29 @@ public:
 		}
 		else
 		{
-			return percentInsideChild(px,py); 
+			return percentInsideChild(px,py);
 		}		
 	}
 	
-	ofVec2f percentInsideChild(float px, float py)
+	ofxUIVec2f percentInsideChild(float px, float py)
     {
-		return ofVec2f((px-x)/(width), (py-y)/(height)); 
+		return ofxUIVec2f((px-x)/(width), (py-y)/(height)); 
     }
     
-    ofVec2f percentInsideParent(float px, float py)
+    ofxUIVec2f percentInsideParent(float px, float py)
     {		
-		return ofVec2f((px-(x+parent->getX()))/(width), (py-(y+parent->getY()))/(height)); 
+		return ofxUIVec2f((px-(x+parent->getX()))/(width), (py-(y+parent->getY()))/(height)); 
 	}
     
     void draw()
     {
         if(parent != NULL)
         {
-            ofRect(parent->getX()+x, parent->getY()+y, width, height); 
+            ofxUIDrawRect(parent->getX()+x, parent->getY()+y, width, height); 
         }
         else
         {
-            ofRect(x,y,width,height); 
+            ofxUIDrawRect(x,y,width,height); 
         }
     }
 /*	
@@ -229,20 +267,25 @@ public:
         return MAX(getY(), getY() + getHeight());  // - height
     }
     
-    bool rIntersects(const ofRectangle& rect)
+    bool rIntersects(const ofxUIRectangle& rect)
     {
         return (getRelativeMinX() < rect.getMaxX() && getRelativeMaxX() > rect.getMinX() &&
                 getRelativeMinY() < rect.getMaxY() && getRelativeMaxY() > rect.getMinY());
     }
 
     //give an input rect, let me know if I am inside of it (completely, no overflow)
-    bool rInside(const ofRectangle& rect)
+    bool rInside(const ofxUIRectangle& rect)
     {
         return (getRelativeMinX() > rect.getMinX() && getRelativeMaxX() < rect.getMaxX() &&
                 getRelativeMinY() > rect.getMinY() && getRelativeMaxY() < rect.getMaxY());
     }
 
-protected: 
+    float x;
+    float y;
+    float width;
+    float height;
+
+protected:
     float halfwidth;
     float halfheight;
     ofxUIRectangle *parent; 

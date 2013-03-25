@@ -96,8 +96,8 @@ public:
         currentPrecisionZone = 1;
         
         
-        string minString = ofToString(min, precision); 
-        string maxString = ofToString(max, precision);         
+        string minString = ofxUIToString(min, precision); 
+        string maxString = ofxUIToString(max, precision);         
         if(minString.length() > maxString.length())
         {
             textstring = minString; 
@@ -153,8 +153,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill();
-            ofSetColor(color_fill);
+            ofxUIFill();
+            ofxUISetColor(color_fill);
             float x = label->getRect()->getX();
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");
@@ -177,12 +177,12 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill();
-            ofSetColor(color_fill_highlight);
+            ofxUIFill();
+            ofxUISetColor(color_fill_highlight);
             float x = label->getRect()->getX();
             float y = label->getRect()->getY()+label->getRect()->getHeight();
             float w = label->getStringWidth("_");            
-            ofRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
+            ofxUIDrawRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
             
             if(displayLabel)
             {
@@ -200,7 +200,7 @@ public:
     
     void calculatePrecisionZone()
     {
-        currentPrecisionZone = ceil(ofMap(hitPoint.x,rect->getX(),rect->getX()+rect->getWidth(),-1, displaystring.size()-1));
+        currentPrecisionZone = ceil(ofxUIMap(hitPoint.x,rect->getX(),rect->getX()+rect->getWidth(),-1, displaystring.size()-1, true));
         if(currentPrecisionZone == 0)
         {
             zoneMultiplier = powf(10.0, numOfPrecisionZones-precision-hasPeriod);
@@ -215,6 +215,15 @@ public:
         }
     }
 	
+    float getMax()
+    {
+        return max;
+    }
+    float getMin()
+    {
+        return min;
+    }
+    
     float getValue()
     {
         return *value; 

@@ -60,7 +60,7 @@ public:
     
 	void update()
 	{
-		label->setLabel(name + ": " + ofToString(ofGetFrameRate(), labelPrecision));
+		label->setLabel(name + ": " + ofxUIToString(ofxUIGetFrameRate(), labelPrecision));
 	}	    
     
     void setLabelPrecision(int _precision) {

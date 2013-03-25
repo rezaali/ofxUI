@@ -102,9 +102,9 @@ public:
         outerRadius = rect->getWidth()*.5; 
         innerRadius = rect->getWidth()*.25;         
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
         
-        label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue(),2)), _size); 		
+        label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue(),2)), _size); 		
 		label->setParent(label); 
 		label->setRectParent(rect); 		
         label->setEmbedded(true);        
@@ -115,7 +115,7 @@ public:
     {
         if(useReference)
         {
-            value = ofMap(*valueRef, min, max, 0.0, 1.0, true); 
+            value = ofxUIMap(*valueRef, min, max, 0.0, 1.0, true); 
         }
     }    
     
@@ -135,8 +135,8 @@ public:
     {
         if(draw_back)
         {
-            ofFill(); 
-            ofSetColor(color_back); 
+            ofxUIFill(); 
+            ofxUISetColor(color_back); 
             drawArcStrip(1.0); 
         }
     }
@@ -145,8 +145,8 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
             drawArcStrip(value); 
         }
     }
@@ -155,8 +155,8 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
             drawArcStrip(value); 
         }        
     }   
@@ -166,7 +166,7 @@ public:
         if(draw_outline)
         {
             ofNoFill();
-            ofSetColor(color_outline); 
+            ofxUISetColor(color_outline); 
             ofSetLineWidth(2.0);
             drawArcStrip(1.0); 
             ofSetLineWidth(1.0);            
@@ -177,7 +177,7 @@ public:
         if(draw_outline_highlight)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight); 
+            ofxUISetColor(color_outline_highlight); 
             ofSetLineWidth(2.0);
             drawArcStrip(1.0); 
             ofSetLineWidth(1.0);            
@@ -282,7 +282,7 @@ public:
     
     void drawArcStrip(float percent)
     {
-        float theta = ofMap(percent, 0, 1, 0, 360.0, true); 
+        float theta = ofxUIMap(percent, 0, 1, 0, 360.0, true); 
         
         ofPushMatrix(); 
         ofTranslate(rect->getX(),rect->getY()); 
@@ -335,12 +335,12 @@ public:
     
 	void input(float x, float y)
 	{
-        hitPoint = ofPoint(x,y);         
+        hitPoint = ofxUIVec2f(x,y);         
         ofVec2f mappedHitPoint = hitPoint; 
         mappedHitPoint -= ofVec2f(rect->getX()+center.x, rect->getY()+center.y);         
         
         ofVec2f cVector = center-homePoint;                 
-        value = ofMap(cVector.angle(mappedHitPoint), -180, 180, 0, 1.0, true); 
+        value = ofxUIMap(cVector.angle(mappedHitPoint), -180, 180, 0, 1.0, true); 
         
         if(value > 1.0)
         {
@@ -362,7 +362,7 @@ public:
     
 	void updateLabel()
 	{
-        label->setLabel(name + ": " + ofToString(getScaledValue(),2)); 		
+        label->setLabel(name + ": " + ofxUIToString(getScaledValue(),2)); 		
 	}
 	
     void stateChange()
@@ -420,7 +420,7 @@ public:
     
 	void setValue(float _value)
 	{
-		value = ofMap(_value, min, max, 0.0, 1.0, true);		
+		value = ofxUIMap(_value, min, max, 0.0, 1.0, true);		
         updateValueRef();
 		updateLabel(); 		
 	}
@@ -432,7 +432,7 @@ public:
 	
 	float getScaledValue()
 	{
-		return ofMap(value, 0.0, 1.0, min, max, true); 
+		return ofxUIMap(value, 0.0, 1.0, min, max, true); 
 	}
     
 	ofxUILabel *getLabel()
@@ -448,8 +448,8 @@ public:
         {
             paddedRect->width = label->getPaddingRect()->width;         
         }
-        center = ofPoint(rect->getWidth()*.5, rect->getHeight()*.5);   
-        homePoint = ofPoint(rect->getWidth()*.5, rect->getHeight());   
+        center = ofxUIVec2f(rect->getWidth()*.5, rect->getHeight()*.5);   
+        homePoint = ofxUIVec2f(rect->getWidth()*.5, rect->getHeight());   
 	}	
     
     bool isDraggable()
@@ -487,8 +487,8 @@ public:
         max = _max;
         min = _min;
 		
-		value = ofMap(value, 0, 1.0, min, max, true);
-		value = ofMap(value, min, max, 0.0, 1.0, true);
+		value = ofxUIMap(value, 0, 1.0, min, max, true);
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true);
         updateValueRef();
         updateLabel();
     }
@@ -512,9 +512,9 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     float *valueRef; 
     bool useReference;         
 	float max, min; 
-    ofPoint center; 
-    ofPoint hitPoint; 
-    ofPoint homePoint; 
+    ofxUIVec2f center; 
+    ofxUIVec2f hitPoint; 
+    ofxUIVec2f homePoint; 
     float outerRadius, innerRadius; 
     
 }; 

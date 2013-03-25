@@ -124,8 +124,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill();
+            ofxUISetColor(color_fill);
 			font->drawString(label, floor(rect->getX())+xOffset, floor(rect->getY()+rect->getHeight())+yOffset); 
         }
 	}
@@ -134,16 +134,16 @@ public:
     {
 		if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
 			font->drawString(label, floor(rect->getX())+xOffset, floor(rect->getY()+rect->getHeight())+yOffset); 
         }        
 	}	
             
     void drawBackLabel()
     {      
-        ofFill(); 
-        ofSetColor(color_back);     
+        ofxUIFill(); 
+        ofxUISetColor(color_back);     
         font->drawString(label, floor(rect->getX())+1+xOffset, floor(rect->getY()+rect->getHeight())+1+yOffset);
     }
     
@@ -154,8 +154,8 @@ public:
     
     void drawStringShadow(float x, float y, string _string)
 	{
-        ofFill();
-        ofSetColor(color_back);     
+        ofxUIFill();
+        ofxUISetColor(color_back);     
         font->drawString(_string, floor(x)+1, floor(y)+1);
 	}
     
@@ -181,7 +181,7 @@ public:
     
     void setLabel(string _label)
 	{
-		label = _label;
+		label = string(_label);
         if(autoSize)
         {
             float w = font->stringWidth(label); 
@@ -195,7 +195,7 @@ public:
         }
         else
         {                    
-            while(getStringWidth(label) > rect->width-padding*4.0)
+            while(getStringWidth(label) > rect->width-padding*4.0 && label.size())
             {
                 label = label.substr(0, label.size()-1);
             }                        
@@ -232,7 +232,7 @@ public:
         return label; 
     }
 	
-	void setFont(ofTrueTypeFont *_font)
+	void setFont(ofxUIFont *_font)
 	{
 		font = _font; 
 		setLabel(label); 

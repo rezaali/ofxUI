@@ -276,8 +276,8 @@ public:
     {
         if(draw_back)
         {
-            ofFill();
-            ofSetColor(color_back);
+            ofxUIFill();
+            ofxUISetColor(color_back);
             sRect->draw();            
         }
     }
@@ -287,7 +287,7 @@ public:
         if(draw_outline)
         {
             ofNoFill();
-            ofSetColor(color_outline);
+            ofxUISetColor(color_outline);
             sRect->draw();
         }
     }
@@ -297,7 +297,7 @@ public:
         if(draw_outline_highlight)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight);
+            ofxUISetColor(color_outline_highlight);
             sRect->draw();
         }
     }
@@ -306,8 +306,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill();
-            ofSetColor(color_fill);
+            ofxUIFill();
+            ofxUISetColor(color_fill);
             sRect->draw();
         }
     }
@@ -316,8 +316,8 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill();
-            ofSetColor(color_fill_highlight);
+            ofxUIFill();
+            ofxUISetColor(color_fill_highlight);
             sRect->draw();
         }
     }
@@ -326,8 +326,8 @@ public:
     {
 		if(draw_padded_rect && !embedded)
 		{
-            ofFill();
-            ofSetColor(color_padded_rect);
+            ofxUIFill();
+            ofxUISetColor(color_padded_rect);
 			paddedRect->draw();
 		}
     }
@@ -337,19 +337,19 @@ public:
         if(draw_padded_rect_outline && !embedded)
 		{
             ofNoFill();
-            ofSetColor(color_padded_rect_outline);
+            ofxUISetColor(color_padded_rect_outline);
 			paddedRect->draw();
 		}
     }
     
     virtual void draw()
     {
-        ofPushStyle();
+        ofxUIPushStyle();
         
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-        ofSetRectMode(OF_RECTMODE_CORNER);
+        ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
         ofSetLineWidth(1.0);
         
         drawPadded();
@@ -374,7 +374,7 @@ public:
             }
 		}
         
-        ofPopStyle();
+        ofxUIPopStyle();
     }
     
     virtual void setPosition(int x, int y)

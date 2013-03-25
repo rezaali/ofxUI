@@ -25,7 +25,9 @@
 #ifndef OFXUI
 #define OFXUI
 
-#include "ofMain.h"
+#ifdef OF_VERSION_MINOR
+    #include "ofxUIOFWrapper.h"
+#endif
 
 #ifndef OFX_UI_NO_XML
 	#include "ofxXmlSettings.h"                                             //Using ofxXmlSettings to save and load state
@@ -44,13 +46,13 @@
 #define OFX_UI_GLOBAL_BUTTON_DIMENSION 16
 #define OFX_UI_GLOBAL_SPACING_HEIGHT 1
 
-#define OFX_UI_COLOR_BACK ofColor(0, 25)                                    //the rect's back color
-#define OFX_UI_COLOR_OUTLINE ofColor(255, 255, 255, 100)                    //the rect's outline color
-#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofColor(255, 255, 255, 200)          //the rect's onMouseOver outline highlight color
-#define OFX_UI_COLOR_FILL ofColor(255, 255, 255, 200)                       //the rect's fill color
-#define OFX_UI_COLOR_FILL_HIGHLIGHT ofColor(255, 255, 255, 255)             //the rect's onMouseDown highlight color
-#define OFX_UI_COLOR_PADDED ofColor(0, 100)                                 //the rect's padded color
-#define OFX_UI_COLOR_PADDED_OUTLINE ofColor(255, 200)                       //the rect's padded outline color
+#define OFX_UI_COLOR_BACK ofxUIColor(0, 25)                                    //the rect's back color
+#define OFX_UI_COLOR_OUTLINE ofxUIColor(255, 255, 255, 100)                    //the rect's outline color
+#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofxUIColor(255, 255, 255, 200)          //the rect's onMouseOver outline highlight color
+#define OFX_UI_COLOR_FILL ofxUIColor(255, 255, 255, 200)                       //the rect's fill color
+#define OFX_UI_COLOR_FILL_HIGHLIGHT ofxUIColor(255, 255, 255, 255)             //the rect's onMouseDown highlight color
+#define OFX_UI_COLOR_PADDED ofxUIColor(0, 100)                                 //the rect's padded color
+#define OFX_UI_COLOR_PADDED_OUTLINE ofxUIColor(255, 200)                       //the rect's padded outline color
 
 #define OFX_UI_COLOR_BACK_ALPHA 25
 #define OFX_UI_COLOR_OUTLINE_ALPHA 100
@@ -64,12 +66,13 @@
 #define OFX_UI_DRAW_PADDING_OUTLINE false
 
 #define OFX_UI_TEXTINPUT_ON_ENTER 0 
-#define OFX_UI_TEXTINPUT_ON_FOCUS 1
+#define OFX_UI_TEXTINPUT_ON_FOCUS 1 
 #define OFX_UI_TEXTINPUT_ON_UNFOCUS 2
+#define OFX_UI_TEXTINPUT_ON_LOAD 3
 
 #define OFX_UI_NUM_OF_THEMES 45
 
-enum ofxWidgetType
+enum ofxUIWidgetType
 {
 	OFX_UI_WIDGET_LABEL = 0,
 	OFX_UI_WIDGET_CANVAS = 1,
@@ -116,13 +119,13 @@ enum ofxWidgetType
     OFX_UI_WIDGET_SUPERCANVAS = 42
 };
 
-enum ofxWidgetOrientation
+enum ofxUIWidgetOrientation
 {
 	OFX_UI_ORIENTATION_VERTICAL = 0, 
 	OFX_UI_ORIENTATION_HORIZONTAL = 1
 };
 
-enum ofxWidgetInputDirection
+enum ofxUIWidgetInputDirection
 {
 	OFX_UI_DIRECTION_NORTHSOUTH = 0,
 	OFX_UI_DIRECTION_SOUTHNORTH = 1,    
@@ -130,7 +133,7 @@ enum ofxWidgetInputDirection
 	OFX_UI_DIRECTION_WESTEAST = 3
 };
 
-enum ofxWidgetAlignment
+enum ofxUIWidgetAlignment
 {
 	OFX_UI_ALIGN_LEFT = 0,
 	OFX_UI_ALIGN_FREE = 1,
@@ -140,7 +143,7 @@ enum ofxWidgetAlignment
     OFX_UI_ALIGN_CENTER = 5
 };
 
-enum ofxWidgetPosition
+enum ofxUIWidgetPosition
 {
 	OFX_UI_WIDGET_POSITION_DOWN = 0,
 	OFX_UI_WIDGET_POSITION_UP = 1,
@@ -148,14 +151,14 @@ enum ofxWidgetPosition
 	OFX_UI_WIDGET_POSITION_RIGHT = 3
 };
 
-enum ofxWidgetFontType 
+enum ofxUIWidgetFontType
 {
 	OFX_UI_FONT_LARGE = 0, 
 	OFX_UI_FONT_MEDIUM = 1, 
 	OFX_UI_FONT_SMALL = 2 	
 };
 
-enum ofxWidgetColorType
+enum ofxUIWidgetColorType
 {
 	OFX_UI_WIDGET_COLOR_BACK = 0, 
 	OFX_UI_WIDGET_COLOR_OUTLINE = 1,
@@ -225,6 +228,7 @@ enum ofxUIThemeType
 
 #define OFX_UI_LABEL_DRAW_BACK false
 
+#include "ofxUIUtils.h"
 #include "ofxUIRectangle.h"
 #include "ofxUIWidget.h"
 #include "ofxUIWidgetWithLabel.h"

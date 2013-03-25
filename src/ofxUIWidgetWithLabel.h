@@ -61,13 +61,13 @@ public:
     
     virtual void toggleColors()
     {
-        ofColor fill = getColorFill();
+        ofxUIColor fill = getColorFill();
         float af = fill.a;
-        ofColor back = getColorBack();
+        ofxUIColor back = getColorBack();
         float ab = back.a;
         
-        setColorFill(ofColor(back, af));
-        setColorBack(ofColor(fill, ab));
+        setColorFill(ofxUIColor(back, af));
+        setColorBack(ofxUIColor(fill, ab));
     }
     
     virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
@@ -88,7 +88,7 @@ public:
         }
     }
     
-protected:    
+protected:
     ofxUILabel *label;
 };
 

@@ -30,6 +30,7 @@ class ofxUIWidget
 public:
     ofxUIWidget() 
     {
+        parent = NULL; 
         name = string("base");
         ID = -1;
         hit = false; 
@@ -76,9 +77,10 @@ public:
     virtual void update() {}
     virtual void draw() 
     {
-        ofPushStyle(); 
+        ofxUIPushStyle();
         
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);        
         
         drawPadded();
         drawPaddedOutline();        
@@ -91,15 +93,15 @@ public:
         drawFill();
         drawFillHighlight();
         
-        ofPopStyle();
+        ofxUIPopStyle();
     }
     
     virtual void drawBack() 
     {
         if(draw_back)
         {
-            ofFill(); 
-            ofSetColor(color_back); 
+            ofxUIFill();
+            ofxUISetColor(color_back);
             rect->draw(); 
         }
     }
@@ -108,8 +110,8 @@ public:
     {
         if(draw_outline)
         {
-            ofNoFill();
-            ofSetColor(color_outline); 
+            ofxUINoFill();
+            ofxUISetColor(color_outline); 
             rect->draw(); 
         } 
     }
@@ -118,8 +120,8 @@ public:
     {
         if(draw_outline_highlight)
         {
-            ofNoFill();
-            ofSetColor(color_outline_highlight); 
+            ofxUINoFill();
+            ofxUISetColor(color_outline_highlight); 
             rect->draw();          
         }
     }    
@@ -128,8 +130,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
             rect->draw(); 
         }
     }
@@ -138,8 +140,8 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
             rect->draw(); 
         }    
     }
@@ -148,8 +150,8 @@ public:
     {
 		if(draw_padded_rect && !embedded)
 		{
-            ofFill();
-            ofSetColor(color_padded_rect); 
+            ofxUIFill();
+            ofxUISetColor(color_padded_rect); 
 			paddedRect->draw(); 
 		}                
     }
@@ -158,8 +160,8 @@ public:
     {
         if(draw_padded_rect_outline && !embedded)
 		{
-            ofNoFill();
-            ofSetColor(color_padded_rect_outline); 
+            ofxUINoFill();
+            ofxUISetColor(color_padded_rect_outline); 
 			paddedRect->draw(); 
 		}                
     }     
@@ -319,72 +321,72 @@ public:
 		return draw_outline_highlight;
 	}
     
-	virtual void setColorBack(ofColor _color_back)
+	virtual void setColorBack(ofxUIColor _color_back)
 	{
 		color_back = _color_back; 
 	}
 		
-	virtual void setColorOutline(ofColor _color_outline)
+	virtual void setColorOutline(ofxUIColor _color_outline)
 	{
 		color_outline = _color_outline; 
 	}
 	
-	virtual void setColorOutlineHighlight(ofColor _color_outline_highlight)
+	virtual void setColorOutlineHighlight(ofxUIColor _color_outline_highlight)
 	{
 		color_outline_highlight = _color_outline_highlight; 
 	}	
 
-	virtual void setColorFill(ofColor _color_fill)
+	virtual void setColorFill(ofxUIColor _color_fill)
 	{
 		color_fill = _color_fill; 
 	}
 	
-	virtual void setColorFillHighlight(ofColor _color_fill_highlight)
+	virtual void setColorFillHighlight(ofxUIColor _color_fill_highlight)
 	{
 		color_fill_highlight = _color_fill_highlight; 
 	}
 	
-    virtual void setColorPadded(ofColor _color_padded_rect)
+    virtual void setColorPadded(ofxUIColor _color_padded_rect)
     {
         color_padded_rect = _color_padded_rect; 
     }
     
-    virtual void setColorPaddedOutline(ofColor _color_padded_rect_outline)
+    virtual void setColorPaddedOutline(ofxUIColor _color_padded_rect_outline)
     {
         color_padded_rect_outline = _color_padded_rect_outline; 
     }
     
-	ofColor& getColorPadded()
+	ofxUIColor& getColorPadded()
 	{
         return color_padded_rect;
 	}
 
-	ofColor& getColorPaddedOutline()
+	ofxUIColor& getColorPaddedOutline()
 	{
         return color_padded_rect_outline;
 	}
     
-	ofColor& getColorBack()
+	ofxUIColor& getColorBack()
 	{
 		return color_back; 
 	}
 	
-	ofColor& getColorOutline()
+	ofxUIColor& getColorOutline()
 	{
 		return color_outline; 
 	}
 	
-	ofColor& getColorOutlineHighlight()
+	ofxUIColor& getColorOutlineHighlight()
 	{
 		return color_outline_highlight; 
 	}	
 	
-	ofColor& getColorFill()
+	ofxUIColor& getColorFill()
 	{
 		return color_fill; 
 	}
 	
-	ofColor& getColorFillHighlight()
+	ofxUIColor& getColorFillHighlight()
 	{
 		return color_fill_highlight; 
 	}
@@ -394,7 +396,7 @@ public:
 		return kind; 
 	}
     
-	virtual void setFont(ofTrueTypeFont *_font)
+	virtual void setFont(ofxUIFont *_font)
 	{
 		font = _font; 
 	}
@@ -569,7 +571,7 @@ public:
 protected:    
 	ofxUIWidget *parent; 
 	ofxUIRectangle *rect; 	
-	ofTrueTypeFont *font; 	
+	ofxUIFont *font;
 	
     string name;            //State Properties
 	int kind; 
@@ -586,19 +588,19 @@ protected:
 	bool draw_fill; 
 	bool draw_fill_highlight; 
 
-	ofColor color_back; 
-	ofColor color_outline; 
-	ofColor color_outline_highlight;	
-	ofColor color_fill; 
-	ofColor color_fill_highlight; 
+	ofxUIColor color_back;
+	ofxUIColor color_outline; 
+	ofxUIColor color_outline_highlight;	
+	ofxUIColor color_fill; 
+	ofxUIColor color_fill_highlight; 
 
 	float padding;          //Spacing/Padding Purposes
 	ofxUIRectangle *paddedRect; 	
 
 	bool draw_padded_rect; 
 	bool draw_padded_rect_outline;     
-    ofColor color_padded_rect; 
-	ofColor color_padded_rect_outline;
+    ofxUIColor color_padded_rect; 
+	ofxUIColor color_padded_rect_outline;
     
     vector<ofxUIWidget *> embeddedWidgets; 
     

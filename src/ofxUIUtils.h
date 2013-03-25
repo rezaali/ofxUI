@@ -1,4 +1,4 @@
-/********************************************************************************** 
+/**********************************************************************************
  
  Copyright (C) 2012 Syed Reza Ali (www.syedrezaali.com)
  
@@ -22,24 +22,46 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_EVENT_ARGS
-#define OFXUI_EVENT_ARGS
+#ifndef OFXUI_UTILS
+#define OFXUI_UTILS
 
-class ofxUIWidget;
+//Taken from openFrameworks (Thanks guys)
 
-class ofxUIEventArgs 
-{   
-public:
-	ofxUIEventArgs()
+template <class T>
+string ofxUIToString(const T& value){
+	ostringstream out;
+	out << value;
+	return out.str();
+}
+
+template <class T>
+string ofxUIToString(const T& value, int precision){
+	ostringstream out;
+	out << fixed << setprecision(precision) << value;
+	return out.str();
+}
+
+float ofxUIMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp)
+{    
+	if (fabs(inputMin - inputMax) < FLT_EPSILON)
     {
-        widget = NULL; 
-    }
-    
-    ofxUIEventArgs(ofxUIWidget *_widget)
+		return outputMin;
+	}
+    else
     {
-        widget = _widget; 
-    }
-    ofxUIWidget *widget; 
-}; 
+		float outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);        
+		if( clamp )
+        {
+			if(outputMax < outputMin){
+				if( outVal < outputMax )outVal = outputMax;
+				else if( outVal > outputMin )outVal = outputMin;
+			}else{
+				if( outVal > outputMax )outVal = outputMax;
+				else if( outVal < outputMin )outVal = outputMin;
+			}
+		}
+		return outVal;
+	}    
+}
 
 #endif

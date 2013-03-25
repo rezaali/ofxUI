@@ -98,8 +98,8 @@ public:
     {
         if(draw_back && !draw_fill)
         {
-            ofFill();
-            ofSetColor(color_back);
+            ofxUIFill();
+            ofxUISetColor(color_back);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
         }
     }
@@ -108,8 +108,8 @@ public:
     {
         if(draw_fill)
         {
-            ofFill();
-            ofSetColor(color_fill);
+            ofxUIFill();
+            ofxUISetColor(color_fill);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
         }
     }
@@ -118,8 +118,8 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill();
-            ofSetColor(color_fill_highlight);
+            ofxUIFill();
+            ofxUISetColor(color_fill_highlight);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
         }
     }
@@ -129,7 +129,7 @@ public:
         if(draw_outline_highlight)
         {
             ofNoFill();
-            ofSetColor(color_outline_highlight);
+            ofxUISetColor(color_outline_highlight);
             img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
         }
     }

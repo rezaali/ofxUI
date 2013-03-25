@@ -89,7 +89,7 @@ public:
 
     virtual void draw()
     {
-        ofPushStyle();
+        ofxUIPushStyle();
         
         ofEnableBlendMode(OF_BLENDMODE_ALPHA);
         
@@ -104,7 +104,7 @@ public:
         drawFill();
         drawFillHighlight();
         
-        ofPopStyle();
+        ofxUIPopStyle();
     }
     
     void clearToggles()

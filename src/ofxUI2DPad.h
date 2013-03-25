@@ -30,13 +30,13 @@
 class ofxUI2DPad : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUI2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, float w, float h, float x = 0, float y = 0) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x = 0, float y = 0) : ofxUIWidgetWithLabel()
     {
         useReference = false;                  
         init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
     }	
 
-    ofxUI2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, float w, float h, float x = 0, float y = 0) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0) : ofxUIWidgetWithLabel()
     {
         useReference = true; 
         init(_name, _rangeX, _rangeY, _value, w, h, x, y);
@@ -45,56 +45,56 @@ public:
     // DON'T USE THE NEXT CONSTRUCTORS
     // This is maintained for backward compatibility and will be removed on future releases
     
-    ofxUI2DPad(float x, float y, float w, float h, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                         
-        init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, x, y);
+        init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), &_value, w, h, x, y);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 
-    ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                  
         init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUI2DPad(float w, float h, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float w, float h, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                         
-        init(_name, ofPoint(0,w), ofPoint(0,h), &_value, w, h, 0, 0);
+        init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), &_value, w, h, 0, 0);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
-    ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = false;                         
         init(_name, _rangeX, _rangeY, &_value, w, h, 0, 0);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUI2DPad(float x, float y, float w, float h, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true; 
-        init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, x, y);
+        init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), _value, w, h, x, y);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUI2DPad(float x, float y, float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true; 
         init(_name, _rangeX, _rangeY, _value, w, h, x, y);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
     
-    ofxUI2DPad(float w, float h, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float w, float h, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
-        init(_name, ofPoint(0,w), ofPoint(0,h), _value, w, h, 0, 0);
+        init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), _value, w, h, 0, 0);
 //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
     }
 	
-    ofxUI2DPad(float w, float h, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, string _name) : ofxUIWidgetWithLabel()
+    ofxUI2DPad(float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
     {
         useReference = true;         
         init(_name, _rangeX, _rangeY, _value, w, h, 0, 0);
@@ -109,7 +109,7 @@ public:
         }        
     }
     
-    void init(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, float w, float h, float x = 0, float y = 0)
+    void init(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0)
     {
         rect = new ofxUIRectangle(x,y,w,h);
 		name = string(_name);
@@ -125,7 +125,7 @@ public:
         }
         else
         {
-            valueRef = new ofPoint(); 
+            valueRef = new ofxUIVec3f(); 
             *valueRef = value; 
         }
 
@@ -133,8 +133,8 @@ public:
         rangeY = _rangeY; 
 		labelPrecision = 2;
         
-		value.x = ofMap(value.x, rangeX.x, rangeX.y, 0.0, 1.0);
-		value.y = ofMap(value.y, rangeY.x, rangeY.y, 0.0, 1.0);
+		value.x = ofxUIMap(value.x, rangeX.x, rangeX.y, 0.0, 1.0, true);
+		value.y = ofxUIMap(value.y, rangeY.x, rangeY.y, 0.0, 1.0, true);
 		
 		if(value.x > 1)
 		{
@@ -154,7 +154,7 @@ public:
 			value.y = 0;
 		}
 		
-		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL); 		
+		label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL); 		
 		label->setParent(label); 
 		label->setRectParent(rect);         
         label->setEmbedded(true);
@@ -168,8 +168,8 @@ public:
     {
         if(useReference)
         {
-            value.x = ofMap(valueRef->x, rangeX.x, rangeX.y, 0.0, 1.0, true);
-            value.y = ofMap(valueRef->y, rangeY.x, rangeY.y, 0.0, 1.0, true);
+            value.x = ofxUIMap(valueRef->x, rangeX.x, rangeX.y, 0.0, 1.0, true);
+            value.y = ofxUIMap(valueRef->y, rangeY.x, rangeY.y, 0.0, 1.0, true);
         }
     }
 
@@ -189,14 +189,14 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 		 
-			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING); 
-			ofSetRectMode(OF_RECTMODE_CORNER);			
-			
-			ofLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
-			ofLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 		 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+			ofxUIDrawRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING);
+			ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
+            
+			ofxUIDrawLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
+			ofxUIDrawLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
         }
     }
     
@@ -204,17 +204,16 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
-			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING); 
-			ofSetRectMode(OF_RECTMODE_CORNER);			
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+			ofxUIDrawRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), OFX_UI_GLOBAL_WIDGET_SPACING, OFX_UI_GLOBAL_WIDGET_SPACING); 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);			
 			
-			ofLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
-			ofLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
+			ofxUIDrawLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
+			ofxUIDrawLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
 			
-			label->drawString(rect->getX()+value.x*rect->getWidth()+OFX_UI_GLOBAL_WIDGET_SPACING, rect->getY()+value.y*rect->getHeight(), "(" +ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)+")"); 
-
+			label->drawString(rect->getX()+value.x*rect->getWidth()+OFX_UI_GLOBAL_WIDGET_SPACING, rect->getY()+value.y*rect->getHeight(), "(" +ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)+")");
         }        
     }   
 
@@ -300,9 +299,9 @@ public:
 			{
 				case OF_KEY_RIGHT:
                 {
-                    ofPoint p = getScaledValue();         
+                    ofxUIVec3f p = getScaledValue();         
                     p.x+=increment; 
-                    value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
+                    value.x = ofxUIMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0, true);                    
                     updateValueRef();                                            
                     updateLabel();                     
                     triggerEvent(this);			
@@ -311,9 +310,9 @@ public:
 					
 				case OF_KEY_UP:
                 {
-                    ofPoint p = getScaledValue();         
+                    ofxUIVec3f p = getScaledValue();         
                     p.y +=increment; 
-                    value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
+                    value.y = ofxUIMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0, true);                    
                     updateValueRef();                                            
                     updateLabel();                     
                     triggerEvent(this);	
@@ -322,9 +321,9 @@ public:
 					
 				case OF_KEY_LEFT:
                 {
-                    ofPoint p = getScaledValue();         
+                    ofxUIVec3f p = getScaledValue();         
                     p.x-=increment; 
-                    value.x = ofMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0);                    
+                    value.x = ofxUIMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0, true);                    
                     updateValueRef();                                            
                     updateLabel();                     
                     triggerEvent(this);		
@@ -333,9 +332,9 @@ public:
 					
 				case OF_KEY_DOWN:
                 {
-                    ofPoint p = getScaledValue();         
+                    ofxUIVec3f p = getScaledValue();         
                     p.y -=increment; 
-                    value.y = ofMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0);                    
+                    value.y = ofxUIMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0, true);
                     updateValueRef();                        
                     updateLabel();                     
                     triggerEvent(this);	
@@ -392,7 +391,7 @@ public:
     
 	void updateLabel()
 	{
-		label->setLabel(name + ": " + ofToString(getScaledValue().x,labelPrecision) + ", " + ofToString(getScaledValue().y,labelPrecision)); 		
+		label->setLabel(name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)); 		
 	}
 	
     void stateChange()
@@ -438,7 +437,7 @@ public:
         label->setVisible(visible); 
     }
     
-	void setValue(ofPoint _value)
+	void setValue(ofxUIVec3f _value)
 	{
 		if(_value.x > rangeX.y)
 		{
@@ -457,29 +456,28 @@ public:
 		{
 			_value.y = rangeY.x;
 		}
-
 		                        
-        value.x = ofMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0);
-		value.y = ofMap(_value.y, rangeY.x, rangeY.y, 0.0, 1.0);
+        value.x = ofxUIMap(_value.x, rangeX.x, rangeX.y, 0.0, 1.0, true);
+		value.y = ofxUIMap(_value.y, rangeY.x, rangeY.y, 0.0, 1.0, true);
         updateValueRef();        
 		updateLabel(); 		
 	}
 	
-	ofPoint getValue()
+	ofxUIVec3f getValue()
 	{
 		return value; 
 	}
 	
-	ofPoint getPercentValue()
+	ofxUIVec3f getPercentValue()
 	{
 		return value; 
 	}
 	
-	ofPoint getScaledValue()
+	ofxUIVec3f getScaledValue()
 	{
-		ofPoint p = value; 
-		p.x = ofMap(p.x, 0, 1, rangeX.x, rangeX.y); 
-		p.y = ofMap(p.y, 0, 1, rangeY.x, rangeY.y); 
+		ofxUIVec3f p = value; 
+		p.x = ofxUIMap(p.x, 0, 1, rangeX.x, rangeX.y, true); 
+		p.y = ofxUIMap(p.y, 0, 1, rangeY.x, rangeY.y, true);
 		return p; 
 	}
     
@@ -509,12 +507,12 @@ public:
 
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-	ofPoint value; 
-	ofPoint *valueRef;     
+	ofxUIVec3f value;
+	ofxUIVec3f *valueRef;     
     float increment;
     int labelPrecision;     
     bool useReference; 
-    ofPoint rangeX, rangeY; 
+    ofxUIVec3f rangeX, rangeY;
 }; 
 
 #endif

@@ -94,8 +94,8 @@ public:
         {			
 			if(image != NULL)
 			{			   
-				ofFill(); 
-				ofSetColor(255);
+				ofxUIFill(); 
+				ofxUISetColor(255);
                 if(cropImageToFitRect)
                 {
                     image->drawSubsection(rect->getX(), rect->getY(), rect->width, rect->height, 0, 0, rect->width, rect->height);

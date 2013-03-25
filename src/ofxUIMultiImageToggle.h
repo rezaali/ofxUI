@@ -119,7 +119,7 @@ public:
     {
         if(draw_back && !draw_fill)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
             back->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());       
         }
     }
@@ -128,7 +128,7 @@ public:
     {
         if(draw_outline_highlight)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
             over->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());                      
         }
     }    
@@ -137,7 +137,7 @@ public:
     {
         if(draw_fill)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
             on->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }        
     }
@@ -146,7 +146,7 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
             down->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }        
     }

@@ -79,11 +79,11 @@ public:
         valueRef = new float();
         *valueRef = value;
 
-		value = ofMap(value, min, max, 0.0, 1.0, true);
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true);
         
 		if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(max,labelPrecision)), _size); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofxUIToString(max,labelPrecision)), _size); 
 		}
 		else 
 		{
@@ -170,7 +170,7 @@ public:
     {
         if(draw_back)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
             track->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
         }
     }
@@ -180,7 +180,7 @@ public:
         if(draw_outline)
         {
             ofNoFill();
-            ofSetColor(color_outline); 
+            ofxUISetColor(color_outline); 
             rect->draw(); 
         }
     }
@@ -194,21 +194,21 @@ public:
     {
         if(draw_fill)
         {			 
-            ofSetColor(255); 
+            ofxUISetColor(255); 
 			if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_H)
 			{	
                 progress->drawSubsection(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight(), 0,0, rect->getWidth()*value, rect->getHeight());
-                ofSetRectMode(OF_RECTMODE_CENTER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
                 handle->draw(imageRect->getX()+imageRect->getWidth()*value, imageRect->getY()+rect->getHalfHeight());                    
-                ofSetRectMode(OF_RECTMODE_CORNER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
 			}
 			else 
 			{
 
                 progress->drawSubsection(rect->getX(), rect->getY()+(1.0-value)*rect->getHeight(), rect->getWidth(), rect->getHeight(), 0, (1.0-value)*rect->getHeight(), rect->getWidth(), value*rect->getHeight());
-                ofSetRectMode(OF_RECTMODE_CENTER);                
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);                
                 handle->draw(imageRect->getX()+rect->getHalfWidth(), imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value);                                            
-                ofSetRectMode(OF_RECTMODE_CORNER);            
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);            
 			}
         }
     }
@@ -217,24 +217,24 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
 			if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_H)
 			{			   
                 progress->drawSubsection(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight(), 0,0);
-                ofSetRectMode(OF_RECTMODE_CENTER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
                 handleDown->draw(imageRect->getX()+imageRect->getWidth()*value, imageRect->getY()+imageRect->getHalfHeight());                    
-                ofSetRectMode(OF_RECTMODE_CORNER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
 			}
 			else 
 			{
                 progress->drawSubsection(rect->getX(), rect->getY()+(1.0-value)*rect->getHeight(), rect->getWidth(), rect->getHeight(), 0, (1.0-value)*rect->getHeight());                
-                ofSetRectMode(OF_RECTMODE_CENTER);                
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);                
                 handleDown->draw(imageRect->getX()+imageRect->getHalfWidth(), imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value);                                            
-                ofSetRectMode(OF_RECTMODE_CORNER);            
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);            
 			}	
 			if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)
 			{
-				label->drawString(imageRect->getX()+imageRect->getWidth()+padding, label->getRect()->getHeight()/2.0+imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value, ofToString(getScaledValue(),labelPrecision)); 
+				label->drawString(imageRect->getX()+imageRect->getWidth()+padding, label->getRect()->getHeight()/2.0+imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value, ofxUIToString(getScaledValue(),labelPrecision)); 
 			}
         }        
     }
@@ -308,7 +308,7 @@ public:
 	{
 		if(kind == OFX_UI_WIDGET_MULTIIMAGESLIDER_H)
 		{
-			label->setLabel(name + ": " + ofToString(getScaledValue(),labelPrecision)); 		
+			label->setLabel(name + ": " + ofxUIToString(getScaledValue(),labelPrecision)); 		
 		}		
 	}
     

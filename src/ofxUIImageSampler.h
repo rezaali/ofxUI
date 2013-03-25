@@ -61,19 +61,19 @@ public:
         {			            
 			if(image != NULL)
 			{			   
-				ofFill(); 
-				ofSetColor(255); 		
+				ofxUIFill(); 
+				ofxUISetColor(255); 		
 				image->draw(rect->getX(), rect->getY(), rect->width, rect->height); 
 			}
-            ofSetColor(color_fill);             
-			ofLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
-			ofLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
+            ofxUISetColor(color_fill);             
+			ofxUIDrawLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
+			ofxUIDrawLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			
 
-            ofFill(); 
-            ofSetColor(sampledColor); 		 
-			ofSetRectMode(OF_RECTMODE_CENTER);            
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
-			ofSetRectMode(OF_RECTMODE_CORNER);
+            ofxUIFill(); 
+            ofxUISetColor(sampledColor); 		 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+			ofxUIDrawRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
             
         }
     }
@@ -82,15 +82,15 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofSetColor(color_fill_highlight);             
-			ofLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
-			ofLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			                        
+            ofxUISetColor(color_fill_highlight);             
+			ofxUIDrawLine(rect->getX()+value.x*rect->getWidth(),  rect->getY(), rect->getX()+value.x*rect->getWidth(),  rect->getY()+rect->getHeight()); 
+			ofxUIDrawLine(rect->getX(),  rect->getY()+value.y*rect->getHeight(), rect->getX()+rect->getWidth(),  rect->getY()+value.y*rect->getHeight()); 			                        
 
-            ofFill(); 
-            ofSetColor(sampledColor); 
-			ofSetRectMode(OF_RECTMODE_CENTER);
-			ofRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
-			ofSetRectMode(OF_RECTMODE_CORNER);						
+            ofxUIFill(); 
+            ofxUISetColor(sampledColor); 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+			ofxUIDrawRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize); 
+			ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
         }        
     }
         

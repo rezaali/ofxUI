@@ -143,13 +143,13 @@ public:
 			valuehigh = min; 
 		}
 		
-		valuelow = ofMap(valuelow, min, max, 0.0, 1.0, true); 
-		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
+		valuelow = ofxUIMap(valuelow, min, max, 0.0, 1.0, true); 
+		valuehigh = ofxUIMap(valuehigh, min, max, 0.0, 1.0, true); 
 		labelPrecision = 2;
         
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)), _size); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValueLow(),labelPrecision) + " " + ofxUIToString(getScaledValueHigh(),labelPrecision)), _size); 
 		}
 		else 
 		{
@@ -167,8 +167,8 @@ public:
     {
         if(useReference)
         {
-            valuelow = ofMap(*valuelowRef, min, max, 0.0, 1.0, true); 
-            valuehigh = ofMap(*valuehighRef, min, max, 0.0, 1.0, true);         
+            valuelow = ofxUIMap(*valuelowRef, min, max, 0.0, 1.0, true); 
+            valuehigh = ofxUIMap(*valuehighRef, min, max, 0.0, 1.0, true);         
         }
     }
     
@@ -188,15 +188,15 @@ public:
     {
         if(draw_fill)
         {			
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
 			if(kind == OFX_UI_WIDGET_RSLIDER_H)
 			{			   
-				ofRect(rect->getX()+rect->getWidth()*valuelow, rect->getY(), rect->getWidth()*(valuehigh-valuelow), rect->getHeight()); 
+				ofxUIDrawRect(rect->getX()+rect->getWidth()*valuelow, rect->getY(), rect->getWidth()*(valuehigh-valuelow), rect->getHeight()); 
 			}
 			else 
 			{
-				ofRect(rect->getX(), rect->getY()+(1.0-valuehigh)*rect->getHeight(), rect->getWidth(), rect->getHeight()*(valuehigh-valuelow)); 
+				ofxUIDrawRect(rect->getX(), rect->getY()+(1.0-valuehigh)*rect->getHeight(), rect->getWidth(), rect->getHeight()*(valuehigh-valuelow)); 
 			}
         }
     }
@@ -205,20 +205,20 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofFill(); 
-            ofSetColor(color_fill_highlight); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill_highlight); 
 			if(kind == OFX_UI_WIDGET_RSLIDER_H)
 			{			   
-				ofRect(rect->getX()+rect->getWidth()*valuelow, rect->getY(), rect->getWidth()*(valuehigh-valuelow), rect->getHeight()); 
+				ofxUIDrawRect(rect->getX()+rect->getWidth()*valuelow, rect->getY(), rect->getWidth()*(valuehigh-valuelow), rect->getHeight()); 
 			}
 			else 
 			{
-				ofRect(rect->getX(), rect->getY()+(1.0-valuehigh)*rect->getHeight(), rect->getWidth(), rect->getHeight()*(valuehigh-valuelow)); 
+				ofxUIDrawRect(rect->getX(), rect->getY()+(1.0-valuehigh)*rect->getHeight(), rect->getWidth(), rect->getHeight()*(valuehigh-valuelow)); 
 			}	
 			if(kind == OFX_UI_WIDGET_RSLIDER_V)
 			{
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuehigh, ofToString(getScaledValueHigh(),labelPrecision)); 
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuelow, ofToString(getScaledValueLow(),labelPrecision)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuehigh, ofxUIToString(getScaledValueHigh(),labelPrecision)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*valuelow, ofxUIToString(getScaledValueLow(),labelPrecision)); 
 			}
         }      
     }
@@ -440,7 +440,7 @@ public:
 	{
 		if(kind == OFX_UI_WIDGET_RSLIDER_H)
 		{
-			label->setLabel(name + ": " + ofToString(getScaledValueLow(),labelPrecision) + " " + ofToString(getScaledValueHigh(),labelPrecision)); 		
+			label->setLabel(name + ": " + ofxUIToString(getScaledValueLow(),labelPrecision) + " " + ofxUIToString(getScaledValueHigh(),labelPrecision)); 		
 		}		
 	}
 	
@@ -498,14 +498,14 @@ public:
     
 	void setValueLow(float _value)
 	{			
-		valuelow = ofMap(_value, min, max, 0.0, 1.0, true); 
+		valuelow = ofxUIMap(_value, min, max, 0.0, 1.0, true); 
         updateValueRef(); 
 		updateLabel(); 		
 	}
 
 	void setValueHigh(float _value)
 	{
-		valuehigh = ofMap(_value, min, max, 0.0, 1.0, true); 
+		valuehigh = ofxUIMap(_value, min, max, 0.0, 1.0, true); 
         updateValueRef(); 
 		updateLabel(); 		
 	}
@@ -522,12 +522,12 @@ public:
 	
 	float getScaledValueLow()
 	{
-		return ofMap(valuelow, 0.0, 1.0, min, max, true); 
+		return ofxUIMap(valuelow, 0.0, 1.0, min, max, true); 
 	}
 
 	float getScaledValueHigh()
 	{
-		return ofMap(valuehigh, 0.0, 1.0, min, max, true); 
+		return ofxUIMap(valuehigh, 0.0, 1.0, min, max, true); 
 	}
 	
 	ofxUILabel *getLabel()
@@ -575,11 +575,11 @@ public:
         max = _max; 
         min = _min; 
 		
-		valuelow= ofMap(valuelow, 0, 1.0, min, max, true);         
-		valuelow = ofMap(valuelow, min, max, 0.0, 1.0, true); 
+		valuelow= ofxUIMap(valuelow, 0, 1.0, min, max, true);         
+		valuelow = ofxUIMap(valuelow, min, max, 0.0, 1.0, true); 
 
-		valuehigh = ofMap(valuehigh, 0, 1.0, min, max, true);         
-		valuehigh = ofMap(valuehigh, min, max, 0.0, 1.0, true); 
+		valuehigh = ofxUIMap(valuehigh, 0, 1.0, min, max, true);         
+		valuehigh = ofxUIMap(valuehigh, min, max, 0.0, 1.0, true); 
         updateValueRef();        
         updateLabel(); 
     }

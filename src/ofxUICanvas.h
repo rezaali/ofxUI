@@ -29,6 +29,7 @@
 #include <vector>
 #include <map>
 
+//class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 class ofxUICanvas : public ofxUIWidget
 {    
 public:
@@ -50,7 +51,7 @@ public:
 		widgets.clear();             
     }
 
-    ofxUICanvas(ofRectangle r) : ofxUIWidget()
+    ofxUICanvas(ofxUIRectangle r) : ofxUIWidget()
     {
         rect = new ofxUIRectangle(r);
         init(r.width,r.height);
@@ -83,10 +84,9 @@ public:
     }
     
     ofxUICanvas(std::string title) : ofxUIWidget()
-    {
-        ofEnableSmoothing();
-        rect = new ofxUIRectangle(0, 0, 316, ofGetHeight());        
-        init(46, ofGetHeight());
+    {    
+        rect = new ofxUIRectangle(0, 0, 316, ofxUIGetHeight());        
+        init(46, ofxUIGetHeight());
         addWidgetDown(new ofxUILabel(title, OFX_UI_FONT_LARGE));
         addWidgetDown(new ofxUISpacer(0, 20));
         addWidgetDown(new ofxUIFPSSlider(300, 20, 0, 1000, ofGetFrameRate(), "FPS"));
@@ -119,9 +119,9 @@ public:
         else
         {
             hasSharedResources = false;
-            font_large = new ofTrueTypeFont();
-            font_medium = new ofTrueTypeFont();
-            font_small = new ofTrueTypeFont();            
+            font_large = new ofxUIFont();
+            font_medium = new ofxUIFont();
+            font_small = new ofxUIFont();            
         
             fontName = string(OFX_UI_FONT_NAME);
             setFont(fontName,true, true, false, 0.0, OFX_UI_FONT_RESOLUTION);
@@ -374,7 +374,7 @@ public:
                 ofxUI2DPad *pad = (ofxUI2DPad *) widget; 
                 float valueX = XML->getValue("XValue", pad->getScaledValue().x, 0); 
                 float valueY = XML->getValue("YValue", pad->getScaledValue().y, 0); 
-                pad->setValue(ofPoint(valueX, valueY)); 
+                pad->setValue(ofxUIVec3f(valueX, valueY));
             }
                 break;
                 
@@ -382,7 +382,8 @@ public:
             {
                 ofxUITextInput *textInput = (ofxUITextInput *) widget; 
                 string value = XML->getValue("Value", textInput->getTextString(), 0);             
-                textInput->setTextString(value); 
+                textInput->setTextString(value);
+                textInput->setTriggerType(OFX_UI_TEXTINPUT_ON_LOAD); 
             }
                 break;                
                 
@@ -405,8 +406,8 @@ public:
                 int b = XML->getValue("BColor", imageSampler->getColor().b, 0);                                                 
                 int a = XML->getValue("AColor", imageSampler->getColor().a, 0);                                 
                 
-                imageSampler->setValue(ofPoint(valueX, valueY));
-                imageSampler->setColor(ofColor(r,g,b,a));
+                imageSampler->setValue(ofxUIVec2f(valueX, valueY));
+                imageSampler->setColor(ofxUIColor(r,g,b,a));
             }
                 break;
                 
@@ -417,17 +418,17 @@ public:
 
 #endif
 	 
-    ofTrueTypeFont *getFontLarge()
+    ofxUIFont *getFontLarge()
     {
         return font_large;
     }    
     
-    ofTrueTypeFont *getFontMedium()
+    ofxUIFont *getFontMedium()
     {
         return font_medium;
     }
 
-    ofTrueTypeFont *getFontSmall()
+    ofxUIFont *getFontSmall()
     {
         return font_small;
     }
@@ -443,7 +444,7 @@ public:
         return successful;
     }
     
-    void setFontSize(ofxWidgetFontType _kind, int _size, int _resolution = OFX_UI_FONT_RESOLUTION)
+    void setFontSize(ofxUIWidgetFontType _kind, int _size, int _resolution = OFX_UI_FONT_RESOLUTION)
     {
         switch(_kind)
         {
@@ -452,7 +453,7 @@ public:
                 {
                     delete font_large;          
                 }
-                font_large = new ofTrueTypeFont(); 
+                font_large = new ofxUIFont(); 
                 font_large->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				            
                 break; 
 
@@ -461,7 +462,7 @@ public:
                 {
                     delete font_medium;          
                 }
-                font_medium = new ofTrueTypeFont(); 
+                font_medium = new ofxUIFont(); 
                 font_medium->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				                            
                 break; 
 
@@ -470,7 +471,7 @@ public:
                 {
                     delete font_small;          
                 }
-                font_small = new ofTrueTypeFont(); 
+                font_small = new ofxUIFont(); 
                 font_small->loadFont(fontName,_size,true, true, false, 0.0,_resolution); 				                            
                 break; 
         }
@@ -691,13 +692,16 @@ public:
      
     virtual void draw()
     {
-        ofPushStyle();
+        ofxUIPushStyle();
         
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
-        ofEnableBlendMode(OF_BLENDMODE_ALPHA); 
-        ofSetRectMode(OF_RECTMODE_CORNER);         
-        ofSetLineWidth(1.0);
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
+        ofxUISetLineWidth(1.0);
         
         drawPadded();
         
@@ -721,7 +725,7 @@ public:
             }
 		}    
         
-        ofPopStyle();
+        ofxUIPopStyle();
     }
     
     void exit()
@@ -1355,8 +1359,8 @@ public:
     }
 	
     ofxUIWidget* addWidgetPosition(ofxUIWidget *widget, 
-                                   ofxWidgetPosition position = OFX_UI_WIDGET_POSITION_DOWN,
-                                   ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT, 
+                                   ofxUIWidgetPosition position = OFX_UI_WIDGET_POSITION_DOWN,
+                                   ofxUIWidgetAlignment align = OFX_UI_ALIGN_LEFT,
                                    bool reAdd = false)
     {
         if(!reAdd) addWidget(widget);
@@ -1429,22 +1433,22 @@ public:
 		return widget;
     }
     
-	ofxUIWidget* addWidgetDown(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
+	ofxUIWidget* addWidgetDown(ofxUIWidget *widget, ofxUIWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
 	{
         return addWidgetPosition(widget, OFX_UI_WIDGET_POSITION_DOWN, align, reAdd);
 	}
     
-	ofxUIWidget* addWidgetUp(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
+	ofxUIWidget* addWidgetUp(ofxUIWidget *widget, ofxUIWidgetAlignment align = OFX_UI_ALIGN_LEFT, bool reAdd = false)
 	{
         return addWidgetPosition(widget, OFX_UI_WIDGET_POSITION_UP, align, reAdd);
 	}    
     
-	ofxUIWidget* addWidgetRight(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
+	ofxUIWidget* addWidgetRight(ofxUIWidget *widget, ofxUIWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
 	{
         return addWidgetPosition(widget, OFX_UI_WIDGET_POSITION_RIGHT, align, reAdd);
 	}
     
-    ofxUIWidget* addWidgetLeft(ofxUIWidget *widget, ofxWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
+    ofxUIWidget* addWidgetLeft(ofxUIWidget *widget, ofxUIWidgetAlignment align = OFX_UI_ALIGN_FREE, bool reAdd = false)
 	{
         return addWidgetPosition(widget, OFX_UI_WIDGET_POSITION_LEFT, align, reAdd);
 	}    
@@ -1856,7 +1860,7 @@ public:
         return widget;
     }
 
-    ofxUI2DPad* add2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value)
+    ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value)
     {
         float dim = rect->getWidth()-widgetSpacing*2; 
         ofxUI2DPad* widget = new ofxUI2DPad(_name, _rangeX, _rangeY, _value, dim, dim, 0, 0);
@@ -1865,14 +1869,14 @@ public:
     }
 
     
-    ofxUI2DPad* add2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint _value, float w, float h, float x = 0, float y = 0)
+    ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x = 0, float y = 0)
     {
         ofxUI2DPad* widget = new ofxUI2DPad(_name, _rangeX, _rangeY, _value, w, h, x, y);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
 
-    ofxUI2DPad* add2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value)
+    ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value)
     {
         float dim = rect->getWidth()-widgetSpacing*2; 
         ofxUI2DPad* widget = new ofxUI2DPad(_name, _rangeX, _rangeY, _value, dim, dim, 0, 0);
@@ -1880,7 +1884,7 @@ public:
         return widget;
     }
 
-    ofxUI2DPad* add2DPad(string _name, ofPoint _rangeX, ofPoint _rangeY, ofPoint *_value, float w, float h, float x = 0, float y = 0)
+    ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0)
     {
         ofxUI2DPad* widget = new ofxUI2DPad(_name, _rangeX, _rangeY, _value, w, h, x, y);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
@@ -2145,14 +2149,14 @@ public:
     }
     
     
-    ofxUI2DGraph *add2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _bufferSize, float * _xValues, float * _yValues)
+    ofxUI2DGraph *add2DGraph(string _name, ofxUIVec2f _rangeX, ofxUIVec2f _rangeY, int _bufferSize, float * _xValues, float * _yValues)
     {
         ofxUI2DGraph* widget = new ofxUI2DGraph(_name, _rangeX, _rangeY, _bufferSize, _xValues, _yValues, rect->getWidth()-widgetSpacing*2, rect->getWidth()-widgetSpacing*2); 
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
 
-    ofxUI2DGraph *add2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _bufferSize, float * _xValues, float * _yValues, float _w, float _h, float _x = 0, float _y = 0)
+    ofxUI2DGraph *add2DGraph(string _name, ofxUIVec2f _rangeX, ofxUIVec2f _rangeY, int _bufferSize, float * _xValues, float * _yValues, float _w, float _h, float _x = 0, float _y = 0)
     {
         ofxUI2DGraph* widget = new ofxUI2DGraph(_name, _rangeX, _rangeY, _bufferSize, _xValues, _yValues, _w, _h, _x, _y);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
@@ -2372,7 +2376,7 @@ public:
         return globalCanvasWidth; 
     }
 		
-	void setWidgetPosition(ofxWidgetPosition _position, int _align = -1)
+	void setWidgetPosition(ofxUIWidgetPosition _position, int _align = -1)
 	{
 	    widgetPosition = _position;
 	    if (_align == -1) 
@@ -2389,21 +2393,21 @@ public:
 	    }
         else
         {
-            widgetAlign = (ofxWidgetAlignment)_align;
+            widgetAlign = (ofxUIWidgetAlignment)_align;
         }
 	}
 	
-    void setWidgetFontSize(ofxWidgetFontType _widgetFontSize)
+    void setWidgetFontSize(ofxUIWidgetFontType _widgetFontSize)
     {
         widgetFontSize = _widgetFontSize;
     }
     
-    ofxWidgetPosition getWidgetPosition()
+    ofxUIWidgetPosition getWidgetPosition()
     {
         return widgetPosition;
     }
     
-    ofxWidgetFontType getWidgetFontSize()
+    ofxUIWidgetFontType getWidgetFontSize()
     {
         return widgetFontSize; 
     }
@@ -2415,7 +2419,7 @@ public:
         ofNotifyEvent(newGUIEvent,*GUIevent,this);
 	}
 	    
-    void setUIColors(ofColor &cb, ofColor &co, ofColor &coh, ofColor &cf, ofColor &cfh, ofColor &cp, ofColor &cpo)
+    void setUIColors(ofxUIColor &cb, ofxUIColor &co, ofxUIColor &coh, ofxUIColor &cf, ofxUIColor &cfh, ofxUIColor &cp, ofxUIColor &cpo)
     {
         setWidgetColor(OFX_UI_WIDGET_COLOR_BACK, cb);
         setWidgetColor(OFX_UI_WIDGET_COLOR_OUTLINE, co);                
@@ -2440,26 +2444,26 @@ public:
         {
             case OFX_UI_THEME_DEFAULT:
             {
-                ofColor cb = OFX_UI_COLOR_BACK; 
-                ofColor co = OFX_UI_COLOR_OUTLINE; 
-                ofColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
-                ofColor cf = OFX_UI_COLOR_FILL; 
-                ofColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
-                ofColor cp = OFX_UI_COLOR_PADDED;
-                ofColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
+                ofxUIColor cb = OFX_UI_COLOR_BACK; 
+                ofxUIColor co = OFX_UI_COLOR_OUTLINE; 
+                ofxUIColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
+                ofxUIColor cf = OFX_UI_COLOR_FILL; 
+                ofxUIColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
+                ofxUIColor cp = OFX_UI_COLOR_PADDED;
+                ofxUIColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_HACKER:
             {
-                ofColor cb = ofColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.784314*255.0, 1*255.0, 0*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.980392*255.0, 0.00784314*255.0, 0.235294*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.0156863*255.0, 0*255.0, 0.0156863*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.294118*255.0, 0*255.0, 0.0588235*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.784314*255.0, 1*255.0, 0*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.980392*255.0, 0.00784314*255.0, 0.235294*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.0156863*255.0, 0*255.0, 0.0156863*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.254902*255.0, 0.239216*255.0, 0.239216*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
@@ -2467,609 +2471,609 @@ public:
                 
             case OFX_UI_THEME_HIPSTER:
             {
-                ofColor cb = ofColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 1*255.0, 0.52549*255.0, 0.0666667*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.0313725*255.0, 0.101961*255.0, 0.188235*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.196078*255.0, 0.25098*255.0, 0.352941*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.607843*255.0, 0.6*255.0, 0.509804*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 1*255.0, 0.52549*255.0, 0.0666667*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.0313725*255.0, 0.101961*255.0, 0.188235*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.196078*255.0, 0.25098*255.0, 0.352941*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.231373*255.0, 0.392157*255.0, 0.501961*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_DIETER:
             {
-                ofColor cb = ofColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.980392*255.0, 0.294118*255.0, 0*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.980392*255.0, 0.980392*255.0, 0.980392*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.121569*255.0, 0.121569*255.0, 0.121569*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.803922*255.0, 0.741176*255.0, 0.682353*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.980392*255.0, 0.294118*255.0, 0*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.980392*255.0, 0.980392*255.0, 0.980392*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.121569*255.0, 0.121569*255.0, 0.121569*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.478431*255.0, 0.356863*255.0, 0.243137*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_BARBIE:
             {
-                ofColor cb = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 ); 
+                ofxUIColor cb = ofxUIColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 1*255.0, 0.94902*255.0, 0*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0*255.0, 0*255.0, 0*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 ); 
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_WINDOWS:
             {
-                ofColor cb = ofColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.054902*255.0, 0.305882*255.0, 0.678431*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.0627451*255.0, 0.498039*255.0, 0.788235*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.027451*255.0, 0.0352941*255.0, 0.239216*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.0470588*255.0, 0.0588235*255.0, 0.4*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.054902*255.0, 0.305882*255.0, 0.678431*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.0627451*255.0, 0.498039*255.0, 0.788235*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.027451*255.0, 0.0352941*255.0, 0.239216*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.0431373*255.0, 0.0627451*255.0, 0.54902*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MACOSX:
             {
-                ofColor cb = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 1*255.0 );
-                ofColor cp = ofColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0*255.0, 0.678431*255.0, 0.937255*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.92549*255.0, 0*255.0, 0.54902*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 1*255.0, 0.94902*255.0, 0*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0*255.0, 0*255.0, 0*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_ZOOLANDER:
             {
-                ofColor cb = ofColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.988235*255.0, 0.207843*255.0, 0.298039*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.988235*255.0, 0.968627*255.0, 0.772549*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.0392157*255.0, 0.74902*255.0, 0.737255*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.784314*255.0 );                
+                ofxUIColor cb = ofxUIColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.160784*255.0, 0.133333*255.0, 0.121569*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.988235*255.0, 0.207843*255.0, 0.298039*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.988235*255.0, 0.968627*255.0, 0.772549*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.0392157*255.0, 0.74902*255.0, 0.737255*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.0745098*255.0, 0.454902*255.0, 0.490196*255.0, 0.784314*255.0 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_VEGAN2:
             {
-                ofColor cb = ofColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.917647*255.0, 0.992157*255.0, 0.901961*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 0.105882*255.0, 0.403922*255.0, 0.419608*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.317647*255.0, 0.584314*255.0, 0.282353*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.784314*255.0 );                                
+                ofxUIColor cb = ofxUIColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.745098*255.0, 0.94902*255.0, 0.00784314*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.917647*255.0, 0.992157*255.0, 0.901961*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 0.105882*255.0, 0.403922*255.0, 0.419608*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.317647*255.0, 0.584314*255.0, 0.282353*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.533333*255.0, 0.768627*255.0, 0.145098*255.0, 0.784314*255.0 );                                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_BERLIN:
             {
-                ofColor cb = ofColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.196078*255.0 );
-                ofColor co = ofColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.392157*255.0 );
-                ofColor coh = ofColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.784314*255.0 );
-                ofColor cf = ofColor( 0.968627*255.0, 0.309804*255.0, 0.309804*255.0, 0.784314*255.0 );
-                ofColor cfh = ofColor( 1*255.0, 0.231373*255.0, 0.231373*255.0, 1*255.0 );
-                ofColor cp = ofColor( 0.105882*255.0, 0.12549*255.0, 0.14902*255.0, 0.392157*255.0 );
-                ofColor cpo = ofColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.784314*255.0 ); 
+                ofxUIColor cb = ofxUIColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.196078*255.0 );
+                ofxUIColor co = ofxUIColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.392157*255.0 );
+                ofxUIColor coh = ofxUIColor( 0.6*255.0, 0.894118*255.0, 1*255.0, 0.784314*255.0 );
+                ofxUIColor cf = ofxUIColor( 0.968627*255.0, 0.309804*255.0, 0.309804*255.0, 0.784314*255.0 );
+                ofxUIColor cfh = ofxUIColor( 1*255.0, 0.231373*255.0, 0.231373*255.0, 1*255.0 );
+                ofxUIColor cp = ofxUIColor( 0.105882*255.0, 0.12549*255.0, 0.14902*255.0, 0.392157*255.0 );
+                ofxUIColor cpo = ofxUIColor( 0.294118*255.0, 0.34902*255.0, 0.419608*255.0, 0.784314*255.0 ); 
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_METALGEAR:
             {
-                ofColor cb = ofColor( 51, 44, 44, 75 );
-                ofColor co = ofColor( 25, 26, 36, 100 );
-                ofColor coh = ofColor( 51, 44, 44, 200 );
-                ofColor cf = ofColor( 250, 101, 87, 200 );
-                ofColor cfh = ofColor( 255, 255, 255, 255 );
-                ofColor cp = ofColor( 0, 0, 0, 100 );
-                ofColor cpo = ofColor( 25, 26, 36, 200 );
+                ofxUIColor cb = ofxUIColor( 51, 44, 44, 75 );
+                ofxUIColor co = ofxUIColor( 25, 26, 36, 100 );
+                ofxUIColor coh = ofxUIColor( 51, 44, 44, 200 );
+                ofxUIColor cf = ofxUIColor( 250, 101, 87, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 255, 255, 255 );
+                ofxUIColor cp = ofxUIColor( 0, 0, 0, 100 );
+                ofxUIColor cpo = ofxUIColor( 25, 26, 36, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_TEALLIME:
             {
-                ofColor cb = ofColor( 27, 103, 107, 75 );
-                ofColor co = ofColor( 234, 253, 230, 100 );
-                ofColor coh = ofColor( 27, 103, 107, 200 );
-                ofColor cf = ofColor( 81, 149, 72, 200 );
-                ofColor cfh = ofColor( 136, 196, 37, 255 );
-                ofColor cp = ofColor( 190, 242, 2, 100 );
-                ofColor cpo = ofColor( 234, 253, 230, 200 );
+                ofxUIColor cb = ofxUIColor( 27, 103, 107, 75 );
+                ofxUIColor co = ofxUIColor( 234, 253, 230, 100 );
+                ofxUIColor coh = ofxUIColor( 27, 103, 107, 200 );
+                ofxUIColor cf = ofxUIColor( 81, 149, 72, 200 );
+                ofxUIColor cfh = ofxUIColor( 136, 196, 37, 255 );
+                ofxUIColor cp = ofxUIColor( 190, 242, 2, 100 );
+                ofxUIColor cpo = ofxUIColor( 234, 253, 230, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_VEGAN:
             {
-                ofColor cb = ofColor( 81, 149, 72, 75 );
-                ofColor co = ofColor( 27, 103, 107, 100 );
-                ofColor coh = ofColor( 81, 149, 72, 200 );
-                ofColor cf = ofColor( 136, 196, 37, 200 );
-                ofColor cfh = ofColor( 190, 242, 2, 255 );
-                ofColor cp = ofColor( 234, 253, 230, 100 );
-                ofColor cpo = ofColor( 27, 103, 107, 200 );
+                ofxUIColor cb = ofxUIColor( 81, 149, 72, 75 );
+                ofxUIColor co = ofxUIColor( 27, 103, 107, 100 );
+                ofxUIColor coh = ofxUIColor( 81, 149, 72, 200 );
+                ofxUIColor cf = ofxUIColor( 136, 196, 37, 200 );
+                ofxUIColor cfh = ofxUIColor( 190, 242, 2, 255 );
+                ofxUIColor cp = ofxUIColor( 234, 253, 230, 100 );
+                ofxUIColor cpo = ofxUIColor( 27, 103, 107, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_RUSTIC:
             {
-                ofColor cb = ofColor( 196, 182, 109, 75 );
-                ofColor co = ofColor( 247, 109, 60, 100 );
-                ofColor coh = ofColor( 196, 182, 109, 200 );
-                ofColor cf = ofColor( 213, 39, 5, 200 );
-                ofColor cfh = ofColor( 240, 211, 119, 255 );
-                ofColor cp = ofColor( 243, 232, 228, 100 );
-                ofColor cpo = ofColor( 247, 109, 60, 200 );
+                ofxUIColor cb = ofxUIColor( 196, 182, 109, 75 );
+                ofxUIColor co = ofxUIColor( 247, 109, 60, 100 );
+                ofxUIColor coh = ofxUIColor( 196, 182, 109, 200 );
+                ofxUIColor cf = ofxUIColor( 213, 39, 5, 200 );
+                ofxUIColor cfh = ofxUIColor( 240, 211, 119, 255 );
+                ofxUIColor cp = ofxUIColor( 243, 232, 228, 100 );
+                ofxUIColor cpo = ofxUIColor( 247, 109, 60, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MIDNIGHT:
             {
-                ofColor cb = ofColor( 11, 72, 107, 75 );
-                ofColor co = ofColor( 207, 240, 158, 100 );
-                ofColor coh = ofColor( 11, 72, 107, 200 );
-                ofColor cf = ofColor( 59, 134, 134, 200 );
-                ofColor cfh = ofColor( 121, 189, 154, 255 );
-                ofColor cp = ofColor( 168, 219, 168, 100 );
-                ofColor cpo = ofColor( 207, 240, 158, 200 );
+                ofxUIColor cb = ofxUIColor( 11, 72, 107, 75 );
+                ofxUIColor co = ofxUIColor( 207, 240, 158, 100 );
+                ofxUIColor coh = ofxUIColor( 11, 72, 107, 200 );
+                ofxUIColor cf = ofxUIColor( 59, 134, 134, 200 );
+                ofxUIColor cfh = ofxUIColor( 121, 189, 154, 255 );
+                ofxUIColor cp = ofxUIColor( 168, 219, 168, 100 );
+                ofxUIColor cpo = ofxUIColor( 207, 240, 158, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINBLUE:
             {
-                ofColor cb = ofColor( 254, 249, 240, 75 );
-                ofColor co = ofColor( 176, 248, 255, 100 );
-                ofColor coh = ofColor( 254, 249, 240, 200 );
-                ofColor cf = ofColor( 0, 188, 209, 200 );
-                ofColor cfh = ofColor( 118, 211, 222, 255 );
-                ofColor cp = ofColor( 174, 232, 251, 100 );
-                ofColor cpo = ofColor( 176, 248, 255, 200 );
+                ofxUIColor cb = ofxUIColor( 254, 249, 240, 75 );
+                ofxUIColor co = ofxUIColor( 176, 248, 255, 100 );
+                ofxUIColor coh = ofxUIColor( 254, 249, 240, 200 );
+                ofxUIColor cf = ofxUIColor( 0, 188, 209, 200 );
+                ofxUIColor cfh = ofxUIColor( 118, 211, 222, 255 );
+                ofxUIColor cp = ofxUIColor( 174, 232, 251, 100 );
+                ofxUIColor cpo = ofxUIColor( 176, 248, 255, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_LIMESTONE:
             {
-                ofColor cb = ofColor( 108, 144, 134, 75 );
-                ofColor co = ofColor( 252, 84, 99, 100 );
-                ofColor coh = ofColor( 108, 144, 134, 200 );
-                ofColor cf = ofColor( 169, 204, 24, 200 );
-                ofColor cfh = ofColor( 207, 73, 108, 255 );
-                ofColor cp = ofColor( 235, 234, 188, 100 );
-                ofColor cpo = ofColor( 252, 84, 99, 200 );
+                ofxUIColor cb = ofxUIColor( 108, 144, 134, 75 );
+                ofxUIColor co = ofxUIColor( 252, 84, 99, 100 );
+                ofxUIColor coh = ofxUIColor( 108, 144, 134, 200 );
+                ofxUIColor cf = ofxUIColor( 169, 204, 24, 200 );
+                ofxUIColor cfh = ofxUIColor( 207, 73, 108, 255 );
+                ofxUIColor cp = ofxUIColor( 235, 234, 188, 100 );
+                ofxUIColor cpo = ofxUIColor( 252, 84, 99, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;                  
                 
             case OFX_UI_THEME_SPEARMINT:
             {
-                ofColor cb = ofColor( 25, 140, 9, 75 );
-                ofColor co = ofColor( 255, 197, 95, 100 );
-                ofColor coh = ofColor( 25, 140, 9, 200 );
-                ofColor cf = ofColor( 220, 250, 250, 200 );
-                ofColor cfh = ofColor( 239, 88, 141, 255 );
-                ofColor cp = ofColor( 254, 169, 18, 100 );
-                ofColor cpo = ofColor( 255, 197, 95, 200 );
+                ofxUIColor cb = ofxUIColor( 25, 140, 9, 75 );
+                ofxUIColor co = ofxUIColor( 255, 197, 95, 100 );
+                ofxUIColor coh = ofxUIColor( 25, 140, 9, 200 );
+                ofxUIColor cf = ofxUIColor( 220, 250, 250, 200 );
+                ofxUIColor cfh = ofxUIColor( 239, 88, 141, 255 );
+                ofxUIColor cp = ofxUIColor( 254, 169, 18, 100 );
+                ofxUIColor cpo = ofxUIColor( 255, 197, 95, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;                  
                 
             case OFX_UI_THEME_MINPINK:
             {
-                ofColor cb = ofColor( 220, 250, 250, 75 );
-                ofColor co = ofColor( 25, 140, 9, 100 );
-                ofColor coh = ofColor( 220, 250, 250, 200 );
-                ofColor cf = ofColor( 239, 88, 141, 200 );
-                ofColor cfh = ofColor( 254, 169, 18, 255 );
-                ofColor cp = ofColor( 255, 197, 95, 100 );
-                ofColor cpo = ofColor( 25, 140, 9, 200 );
+                ofxUIColor cb = ofxUIColor( 220, 250, 250, 75 );
+                ofxUIColor co = ofxUIColor( 25, 140, 9, 100 );
+                ofxUIColor coh = ofxUIColor( 220, 250, 250, 200 );
+                ofxUIColor cf = ofxUIColor( 239, 88, 141, 200 );
+                ofxUIColor cfh = ofxUIColor( 254, 169, 18, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 197, 95, 100 );
+                ofxUIColor cpo = ofxUIColor( 25, 140, 9, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_PEPTOBISMOL:
             {
-                ofColor cb = ofColor( 223, 21, 26, 75 );
-                ofColor co = ofColor( 0, 218, 60, 100 );
-                ofColor coh = ofColor( 223, 21, 26, 200 );
-                ofColor cf = ofColor( 244, 243, 40, 200 );
-                ofColor cfh = ofColor( 253, 134, 3, 255 );
-                ofColor cp = ofColor( 0, 203, 231, 100 );
-                ofColor cpo = ofColor( 0, 218, 60, 200 );
+                ofxUIColor cb = ofxUIColor( 223, 21, 26, 75 );
+                ofxUIColor co = ofxUIColor( 0, 218, 60, 100 );
+                ofxUIColor coh = ofxUIColor( 223, 21, 26, 200 );
+                ofxUIColor cf = ofxUIColor( 244, 243, 40, 200 );
+                ofxUIColor cfh = ofxUIColor( 253, 134, 3, 255 );
+                ofxUIColor cp = ofxUIColor( 0, 203, 231, 100 );
+                ofxUIColor cpo = ofxUIColor( 0, 218, 60, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_BILEBLUE:
             {
-                ofColor cb = ofColor( 253, 134, 3, 75 );
-                ofColor co = ofColor( 244, 243, 40, 100 );
-                ofColor coh = ofColor( 253, 134, 3, 200 );
-                ofColor cf = ofColor( 0, 203, 231, 200 );
-                ofColor cfh = ofColor( 0, 218, 60, 255 );
-                ofColor cp = ofColor( 223, 21, 26, 100 );
-                ofColor cpo = ofColor( 244, 243, 40, 200 );
+                ofxUIColor cb = ofxUIColor( 253, 134, 3, 75 );
+                ofxUIColor co = ofxUIColor( 244, 243, 40, 100 );
+                ofxUIColor coh = ofxUIColor( 253, 134, 3, 200 );
+                ofxUIColor cf = ofxUIColor( 0, 203, 231, 200 );
+                ofxUIColor cfh = ofxUIColor( 0, 218, 60, 255 );
+                ofxUIColor cp = ofxUIColor( 223, 21, 26, 100 );
+                ofxUIColor cpo = ofxUIColor( 244, 243, 40, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_COOLCLAY:
             {
-                ofColor cb = ofColor( 153, 228, 255, 75 );
-                ofColor co = ofColor( 75, 89, 107, 100 );
-                ofColor coh = ofColor( 153, 228, 255, 200 );
-                ofColor cf = ofColor( 247, 79, 79, 200 );
-                ofColor cfh = ofColor( 255, 59, 59, 255 );
-                ofColor cp = ofColor( 27, 32, 38, 100 );
-                ofColor cpo = ofColor( 75, 89, 107, 200 );
+                ofxUIColor cb = ofxUIColor( 153, 228, 255, 75 );
+                ofxUIColor co = ofxUIColor( 75, 89, 107, 100 );
+                ofxUIColor coh = ofxUIColor( 153, 228, 255, 200 );
+                ofxUIColor cf = ofxUIColor( 247, 79, 79, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 59, 59, 255 );
+                ofxUIColor cp = ofxUIColor( 27, 32, 38, 100 );
+                ofxUIColor cpo = ofxUIColor( 75, 89, 107, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_BLUEBLUE:
             {
-                ofColor cb = ofColor( 0, 173, 239, 75 );
-                ofColor co = ofColor( 255, 242, 0, 100 );
-                ofColor coh = ofColor( 0, 0, 0, 200 );
-                ofColor cf = ofColor( 0, 173, 239, 200 );
-                ofColor cfh = ofColor( 236, 0, 140, 255 );
-                ofColor cp = ofColor( 255, 242, 0, 100 );
-                ofColor cpo = ofColor( 0, 0, 0, 200 );
+                ofxUIColor cb = ofxUIColor( 0, 173, 239, 75 );
+                ofxUIColor co = ofxUIColor( 255, 242, 0, 100 );
+                ofxUIColor coh = ofxUIColor( 0, 0, 0, 200 );
+                ofxUIColor cf = ofxUIColor( 0, 173, 239, 200 );
+                ofxUIColor cfh = ofxUIColor( 236, 0, 140, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 242, 0, 100 );
+                ofxUIColor cpo = ofxUIColor( 0, 0, 0, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_PINKPANTHER:
             {
-                ofColor cb = ofColor( 236, 0, 140, 75 );
-                ofColor co = ofColor( 0, 0, 0, 100 );
-                ofColor coh = ofColor( 0, 173, 239, 200 );
-                ofColor cf = ofColor( 236, 0, 140, 200 );
-                ofColor cfh = ofColor( 255, 242, 0, 255 );
-                ofColor cp = ofColor( 0, 0, 0, 100 );
-                ofColor cpo = ofColor( 0, 173, 239, 200 );
+                ofxUIColor cb = ofxUIColor( 236, 0, 140, 75 );
+                ofxUIColor co = ofxUIColor( 0, 0, 0, 100 );
+                ofxUIColor coh = ofxUIColor( 0, 173, 239, 200 );
+                ofxUIColor cf = ofxUIColor( 236, 0, 140, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 242, 0, 255 );
+                ofxUIColor cp = ofxUIColor( 0, 0, 0, 100 );
+                ofxUIColor cpo = ofxUIColor( 0, 173, 239, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MAROON:
             {
-                ofColor cb = ofColor( 101, 150, 158, 75 );
-                ofColor co = ofColor( 219, 217, 210, 100 );
-                ofColor coh = ofColor( 101, 150, 158, 200 );
-                ofColor cf = ofColor( 171, 20, 44, 200 );
-                ofColor cfh = ofColor( 189, 219, 222, 255 );
-                ofColor cp = ofColor( 205, 212, 108, 100 );
-                ofColor cpo = ofColor( 219, 217, 210, 200 );
+                ofxUIColor cb = ofxUIColor( 101, 150, 158, 75 );
+                ofxUIColor co = ofxUIColor( 219, 217, 210, 100 );
+                ofxUIColor coh = ofxUIColor( 101, 150, 158, 200 );
+                ofxUIColor cf = ofxUIColor( 171, 20, 44, 200 );
+                ofxUIColor cfh = ofxUIColor( 189, 219, 222, 255 );
+                ofxUIColor cp = ofxUIColor( 205, 212, 108, 100 );
+                ofxUIColor cpo = ofxUIColor( 219, 217, 210, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_PINKLATTE:
             {
-                ofColor cb = ofColor( 218, 216, 167, 75 );
-                ofColor co = ofColor( 127, 199, 175, 100 );
-                ofColor coh = ofColor( 218, 216, 167, 200 );
-                ofColor cf = ofColor( 255, 61, 127, 200 );
-                ofColor cfh = ofColor( 255, 158, 157, 255 );
-                ofColor cp = ofColor( 63, 184, 175, 100 );
-                ofColor cpo = ofColor( 127, 199, 175, 200 );
+                ofxUIColor cb = ofxUIColor( 218, 216, 167, 75 );
+                ofxUIColor co = ofxUIColor( 127, 199, 175, 100 );
+                ofxUIColor coh = ofxUIColor( 218, 216, 167, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 61, 127, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 158, 157, 255 );
+                ofxUIColor cp = ofxUIColor( 63, 184, 175, 100 );
+                ofxUIColor cpo = ofxUIColor( 127, 199, 175, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINGREEN:
             {
-                ofColor cb = ofColor( 255, 255, 255, 75 );
-                ofColor co = ofColor( 242, 230, 194, 100 );
-                ofColor coh = ofColor( 255, 255, 255, 200 );
-                ofColor cf = ofColor( 111, 191, 162, 200 );
-                ofColor cfh = ofColor( 191, 184, 174, 255 );
-                ofColor cp = ofColor( 242, 199, 119, 100 );
-                ofColor cpo = ofColor( 242, 230, 194, 200 );
+                ofxUIColor cb = ofxUIColor( 255, 255, 255, 75 );
+                ofxUIColor co = ofxUIColor( 242, 230, 194, 100 );
+                ofxUIColor coh = ofxUIColor( 255, 255, 255, 200 );
+                ofxUIColor cf = ofxUIColor( 111, 191, 162, 200 );
+                ofxUIColor cfh = ofxUIColor( 191, 184, 174, 255 );
+                ofxUIColor cp = ofxUIColor( 242, 199, 119, 100 );
+                ofxUIColor cpo = ofxUIColor( 242, 230, 194, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_HELLOYELLOW:
             {
-                ofColor cb = ofColor( 255, 211, 0, 75 );
-                ofColor co = ofColor( 74, 186, 176, 100 );
-                ofColor coh = ofColor( 152, 33, 0, 200 );
-                ofColor cf = ofColor( 255, 211, 0, 200 );
-                ofColor cfh = ofColor( 255, 245, 158, 255 );
-                ofColor cp = ofColor( 74, 186, 176, 100 );
-                ofColor cpo = ofColor( 152, 33, 0, 200 );
+                ofxUIColor cb = ofxUIColor( 255, 211, 0, 75 );
+                ofxUIColor co = ofxUIColor( 74, 186, 176, 100 );
+                ofxUIColor coh = ofxUIColor( 152, 33, 0, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 211, 0, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 245, 158, 255 );
+                ofxUIColor cp = ofxUIColor( 74, 186, 176, 100 );
+                ofxUIColor cpo = ofxUIColor( 152, 33, 0, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_TEALTEAL:
             {
-                ofColor cb = ofColor( 74, 186, 176, 75 );
-                ofColor co = ofColor( 255, 211, 0, 100 );
-                ofColor coh = ofColor( 255, 245, 158, 200 );
-                ofColor cf = ofColor( 74, 186, 176, 200 );
-                ofColor cfh = ofColor( 152, 33, 0, 255 );
-                ofColor cp = ofColor( 255, 211, 0, 100 );
-                ofColor cpo = ofColor( 255, 245, 158, 200 );            
+                ofxUIColor cb = ofxUIColor( 74, 186, 176, 75 );
+                ofxUIColor co = ofxUIColor( 255, 211, 0, 100 );
+                ofxUIColor coh = ofxUIColor( 255, 245, 158, 200 );
+                ofxUIColor cf = ofxUIColor( 74, 186, 176, 200 );
+                ofxUIColor cfh = ofxUIColor( 152, 33, 0, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 211, 0, 100 );
+                ofxUIColor cpo = ofxUIColor( 255, 245, 158, 200 );            
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_RUSTICORANGE:
             {
-                ofColor cb = ofColor( 107, 85, 48, 75 );
-                ofColor co = ofColor( 49, 48, 66, 100 );
-                ofColor coh = ofColor( 107, 85, 48, 200 );
-                ofColor cf = ofColor( 255, 109, 36, 200 );
-                ofColor cfh = ofColor( 255, 235, 107, 255 );
-                ofColor cp = ofColor( 42, 135, 50, 100 );
-                ofColor cpo = ofColor( 49, 48, 66, 200 );
+                ofxUIColor cb = ofxUIColor( 107, 85, 48, 75 );
+                ofxUIColor co = ofxUIColor( 49, 48, 66, 100 );
+                ofxUIColor coh = ofxUIColor( 107, 85, 48, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 109, 36, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 235, 107, 255 );
+                ofxUIColor cp = ofxUIColor( 42, 135, 50, 100 );
+                ofxUIColor cpo = ofxUIColor( 49, 48, 66, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_TEALSALMON:
             {
-                ofColor cb = ofColor( 78, 133, 136, 75 );
-                ofColor co = ofColor( 56, 69, 59, 100 );
-                ofColor coh = ofColor( 78, 133, 136, 200 );
-                ofColor cf = ofColor( 255, 70, 84, 200 );
-                ofColor cfh = ofColor( 255, 213, 106, 255 );
-                ofColor cp = ofColor( 255, 254, 211, 100 );
-                ofColor cpo = ofColor( 56, 69, 59, 200 );
+                ofxUIColor cb = ofxUIColor( 78, 133, 136, 75 );
+                ofxUIColor co = ofxUIColor( 56, 69, 59, 100 );
+                ofxUIColor coh = ofxUIColor( 78, 133, 136, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 70, 84, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 213, 106, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 254, 211, 100 );
+                ofxUIColor cpo = ofxUIColor( 56, 69, 59, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_CITRUSBLUE:
             {
-                ofColor cb = ofColor( 57, 142, 182, 75 );
-                ofColor co = ofColor( 34, 104, 136, 100 );
-                ofColor coh = ofColor( 57, 142, 182, 200 );
-                ofColor cf = ofColor( 255, 162, 0, 200 );
-                ofColor cfh = ofColor( 255, 214, 0, 255 );
-                ofColor cp = ofColor( 255, 245, 0, 100 );
-                ofColor cpo = ofColor( 34, 104, 136, 200 );
+                ofxUIColor cb = ofxUIColor( 57, 142, 182, 75 );
+                ofxUIColor co = ofxUIColor( 34, 104, 136, 100 );
+                ofxUIColor coh = ofxUIColor( 57, 142, 182, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 162, 0, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 214, 0, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 245, 0, 100 );
+                ofxUIColor cpo = ofxUIColor( 34, 104, 136, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_LIMEPURPLE:
             {
-                ofColor cb = ofColor( 87, 54, 255, 75 );
-                ofColor co = ofColor( 38, 38, 38, 100 );
-                ofColor coh = ofColor( 87, 54, 255, 200 );
-                ofColor cf = ofColor( 231, 255, 54, 200 );
-                ofColor cfh = ofColor( 255, 54, 111, 255 );
-                ofColor cp = ofColor( 35, 116, 222, 100 );
-                ofColor cpo = ofColor( 38, 38, 38, 200 );
+                ofxUIColor cb = ofxUIColor( 87, 54, 255, 75 );
+                ofxUIColor co = ofxUIColor( 38, 38, 38, 100 );
+                ofxUIColor coh = ofxUIColor( 87, 54, 255, 200 );
+                ofxUIColor cf = ofxUIColor( 231, 255, 54, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 54, 111, 255 );
+                ofxUIColor cp = ofxUIColor( 35, 116, 222, 100 );
+                ofxUIColor cpo = ofxUIColor( 38, 38, 38, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_LIMESTONE2:
             {
-                ofColor cb = ofColor( 101, 98, 115, 75 );
-                ofColor co = ofColor( 89, 186, 169, 100 );
-                ofColor coh = ofColor( 101, 98, 115, 200 );
-                ofColor cf = ofColor( 216, 241, 113, 200 );
-                ofColor cfh = ofColor( 252, 255, 217, 255 );
-                ofColor cp = ofColor( 64, 18, 44, 100 );
-                ofColor cpo = ofColor( 89, 186, 169, 200 );                
+                ofxUIColor cb = ofxUIColor( 101, 98, 115, 75 );
+                ofxUIColor co = ofxUIColor( 89, 186, 169, 100 );
+                ofxUIColor coh = ofxUIColor( 101, 98, 115, 200 );
+                ofxUIColor cf = ofxUIColor( 216, 241, 113, 200 );
+                ofxUIColor cfh = ofxUIColor( 252, 255, 217, 255 );
+                ofxUIColor cp = ofxUIColor( 64, 18, 44, 100 );
+                ofxUIColor cpo = ofxUIColor( 89, 186, 169, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_COOLPURPLE:
             {
-                ofColor cb = ofColor( 38, 137, 233, 75 );
-                ofColor co = ofColor( 11, 246, 147, 100 );
-                ofColor coh = ofColor( 38, 137, 233, 200 );
-                ofColor cf = ofColor( 233, 26, 157, 200 );
-                ofColor cfh = ofColor( 246, 182, 11, 255 );
-                ofColor cp = ofColor( 246, 242, 11, 100 );
-                ofColor cpo = ofColor( 11, 246, 147, 200 );                
+                ofxUIColor cb = ofxUIColor( 38, 137, 233, 75 );
+                ofxUIColor co = ofxUIColor( 11, 246, 147, 100 );
+                ofxUIColor coh = ofxUIColor( 38, 137, 233, 200 );
+                ofxUIColor cf = ofxUIColor( 233, 26, 157, 200 );
+                ofxUIColor cfh = ofxUIColor( 246, 182, 11, 255 );
+                ofxUIColor cp = ofxUIColor( 246, 242, 11, 100 );
+                ofxUIColor cpo = ofxUIColor( 11, 246, 147, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_GRAYRED:
             {
-                ofColor cb = ofColor( 41, 34, 31, 75 );
-                ofColor co = ofColor( 19, 116, 125, 100 );
-                ofColor coh = ofColor( 41, 34, 31, 200 );
-                ofColor cf = ofColor( 252, 53, 76, 200 );
-                ofColor cfh = ofColor( 252, 247, 197, 255 );
-                ofColor cp = ofColor( 10, 191, 188, 100 );
-                ofColor cpo = ofColor( 19, 116, 125, 200 );                
+                ofxUIColor cb = ofxUIColor( 41, 34, 31, 75 );
+                ofxUIColor co = ofxUIColor( 19, 116, 125, 100 );
+                ofxUIColor coh = ofxUIColor( 41, 34, 31, 200 );
+                ofxUIColor cf = ofxUIColor( 252, 53, 76, 200 );
+                ofxUIColor cfh = ofxUIColor( 252, 247, 197, 255 );
+                ofxUIColor cp = ofxUIColor( 10, 191, 188, 100 );
+                ofxUIColor cpo = ofxUIColor( 19, 116, 125, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_METALGEAR2:
             {
-                ofColor cb = ofColor( 205, 189, 174, 75 );
-                ofColor co = ofColor( 122, 91, 62, 100 );
-                ofColor coh = ofColor( 205, 189, 174, 200 );
-                ofColor cf = ofColor( 250, 75, 0, 200 );
-                ofColor cfh = ofColor( 250, 250, 250, 255 );
-                ofColor cp = ofColor( 31, 31, 31, 100 );
-                ofColor cpo = ofColor( 122, 91, 62, 200 );
+                ofxUIColor cb = ofxUIColor( 205, 189, 174, 75 );
+                ofxUIColor co = ofxUIColor( 122, 91, 62, 100 );
+                ofxUIColor coh = ofxUIColor( 205, 189, 174, 200 );
+                ofxUIColor cf = ofxUIColor( 250, 75, 0, 200 );
+                ofxUIColor cfh = ofxUIColor( 250, 250, 250, 255 );
+                ofxUIColor cp = ofxUIColor( 31, 31, 31, 100 );
+                ofxUIColor cpo = ofxUIColor( 122, 91, 62, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_LIGHTPINK:
             {
-                ofColor cb = ofColor( 158, 30, 76, 75 );
-                ofColor co = ofColor( 143, 143, 143, 100 );
-                ofColor coh = ofColor( 158, 30, 76, 200 );
-                ofColor cf = ofColor( 236, 236, 236, 200 );
-                ofColor cfh = ofColor( 255, 17, 104, 255 );
-                ofColor cp = ofColor( 37, 2, 15, 100 );
-                ofColor cpo = ofColor( 143, 143, 143, 200 );                
+                ofxUIColor cb = ofxUIColor( 158, 30, 76, 75 );
+                ofxUIColor co = ofxUIColor( 143, 143, 143, 100 );
+                ofxUIColor coh = ofxUIColor( 158, 30, 76, 200 );
+                ofxUIColor cf = ofxUIColor( 236, 236, 236, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 17, 104, 255 );
+                ofxUIColor cp = ofxUIColor( 37, 2, 15, 100 );
+                ofxUIColor cpo = ofxUIColor( 143, 143, 143, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINPINK2:
             {
-                ofColor cb = ofColor( 236, 236, 236, 75 );
-                ofColor co = ofColor( 158, 30, 76, 100 );
-                ofColor coh = ofColor( 236, 236, 236, 200 );
-                ofColor cf = ofColor( 255, 17, 104, 200 );
-                ofColor cfh = ofColor( 37, 2, 15, 255 );
-                ofColor cp = ofColor( 143, 143, 143, 100 );
-                ofColor cpo = ofColor( 158, 30, 76, 200 );                
+                ofxUIColor cb = ofxUIColor( 236, 236, 236, 75 );
+                ofxUIColor co = ofxUIColor( 158, 30, 76, 100 );
+                ofxUIColor coh = ofxUIColor( 236, 236, 236, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 17, 104, 200 );
+                ofxUIColor cfh = ofxUIColor( 37, 2, 15, 255 );
+                ofxUIColor cp = ofxUIColor( 143, 143, 143, 100 );
+                ofxUIColor cpo = ofxUIColor( 158, 30, 76, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MAXPINK:
             {
-                ofColor cb = ofColor( 255, 20, 87, 75 );
-                ofColor co = ofColor( 10, 10, 10, 100 );
-                ofColor coh = ofColor( 227, 246, 255, 200 );
-                ofColor cf = ofColor( 255, 20, 87, 200 );
-                ofColor cfh = ofColor( 255, 216, 125, 255 );
-                ofColor cp = ofColor( 10, 10, 10, 100 );
-                ofColor cpo = ofColor( 227, 246, 255, 200 );                
+                ofxUIColor cb = ofxUIColor( 255, 20, 87, 75 );
+                ofxUIColor co = ofxUIColor( 10, 10, 10, 100 );
+                ofxUIColor coh = ofxUIColor( 227, 246, 255, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 20, 87, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 216, 125, 255 );
+                ofxUIColor cp = ofxUIColor( 10, 10, 10, 100 );
+                ofxUIColor cpo = ofxUIColor( 227, 246, 255, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINYELLOW:
             {
-                ofColor cb = ofColor( 229, 228, 218, 75 );
-                ofColor co = ofColor( 216, 210, 153, 100 );
-                ofColor coh = ofColor( 229, 228, 218, 200 );
-                ofColor cf = ofColor( 245, 224, 56, 200 );
-                ofColor cfh = ofColor( 23, 22, 92, 255 );
-                ofColor cp = ofColor( 190, 191, 158, 100 );
-                ofColor cpo = ofColor( 216, 210, 153, 200 );
+                ofxUIColor cb = ofxUIColor( 229, 228, 218, 75 );
+                ofxUIColor co = ofxUIColor( 216, 210, 153, 100 );
+                ofxUIColor coh = ofxUIColor( 229, 228, 218, 200 );
+                ofxUIColor cf = ofxUIColor( 245, 224, 56, 200 );
+                ofxUIColor cfh = ofxUIColor( 23, 22, 92, 255 );
+                ofxUIColor cp = ofxUIColor( 190, 191, 158, 100 );
+                ofxUIColor cpo = ofxUIColor( 216, 210, 153, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINLIME:
             {
-                ofColor cb = ofColor( 245, 225, 226, 75 );
-                ofColor co = ofColor( 225, 183, 237, 100 );
-                ofColor coh = ofColor( 245, 225, 226, 200 );
-                ofColor cf = ofColor( 185, 222, 81, 200 );
-                ofColor cfh = ofColor( 209, 227, 137, 255 );
-                ofColor cp = ofColor( 224, 72, 145, 100 );
-                ofColor cpo = ofColor( 225, 183, 237, 200 );
+                ofxUIColor cb = ofxUIColor( 245, 225, 226, 75 );
+                ofxUIColor co = ofxUIColor( 225, 183, 237, 100 );
+                ofxUIColor coh = ofxUIColor( 245, 225, 226, 200 );
+                ofxUIColor cf = ofxUIColor( 185, 222, 81, 200 );
+                ofxUIColor cfh = ofxUIColor( 209, 227, 137, 255 );
+                ofxUIColor cp = ofxUIColor( 224, 72, 145, 100 );
+                ofxUIColor cpo = ofxUIColor( 225, 183, 237, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINORANGE:
             {
-                ofColor cb = ofColor( 204, 204, 204, 75 );
-                ofColor co = ofColor( 111, 111, 111, 100 );
-                ofColor coh = ofColor( 204, 204, 204, 200 );
-                ofColor cf = ofColor( 255, 100, 0, 200 );
-                ofColor cfh = ofColor( 255, 255, 255, 255 );
-                ofColor cp = ofColor( 51, 51, 51, 100 );
-                ofColor cpo = ofColor( 111, 111, 111, 200 );
+                ofxUIColor cb = ofxUIColor( 204, 204, 204, 75 );
+                ofxUIColor co = ofxUIColor( 111, 111, 111, 100 );
+                ofxUIColor coh = ofxUIColor( 204, 204, 204, 200 );
+                ofxUIColor cf = ofxUIColor( 255, 100, 0, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 255, 255, 255 );
+                ofxUIColor cp = ofxUIColor( 51, 51, 51, 100 );
+                ofxUIColor cpo = ofxUIColor( 111, 111, 111, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_GRAYDAY:
             {
-                ofColor cb = ofColor( 177, 198, 204, 75 );
-                ofColor co = ofColor( 255, 255, 255, 100 );
-                ofColor coh = ofColor( 20, 20, 20, 200 );
-                ofColor cf = ofColor( 177, 198, 204, 200 );
-                ofColor cfh = ofColor( 255, 239, 94, 255 );
-                ofColor cp = ofColor( 255, 255, 255, 100 );
-                ofColor cpo = ofColor( 20, 20, 20, 200 );
+                ofxUIColor cb = ofxUIColor( 177, 198, 204, 75 );
+                ofxUIColor co = ofxUIColor( 255, 255, 255, 100 );
+                ofxUIColor coh = ofxUIColor( 20, 20, 20, 200 );
+                ofxUIColor cf = ofxUIColor( 177, 198, 204, 200 );
+                ofxUIColor cfh = ofxUIColor( 255, 239, 94, 255 );
+                ofxUIColor cp = ofxUIColor( 255, 255, 255, 100 );
+                ofxUIColor cpo = ofxUIColor( 20, 20, 20, 200 );
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             case OFX_UI_THEME_MINBLACK:
             {
-                ofColor cb = ofColor( 255, 255, 255, 75 );
-                ofColor co = ofColor( 209, 231, 81, 100 );
-                ofColor coh = ofColor( 255, 255, 255, 200 );
-                ofColor cf = ofColor( 0, 0, 0, 200 );
-                ofColor cfh = ofColor( 38, 173, 228, 255 );
-                ofColor cp = ofColor( 77, 188, 233, 100 );
-                ofColor cpo = ofColor( 209, 231, 81, 200 );                
+                ofxUIColor cb = ofxUIColor( 255, 255, 255, 75 );
+                ofxUIColor co = ofxUIColor( 209, 231, 81, 100 );
+                ofxUIColor coh = ofxUIColor( 255, 255, 255, 200 );
+                ofxUIColor cf = ofxUIColor( 0, 0, 0, 200 );
+                ofxUIColor cfh = ofxUIColor( 38, 173, 228, 255 );
+                ofxUIColor cp = ofxUIColor( 77, 188, 233, 100 );
+                ofxUIColor cpo = ofxUIColor( 209, 231, 81, 200 );                
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break;  
                 
             default:
             {
-                ofColor cb = OFX_UI_COLOR_BACK; 
-                ofColor co = OFX_UI_COLOR_OUTLINE; 
-                ofColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
-                ofColor cf = OFX_UI_COLOR_FILL; 
-                ofColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
-                ofColor cp = OFX_UI_COLOR_PADDED;
-                ofColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
+                ofxUIColor cb = OFX_UI_COLOR_BACK; 
+                ofxUIColor co = OFX_UI_COLOR_OUTLINE; 
+                ofxUIColor coh = OFX_UI_COLOR_OUTLINE_HIGHLIGHT;
+                ofxUIColor cf = OFX_UI_COLOR_FILL; 
+                ofxUIColor cfh = OFX_UI_COLOR_FILL_HIGHLIGHT;
+                ofxUIColor cp = OFX_UI_COLOR_PADDED;
+                ofxUIColor cpo = OFX_UI_COLOR_PADDED_OUTLINE;
                 setUIColors( cb, co, coh, cf, cfh, cp, cpo );                                 
             }
                 break; 
         }
     }
     
-    ofColor& getWidgetColorPadded()
+    ofxUIColor& getWidgetColorPadded()
 	{
         return widget_color_padded_rect;
 	}
     
-	ofColor& getWidgetColorPaddedOutline()
+	ofxUIColor& getWidgetColorPaddedOutline()
 	{
         return widget_color_padded_rect_outline;
 	}
     
-	ofColor& getWidgetColorBack()
+	ofxUIColor& getWidgetColorBack()
 	{
 		return widget_color_back;
 	}
 	
-	ofColor& getWidgetColorOutline()
+	ofxUIColor& getWidgetColorOutline()
 	{
 		return widget_color_outline;
 	}
 	
-	ofColor& getWidgetColorOutlineHighlight()
+	ofxUIColor& getWidgetColorOutlineHighlight()
 	{
 		return widget_color_outline_highlight;
 	}
 	
-	ofColor& getWidgetColorFill()
+	ofxUIColor& getWidgetColorFill()
 	{
 		return widget_color_fill;
 	}
 	
-	ofColor& getWidgetColorFillHighlight()
+	ofxUIColor& getWidgetColorFillHighlight()
 	{
 		return widget_color_fill_highlight;
 	}
@@ -3091,7 +3095,7 @@ public:
         widget->setColorPaddedOutline(color_padded_rect_outline);
     }
     
-	void setWidgetColor(int _target, ofColor _color)
+	void setWidgetColor(int _target, ofxUIColor _color)
 	{
 		switch (_target) 
 		{
@@ -3156,14 +3160,37 @@ public:
 		}
 	}
     
-    ofxUIWidget *getWidget(string _name)
+    ofxUIWidget *getWidget(string _name, int widgetID = -1)
 	{
-		return widgets_map[_name]; 
+        if(widgetID == -1)
+        {
+            multimap<string, ofxUIWidget *>::iterator wit = widgets_map.find(_name);
+            if(wit != widgets_map.end())
+            {
+                return wit->second;
+            }
+        }
+        else
+        {
+            for(multimap<string, ofxUIWidget*>::iterator wit = widgets_map.equal_range(_name).first; wit != widgets_map.equal_range(_name).second; ++wit)
+            {
+                if(wit->second->getID() == widgetID)
+                {
+                    return wit->second;
+                }
+            }
+            multimap<string, ofxUIWidget *>::iterator wit = widgets_map.find(_name);
+            if(wit != widgets_map.end())
+            {
+                return wit->second;
+            }                    
+        }
+        return NULL;
 	}
 	
     void removeWidget(string _name)
     {
-        ofxUIWidget *w = widgets_map[_name];
+        ofxUIWidget *w = getWidget(_name);
         if(w != NULL)
         {
             removeWidget(w);
@@ -3247,7 +3274,7 @@ public:
         return widgets;
     }
     
-    vector<ofxUIWidget*> getWidgetsOfType(ofxWidgetType type)
+    vector<ofxUIWidget*> getWidgetsOfType(ofxUIWidgetType type)
     {
         vector<ofxUIWidget*> widgetToReturn; 
         for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
@@ -3283,9 +3310,9 @@ protected:
         widgets_map.insert ( pair<string,ofxUIWidget *>( widget->getName(), widget) );
     }
     
-	ofTrueTypeFont *font_large; 	
-	ofTrueTypeFont *font_medium; 		
-	ofTrueTypeFont *font_small;
+	ofxUIFont *font_large; 	
+	ofxUIFont *font_medium; 		
+	ofxUIFont *font_small;
  	
 	ofxUIEventArgs *GUIevent; 
     int state;
@@ -3293,7 +3320,7 @@ protected:
     bool autoDraw;
     bool autoUpdate;
     
-    map<string, ofxUIWidget*> widgets_map;
+    multimap<string, ofxUIWidget*> widgets_map;
 	vector<ofxUIWidget*> widgets;
     map<string, ofxUIWidget*> widgetsAreModal;
 	vector<ofxUIWidget*> widgetsWithState;
@@ -3314,23 +3341,23 @@ protected:
     
     string fontName;
 
-    ofxWidgetPosition widgetPosition;
-    ofxWidgetAlignment widgetAlign;
-    ofxWidgetFontType widgetFontSize;
+    ofxUIWidgetPosition widgetPosition;
+    ofxUIWidgetAlignment widgetAlign;
+    ofxUIWidgetFontType widgetFontSize;
     
-	ofColor widget_color_back;
-	ofColor widget_color_outline;
-	ofColor widget_color_outline_highlight;
-	ofColor widget_color_fill;
-	ofColor widget_color_fill_highlight;
-    ofColor widget_color_padded_rect;
-	ofColor widget_color_padded_rect_outline;
+	ofxUIColor widget_color_back;
+	ofxUIColor widget_color_outline;
+	ofxUIColor widget_color_outline_highlight;
+	ofxUIColor widget_color_fill;
+	ofxUIColor widget_color_fill_highlight;
+    ofxUIColor widget_color_padded_rect;
+	ofxUIColor widget_color_padded_rect_outline;
     
     bool bDrawWidgetPadding;
     bool bDrawWidgetPaddingOutline;
     
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
-    bool updateFont(ofxWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
+    bool updateFont(ofxUIWidgetFontType _kind, string filename, int fontsize, bool _bAntiAliased=true, bool _bFullCharacterSet=false, bool makeContours=false, float simplifyAmt=0.3, int dpi=0) {
         bool success = false;
         switch(_kind)
         {
@@ -3339,7 +3366,7 @@ protected:
                 {
                     delete font_large;
                 }
-                font_large = new ofTrueTypeFont();
+                font_large = new ofxUIFont();
                 success = font_large->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
                 break;
                 
@@ -3348,7 +3375,7 @@ protected:
                 {
                     delete font_medium;
                 }
-                font_medium = new ofTrueTypeFont();
+                font_medium = new ofxUIFont();
                 success = font_medium->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
                 break;
                 
@@ -3357,7 +3384,7 @@ protected:
                 {
                     delete font_small;
                 }
-                font_small = new ofTrueTypeFont();
+                font_small = new ofxUIFont();
                 success = font_small->loadFont(filename,fontsize,_bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt,dpi);
                 break;
         }
@@ -3373,31 +3400,35 @@ protected:
             {
                 case OFX_UI_TEXTINPUT_ON_FOCUS:
                 {
-                    hasKeyBoard = true;         
+                    hasKeyBoard = true;
+                    return;
                 }
                     break; 
                     
                 case OFX_UI_TEXTINPUT_ON_ENTER:
                 {
                     hasKeyBoard = true; 
-                }        
+                    return;
+                }
                     break; 
                     
                 case OFX_UI_TEXTINPUT_ON_UNFOCUS:
                 {
                     hasKeyBoard = false; 
-                }        
+                    return;
+                }
                     break; 
                     
                 default:
                 {
                     hasKeyBoard = false; 
+                    return; 
                 }
                     break;                     
             }
         }        
+        hasKeyBoard = false;
     }
-    
 };
 
 #endif

@@ -101,11 +101,11 @@ public:
 			value = min; 
 		}
 		
-		value = ofMap(value, min, max, 0.0, 1.0, true); 
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
         
 		if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
 		{
-			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofToString(max,labelPrecision)), OFX_UI_FONT_SMALL); 
+			label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofxUIToString(max,labelPrecision)), OFX_UI_FONT_SMALL); 
 		}
 		else 
 		{
@@ -192,7 +192,7 @@ public:
         {
             if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
             {
-                ofSetColor(255);
+                ofxUISetColor(255);
                 
                 trackleft->draw(rect->getX(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());                
                 trackright->draw(rect->getX()+rect->getWidth()-traspect*rect->getHeight(), rect->getY(), traspect*rect->getHeight(), rect->getHeight());
@@ -206,7 +206,7 @@ public:
         if(draw_outline)
         {
             ofNoFill();
-            ofSetColor(color_outline); 
+            ofxUISetColor(color_outline); 
             rect->draw(); 
         }
     }
@@ -220,7 +220,7 @@ public:
     {
         if(draw_fill)
         {			 
-            ofSetColor(255); 
+            ofxUISetColor(255); 
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
 			{
                 if(value > 0.00)
@@ -231,10 +231,10 @@ public:
                 if(value > .99)
                     progressright->draw(rect->getX()+rect->getWidth() - tlaspect*rect->getHeight(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
 
-                ofSetRectMode(OF_RECTMODE_CENTER);
-                ofSetColor(255); 
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+                ofxUISetColor(255); 
                 handle->draw(imageRect->getX()+value*imageRect->getWidth(), rect->getY()+rect->getHalfHeight(), ratio*handle->getWidth(), ratio*handle->getHeight());
-                ofSetRectMode(OF_RECTMODE_CORNER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
 			}
         }
     }
@@ -243,7 +243,7 @@ public:
     {
         if(draw_fill_highlight)
         {
-            ofSetColor(255); 
+            ofxUISetColor(255); 
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
 			{
                 if(value > 0.00)
@@ -254,10 +254,10 @@ public:
                 if(value > .99)
                     progressright->draw(rect->getX()+rect->getWidth() - tlaspect*rect->getHeight(), rect->getY(), tlaspect*rect->getHeight(), rect->getHeight());
                 
-                ofSetRectMode(OF_RECTMODE_CENTER);
-                ofSetColor(255);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+                ofxUISetColor(255);
                 handleDown->draw(imageRect->getX()+value*imageRect->getWidth(), rect->getY()+rect->getHalfHeight(), ratio*handle->getWidth(), ratio*handle->getHeight());
-                ofSetRectMode(OF_RECTMODE_CORNER);
+                ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
 			}
 			else 
 			{
@@ -266,7 +266,7 @@ public:
             }
 			if(kind == OFX_UI_WIDGET_IMAGESLIDER_V)
 			{
-				label->drawString(imageRect->getX()+imageRect->getWidth()+padding, label->getRect()->getHeight()/2.0+imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value, ofToString(getScaledValue(),labelPrecision)); 
+				label->drawString(imageRect->getX()+imageRect->getWidth()+padding, label->getRect()->getHeight()/2.0+imageRect->getY()+imageRect->getHeight()-imageRect->getHeight()*value, ofxUIToString(getScaledValue(),labelPrecision)); 
 			}
         }        
     }
@@ -340,7 +340,7 @@ public:
 	{
 		if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
 		{
-			label->setLabel(name + ": " + ofToString(getScaledValue(),labelPrecision)); 		
+			label->setLabel(name + ": " + ofxUIToString(getScaledValue(),labelPrecision)); 		
 		}		
 	}
     

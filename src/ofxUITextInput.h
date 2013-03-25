@@ -91,14 +91,14 @@ public:
     {
         if(draw_fill)
         {
-            ofFill(); 
-            ofSetColor(color_fill); 
+            ofxUIFill(); 
+            ofxUISetColor(color_fill); 
             rect->draw(); 
         }
         if(clicked)
 		{
             ofNoFill();
-            ofSetColor(color_outline_highlight);
+            ofxUISetColor(color_outline_highlight);
             rect->draw();
             
 			float h = label->getRect()->height; 
@@ -106,8 +106,8 @@ public:
 			float ph = rect->getHeight(); 
 			label->getRect()->y = ph/2.0 - h/2.0; 
 			
-            ofFill(); 
-			ofSetColor(label->getColorFillHighlight(), 255.0*fabs(cos(theta))); 
+            ofxUIFill(); 
+			ofxUISetColor(label->getColorFillHighlight(), 255.0*fabs(cos(theta))); 
 			theta +=0.05; 
 			
 			spaceOffset = label->getStringWidth(displaystring+".")-cursorWidth; 
@@ -118,13 +118,13 @@ public:
 			float x = label->getRect()->getX()+spaceOffset;			
 			float y = label->getRect()->getY()-padding; 
 			float t = label->getRect()->height+padding*2.0; 			
-			ofRect(x, y, cursorWidth, t); 
+			ofxUIDrawRect(x, y, cursorWidth, t); 
 		}
 		
 		if(textstring.size() == 0 && !clicked)
 		{
-			ofFill(); 
-            ofSetColor(color_fill); 
+			ofxUIFill(); 
+            ofxUISetColor(color_fill); 
 			label->drawString(rect->getX()+defaultX, rect->getY()+defaultY, defaultstring); 
 		}        
     }
@@ -228,15 +228,8 @@ public:
 					break;
 					
 				case OF_KEY_RETURN:
-					if(autoclear)
-					{
-						triggerType = OFX_UI_TEXTINPUT_ON_ENTER;
-					}
-					else
-					{
-						triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
-					}
-					triggerEvent(this); 			
+                    triggerType = OFX_UI_TEXTINPUT_ON_ENTER;
+					triggerEvent(this);
 					if(autoclear)
 					{
 						textstring.clear(); 
@@ -345,7 +338,12 @@ public:
 		return textstring; 
 	}
 	
-	int getTriggerType()
+    void setTriggerType(int _triggerType)
+    {
+        triggerType = _triggerType; 
+    }
+	
+    int getTriggerType()
 	{
 		return triggerType; 
 	}
@@ -382,7 +380,7 @@ public:
 	void setParent(ofxUIWidget *_parent)
 	{
 		parent = _parent; 
-        if(rect->height == 0)
+        if(rect->height == 0 || rect->height < label->getPaddingRect()->height+padding*2.0)
         {
             rect->height = label->getPaddingRect()->height+padding*2.0; 
         }

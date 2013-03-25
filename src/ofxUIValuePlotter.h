@@ -74,11 +74,11 @@ public:
     {
         if(draw_back)
         {
-            ofFill();
-            ofSetColor(color_back);
+            ofxUIFill();
+            ofxUISetColor(color_back);
             rect->draw();
             
-            ofLine(rect->getX(), rect->getY()+rect->getHalfHeight(), rect->getX()+rect->getWidth(), rect->getY()+rect->getHalfHeight());
+            ofxUIDrawLine(rect->getX(), rect->getY()+rect->getHalfHeight(), rect->getX()+rect->getWidth(), rect->getY()+rect->getHalfHeight());
         }
     }
 
@@ -89,11 +89,11 @@ public:
 			ofNoFill();
 			if(draw_fill_highlight)
 			{
-				ofSetColor(color_fill_highlight);
+				ofxUISetColor(color_fill_highlight);
 			}
 			else
 			{
-				ofSetColor(color_fill);
+				ofxUISetColor(color_fill);
 			}
             ofPushMatrix(); 
             ofTranslate(rect->getX(), rect->getY()+scale, 0);
@@ -101,7 +101,7 @@ public:
             ofBeginShape();
             for (int i = 0; i < bufferSize; i++)
             {
-                ofVertex(inc*(float)i, ofMap(buffer[i], min, max, scale, -scale, true));
+                ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, scale, -scale, true));
             }
             ofEndShape();
             ofSetLineWidth(1);
