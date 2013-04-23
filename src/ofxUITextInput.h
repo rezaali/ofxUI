@@ -56,14 +56,15 @@ public:
 		name = string(_name);  		
 		kind = OFX_UI_WIDGET_TEXTINPUT; 		
 		textstring = _textstring; 
-		defaultstring = _textstring; 
-		displaystring = _textstring; 
+		defaultstring = _textstring;
+		displaystring = _textstring;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, padding*2.0);
 		paddedRect->setParent(rect); 
         
 		clicked = false;                                            //the widget's value
-        autoclear = true; 
+        autoclear = true;
+        triggerOnClick = true;
 		
 		label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), _size); 
 		label->setParent(label); 
@@ -72,7 +73,10 @@ public:
         
 		triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
 		cursorWidth = 0; spaceOffset = 0; 		
-		theta = 0;         
+		theta = 0;
+
+        cursorPosition = 0;
+        firstVisibleCharacterIndex = 0;
     }
     
     virtual void setDrawPadding(bool _draw_padded_rect)
@@ -110,11 +114,10 @@ public:
 			ofSetColor(label->getColorFillHighlight(), 255.0*fabs(cos(theta))); 
 			theta +=0.05; 
 			
-			spaceOffset = label->getStringWidth(displaystring+".")-cursorWidth; 
-            if(spaceOffset > rect->width-padding*4.0)
-            {
-                spaceOffset = rect->width-padding*4.0; 
-            }
+            int displayCursorPosition = cursorPosition - firstVisibleCharacterIndex;
+            string displayStringBeforeCursor = displaystring.substr(0, displayCursorPosition);
+			spaceOffset = label->getStringWidth(displayStringBeforeCursor);
+
 			float x = label->getRect()->getX()+spaceOffset;			
 			float y = label->getRect()->getY()-padding; 
 			float t = label->getRect()->height+padding*2.0; 			
@@ -170,10 +173,16 @@ public:
 			theta = 0;
 			hit = true;
 #endif
+            cursorPosition = label->getLabel().length();
+            
             state = OFX_UI_STATE_DOWN;     
-			triggerType = OFX_UI_TEXTINPUT_ON_FOCUS; 
-			triggerEvent(this); 			
-        }    
+			triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
+            
+            if(triggerOnClick)
+            {
+                triggerEvent(this);
+            }
+        }
         else
         {
             state = OFX_UI_STATE_NORMAL;
@@ -213,17 +222,23 @@ public:
             switch (key) 
 			{
 				case OF_KEY_BACKSPACE:
-					if (textstring.size() > 0) 
+					if (textstring.size() > 0 && cursorPosition > 0)
 					{
-						textstring.erase(textstring.size()-1); 
-                        displaystring = textstring;                         
-                        while(label->getStringWidth(displaystring) > rect->width-padding*4.0)
-                        {
-                            string::iterator it;
-                            it=displaystring.begin();
-                            displaystring.erase (it);                    
-                        }
-						label->setLabel(displaystring);                           
+                        cursorPosition --;
+                        textstring.erase(cursorPosition, 1);
+                        
+                        // when we're deleting the first visible character, shift the string to the right
+                        if(firstVisibleCharacterIndex == cursorPosition)
+                            firstVisibleCharacterIndex = 0;
+                        recalculateDisplayString();
+					}
+					break;
+
+                case OF_KEY_DEL:
+					if (textstring.size() > 0 && cursorPosition < textstring.length())
+					{
+                        textstring.erase(cursorPosition, 1);
+                        recalculateDisplayString();
 					}
 					break;
 					
@@ -236,43 +251,61 @@ public:
 					{
 						triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
 					}
-					triggerEvent(this); 			
+					triggerEvent(this);
 					if(autoclear)
 					{
 						textstring.clear(); 
-                        displaystring = textstring;                         
-						label->setLabel(displaystring); 
+                        recalculateDisplayString();
 					}
-                    clicked = false; 
+                    clicked = false;
 					break;
 					
 				case OF_KEY_RIGHT:
-                    
+                case OF_KEY_DOWN:
+                    if(cursorPosition < textstring.length())
+                    {
+                        cursorPosition ++;
+                        recalculateDisplayString();
+                    }
 					break;					
                     
 				case OF_KEY_LEFT:
-					
-					break;					
+                case OF_KEY_UP:
+                    if(cursorPosition > 0)
+                    {
+                        cursorPosition --;
+                        recalculateDisplayString();
+                    }
+					break;
                     
-				case OF_KEY_UP:
-					
-					break;					
+                case OF_KEY_MODIFIER:
+                case OF_KEY_CTRL:
+                case OF_KEY_ALT:
+                case OF_KEY_SHIFT:
+                case OF_KEY_F1:
+                case OF_KEY_F2:
+                case OF_KEY_F3:
+                case OF_KEY_F4:
+                case OF_KEY_F5:
+                case OF_KEY_F6:
+                case OF_KEY_F7:
+                case OF_KEY_F8:
+                case OF_KEY_F9:
+                case OF_KEY_F10:
+                case OF_KEY_F11:
+                case OF_KEY_F12:
+                case OF_KEY_PAGE_UP:
+                case OF_KEY_PAGE_DOWN:
+                case OF_KEY_HOME:
+                case OF_KEY_END:
+                case OF_KEY_INSERT:
+                    break;
                     
-				case OF_KEY_DOWN:
-					
-					break;					
-	
 				default:
                 {
-                    textstring+=key; 
-                    displaystring+=key; 
-                    while(label->getStringWidth(displaystring) > rect->width-padding*4.0)
-                    {
-                        string::iterator it;
-                        it=displaystring.begin();
-                        displaystring.erase (it);                    
-                    }
-                    label->setLabel(displaystring);                         
+                    textstring.insert(cursorPosition, 1, key);
+                    cursorPosition ++;
+                    recalculateDisplayString();
                 }
 					break;
 			}
@@ -332,7 +365,7 @@ public:
     
 	bool isClicked()
 	{
-		return clicked; 
+		return clicked;
 	}
 	
 	ofxUILabel *getLabel()
@@ -404,7 +437,7 @@ public:
             string::iterator it;
             it=textstring.begin();
             textstring.erase (it);                    
-        }        
+        }
         
         defaultstring = textstring; 
 		displaystring = textstring; 
@@ -415,9 +448,47 @@ public:
 	{
 		autoclear = _autoclear; 
 	}
+    
+    void setTriggerOnClick(bool _triggerOnClick)
+    {
+        triggerOnClick = _triggerOnClick;
+    }
+    
+    void recalculateDisplayString()
+    {
+        // the maximum width of the displaystring
+        float maxWidth = rect->width-padding*4.0;
+        
+        displaystring = textstring;
+        string stringBeforeCursor = displaystring.substr(0, cursorPosition);
+        string stringBeforeLabel =  displaystring.substr(0, firstVisibleCharacterIndex);
+        
+        // if the cursoroffset - length of the (invisible) string before the label < 0, we have to shift our string to the left to get our cursor in the label
+        while(label->getStringWidth(stringBeforeCursor) - label->getStringWidth(stringBeforeLabel) < 0){
+            firstVisibleCharacterIndex --;
+            stringBeforeLabel =  displaystring.substr(0, firstVisibleCharacterIndex);
+        }
+
+        // if the cursoroffset - length of the (invisible) string before the label is > maximum width, we have to shift to the right
+        while(label->getStringWidth(stringBeforeCursor) - label->getStringWidth(stringBeforeLabel) > maxWidth){
+            firstVisibleCharacterIndex ++;
+            stringBeforeLabel =  displaystring.substr(0, firstVisibleCharacterIndex);
+        }
+        
+        // we now know how long the string before the label should be, so trim it off
+        displaystring = displaystring.substr(MIN(firstVisibleCharacterIndex, displaystring.length()));
+        
+        // trim off the end of the string until it fits
+        while(label->getStringWidth(displaystring) > maxWidth && displaystring.length() > 0)
+        {
+            displaystring = displaystring.substr(0, displaystring.size()-1);
+        }
+        
+        label->setLabel(displaystring);
+    }
 
     
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	string textstring; 
 	string defaultstring; 
     string displaystring; 
@@ -428,7 +499,11 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
 	bool autoclear; 
 	float defaultY, defaultX; 	
 	int triggerType;
-    int maxsize; 
+    int maxsize;
+    bool triggerOnClick;
+    
+    int cursorPosition;
+    int firstVisibleCharacterIndex;
 }; 
 
 #endif
