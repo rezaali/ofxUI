@@ -8,16 +8,17 @@ void testApp::setup()
     float length = 320; 
     gui = new ofxUICanvas();
     
-    gui->addWidgetDown(new ofxUILabel("DYNAMIC DROP DOWN LIST", OFX_UI_FONT_LARGE)); 
-    gui->addWidgetDown(new ofxUILabel("PRESS '1' TO ADD TO LIST", OFX_UI_FONT_MEDIUM)); 
-    gui->addWidgetDown(new ofxUILabel("PRESS '2' TO DELETE FROM LIST", OFX_UI_FONT_MEDIUM));     
-    gui->addWidgetDown(new ofxUILabel("PRESS '3' TO DELETE ALL IN LIST", OFX_UI_FONT_MEDIUM));         
+    gui->addLabel("DYNAMIC DROP DOWN LIST", OFX_UI_FONT_LARGE);
+    gui->addLabel("PRESS '1' TO ADD TO LIST", OFX_UI_FONT_MEDIUM);
+    gui->addLabel("PRESS '2' TO DELETE FROM LIST", OFX_UI_FONT_MEDIUM);
+    gui->addLabel("PRESS '3' TO DELETE ALL IN LIST", OFX_UI_FONT_MEDIUM); 
     vector<string> names; 
     names.push_back("ONE");    names.push_back("TWO");    names.push_back("THREE");    names.push_back("FOUR");    names.push_back("FIVE");
-    ddl = new ofxUIDropDownList(length-xInit, "DYNAMIC DROP DOWN", names, OFX_UI_FONT_MEDIUM);
+    gui->autoSizeToFitWidgets(); 
+    gui->addToggle("DDL SHOW ACTIVE ITEM", false);
+    ddl = gui->addDropDownList("DYNAMIC DROP DOWN", names);
     ddl->setAllowMultiple(true);
 //    ddl->setAutoClose(true);
-    gui->addWidgetDown(ddl);
     gui->setTheme(OFX_UI_THEME_BARBIE);
     gui->autoSizeToFitWidgets(); 
 //    gui->setDrawWidgetPadding(true);
@@ -47,10 +48,10 @@ void testApp::guiEvent(ofxUIEventArgs &e)
     
     cout << "WIDGET NAME: " << name << endl; 
     
-    if(name == "FULLSCREEN")
+    if(name == "DDL SHOW ACTIVE ITEM")
     {
         ofxUIToggle *toggle = (ofxUIToggle *) e.widget;
-        ofSetFullscreen(toggle->getValue());   
+        ddl->setShowCurrentSelected(toggle->getValue()); 
     }
     else if(name == "DYNAMIC DROP DOWN")
     {

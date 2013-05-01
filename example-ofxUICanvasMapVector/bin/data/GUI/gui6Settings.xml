@@ -1,7 +1,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>FPS</Name>
-    <Value>59.762184143</Value>
+    <Value>59.897464752</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -231,7 +231,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX(9,3)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -276,7 +276,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX(6,4)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -391,7 +391,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX(5,6)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -401,7 +401,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX(7,6)</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>

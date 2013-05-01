@@ -304,6 +304,18 @@ public:
         draw_fill = *value;
 //        label->setDrawBack((*value));
 	}
+    
+    virtual void setValuePtr(bool *_value)
+    {
+        if(!useReference)
+        {
+            delete value;
+            useReference = true; 
+        }
+        value = _value;
+        setValue(*value);        
+    }
+
 	
 	void toggleValue() {
         setValue(!(*value));
