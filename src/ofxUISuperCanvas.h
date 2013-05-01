@@ -105,63 +105,63 @@ public:
     
 #ifdef TARGET_OPENGLES
 	
-    virtual void onTouchDown(ofTouchEventArgs &data)
+    virtual void touchDown(float x, float y, int id)
     {
         if(touchId == -1)
         {
-            if(rect->inside(data.x, data.y) && canvasTitle->isHit(data.x, data.y))
+            if(rect->inside(x, y) && canvasTitle->isHit(x, y))
             {
-                touchId = data.id; 
+                touchId = id;
                 bTitleLabelHit = true;
-                hitPoint.set(data.x - rect->getX(), data.y - rect->getY());
-                return;                
-            }
-        }
-		touchDown(data);
-    }
-    
-    virtual void onTouchMoved(ofTouchEventArgs &data)
-    {
-        if(touchId == data.id)
-        {
-            if(bTitleLabelHit)
-            {
-                rect->setX(data.x - hitPoint.x);
-                rect->setY(data.y - hitPoint.y);
+                hitPoint.set(x - rect->getX(), y - rect->getY());
                 return;
             }
         }
-		touchMoved(data);
+        canvasTouchDown(x, y, id); 
     }
     
-    virtual void onTouchUp(ofTouchEventArgs &data)
+    virtual void touchMoved(float x, float y, int id)
     {
-        if(touchId == data.id)
+        if(touchId == id)
+        {
+            if(bTitleLabelHit)
+            {
+                rect->setX(x - hitPoint.x);
+                rect->setY(y - hitPoint.y);
+                return;
+            }
+        }
+        canvasTouchMoved(x, y, id);
+    }
+    
+    virtual void touchUp(float x, float y, int id)
+    {
+        if(touchId == id)
         {
             touchId = -1;
-            bTitleLabelHit = false; 
+            bTitleLabelHit = false;
         }
-		touchUp(data);
+        canvasTouchUp(x, y, id);
     }
-	
-    virtual void onTouchDoubleTap(ofTouchEventArgs &data)
+    
+    virtual void touchDoubleTap(float x, float y, int id)
     {
-        if(rect->inside(data.x, data.y) && canvasTitle->isHit(data.x, data.y))
+        if(rect->inside(x, y) && canvasTitle->isHit(x, y))
         {
             toggleMinified();
             return;
         }
-		touchDoubleTap(data);
+        canvasTouchDoubleTap(x, y, id);
     }
-	
-	virtual void onTouchCancelled(ofTouchEventArgs &data)
+    
+    virtual void touchCancelled(float x, float y, int id)
     {
-        if(touchId == data.id)
+        if(touchId == id)
         {
             touchId = -1;
             bTitleLabelHit = false;
-        }        
-		touchCancelled(data);
+        }
+        canvasTouchCancelled(x, y, id);
     }
 
 #else
@@ -262,8 +262,8 @@ public:
     //These header widgets are meant to stay visible when minified...
     void addWidgetToHeader(ofxUIWidget *widget)
     {
-        widget->setEmbedded(true); 
-        headerWidgets.push_back(widget); 
+//        widget->setEmbedded(true); 
+        headerWidgets.push_back(widget);
     }
     
 protected:

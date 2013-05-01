@@ -111,7 +111,7 @@ public:
     virtual void setVisible(bool _visible)
     {
         visible = _visible; 
-        label->setVisible(showLabel);             
+        label->setVisible(showLabel && _visible);
     }
 		
     void setCropImageToFitRect(bool _cropImageToFitRect)

@@ -35,7 +35,7 @@ public:
         ID = -1;
         hit = false; 
         visible = true; 
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         touchId = -1; 
 #endif
         state = OFX_UI_STATE_NORMAL; 
@@ -164,49 +164,48 @@ public:
             ofxUISetColor(color_padded_rect_outline); 
 			paddedRect->draw(); 
 		}                
-    }     
+    }
     
-    
-#ifdef TARGET_OPENGLES          //iOS Mode
-    void touchDown(ofTouchEventArgs& touch)
+#ifdef OFX_UI_TARGET_TOUCH          //iOS Mode
+    void touchDown(float x, float y, int id)
     {
         if(touchId == -1)
         {    
-            this->mousePressed(touch.x, touch.y, 0);
+            this->mousePressed(x, y, 0);
             if(hit)
             {
-                touchId = touch.id;    
+                touchId = id;    
             }            
         }    
     }
     
-    void touchMoved(ofTouchEventArgs& touch) 
+    void touchMoved(float x, float y, int id)
     {
-        if(touchId == touch.id)
+        if(touchId == id)
         {
-            this->mouseDragged(touch.x, touch.y, 0); 
+            this->mouseDragged(x, y, 0);
         }       
     }
     
-    void touchUp(ofTouchEventArgs& touch) 
+    void touchUp(float x, float y, int id)
     {
-        if(touchId == touch.id)
+        if(touchId == id)
         {
-            this->mouseReleased(touch.x, touch.y, 0); 
+            this->mouseReleased(x, y, 0);
             touchId = -1;                      
         }
     }
     
-    void touchCancelled(ofTouchEventArgs& touch) 
+    void touchCancelled(float x, float y, int id)
     {
-        if(touchId == touch.id)
+        if(touchId == id)
         {
-            this->mouseReleased(touch.x, touch.y, 0); 
+            this->mouseReleased(x, y, 0);
             touchId = -1;                
         }
     }
     
-    void touchDoubleTap(ofTouchEventArgs& touch)
+    void touchDoubleTap(float x, float y, int id)
     {
         
     }
@@ -604,7 +603,7 @@ protected:
     
     vector<ofxUIWidget *> embeddedWidgets; 
     
-#ifdef TARGET_OPENGLES          //iOS Mode
+#ifdef OFX_UI_TARGET_TOUCH          //iOS Mode
     int touchId;     
 #endif
 };

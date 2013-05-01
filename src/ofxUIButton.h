@@ -101,6 +101,7 @@ public:
 		label->setRectParent(rect); 
         label->setEmbedded(true);
         drawLabel = true;
+        bLabelRight = true;
         label->setVisible(drawLabel);      
 
         if(useReference)
@@ -278,12 +279,22 @@ public:
         drawLabel = _visible; 
         label->setVisible((drawLabel && visible));
         if(!drawLabel)
-        {
+        {            
             paddedRect->width = rect->width+padding*2.0;
+            paddedRect->x = -padding;
         }
         else
         {
-            paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
+//            paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
+            paddedRect->width = rect->width+padding*2.0;
+            if(bLabelRight)
+            {                
+               paddedRect->x = - padding;
+            }
+            else
+            {
+               paddedRect->x = label->getRect()->x - padding*2.0;
+            }
         }
     }
 	
@@ -315,11 +326,20 @@ public:
         switch (pos)
         {
             case OFX_UI_WIDGET_POSITION_LEFT:
+            {
+                bLabelRight = false; 
                 label->getRect()->x = - label->getRect()->getWidth() - padding*2;
+                paddedRect->x = label->getRect()->x - padding*2.0;
+                paddedRect->width = rect->width+padding*2.0;
+            }
                 break;
                 
             case OFX_UI_WIDGET_POSITION_RIGHT:
-                label->getRect()->x = rect->getWidth() + padding*2;
+            {
+                bLabelRight = true; 
+                label->getRect()->x = rect->getWidth() + padding*2.0;
+                paddedRect->x = -padding;
+            }
                 break;
                 
             default:
@@ -330,7 +350,8 @@ public:
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool *value; 
     bool useReference; 
-    bool drawLabel; 
+    bool drawLabel;
+    bool bLabelRight; 
 }; 
 
 #endif

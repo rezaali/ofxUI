@@ -33,28 +33,24 @@ typedef ofVec2f ofxUIVec2f;
 typedef ofTrueTypeFont ofxUIFont; 
 typedef ofColor ofxUIColor;
 
-class ofxUICanvas;
+#ifdef TARGET_OPENGLES
+#define OFX_UI_TARGET_TOUCH
+#endif
 
 #define OFX_UI_RECTMODE_CORNER OF_RECTMODE_CORNER
 #define OFX_UI_RECTMODE_CENTER OF_RECTMODE_CENTER
 
 class ofxUIAppCBGlue
 {
-public:
-    
-    ofxUIAppCBGlue(ofBaseApp *_app)
-    {
-        app = _app;
-    }
-    
+public:        
     ofBaseApp *app;
     
-    void enable()
+    void EnableCallbacks()
 	{
         enableAppDrawCallback();
         enableAppUpdateCallback();
         enableAppExitCallback();
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         enableTouchEventCallbacks();
 #else
         enableMouseEventCallbacks();
@@ -63,12 +59,12 @@ public:
         enableKeyEventCallbacks();
 	}
 	
-	void disable()
+	void DisableCallbacks()
 	{
         disableAppDrawCallback();
         disableAppUpdateCallback();
         disableAppExitCallback();
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         disableTouchEventCallbacks();
 #else
         disableMouseEventCallbacks();
@@ -123,7 +119,7 @@ public:
         ofRemoveListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit);
     }
     
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
 	
 	//Touch Callbacks
     void enableTouchEventCallbacks()
@@ -293,7 +289,7 @@ public:
 
     }
     
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
 	
     virtual void onTouchDown(ofTouchEventArgs &data)
     {
@@ -414,72 +410,72 @@ public:
 //    }
 //};
 
-void ofxUISetColor(ofxUIColor color, float alpha)
+static void ofxUISetColor(ofxUIColor color, float alpha)
 {
     ofSetColor(color, alpha);
 }
 
-void ofxUISetColor(ofxUIColor color)
+static void ofxUISetColor(ofxUIColor color)
 {
     ofSetColor(color);
 }
 
-void ofxUIFill()
+static void ofxUIFill()
 {
     ofFill();
 }
 
-void ofxUINoFill()
+static void ofxUINoFill()
 {
     ofNoFill();
 }
 
-void ofxUIPushStyle()
+static void ofxUIPushStyle()
 {
     ofPushStyle();
 }
 
-void ofxUIPopStyle()
+static void ofxUIPopStyle()
 {
     ofPopStyle();
 }
 
-void ofxUISetLineWidth(float lineWidth)
+static void ofxUISetLineWidth(float lineWidth)
 {
     ofSetLineWidth(lineWidth);
 }
 
-float ofxUIGetFrameRate()
+static float ofxUIGetFrameRate()
 {
     return ofGetFrameRate();
 }
 
-void ofxUISetRectMode(ofRectMode rectMode)
+static void ofxUISetRectMode(ofRectMode rectMode)
 {
     ofSetRectMode(rectMode);
 }
 
-void ofxUICircle(float x, float y, float radius)
+static void ofxUICircle(float x, float y, float radius)
 {
     ofCircle(x, y, radius);
 }
 
-void ofxUIDrawRect(float x, float y, float w, float h)
+static void ofxUIDrawRect(float x, float y, float w, float h)
 {
     ofRect(x,y,w,h);
 }
 
-void ofxUIDrawLine(float x1, float y1, float x2, float y2)
+static void ofxUIDrawLine(float x1, float y1, float x2, float y2)
 {
     ofLine(x1, y1, x2, y2); 
 }
 
-int ofxUIGetHeight()
+static int ofxUIGetHeight()
 {
     return ofGetHeight(); 
 }
 
-int ofxUIGetWidth()
+static int ofxUIGetWidth()
 {
     return ofGetWidth();
 }

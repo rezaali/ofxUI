@@ -29,9 +29,8 @@
 #include <vector>
 #include <map>
 
-//class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
-class ofxUICanvas : public ofxUIWidget
-{    
+class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
+{
 public:
     ~ofxUICanvas() 
     {
@@ -528,16 +527,7 @@ public:
         {            
             enabled = true;
             visible = true; 
-            enableAppDrawCallback();
-            enableAppUpdateCallback();
-            enableAppExitCallback();
-    #ifdef TARGET_OPENGLES
-            enableTouchEventCallbacks();
-    #else
-            enableMouseEventCallbacks();
-            enableWindowEventCallbacks(); 
-    #endif
-            enableKeyEventCallbacks();
+            EnableCallbacks();
         }
 	}
 	
@@ -547,141 +537,10 @@ public:
         {                    
             enabled = false;
             visible = false;
-            disableAppDrawCallback();
-            disableAppUpdateCallback();
-            disableAppExitCallback();     
-    #ifdef TARGET_OPENGLES
-            disableTouchEventCallbacks();
-    #else
-            disableMouseEventCallbacks();
-            disableWindowEventCallbacks();
-    #endif
-            disableKeyEventCallbacks();
+            DisableCallbacks();
         }
     }
 	    
-	//App Callbacks
-    void enableAppEventCallbacks()
-    {
-        ofAddListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
-        ofAddListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
-        ofAddListener(ofEvents().exit, this, &ofxUICanvas::onExit);
-    }
-	
-	//App Callbacks
-    void disableAppEventCallbacks()
-    {
-        ofRemoveListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
-        ofRemoveListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
-        ofRemoveListener(ofEvents().exit, this, &ofxUICanvas::onExit);
-    }
-	
-    void enableAppDrawCallback()
-    {
-        ofAddListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
-    }
-    
-    void enableAppUpdateCallback()
-    {
-        ofAddListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
-    }
-    
-    void enableAppExitCallback()
-    {
-        ofAddListener(ofEvents().exit, this, &ofxUICanvas::onExit);
-    }
-
-    void disableAppDrawCallback()
-    {
-        ofRemoveListener(ofEvents().draw, this, &ofxUICanvas::onDraw);
-    }
-    
-    void disableAppUpdateCallback()
-    {
-        ofRemoveListener(ofEvents().update, this, &ofxUICanvas::onUpdate);
-    }
-    
-    void disableAppExitCallback()
-    {
-        ofRemoveListener(ofEvents().exit, this, &ofxUICanvas::onExit);
-    }
-
-#ifdef TARGET_OPENGLES
-	
-	//Touch Callbacks
-    void enableTouchEventCallbacks()
-    {
-
-        ofAddListener(ofEvents().touchUp, this, &ofxUICanvas::onTouchUp);
-        ofAddListener(ofEvents().touchDown, this, &ofxUICanvas::onTouchDown);
-        ofAddListener(ofEvents().touchMoved, this, &ofxUICanvas::onTouchMoved);
-        ofAddListener(ofEvents().touchCancelled, this, &ofxUICanvas::onTouchCancelled);
-        ofAddListener(ofEvents().touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
-    }	
-
-	void disableTouchEventCallbacks()
-    {
-        ofRemoveListener(ofEvents().touchUp, this, &ofxUICanvas::onTouchUp);
-        ofRemoveListener(ofEvents().touchDown, this, &ofxUICanvas::onTouchDown);
-        ofRemoveListener(ofEvents().touchMoved, this, &ofxUICanvas::onTouchMoved);
-        ofRemoveListener(ofEvents().touchCancelled, this, &ofxUICanvas::onTouchCancelled);
-        ofRemoveListener(ofEvents().touchDoubleTap, this, &ofxUICanvas::onTouchDoubleTap);
-    }	
-	
-#else
-	
-	//Mouse Callbacks
-    void enableMouseEventCallbacks()
-    {
-        ofAddListener(ofEvents().mouseReleased, this, &ofxUICanvas::onMouseReleased);
-        ofAddListener(ofEvents().mousePressed, this, &ofxUICanvas::onMousePressed);
-        ofAddListener(ofEvents().mouseMoved, this, &ofxUICanvas::onMouseMoved);
-        ofAddListener(ofEvents().mouseDragged, this, &ofxUICanvas::onMouseDragged);
-    }
-
-	//Mouse Callbacks
-    void disableMouseEventCallbacks()
-    {
-        ofRemoveListener(ofEvents().mouseReleased, this, &ofxUICanvas::onMouseReleased);
-        ofRemoveListener(ofEvents().mousePressed, this, &ofxUICanvas::onMousePressed);
-        ofRemoveListener(ofEvents().mouseMoved, this, &ofxUICanvas::onMouseMoved);
-        ofRemoveListener(ofEvents().mouseDragged, this, &ofxUICanvas::onMouseDragged);
-    }
-
-    //Window Resize Callback
-    void enableWindowEventCallbacks()
-    {
-        ofAddListener(ofEvents().windowResized, this, &ofxUICanvas::onWindowResized);        
-    }
-
-	//Window Resize Callback
-    void disableWindowEventCallbacks()
-    {
-        ofRemoveListener(ofEvents().windowResized, this, &ofxUICanvas::onWindowResized);        
-    }
-	
-	
-#endif	
-
-    //KeyBoard Callbacks
-	void enableKeyEventCallbacks()
-	{
-		ofAddListener(ofEvents().keyPressed, this, &ofxUICanvas::onKeyPressed);
-		ofAddListener(ofEvents().keyReleased, this, &ofxUICanvas::onKeyReleased);
-	}
-
-	//KeyBoard Callbacks
-	void disableKeyEventCallbacks()
-	{
-		ofRemoveListener(ofEvents().keyPressed, this, &ofxUICanvas::onKeyPressed);
-		ofRemoveListener(ofEvents().keyReleased, this, &ofxUICanvas::onKeyReleased);
-	}
-
-    void onUpdate(ofEventArgs &data) { if(autoUpdate) update(); }
-    void onDraw(ofEventArgs &data) { if(autoDraw) draw(); }
-    void onExit(ofEventArgs &data) { exit(); } 
-
-    
     virtual void update()
     {    
 		for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
@@ -698,6 +557,9 @@ public:
         glDisable(GL_LIGHTING);
 
         glEnable(GL_BLEND);
+#ifndef OFX_UI_TARGET_TOUCH
+        glBlendEquation(GL_FUNC_ADD);
+#endif
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         
         ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
@@ -733,125 +595,105 @@ public:
 
     }	
         
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH 
 	
-    virtual void onTouchDown(ofTouchEventArgs &data)
+    virtual void canvasTouchDown(float x, float y, int id)
     {
-		touchDown(data); 
-    }
-    
-    virtual void onTouchMoved(ofTouchEventArgs &data) 
-    {
-		touchMoved(data); 
-    }
-
-    virtual void onTouchUp(ofTouchEventArgs &data) 
-    {
-		touchUp(data); 
-    }
-	
-    virtual void onTouchDoubleTap(ofTouchEventArgs &data)
-    {
-		touchDoubleTap(data); 
-    }
-	
-	virtual void onTouchCancelled(ofTouchEventArgs &data)
-    {
-		touchCancelled(data); 
-    }
-	
-	virtual void touchDown(ofTouchEventArgs& touch) 
-	{		
-        if(rect->inside(touch.x, touch.y))
+        if(rect->inside(x, y))
         {
 			for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
 			{
-				if((*it)->isVisible())	(*it)->touchDown(touch); 
+				if((*it)->isVisible())	(*it)->touchDown(x, y, id);
 			}
 		}
         else
         {
             for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
             {
-                if((*it).second->isVisible()) (*it).second->touchDown(touch);
-            }            
-        }
-	}
-    
-	virtual void touchMoved(ofTouchEventArgs& touch) 
-	{
-        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
-        {
-            if((*it)->isVisible())	(*it)->touchMoved(touch);
-        }
-	}
-    
-	virtual void touchUp(ofTouchEventArgs& touch) 
-	{
-        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
-        {
-            if((*it)->isVisible())	(*it)->touchUp(touch); 
-        }
-	}
-    
-	virtual void touchDoubleTap(ofTouchEventArgs& touch) 
-	{
-        if(rect->inside(touch.x, touch.y))
-        {
-			for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
-			{
-				if((*it)->isVisible())	(*it)->touchDoubleTap(touch); 
-			}
-		}
-        else
-        {
-            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
-            {
-                if((*it).second->isVisible()) (*it).second->touchDoubleTap(touch);
+                if((*it).second->isVisible()) (*it).second->touchDown(x, y, id);
             }
-        }        
-	}
+        }
+    }
     
-	virtual void touchCancelled(ofTouchEventArgs& touch) 
-	{		
-        if(rect->inside(touch.x, touch.y))
+    virtual void canvasTouchMoved(float x, float y, int id)
+    {
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
+        {
+            if((*it)->isVisible())	(*it)->touchMoved(x, y, id);
+        }
+    }
+    
+    virtual void canvasTouchUp(float x, float y, int id)
+	{
+        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
+        {
+            if((*it)->isVisible())	(*it)->touchUp(x, y, id);
+        }
+    }
+    
+    virtual void canvasTouchDoubleTap(float x, float y, int id)
+    {
+        if(rect->inside(x, y))
+        {
+			for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
+			{
+				if((*it)->isVisible())	(*it)->touchDoubleTap(x, y, id);
+            }
+		}
+        else
+        {
+            for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
+            {
+                if((*it).second->isVisible()) (*it).second->touchDoubleTap(x, y, id);
+            }
+        }
+    }
+    
+    virtual void canvasTouchCancelled(float x, float y, int id)
+    {
+        if(rect->inside(x, y))
         {
         	for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
 			{
-				if((*it)->isVisible())	(*it)->touchCancelled(touch); 
+				if((*it)->isVisible())	(*it)->touchCancelled(x, y, id);
 			}
 		}
         else
         {
             for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
             {
-                if((*it).second->isVisible()) (*it).second->touchCancelled(touch);
+                if((*it).second->isVisible()) (*it).second->touchCancelled(x, y, id);
             }
-        }        
+        }
+    }
+    
+    virtual void touchDown(float x, float y, int id)
+	{
+        canvasTouchDown(x, y, id);
 	}
-	
+    
+	virtual void touchMoved(float x, float y, int id)
+	{
+        canvasTouchMoved(x, y, id);
+	}
+    
+	virtual void touchUp(float x, float y, int id)
+	{
+        canvasTouchUp(x, y, id);
+	}
+    
+	virtual void touchDoubleTap(float x, float y, int id)
+	{
+        canvasTouchDoubleTap(x, y, id);
+	}
+        
+	virtual void touchCancelled(float x, float y, int id)
+	{		
+        canvasTouchCancelled(x, y, id);
+	}
+	   
 #else	
     
-    virtual void onMouseReleased(ofMouseEventArgs& data)
-    { 
-        mouseReleased(data.x, data.y, data.button); 
-    }
-    
-    virtual void onMousePressed(ofMouseEventArgs& data)
-    {
-        mousePressed(data.x, data.y, data.button); 
-    }
-    
-    virtual void onMouseMoved(ofMouseEventArgs& data) 
-    { 
-        mouseMoved(data.x, data.y); 
-    }
-    
-    virtual void onMouseDragged(ofMouseEventArgs& data)
-    { 
-        mouseDragged(data.x, data.y, data.button); 
-    }
-	
 	virtual void mouseMoved(int x, int y ) 
     {
         if(rect->inside(x, y))
@@ -903,11 +745,6 @@ public:
             if((*it)->isVisible()) (*it)->mouseReleased(x, y, button); 
         }    
     }
-	
-    void onWindowResized(ofResizeEventArgs& data) 
-    { 
-		windowResized(data.width, data.height); 
-    } 	
     
     virtual void windowResized(int w, int h) 
     {
@@ -918,16 +755,6 @@ public:
     }
     
 #endif	
-
-	void onKeyPressed(ofKeyEventArgs& data)
-    {
-		keyPressed(data.key);
-    }
-
-    void onKeyReleased(ofKeyEventArgs& data)
-    {
-		keyReleased(data.key);
-    }
 
     virtual void keyPressed(int key)
     {
@@ -1364,7 +1191,8 @@ public:
                                    bool reAdd = false)
     {
         if(!reAdd) addWidget(widget);
-        ofxUIRectangle *widgetRect = widget->getRect();         
+        ofxUIRectangle *widgetRect = widget->getRect();
+        ofxUIRectangle *widgetPaddingRect = widget->getPaddingRect();        
 		if(lastAdded != NULL)
 		{
    			ofxUIRectangle *lastPaddedRect = lastAdded->getPaddingRect(); 
@@ -1417,8 +1245,8 @@ public:
                 
                 break;
             case OFX_UI_ALIGN_RIGHT:
-                widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing; 
-                break;                 	
+                widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing;
+                break;
             case OFX_UI_ALIGN_TOP:
                 widgetRect->y = widgetSpacing;
                 break;

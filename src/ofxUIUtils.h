@@ -41,7 +41,7 @@ string ofxUIToString(const T& value, int precision){
 	return out.str();
 }
 
-float ofxUIMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp)
+static float ofxUIMap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp)
 {    
 	if (fabs(inputMin - inputMax) < FLT_EPSILON)
     {
