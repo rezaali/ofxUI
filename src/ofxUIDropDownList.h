@@ -163,6 +163,13 @@ public:
         }
     }    
     
+    void addToggles(vector<string>& toggleNames)
+    {
+        for(int i = 0; i < toggleNames.size(); i++){
+            addToggle(toggleNames[i]);
+        }
+    }
+    
     void removeToggle(string toggleName)
     {
         ofxUILabelToggle *t = NULL; 

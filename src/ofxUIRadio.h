@@ -180,6 +180,11 @@ public:
 		return toggles; 
 	}
 	
+	ofxUIToggle* getActive()
+	{
+		return active;
+	}
+	
 	void triggerEvent(ofxUIWidget *child)
 	{
         if(!allowMultiple)
