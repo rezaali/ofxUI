@@ -1720,14 +1720,14 @@ public:
         return widget;
     }
     
-    ofxUITextInput* addTextInput(string _name, string _textstring, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUITextInput* addTextInput(string _name, string _textstring, int _size = OFX_UI_FONT_SMALL)
     {
         ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2, _size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
     
-    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM)
+    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL)
     {
         ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, w, h, x, y, _size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
