@@ -1004,7 +1004,7 @@ public:
         }
         
         //for the map
-        map<string, ofxUIWidget*>::iterator it;        
+        multimap<string, ofxUIWidget*>::iterator it;
         it=widgets_map.find(widget->getName());
         if(it != widgets_map.end())
         {
