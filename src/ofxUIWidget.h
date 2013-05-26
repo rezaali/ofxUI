@@ -567,9 +567,29 @@ public:
         embeddedWidgets.clear();        //does not deallocate widgets, just deletes the pointers and sets the size to zero
     }
     
-protected:    
-	ofxUIWidget *parent; 
-	ofxUIRectangle *rect; 	
+    ofxUIWidget *getCanvasParent()
+    {
+        bool notFoundParentCanvas = true;
+        ofxUIWidget *parent = this->getParent();
+        
+        while (notFoundParentCanvas)
+        {
+            int kind = parent->getKind();
+            if( kind == OFX_UI_WIDGET_CANVAS || kind == OFX_UI_WIDGET_SCROLLABLECANVAS || kind == OFX_UI_WIDGET_SUPERCANVAS )
+            {
+                notFoundParentCanvas = false;
+                return parent; 
+            }
+            else
+            {
+                parent = parent->getParent();
+            }
+        }
+    }
+    
+protected:
+	ofxUIWidget *parent;
+	ofxUIRectangle *rect;
 	ofxUIFont *font;
 	
     string name;            //State Properties
