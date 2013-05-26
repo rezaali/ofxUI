@@ -202,6 +202,10 @@ public:
     {
         toggle->setParent(this);
         toggles.push_back(toggle);
+        if(toggle->getValue())
+        {
+            activateToggle(toggle->getName());
+        }        
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
