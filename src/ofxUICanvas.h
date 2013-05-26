@@ -509,10 +509,10 @@ public:
 	{
 		if(isEnabled())
 		{
-			disable(); 
+			disable();
 		}
 		else {
-			enable(); 
+			enable();
 		}
 	}
 
@@ -982,7 +982,8 @@ public:
 			ofxUIWidget *w = (*it);
 			removeWidget(w);
 		}
-        widgets.clear(); 
+        widgets.clear();
+        lastAdded = NULL; 
     }
     
     void removeWidget(ofxUIWidget *widget)
