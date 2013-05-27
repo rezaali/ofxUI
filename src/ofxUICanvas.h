@@ -92,7 +92,7 @@ public:
     }
     
     void init(int w, int h, ofxUICanvas *sharedResources = NULL)
-    {        
+    {
         name = string("OFX_UI_WIDGET_CANVAS");
 		kind = OFX_UI_WIDGET_CANVAS; 
 		
@@ -104,6 +104,7 @@ public:
         
         autoDraw = true;
         autoUpdate = true;
+        bTriggerWidgetsUponLoad = true;
         
 		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
 		paddedRect->setParent(rect);
@@ -296,6 +297,16 @@ public:
         }
     }
     
+    void setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad)
+    {
+        bTriggerWidgetsUponLoad = _bTriggerWidgetsUponLoad;
+    }
+    
+    bool getTriggerWidgetsUponLoad()
+    {
+        return bTriggerWidgetsUponLoad;
+    }
+    
     virtual void loadSettings(string fileName)
     {
         ofxXmlSettings *XML = new ofxXmlSettings(); 
@@ -309,7 +320,9 @@ public:
             if(widget != NULL)
             {
                 loadSpecificWidgetData(widget, XML); 
-                triggerEvent(widget); 
+                if(bTriggerWidgetsUponLoad){
+                    triggerEvent(widget);   
+                }
             }
             XML->popTag(); 
         }
@@ -3157,7 +3170,8 @@ protected:
 	ofxUIWidget *activeFocusedWidget; 
 	bool enable_highlight_outline; 
 	bool enable_highlight_fill;
-	bool enabled; 
+	bool enabled;
+    bool bTriggerWidgetsUponLoad;
     int uniqueIDs; 
     bool hasKeyBoard; 
     

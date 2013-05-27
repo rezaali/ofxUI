@@ -243,7 +243,10 @@ public:
             if(widget != NULL)
             {
                 loadSpecificWidgetData(widget, XML);
-                triggerEvent(widget);
+                if(bTriggerWidgetsUponLoad)
+                {
+                    triggerEvent(widget);
+                }
             }
             XML->popTag();
         }
