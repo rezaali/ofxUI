@@ -222,7 +222,7 @@ public:
         return bShowCurrentSelected;
     }
     
-    bool setShowCurrentSelected(bool _bShowCurrentSelected)
+    void setShowCurrentSelected(bool _bShowCurrentSelected)
     {
         bShowCurrentSelected = _bShowCurrentSelected;
         checkAndSetTitleLabel();
