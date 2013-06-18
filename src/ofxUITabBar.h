@@ -91,6 +91,11 @@ public:
         }
     }
     
+    ofxUICanvas* getActiveCanvas()
+    {
+        return active;
+    }
+    
     bool isHit(int x, int y)
     {                        
         if (ofxUICanvas::isHit(x, y)) {
