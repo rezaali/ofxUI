@@ -567,7 +567,7 @@ public:
 		
         ofxUIPushStyle();
 
-		glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
 		
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
@@ -605,7 +605,7 @@ public:
         
         ofxUIPopStyle();
 		
-		glPopAttrib();
+        glPopAttrib();
     }
     
     void exit()
