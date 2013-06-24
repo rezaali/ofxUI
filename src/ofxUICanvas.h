@@ -3254,7 +3254,7 @@ protected:
                     
                 case OFX_UI_TEXTINPUT_ON_ENTER:
                 {
-                    hasKeyBoard = true; 
+                    hasKeyBoard = false;
                     return;
                 }
                     break; 
