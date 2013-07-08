@@ -564,11 +564,10 @@ public:
      
     virtual void draw()
     {
-		
         ofxUIPushStyle();
-
-        glPushAttrib(GL_ALL_ATTRIB_BITS);
-		
+        
+        glPushAttrib(GL_ALL_ATTRIB_BITS); 
+        
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
 
@@ -603,9 +602,9 @@ public:
             }
 		}    
         
+        glPopAttrib(); 
+        
         ofxUIPopStyle();
-		
-        glPopAttrib();
     }
     
     void exit()
