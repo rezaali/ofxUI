@@ -436,15 +436,13 @@ static void ofxUIPushStyle()
 #ifndef TARGET_OPENGLES
     glPushAttrib(GL_ALL_ATTRIB_BITS);
 #endif
->>>>>>> develop
 }
 
 static void ofxUIPopStyle()
 {
 #ifndef TARGET_OPENGLES    
     glPopAttrib();
-#endif    
->>>>>>> develop
+#endif
     ofPopStyle();
 }
 
