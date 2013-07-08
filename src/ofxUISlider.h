@@ -484,9 +484,9 @@ public:
         updateLabel();
     }
     
-    void setMax(float _max, bool bKeepValueTheSame = false)
+    void setMax(float _max)
     {
-        setMaxAndMin(_max, min, bKeepValueTheSame);
+        setMaxAndMin(_max, min); 
     }
 
     float getMax()
@@ -494,9 +494,9 @@ public:
         return max; 
     }
     
-    void setMin(float _min, bool bKeepValueTheSame = false)
+    void setMin(float _min)
     {
-        setMaxAndMin(max, _min, bKeepValueTheSame);
+        setMaxAndMin(max, _min); 
     }
     
     float getMin()
@@ -509,18 +509,15 @@ public:
         return ofxUIVec2f(max, min); 
     }
     
-    void setMaxAndMin(float _max, float _min, bool bKeepValueTheSame = false)
-    {        
-        max = _max;
-        min = _min;
-
-        if(!bKeepValueTheSame)
-        {
-            value = ofxUIMap(value, 0, 1.0, min, max, true);
-            value = ofxUIMap(value, min, max, 0.0, 1.0, true);
-            updateValueRef();
-            updateLabel();
-        }
+    void setMaxAndMin(float _max, float _min)
+    {
+        max = _max; 
+        min = _min; 
+		
+		value = ofxUIMap(value, 0, 1.0, min, max, true);         
+		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
+        updateValueRef();        
+        updateLabel(); 
     }
 
     bool isDraggable()

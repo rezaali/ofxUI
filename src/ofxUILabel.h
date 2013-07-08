@@ -126,8 +126,7 @@ public:
         {
             ofxUIFill();
             ofxUISetColor(color_fill);
-			font->drawString(label, floor(rect->getX())+xOffset,
-							 floor(rect->getY()+rect->getHeight()-(getStringHeight(label)-getLineHeight()))+yOffset);
+			font->drawString(label, floor(rect->getX())+xOffset, floor(rect->getY()+rect->getHeight())+yOffset); 
         }
 	}
 	
@@ -135,19 +134,17 @@ public:
     {
 		if(draw_fill_highlight)
         {
-            ofxUIFill();
+            ofxUIFill(); 
             ofxUISetColor(color_fill_highlight); 
-			font->drawString(label, floor(rect->getX())+xOffset,
-							 floor(rect->getY()+rect->getHeight()-(getStringHeight(label)-getLineHeight()))+yOffset);
-        }
+			font->drawString(label, floor(rect->getX())+xOffset, floor(rect->getY()+rect->getHeight())+yOffset); 
+        }        
 	}	
             
     void drawBackLabel()
     {      
         ofxUIFill(); 
         ofxUISetColor(color_back);     
-        font->drawString(label, floor(rect->getX())+1+xOffset,
-						 floor(rect->getY()+rect->getHeight()-(getStringHeight(label)-getLineHeight()))+1+yOffset);
+        font->drawString(label, floor(rect->getX())+1+xOffset, floor(rect->getY()+rect->getHeight())+1+yOffset);
     }
     
 	void drawString(float x, float y, string _string)
@@ -187,9 +184,9 @@ public:
 		label = string(_label);
         if(autoSize)
         {
-            float w = font->stringWidth(label);
-            float h = font->stringHeight(label);          //otherwise we get some funky non-uniform spacing :(
-            rect->setWidth(w); 
+            float w = font->stringWidth(label); 
+            float h = font->stringHeight("1");          //otherwise we get some funky non-uniform spacing :(
+            rect->setWidth(w);
             rect->setHeight(h); 		 
             paddedRect->setWidth(w+padding*2.0);
             paddedRect->setHeight(h+padding*2.0);
@@ -202,11 +199,11 @@ public:
             {
                 label = label.substr(0, label.size()-1);
             }                        
-//            float w = (int)font->stringWidth(label);
-            float h = (int)font->stringHeight(label);     //otherwise we get some funky non-uniform spacing :(
+//            float w = (int)font->stringWidth(label); 
+            float h = (int)font->stringHeight("1");     //otherwise we get some funky non-uniform spacing :(
             if(rect->getHeight() > 0)
             {
-                yOffset = 0;
+                yOffset = 0; 
             }
             else
             {

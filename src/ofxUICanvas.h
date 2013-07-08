@@ -564,10 +564,11 @@ public:
      
     virtual void draw()
     {
+		
         ofxUIPushStyle();
-        
-        glPushAttrib(GL_ALL_ATTRIB_BITS); 
-        
+
+        glPushAttrib(GL_ALL_ATTRIB_BITS);
+		
         glDisable(GL_DEPTH_TEST);
         glDisable(GL_LIGHTING);
 
@@ -602,9 +603,9 @@ public:
             }
 		}    
         
-        glPopAttrib(); 
-        
         ofxUIPopStyle();
+		
+        glPopAttrib();
     }
     
     void exit()
@@ -3254,7 +3255,7 @@ protected:
                     
                 case OFX_UI_TEXTINPUT_ON_ENTER:
                 {
-                    hasKeyBoard = true; 
+                    hasKeyBoard = false;
                     return;
                 }
                     break; 

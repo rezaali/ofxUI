@@ -433,10 +433,16 @@ static void ofxUINoFill()
 static void ofxUIPushStyle()
 {
     ofPushStyle();
+#ifndef TARGET_OPENGLES
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+#endif
 }
 
 static void ofxUIPopStyle()
 {
+#ifndef TARGET_OPENGLES    
+    glPopAttrib();
+#endif    
     ofPopStyle();
 }
 
