@@ -29,26 +29,26 @@
 class ofxUIBaseDraws : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name)
+    ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _image, _name); 
     }
     
-    ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name, bool _showLabel)
+    ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(x,y,w,h); 
         init(w, h, _image, _name); 
         showLabel = _showLabel; 
     }
     
-    ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name)
+    ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _image, _name); 
     }    
 
-    ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name, bool _showLabel)
+    ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
     {
         rect = new ofxUIRectangle(0,0,w,h); 
         init(w, h, _image, _name); 

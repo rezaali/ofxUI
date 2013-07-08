@@ -1899,6 +1899,21 @@ public:
         return widget;
     }
 
+    ofxUIBaseDraws *addBaseDraws(string _name, ofBaseDraws *_base, float _w, float _h, bool _showLabel = false)
+    {
+        ofxUIBaseDraws* widget = new ofxUIBaseDraws(_w, _h, _base, _name, _showLabel);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIBaseDraws *addBaseDraws(string _name, ofBaseDraws *_base, bool _showLabel = false)
+    {
+        float _w = rect->getWidth()-widgetSpacing*2;
+        float _h = _w*(float)_base->getHeight()/(float)_base->getWidth();
+        ofxUIBaseDraws* widget = new ofxUIBaseDraws(_w, _h, _base, _name, _showLabel);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
     ofxUIImageSampler *addImageSampler(string _name, ofImage *_image, float _w, float _h)
     {
         ofxUIImageSampler* widget = new ofxUIImageSampler(_w, _h, _image, _name);

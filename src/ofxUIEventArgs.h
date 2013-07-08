@@ -63,7 +63,11 @@ public:
         return widget->getName();
     }
     
+<<<<<<< HEAD
     ofxUIWidget *widget; 
+=======
+    ofxUIWidget *widget;
+>>>>>>> develop
 }; 
 
 #endif

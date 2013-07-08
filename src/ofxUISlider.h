@@ -510,10 +510,10 @@ public:
     }
     
     void setMaxAndMin(float _max, float _min, bool bKeepValueTheSame = false)
-    {        
+    {
         max = _max;
         min = _min;
-
+        
         if(!bKeepValueTheSame)
         {
             value = ofxUIMap(value, 0, 1.0, min, max, true);
