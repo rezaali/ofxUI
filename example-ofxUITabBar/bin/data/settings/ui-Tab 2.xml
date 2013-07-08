@@ -1,0 +1,67 @@
+<Widget>
+    <Kind>4</Kind>
+    <Name>FPS SLIDER</Name>
+    <Value>370.648895264</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RED</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>25</Kind>
+    <Name>GREEN</Name>
+    <Value>100.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>26</Kind>
+    <Name>BLUE</Name>
+    <Value>100.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>5</Kind>
+    <Name>1</Name>
+    <Value>100.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>5</Kind>
+    <Name>2</Name>
+    <Value>150.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>5</Kind>
+    <Name>3</Name>
+    <Value>200.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>5</Kind>
+    <Name>4</Name>
+    <Value>250.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>6</Kind>
+    <Name>RSLIDER</Name>
+    <HighValue>100.000000000</HighValue>
+    <LowValue>50.000000000</LowValue>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>CSLIDER 2</Name>
+    <Value>75.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>11</Kind>
+    <Name>PAD</Name>
+    <XValue>156.000000000</XValue>
+    <YValue>40.000000000</YValue>
+</Widget>
+<Widget>
+    <Kind>27</Kind>
+    <Name>GREEN</Name>
+    <Value>100.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>34</Kind>
+    <Name>IMAGE SLIDER</Name>
+    <Value>100.000000000</Value>
+</Widget>
