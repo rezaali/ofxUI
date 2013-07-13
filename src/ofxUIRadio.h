@@ -69,7 +69,7 @@ public:
         }
         else
         {
-            for(int i = 0; i < names.size(); i++)
+            for(unsigned int i = 0; i < names.size(); i++)
             {
                 string tname = names[i];
                 ofxUIToggle *toggle = new ofxUIToggle(0,0, w, h, false, tname, _size);
@@ -85,7 +85,7 @@ public:
     void setVisible(bool _visible)
     {
         visible = _visible; 
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
             t->setVisible(visible);             
@@ -93,7 +93,7 @@ public:
     }
 	void activateToggle(string _name)
 	{
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
@@ -126,7 +126,7 @@ public:
 		float xt = 0; 
 		float yt = 0; 
 		
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
 			t->setParent(this);

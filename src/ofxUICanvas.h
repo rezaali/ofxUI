@@ -1025,7 +1025,7 @@ public:
         }
         
         //for the widgets with state         
-        for(int i = 0; i < widgetsWithState.size(); i++)
+        for(unsigned int i = 0; i < widgetsWithState.size(); i++)
         {
             ofxUIWidget *other = widgetsWithState[i]; 
             if(widget->getName() == other->getName())
@@ -1133,7 +1133,7 @@ public:
         {
 			ofxUIDropDownList *list = (ofxUIDropDownList *) widget;            
             vector<ofxUILabelToggle *> toggles = list->getToggles(); 
-			for(int i = 0; i < toggles.size(); i++)
+			for(unsigned int i = 0; i < toggles.size(); i++)
 			{
 				ofxUILabelToggle *t = toggles[i]; 
 				ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
@@ -1160,7 +1160,7 @@ public:
 			ofxUIRadio *radio = (ofxUIRadio *) widget;
 			vector<ofxUIToggle *> toggles = radio->getToggles(); 
 			
-			for(int i = 0; i < toggles.size(); i++)
+			for(unsigned int i = 0; i < toggles.size(); i++)
 			{
 				ofxUIToggle *t = toggles[i]; 
 				ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
@@ -1176,7 +1176,7 @@ public:
 			ofxUIToggleMatrix *matrix = (ofxUIToggleMatrix *) widget;
 			vector<ofxUIToggle *> toggles = matrix->getToggles(); 
 			
-			for(int i = 0; i < toggles.size(); i++)
+			for(unsigned int i = 0; i < toggles.size(); i++)
 			{
 				ofxUIToggle *t = toggles[i]; 
 				ofxUILabel *l2 = (ofxUILabel *) t->getLabel();

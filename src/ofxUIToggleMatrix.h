@@ -76,7 +76,7 @@ public:
     void setVisible(bool _visible)
     {
         visible = _visible;   
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
             t->setVisible(visible);
@@ -86,7 +86,7 @@ public:
     
 	void activateToggle(string _name)
 	{
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
@@ -134,7 +134,7 @@ public:
     
     void setAllToggles(bool _value)
     {
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
             t->setValue(_value);
@@ -143,19 +143,19 @@ public:
     
     void setAllTogglesAndTrigger(bool _value)
     {
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUIToggle *t = toggles[i]; 			
             t->setValue(_value);
         }        
         
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
 		{
             triggerEvent(toggles[i]); 
         }        
     }
     
-    void setToggle(int x, int y, bool _value)
+    void setToggle(unsigned int x, unsigned int y, bool _value)
     {
         if(x*y < toggles.size())
         {

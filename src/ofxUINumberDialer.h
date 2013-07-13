@@ -164,7 +164,7 @@ public:
                 label->drawString(x+rect->getWidth(), y, name);
             }
             
-            for(int i = 0; i < displaystring.size(); i++)
+            for(unsigned int i = 0; i < displaystring.size(); i++)
             {
                 float tw = label->getStringWidth(displaystring.substr(i,1));
                 float delta = w/2.0 - tw/2.0;
@@ -189,7 +189,7 @@ public:
                 label->drawString(x+rect->getWidth(), y, name);
             }
             
-            for(int i = 0; i < displaystring.size(); i++)
+            for(unsigned int i = 0; i < displaystring.size(); i++)
             {
                 float tw = label->getStringWidth(displaystring.substr(i,1));
                 float delta = w/2.0 - tw/2.0; 

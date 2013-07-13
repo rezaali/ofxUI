@@ -501,8 +501,8 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     int maxsize;
     bool triggerOnClick;
     
-    int cursorPosition;
-    int firstVisibleCharacterIndex;
+    unsigned int cursorPosition;
+    unsigned int firstVisibleCharacterIndex;
 }; 
 
 #endif
