@@ -119,7 +119,7 @@ public:
     
     void clearSelected()
     {
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
         {
 	        toggles[i]->setValue(false);
         }            
@@ -130,7 +130,7 @@ public:
     {        
         float yt = rect->getHeight();
         
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUILabelToggle *t = toggles[i]; 			
             yt +=t->getRect()->getHeight();         
@@ -166,7 +166,7 @@ public:
     
     void addToggles(vector<string>& toggleNames)
     {
-        for(int i = 0; i < toggleNames.size(); i++){
+        for(unsigned int i = 0; i < toggleNames.size(); i++){
             addToggle(toggleNames[i]);
         }
     }
@@ -174,7 +174,7 @@ public:
     void removeToggle(string toggleName)
     {
         ofxUILabelToggle *t = NULL; 
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
         {
             ofxUILabelToggle *other = (ofxUILabelToggle *)toggles[i];
             if(other->getName() == toggleName)
@@ -184,7 +184,7 @@ public:
                 break; 
             }
         }
-        for(int i = 0; i < selected.size(); i++)
+        for(unsigned int i = 0; i < selected.size(); i++)
         {
             ofxUILabelToggle *other = (ofxUILabelToggle *)selected[i];
             if(other->getName() == toggleName)
@@ -198,7 +198,7 @@ public:
             parent->removeWidget(t);
             
             float yt = rect->getHeight();
-            for(int i = 0; i < toggles.size(); i++)
+            for(unsigned int i = 0; i < toggles.size(); i++)
             {
                 ofxUILabelToggle *t = toggles[i]; 			
                 t->setParent(this); 
@@ -265,7 +265,7 @@ public:
     void initToggles(vector<string> &items, int _size)
     {
         float ty = 20;
-		for(int i = 0; i < items.size(); i++)
+		for(unsigned int i = 0; i < items.size(); i++)
 		{
 			string tname = items[i]; 
 			ofxUILabelToggle *ltoggle; 
@@ -332,7 +332,7 @@ public:
         paddedRect->width = rect->width+padding*2.0;          
                     
 		float yt = rect->height;
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUILabelToggle *t = toggles[i]; 			
 			t->setParent(this); 
@@ -388,7 +388,7 @@ public:
     {
         visible = _visible; 
         label->setVisible(visible); 
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
         {
             ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
             toggle->setVisible((visible && isOpen()));
@@ -397,7 +397,7 @@ public:
     
     void setToggleVisibility(bool _value)
     {
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
         {
             ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
             toggle->setVisible(_value); 
@@ -440,7 +440,7 @@ public:
         }
         
         selected.clear();
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUILabelToggle *t = toggles[i]; 		
             if(t->getValue())
@@ -460,7 +460,7 @@ public:
     
 	void activateToggle(string _name)
 	{
-		for(int i = 0; i < toggles.size(); i++)
+		for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUILabelToggle *t = toggles[i]; 			
 			if(!(t->getName().compare(_name.c_str())))
@@ -504,7 +504,7 @@ public:
             }
         }
         
-        for(int i = 0; i < toggles.size(); i++)
+        for(unsigned int i = 0; i < toggles.size(); i++)
         {
             toggles[i]->setModal(modal);
         }

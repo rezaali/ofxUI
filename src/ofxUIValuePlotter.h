@@ -57,7 +57,7 @@ public:
 		bufferSize = _bufferSize;
 		max = _max;
 		min = _min;
-        for(int i = 0; i < bufferSize; i++)
+        for(unsigned int i = 0; i < bufferSize; i++)
         {
             buffer.push_back(*value);
         }
@@ -99,7 +99,7 @@ public:
             ofTranslate(rect->getX(), rect->getY()+scale, 0);
             ofSetLineWidth(1.5);
             ofBeginShape();
-            for (int i = 0; i < bufferSize; i++)
+            for (unsigned int i = 0; i < bufferSize; i++)
             {
                 ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, scale, -scale, true));
             }
@@ -139,7 +139,7 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     float *value; 
     vector<float> buffer;
 	float max, min, scale, inc;
-	int bufferSize;
+	unsigned int bufferSize;
 };
 
 

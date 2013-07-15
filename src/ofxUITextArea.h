@@ -79,14 +79,14 @@ public:
             if(drawShadow)
             {
                 ofSetColor(color_back);
-                for(int i = 0; i < textLines.size(); i++)
+                for(unsigned int i = 0; i < textLines.size(); i++)
                 {
                     label->drawStringShadow(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
                 }
             }
             
             ofSetColor(color_fill);
-            for(int i = 0; i < textLines.size(); i++)
+            for(unsigned int i = 0; i < textLines.size(); i++)
             {
                 label->drawString(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
             }
