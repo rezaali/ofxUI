@@ -87,11 +87,15 @@ public:
         
         img = new ofImage();
         img->loadImage(_pathURL);
+        bChangedImage = false;
     }
     
     virtual ~ofxUIImageToggle()
     {
-        delete img;
+        if(!bChangedImage)
+        {
+            delete img;
+        }
     }
     
     virtual void drawBack()
@@ -134,8 +138,25 @@ public:
         }
     }
     
+    virtual ofImage *getImage()
+    {
+        return img;
+    }
+    
+    virtual void setImage(ofImage *_img)
+    {
+        if(img != NULL && !bChangedImage)
+        {
+            delete img;
+            img = NULL;
+        }
+        img = _img;
+        bChangedImage = true; 
+    }
+    
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
-    ofImage *img;     
+    ofImage *img;
+    bool bChangedImage;
 }; 
 
 #endif
