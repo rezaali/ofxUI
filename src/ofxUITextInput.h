@@ -216,7 +216,6 @@ public:
 	
     void keyPressed(int key) 
     {
-    	ofLog(OF_LOG_VERBOSE, "openframeworks Drawnetic ofxUI keyPressed: %i", key);
 		if(clicked)            
 		{
             switch (key) 
@@ -271,10 +270,9 @@ public:
                         recalculateDisplayString();
                     }
 					break;
-                    
-                case OF_KEY_MODIFIER:
-                case OF_KEY_ALT:
-                case OF_KEY_SHIFT:
+
+                case OF_KEY_TAB:
+                case OF_KEY_COMMAND:
                 case OF_KEY_F1:
                 case OF_KEY_F2:
                 case OF_KEY_F3:
@@ -292,6 +290,17 @@ public:
                 case OF_KEY_HOME:
                 case OF_KEY_END:
                 case OF_KEY_INSERT:
+                case OF_KEY_CONTROL:
+                case OF_KEY_ALT:
+                case OF_KEY_SHIFT:
+                case OF_KEY_LEFT_SHIFT:
+                case OF_KEY_RIGHT_SHIFT:
+                case OF_KEY_LEFT_CONTROL:
+                case OF_KEY_RIGHT_CONTROL:
+                case OF_KEY_LEFT_ALT:
+                case OF_KEY_RIGHT_ALT:
+                case OF_KEY_LEFT_SUPER:
+                case OF_KEY_RIGHT_SUPER:
                     break;
                     
 				default:
