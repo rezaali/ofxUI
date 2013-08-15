@@ -137,7 +137,8 @@ public:
         globalButtonDimension = OFX_UI_GLOBAL_BUTTON_DIMENSION;
         globalSpacerHeight = OFX_UI_GLOBAL_SPACING_HEIGHT;
         
-        hasKeyBoard = false; 
+        hasKeyBoard = false;
+        bInsideCanvas = false;
         
         widgetPosition = OFX_UI_WIDGET_POSITION_DOWN;
         widgetAlign = OFX_UI_ALIGN_LEFT;
@@ -714,9 +715,11 @@ public:
 			{                
 				if((*it)->isVisible()) (*it)->mouseMoved(x, y); 
 			}
+            bInsideCanvas = true;
 		}
         else
         {
+            bInsideCanvas = false;
             for (map<string, ofxUIWidget*>::iterator it=widgetsAreModal.begin() ; it != widgetsAreModal.end(); it++ )
             {
                 if((*it).second->isVisible()) (*it).second->mouseMoved(x, y);
@@ -770,18 +773,24 @@ public:
 
     virtual void keyPressed(int key)
     {
-        for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
-		{
-			(*it)->keyPressed(key);
-		}
+        if(bInsideCanvas)
+        {
+            for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
+            {
+                (*it)->keyPressed(key);
+            }
+        }
     }
 
     virtual void keyReleased(int key)
     {
-		for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
-		{
-			(*it)->keyReleased(key);
-		}
+        if(bInsideCanvas)
+        {
+            for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
+            {
+                (*it)->keyReleased(key);
+            }
+        }
     }
 	
     virtual bool isHit(int x, int y)
@@ -3169,6 +3178,7 @@ protected:
 	ofxUIFont *font_large; 	
 	ofxUIFont *font_medium; 		
 	ofxUIFont *font_small;
+    bool bInsideCanvas;
  	
 	ofxUIEventArgs *GUIevent; 
     int state;

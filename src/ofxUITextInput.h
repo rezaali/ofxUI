@@ -273,7 +273,6 @@ public:
 					break;
                     
                 case OF_KEY_MODIFIER:
-                case OF_KEY_CTRL:
                 case OF_KEY_ALT:
                 case OF_KEY_SHIFT:
                 case OF_KEY_F1:
