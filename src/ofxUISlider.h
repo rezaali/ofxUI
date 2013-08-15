@@ -198,7 +198,7 @@ public:
     
     virtual void drawFill() 
     {
-        if(draw_fill)
+        if(draw_fill && value > 0.0)
         {			
             ofxUIFill(); 
             ofxUISetColor(color_fill); 
