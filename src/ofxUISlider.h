@@ -140,16 +140,28 @@ public:
 		}
         
 		label->setParent(label); 
-		label->setRectParent(rect); 
+		label->setRectParent(rect);
         label->setEmbedded(true);
         increment = fabs(max - min) / 100.0;
+        bRoundedToNearestInt = false;
+        bClampValue = true;
+    }
+    
+    bool getSetClampValue()
+    {
+        return bClampValue;
+    }
+    
+    void setClampValue(bool _bClampValue)
+    {
+        bClampValue = _bClampValue;
     }
     
     virtual void update()
     {
         if(useReference)
         {
-            value = ofxUIMap(*valueRef, min, max, 0.0, 1.0, true);
+            value = ofxUIMap(*valueRef, min, max, 0.0, 1.0, bClampValue);
             updateLabel(); 
         }
     }
@@ -204,11 +216,11 @@ public:
             ofxUISetColor(color_fill); 
 			if(kind == OFX_UI_WIDGET_SLIDER_H)
 			{			   
-				ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+				ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*MIN(MAX(value, 0.0), 1.0), rect->getHeight());
 			}
 			else 
 			{
-				ofxUIDrawRect(rect->getX(), rect->getY()+rect->getHeight(), rect->getWidth(), -rect->getHeight()*value); 
+				ofxUIDrawRect(rect->getX(), rect->getY()+rect->getHeight(), rect->getWidth(), -rect->getHeight()*MIN(MAX(value, 0.0), 1.0));
 			}
         }
     }
@@ -225,11 +237,11 @@ public:
 			}
 			else 
 			{
-				ofxUIDrawRect(rect->getX(), rect->getY()+rect->getHeight(), rect->getWidth(), -rect->getHeight()*value); 
+				ofxUIDrawRect(rect->getX(), rect->getY()+rect->getHeight(), rect->getWidth(), -rect->getHeight()*MIN(MAX(value, 0.0), 1.0));
 			}	
 			if(kind == OFX_UI_WIDGET_SLIDER_V)
 			{
-				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*value, ofxUIToString(getScaledValue(),labelPrecision)); 
+				label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*MIN(MAX(value, 0.0), 1.0), ofxUIToString(getScaledValue(),labelPrecision)); 
 			}
         }        
     }
@@ -300,7 +312,7 @@ public:
 	
     void keyPressed(int key) 
     {		
-		if(state == OFX_UI_STATE_OVER)
+		if(state == OFX_UI_STATE_OVER || state == OFX_UI_STATE_DOWN)
 		{
 			switch (key) 
 			{
@@ -321,9 +333,16 @@ public:
                     
 				case OF_KEY_DOWN:
 					setValue(getScaledValue()-increment); 					
-					triggerEvent(this); 
+					triggerEvent(this);     
 					break;					
                     
+                case OF_KEY_SHIFT:
+#if OF_VERSION_MINOR > 7
+                case OF_KEY_LEFT_SHIFT:
+                case OF_KEY_RIGHT_SHIFT:
+#endif
+                    bRoundedToNearestInt = true;
+                    break;
 				default:
 					break;
 			}
@@ -332,7 +351,7 @@ public:
     
     void keyReleased(int key) 
     {
-		
+        bRoundedToNearestInt = false; 
     }
 	
     void windowResized(int w, int h)
@@ -376,7 +395,7 @@ public:
     
     void updateValueRef()
     {
-        (*valueRef) = getScaledValue();  
+        (*valueRef) = bRoundedToNearestInt ? ceil(getScaledValue()) : getScaledValue();  
     }    
 
 	virtual void updateLabel()
@@ -391,8 +410,8 @@ public:
     {                
         switch (state) {
             case OFX_UI_STATE_NORMAL:
-            {            
-                draw_fill_highlight = false;             
+            {
+                draw_fill_highlight = false;
                 draw_outline_highlight = false;             
 				label->unfocus(); 				
             }
@@ -426,7 +445,7 @@ public:
 	
 	void setValue(float _value)
 	{
-		value = ofxUIMap(_value, min, max, 0.0, 1.0, true);		
+		value = ofxUIMap(_value, min, max, 0.0, 1.0, bClampValue);		
         updateValueRef();        
 		updateLabel(); 		
 	}
@@ -443,7 +462,7 @@ public:
 	
 	float getScaledValue()
 	{
-		return ofxUIMap(value, 0.0, 1.0, min, max, true); 
+		return ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
 	}
     
 	ofxUILabel *getLabel()
@@ -516,8 +535,8 @@ public:
         
         if(!bKeepValueTheSame)
         {
-            value = ofxUIMap(value, 0, 1.0, min, max, true);
-            value = ofxUIMap(value, min, max, 0.0, 1.0, true);
+            value = ofxUIMap(value, 0, 1.0, min, max, bClampValue);
+            value = ofxUIMap(value, min, max, 0.0, 1.0, bClampValue);
             updateValueRef();
             updateLabel();
         }
@@ -529,6 +548,8 @@ public:
     }
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+    bool bRoundedToNearestInt;
+    bool bClampValue; 
     float value, increment;
     float *valueRef; 
     bool useReference;     

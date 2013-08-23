@@ -139,6 +139,8 @@ public:
 		label->setRectParent(rect); 	
         label->setEmbedded(true);        
         increment = fabs(max - min) / 10.0;
+        bRoundedToNearestInt = false;
+        bClampValue = false;
     }
     
     virtual void drawFill()
@@ -147,7 +149,7 @@ public:
         {			
             ofxUIFill(); 
             ofxUISetColor(color_fill); 
-            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*MIN(MAX(value, 0.0), 1.0), rect->getHeight());
         }
     }
     
@@ -157,7 +159,7 @@ public:
         {
             ofxUIFill(); 
             ofxUISetColor(color_fill_highlight); 
-            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+            ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*MIN(MAX(value, 0.0), 1.0), rect->getHeight());
             ofxUISetColor(label->getColorFillHighlight());             
             label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
         }        
