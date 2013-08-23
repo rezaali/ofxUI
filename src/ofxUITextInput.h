@@ -271,6 +271,19 @@ public:
                     }
 					break;
 
+#if (OF_VERSION_MINOR > 7)
+                case OF_KEY_TAB:
+                case OF_KEY_COMMAND:
+                case OF_KEY_CONTROL:
+                case OF_KEY_LEFT_SHIFT:
+                case OF_KEY_RIGHT_SHIFT:
+                case OF_KEY_LEFT_CONTROL:
+                case OF_KEY_RIGHT_CONTROL:
+                case OF_KEY_LEFT_ALT:
+                case OF_KEY_RIGHT_ALT:
+                case OF_KEY_LEFT_SUPER:
+                case OF_KEY_RIGHT_SUPER:					
+#endif
                 case OF_KEY_F1:
                 case OF_KEY_F2:
                 case OF_KEY_F3:
@@ -290,25 +303,12 @@ public:
                 case OF_KEY_INSERT:
                 case OF_KEY_ALT:
                 case OF_KEY_SHIFT:
-#if OF_VERSION_MINOR > 7
-                case OF_KEY_TAB:
-                case OF_KEY_COMMAND:
-                case OF_KEY_CONTROL:
-                case OF_KEY_LEFT_SHIFT:
-                case OF_KEY_RIGHT_SHIFT:
-                case OF_KEY_LEFT_CONTROL:
-                case OF_KEY_RIGHT_CONTROL:
-                case OF_KEY_LEFT_ALT:
-                case OF_KEY_RIGHT_ALT:
-                case OF_KEY_LEFT_SUPER:
-                case OF_KEY_RIGHT_SUPER:
-#endif
-                    break;
+                break;
                     
 				default:
                 {
                     textstring.insert(cursorPosition, 1, key);
-                    cursorPosition ++;
+                    cursorPosition++;
                     recalculateDisplayString();
                 }
 					break;
