@@ -1001,10 +1001,15 @@ public:
 		for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
 		{
 			ofxUIWidget *w = (*it);
-			removeWidget(w);
+            delete w; 
 		}
         widgets.clear();
-        lastAdded = NULL; 
+        widgets_map.clear();
+        widgetsAreModal.clear();
+        widgetsWithState.clear();
+        lastAdded = NULL;
+        activeFocusedWidget = NULL;
+        resetPlacer();
     }
     
     void removeWidget(ofxUIWidget *widget)

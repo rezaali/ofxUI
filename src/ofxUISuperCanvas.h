@@ -57,8 +57,10 @@ public:
 
     void superInit(string _label, int _size)
     {
+        size = _size; 
+        title = _label; 
         kind = OFX_UI_WIDGET_SUPERCANVAS;
-        canvasTitle = new ofxUILabel(rect->getWidth()-widgetSpacing*2, _label, _size);
+        canvasTitle = new ofxUILabel(rect->getWidth()-widgetSpacing*2, title, size);
         canvasTitle->setEmbedded(true); 
         headerWidgets.push_back(canvasTitle);
         addWidgetPosition(canvasTitle, widgetPosition, widgetAlign);
@@ -269,6 +271,17 @@ public:
         headerWidgets.push_back(widget);
     }
     
+    void removeWidgets()
+    {     
+        ofxUICanvas::removeWidgets();
+        headerWidgets.clear();
+        
+        canvasTitle = new ofxUILabel(rect->getWidth()-widgetSpacing*2, title, size);
+        canvasTitle->setEmbedded(true);
+        headerWidgets.push_back(canvasTitle);
+        addWidgetPosition(canvasTitle, widgetPosition, widgetAlign);
+    }
+    
 protected:
     void minify()
     {
@@ -304,6 +317,8 @@ protected:
         autoSizeToFitWidgets();
     }
     
+    int size; 
+    string title; 
     ofxUILabel *canvasTitle;
     vector<ofxUIWidget *> headerWidgets;
     
