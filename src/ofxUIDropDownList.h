@@ -124,6 +124,7 @@ public:
 	        toggles[i]->setValue(false);
         }            
         selected.clear();
+        selectedIndeces.clear();
     }
     
     void addToggle(string toggleName)
@@ -189,7 +190,8 @@ public:
             ofxUILabelToggle *other = (ofxUILabelToggle *)selected[i];
             if(other->getName() == toggleName)
             {
-                selected.erase(selected.begin()+i);                                             
+                selected.erase(selected.begin()+i);
+                selectedIndeces.erase(selectedIndeces.begin()+i);
                 break; 
             }
         }                
@@ -260,6 +262,11 @@ public:
     vector<ofxUIWidget *> & getSelected()
     {                 
         return selected;         
+    }
+
+    vector<int> & getSelectedIndeces()
+    {
+        return selectedIndeces;
     }
 
     void initToggles(vector<string> &items, int _size)
@@ -440,12 +447,14 @@ public:
         }
         
         selected.clear();
+        selectedIndeces.clear();
         for(unsigned int i = 0; i < toggles.size(); i++)
 		{
 			ofxUILabelToggle *t = toggles[i]; 		
             if(t->getValue())
             {
                 selected.push_back(t);
+                selectedIndeces.push_back(i);
             }                           
         }        
             
@@ -519,9 +528,10 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     bool autoSize; 
     bool autoClose;
     bool bShowCurrentSelected; 
-    vector<ofxUILabelToggle *> toggles; 
-    ofxUILabelToggle *singleSelected; 
+    vector<ofxUILabelToggle *> toggles;
+    ofxUILabelToggle *singleSelected;
     vector<ofxUIWidget *> selected;
+    vector<int> selectedIndeces;
     bool allowMultiple;
     int size;     
 }; 
