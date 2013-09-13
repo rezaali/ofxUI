@@ -1,47 +1,42 @@
 <Widget>
     <Kind>4</Kind>
     <Name>BGR</Name>
-    <Value>198.631576538</Value>
+    <Value>198.632</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BGG</Name>
-    <Value>56.368419647</Value>
+    <Value>56.3684</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BGB</Name>
-    <Value>128.842102051</Value>
+    <Value>128.842</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
-    <Name>RED</Name>
-    <Value>16.946203232</Value>
+    <Kind>2</Kind>
+    <Name>name 1</Name>
+    <Value>0</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
-    <Name>GREEN</Name>
-    <Value>41.962024689</Value>
+    <Kind>2</Kind>
+    <Name>name 2</Name>
+    <Value>1</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
-    <Name>BLUE</Name>
-    <Value>166.234176636</Value>
+    <Kind>2</Kind>
+    <Name>name 3</Name>
+    <Value>0</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
-    <Name>ALPHA</Name>
-    <Value>246.826995850</Value>
+    <Kind>2</Kind>
+    <Name>name 4</Name>
+    <Value>0</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
-    <Name>RADIUS</Name>
-    <Value>193.670883179</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>RESOLUTION</Name>
-    <Value>8.000000000</Value>
+    <Kind>2</Kind>
+    <Name>name 5</Name>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -51,6 +46,6 @@
 <Widget>
     <Kind>11</Kind>
     <Name>POSITION</Name>
-    <XValue>208.000000000</XValue>
-    <YValue>76.000000000</YValue>
+    <XValue>118</XValue>
+    <YValue>102</YValue>
 </Widget>

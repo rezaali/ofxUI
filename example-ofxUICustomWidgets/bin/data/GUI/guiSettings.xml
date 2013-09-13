@@ -1,12 +1,12 @@
 <Widget>
     <Kind>8</Kind>
     <Name>NDIALER</Name>
-    <Value>100.000000000</Value>
+    <Value>100</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
     <Name>Text Input Large</Name>
-    <Value>LARGE TEXT FIELD</Value>
+    <Value>LARGE TEXT FIELD&#x1B;</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
@@ -26,8 +26,8 @@
 <Widget>
     <Kind>28</Kind>
     <Name>OF LOGO 2</Name>
-    <XValue>0.500000000</XValue>
-    <YValue>0.500000000</YValue>
+    <XValue>0.5</XValue>
+    <YValue>0.5</YValue>
     <RColor>188</RColor>
     <GColor>152</GColor>
     <BColor>116</BColor>

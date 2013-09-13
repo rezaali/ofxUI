@@ -63,6 +63,11 @@ public:
         return widget->getName();
     }
     
+    int getKind()
+    {
+        return widget->getKind(); 
+    }
+    
     ofxUIWidget *widget;
 }; 
 
