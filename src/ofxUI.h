@@ -117,7 +117,9 @@ enum ofxUIWidgetType
     OFX_UI_WIDGET_VALUEPLOTTER = 40,
     OFX_UI_WIDGET_2DGRAPH = 41,
     OFX_UI_WIDGET_SUPERCANVAS = 42,
-    OFX_UI_WIDGET_TABBAR = 43
+    OFX_UI_WIDGET_TABBAR = 43,
+    OFX_UI_WIDGET_INTSLIDER_H = 44,
+	OFX_UI_WIDGET_INTSLIDER_V = 45,
 };
 
 enum ofxUIWidgetOrientation
@@ -237,6 +239,7 @@ enum ofxUIThemeType
 #include "ofxUILabel.h"
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
+#include "ofxUIIntSlider.h"
 #include "ofxUIMultiImageSlider.h"
 #include "ofxUIImageSlider.h"
 #include "ofxUIFPSSlider.h"
