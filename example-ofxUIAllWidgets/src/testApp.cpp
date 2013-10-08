@@ -462,6 +462,16 @@ void testApp::setGUI4()
     gui4->addWidgetDown(new ofxUIMultiImageButton(dim*2, dim*2, false, "GUI/toggle.png", "IMAGE BUTTON"));
     gui4->addWidgetDown(new ofxUIMultiImageToggle(dim*2, dim*2, false, "GUI/toggle.png", "IMAGE BUTTON"));
     
-    
+    vector<std::string> items;
+    items.push_back("FIRST ITEM");
+    items.push_back("SECOND ITEM");
+    items.push_back("THIRD ITEM WHATS UP DOG");
+    items.push_back("FOURTH ITEM");
+    items.push_back("FIFTH ITEM");
+    items.push_back("SIXTH ITEM");
+
+    ofxUISortableList* sortableList = new ofxUISortableList("SORTABLE LIST", items, 200, 5, 30, 100, OFX_UI_FONT_MEDIUM);    
+    gui4->addWidgetDown(sortableList);
+
 	ofAddListener(gui4->newGUIEvent,this,&testApp::guiEvent);
 }
