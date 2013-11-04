@@ -242,6 +242,14 @@ public:
                 XML->setValue("Value", slider->getScaledValue(), 0); 
             }
                 break;
+                
+            case OFX_UI_WIDGET_INTSLIDER_H:
+            case OFX_UI_WIDGET_INTSLIDER_V:
+            {
+                ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
+                XML->setValue("Value", slider->getValue(), 0);
+            }
+                break;
 
             case OFX_UI_WIDGET_RSLIDER_H:
             case OFX_UI_WIDGET_RSLIDER_V:
@@ -363,6 +371,15 @@ public:
             }
                 break;
                 
+            case OFX_UI_WIDGET_INTSLIDER_H:
+            case OFX_UI_WIDGET_INTSLIDER_V:
+            {
+                ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
+                int value = XML->getValue("Value", slider->getValue(), 0);
+                slider->setValue(value);
+            }
+                break;
+                
             case OFX_UI_WIDGET_RSLIDER_H:
             case OFX_UI_WIDGET_RSLIDER_V:
             {
@@ -449,10 +466,10 @@ public:
     //Easy Font setting contributed from Colin Duffy (colin@tomorrowevening.com)
     bool setFont(string filename, bool _bAntiAliased=true, bool _bFullCharacterSet=true, bool makeContours=false, float simplifyAmt=0.0, int dpi=OFX_UI_FONT_RESOLUTION) 
     {
-        bool large = updateFont(OFX_UI_FONT_LARGE, filename, OFX_UI_FONT_LARGE_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
-        bool medium = updateFont(OFX_UI_FONT_MEDIUM, filename, OFX_UI_FONT_MEDIUM_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
-        bool small = updateFont(OFX_UI_FONT_SMALL, filename, OFX_UI_FONT_SMALL_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
-        bool successful = large && medium && small;
+        bool bLarge = updateFont(OFX_UI_FONT_LARGE, filename, OFX_UI_FONT_LARGE_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool bMedium = updateFont(OFX_UI_FONT_MEDIUM, filename, OFX_UI_FONT_MEDIUM_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool bSmall = updateFont(OFX_UI_FONT_SMALL, filename, OFX_UI_FONT_SMALL_SIZE, _bAntiAliased, _bFullCharacterSet, makeContours, simplifyAmt, dpi);
+        bool successful = bLarge && bMedium && bSmall;
         if( successful ) fontName = filename;
         return successful;
     }
@@ -1105,7 +1122,7 @@ public:
             setWidgetColor(label);
         }
             
-        if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)
+        if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_INTSLIDER_H || widget->getKind() == OFX_UI_WIDGET_INTSLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGESLIDER_V)
 		{
             if(widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER)
             {
@@ -1478,6 +1495,34 @@ public:
     ofxUISlider* addSlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0)
     {
         ofxUISlider* widget = new ofxUISlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int _value)
+    {
+        ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int _value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, w, h, x, y);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int *_value)
+    {
+        ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
+        addWidgetPosition(widget, widgetPosition, widgetAlign);
+        return widget;
+    }
+    
+    ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int *_value, float w, float h, float x = 0, float y = 0)
+    {
+        ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, w, h, x, y);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }

@@ -233,7 +233,7 @@ public:
             ofxUISetColor(color_fill_highlight); 
 			if(kind == OFX_UI_WIDGET_SLIDER_H)
 			{			   
-				ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*value, rect->getHeight()); 
+				ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*MIN(MAX(value, 0.0), 1.0), rect->getHeight()); 
 			}
 			else 
 			{
