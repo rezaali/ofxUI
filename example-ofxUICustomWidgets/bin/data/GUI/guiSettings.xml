@@ -1,12 +1,12 @@
 <Widget>
     <Kind>8</Kind>
     <Name>NDIALER</Name>
-    <Value>100</Value>
+    <Value>500</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
     <Name>Text Input Large</Name>
-    <Value>LARGE TEXT FIELD&#x1B;</Value>
+    <Value></Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
