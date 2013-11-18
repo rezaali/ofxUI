@@ -418,6 +418,7 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 				);
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -447,6 +448,7 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 				);
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
