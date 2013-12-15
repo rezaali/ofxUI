@@ -40,27 +40,28 @@ When I first started programming with C++ it was difficult for me to use the oth
 
 This tutorial will provide step by step instructions on how to integrate ofxUI with a project your are working on, for simplicity I will assume we are starting from an empty project. For this we are going to be assuming you are using openFrameworks 073+ for OSX, however these instructions should be easily adaptable for iOS.
 
-1. After downloading ofxUI, place it in your openframeworks addons folder. 
+- After downloading ofxUI, place it in your openframeworks addons folder. 
 
-2. Create a new project that is an example of the openframeworks emptyExample (found in the apps/examples folder in OF).
+- Create a new project that is an example of the openframeworks emptyExample (found in the apps/examples folder in OF).
 
-3. Open the project in xCode. 
+- Open the project in xCode. 
 
-4. Drag the src (addons/ofxUI/src) folder within ofxUI into the addons folder in the xCode project (located on the left side of OF). You can rename this ofxUI to make things neat. 
+- Drag the src (addons/ofxUI/src) folder within ofxUI into the addons folder in the xCode project (located on the left side of OF). You can rename this ofxUI to make things neat. 
 
-5. When prompted "Choose options for adding these files", just press "finish." Then add ofxXmlSettings to the addons folder inside your xCode project. ofxUI uses this addon to save and load settings from XML files. 
+- When prompted "Choose options for adding these files", just press "finish." Then add ofxXmlSettings to the addons folder inside your xCode project. ofxUI uses this addon to save and load settings from XML files. 
 
-6. Now we must import some resources that ofxUI will use into the data folder of the project your are working on. The easiest way is to go to one the examples in the ofxUI addon folder and copy the bin/data/GUI folder into your project's data folder "bin/data/".
-
+- Now we must import some resources that ofxUI will use into the data folder of the project your are working on. The easiest way is to go to one the examples in the ofxUI addon folder and copy the bin/data/GUI folder into your project's data folder "bin/data/".
+ 
 Note: The last step is critical so ofxUI can find the proper resources for rendering font. 
 
-7. Now go back to Xcode and add ```#include "ofxUI.h"``` to the top of your testApp.h file.
+- Now go back to Xcode and add ```#include "ofxUI.h"``` to the top of your testApp.h file.
 
-8. Then in your testApp.h file, create a new ```ofxUICanvas``` object within the testApp class like so:
+- Then in your testApp.h file, create a new ```ofxUICanvas``` object within the testApp class like so:
 
 ```cpp
 ofxUICanvas *gui;
 ```
+
 In addition create two functions:
 
 ```cpp
@@ -68,7 +69,7 @@ void exit();
 void guiEvent(ofxUIEventArgs &e);
 ```
 
-9. Switch over to your testApp.cpp file and define the exit and guiEvent functions: 
+- Switch over to your testApp.cpp file and define the exit and `guiEvent` functions: 
 
 ```cpp
 void testApp::exit()
@@ -82,7 +83,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 }
 ```
 
-10. Within the setup function we are going to initialize the gui object and add widgets to it. So one way to do that is: 
+- Within the setup function we are going to initialize the gui object and add widgets to it. So one way to do that is: 
 
 ```cpp
 gui = new ofxUICanvas(0,0,320,320);		//ofxUICanvas(float x, float y, float width, float height)		
@@ -90,7 +91,7 @@ gui = new ofxUICanvas(0,0,320,320);		//ofxUICanvas(float x, float y, float width
 
 Note: The arguments define the GUI's top left corner position and width and height. If no arguments are passed then the GUI will position itself on top of the window and the back of the GUI won't be drawn. 
 
-11. In the exit function we have to delete the gui after we are done using the application. But before this we want to tell the GUI to save the current values in the widgets to an XML file. Thus your exit function should look like: 
+- In the exit function we have to delete the gui after we are done using the application. But before this we want to tell the GUI to save the current values in the widgets to an XML file. Thus your exit function should look like: 
 
 ```cpp
 void testApp::exit()
@@ -100,7 +101,7 @@ void testApp::exit()
 }
 ```
 
-12. We are now going to add widgets to the GUI: 
+- We are now going to add widgets to the GUI: 
 
 ```cpp
 gui->addWidgetDown(new ofxUILabel("OFXUI TUTORIAL", OFX_UI_FONT_LARGE)); 
@@ -111,7 +112,7 @@ gui->loadSettings("GUI/guiSettings.xml");
 
 Note: The second to last line adds a listener/callback, so the gui knows what function to call once a widget is triggered or interacted with by the user, don't worry if its doesn't make too much sense right now, you'll get the hang of it. The last line tells the gui to load settings (widget values from a saved XML file, if the file isn't present it uses the default value of the widgets). 
 
-13. Now to the guiEvent function, we need to react to the user input. The argument of the guiEvent function, ```ofxUIEventArgs &e```, contains the widget which was modified. To access the widget we do the following:
+- Now to the `guiEvent` function, we need to react to the user input. The argument of the `guiEvent` function, ```ofxUIEventArgs &e```, contains the widget which was modified. To access the widget we do the following:
 
 ```cpp
 void testApp::guiEvent(ofxUIEventArgs &e)
@@ -128,7 +129,7 @@ Note: The if statement checks to see which widget was triggered. The way it does
 
 Note: A more practical example might save the value from the slider and use it else where the program. 
 
-14. Lets add a Toggle to toggle the window between fullscreen and window mode. In the setup function add another widget after the other widgets: 
+- Lets add a Toggle to toggle the window between fullscreen and window mode. In the setup function add another widget after the other widgets: 
 
 ```cpp
 gui->addWidgetDown(new ofxUIToggle(32, 32, false, "FULLSCREEN"));
@@ -136,7 +137,7 @@ gui->addWidgetDown(new ofxUIToggle(32, 32, false, "FULLSCREEN"));
 
 Note: if we placed this function before the other addWidgetDown calls then the Toggle would be placed above the slider and able. Lets keep things neat and put in under the slider. 
 
-15. We have to now respond to the "FULLSCREEN" toggle widget so we add more functionality to our guiEvent function. In the end it should look like:
+- We have to now respond to the "FULLSCREEN" toggle widget so we add more functionality to our `guiEvent` function. In the end it should look like:
 
 ```cpp
 void testApp::guiEvent(ofxUIEventArgs &e)
