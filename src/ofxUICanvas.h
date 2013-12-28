@@ -301,6 +301,21 @@ public:
             }
                 break;
 
+            case OFX_UI_WIDGET_SORTABLELIST:
+            {
+                ofxUISortableList *sortableList = (ofxUISortableList *) widget;
+                vector<ofxUIDraggableLabelButton*> listItems = sortableList->getListItems();
+                for (int i = 0; i < listItems .size(); i++)
+                {
+                    ofxUIDraggableLabelButton* draggableLabelButton = listItems.at(i);
+                    XML->addTag("position");
+                    XML->pushTag("position",i);
+                    XML->addValue("id", draggableLabelButton->getSortID());
+                    XML->popTag();
+                }
+            }
+                break;
+
             default:
                 break;
         }
@@ -438,6 +453,22 @@ public:
                 
                 imageSampler->setValue(ofxUIVec2f(valueX, valueY));
                 imageSampler->setColor(ofxUIColor(r,g,b,a));
+            }
+                break;
+
+            case OFX_UI_WIDGET_SORTABLELIST:
+            {
+                ofxUISortableList *sortableList = (ofxUISortableList *) widget;
+                int numberOfListEntries = XML->getNumTags("position");
+                vector<string> listItemOrdering;
+                for(int i = 0; i < numberOfListEntries; i++){
+                    XML->pushTag("position", i);
+                    string id = XML->getValue("id", "");
+                    listItemOrdering.push_back(id);
+                    XML->popTag();
+                }
+                XML->popTag();
+                sortableList->reshuffle(listItemOrdering);
             }
                 break;
                 
@@ -1173,6 +1204,20 @@ public:
                 pushbackWidget(t); 
                 widgetsWithState.push_back(t);             
 			}            
+        }
+        else if(widget->getKind() == OFX_UI_WIDGET_SORTABLELIST)
+        {
+            ofxUISortableList *list = (ofxUISortableList *) widget;
+            vector<ofxUIDraggableLabelButton*> toggles = list->getListItems();
+            for(int i = 0; i < toggles.size(); i++)
+            {
+                ofxUIDraggableLabelButton *t = toggles[i];
+                ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
+                setLabelFont(l2);
+                pushbackWidget(l2);
+                pushbackWidget(t);
+            }
+            widgetsWithState.push_back(list);
         }
 		else if(widget->getKind() == OFX_UI_WIDGET_TEXTINPUT)
 		{

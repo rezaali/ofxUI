@@ -120,6 +120,8 @@ enum ofxUIWidgetType
     OFX_UI_WIDGET_TABBAR = 43,
     OFX_UI_WIDGET_INTSLIDER_H = 44,
 	OFX_UI_WIDGET_INTSLIDER_V = 45,
+    OFX_UI_WIDGET_SORTABLELIST = 46,
+    OFX_UI_WIDGET_DRAGABLELABELBUTTON = 47
 };
 
 enum ofxUIWidgetOrientation
@@ -260,6 +262,8 @@ enum ofxUIThemeType
 #include "ofxUINumberDialer.h"
 #include "ofxUILabelButton.h"
 #include "ofxUILabelToggle.h"
+#include "ofxUIDragableLabelButton.h"
+#include "ofxUISortableList.h"
 #include "ofxUIToggleMatrix.h"
 #include "ofxUIImageButton.h"
 #include "ofxUIImageToggle.h"
