@@ -1841,7 +1841,10 @@ public:
     
     ofxUITextInput* addTextInput(string _name, string _textstring, int _size = OFX_UI_FONT_SMALL)
     {
-        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2, _size);
+		float h = 0;
+		float x = 0;
+		float y = 0;
+        ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2, h, x, y, _size);
         addWidgetPosition(widget, widgetPosition, widgetAlign);
         return widget;
     }
