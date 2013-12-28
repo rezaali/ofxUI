@@ -128,7 +128,6 @@ public:
         }
         
 		font = font_medium; 
-		lastAdded = NULL; 
         uniqueIDs = 0;         
         widgetSpacing = OFX_UI_GLOBAL_WIDGET_SPACING;
         globalCanvasWidth = OFX_UI_GLOBAL_CANVAS_WIDTH;
@@ -1055,7 +1054,7 @@ public:
         widgets_map.clear();
         widgetsAreModal.clear();
         widgetsWithState.clear();
-        lastAdded = NULL;
+        lastAddeds.clear();
         activeFocusedWidget = NULL;
         resetPlacer();
     }
@@ -1124,6 +1123,9 @@ public:
             removeWidget(widget->getEmbeddedWidget(i));
         }
         widget->clearEmbeddedWidgets();
+
+		//	remove widget from lastAdded stack
+		lastAddeds.erase( std::remove( lastAddeds.begin(), lastAddeds.end(), widget ), lastAddeds.end() );
 
         delete widget;
     }    
@@ -1282,6 +1284,7 @@ public:
         if(!reAdd) addWidget(widget);
         ofxUIRectangle *widgetRect = widget->getRect();
         ofxUIRectangle *widgetPaddingRect = widget->getPaddingRect();        
+		ofxUIWidget* lastAdded = lastAddeds.empty() ? NULL : lastAddeds.back();
 		if(lastAdded != NULL)
 		{
    			ofxUIRectangle *lastPaddedRect = lastAdded->getPaddingRect(); 
@@ -1345,7 +1348,7 @@ public:
         }
         if(widget->getRect()->getHeight() != 0 || widget->getRect()->getWidth() != 0)
         {
-            lastAdded = widget;
+            lastAddeds.push_back( widget );
         }
 		return widget;
     }
@@ -1388,7 +1391,7 @@ public:
 			ofxUIRectangle *widgetRect = widget->getRect(); 
 			widgetRect->y = widgetSpacing; 
 		}
-        lastAdded = widget;  		
+        lastAddeds.push_back( widget );
         return widget;
     }    
     
@@ -1411,7 +1414,7 @@ public:
 			ofxUIRectangle *widgetRect = widget->getRect(); 
 			widgetRect->y = widgetSpacing; 
 		}
-        lastAdded = widget;  	        
+        lastAddeds.push_back( widget );	        
         return widget;
     }      
     
@@ -1434,7 +1437,7 @@ public:
             ofxUIRectangle *currentRect = widget->getRect(); 			
             currentRect->y = widgetSpacing; 
 		}
-        lastAdded = widget;  	
+        lastAddeds.push_back( widget );
         return widget;
     }        
     
@@ -1455,7 +1458,7 @@ public:
             ofxUIRectangle *currentRect = widget->getRect(); 			
             currentRect->y = widgetSpacing; 
 		}
-        lastAdded = widget;  	
+        lastAddeds.push_back( widget );
         return widget;
     }         
    
@@ -2246,12 +2249,15 @@ public:
     
     void resetPlacer()
     {
-        lastAdded = NULL; 
+        lastAddeds.clear();
     }
     
     void setPlacer(ofxUIWidget *referenceWidget)
     {
-        lastAdded = referenceWidget; 
+		if ( !referenceWidget )
+			return;
+		std::remove( lastAddeds.begin(), lastAddeds.end(), referenceWidget );
+        lastAddeds.push_back( referenceWidget );
     }
     
 	void setLabelFont(ofxUILabel *label)
@@ -3285,7 +3291,7 @@ protected:
 	vector<ofxUIWidget*> widgets;
     map<string, ofxUIWidget*> widgetsAreModal;
 	vector<ofxUIWidget*> widgetsWithState;
-	ofxUIWidget *lastAdded; 
+	vector<ofxUIWidget*> lastAddeds; 
 	ofxUIWidget *activeFocusedWidget; 
 	bool enable_highlight_outline; 
 	bool enable_highlight_fill;
