@@ -1,12 +1,10 @@
 #include "ofMain.h"
-#include "testApp.h"
-#include "ofAppGlutWindow.h"
+#include "ofApp.h"
 
-//========================================================================
-int main( ){
-
-    ofAppGlutWindow window;
-//	window.setGlutDisplayString("rgba double samples>=6 depth");        
-	ofSetupOpenGL(&window, 768,1024, OF_WINDOW);			// <-------- setup the GL context
-	ofRunApp( new testApp());
+int main( )
+{
+	ofSetupOpenGL(768, 1024, OF_WINDOW);
+	ofRunApp( new ofApp());
+    
 }
+

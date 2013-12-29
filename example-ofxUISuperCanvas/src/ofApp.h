@@ -1,10 +1,9 @@
-#ifndef TESTAPP
-#define TESTAPP
+#pragma once
 
 #include "ofMain.h"
 #include "ofxUI.h"
 
-class testApp : public ofBaseApp 
+class ofApp : public ofBaseApp 
 {
 	public:
 	void setup();
@@ -32,5 +31,3 @@ class testApp : public ofBaseApp
     int resolution;
     ofPoint position;    
 };
-
-#endif

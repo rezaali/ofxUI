@@ -108,8 +108,6 @@ public:
         
         return false;
     }
-
-#ifndef OFX_UI_NO_XML
     
     void saveSettings(string pathToSaveTo, string fileNamePrefix)
     {                
@@ -124,8 +122,6 @@ public:
             it->second->loadSettings(pathToLoadFrom + fileNamePrefix + it->second->getName() + ".xml");
         }
     }
-
-#endif
     
 protected:
     map<ofxUIToggle*, ofxUICanvas*> canvases;

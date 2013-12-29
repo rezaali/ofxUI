@@ -1,7 +1,7 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup()
+void ofApp::setup()
 {    
 	ofSetVerticalSync(true); 
 	ofEnableSmoothing();
@@ -32,19 +32,19 @@ void testApp::setup()
     gui->add2DPad("CENTER", ofPoint(0,ofGetWidth()), ofPoint(0, ofGetHeight()), &position);
     gui->addLabelToggle("DRAWFILL", &drawFill);
     gui->autoSizeToFitWidgets();
-    ofAddListener(gui->newGUIEvent,this,&testApp::guiEvent);
+    ofAddListener(gui->newGUIEvent,this,&ofApp::guiEvent);
     
     gui->loadSettings("GUI/guiSettings.xml");
 }
 
 //--------------------------------------------------------------
-void testApp::update()
+void ofApp::update()
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::draw()
+void ofApp::draw()
 {
 	ofBackground(backgroundColor);
 	ofPushStyle(); 
@@ -65,19 +65,19 @@ void testApp::draw()
 	ofPopStyle(); 
 }
 //--------------------------------------------------------------
-void testApp::guiEvent(ofxUIEventArgs &e)
+void ofApp::guiEvent(ofxUIEventArgs &e)
 {
 //	string name = e.widget->getName(); 
 //	int kind = e.widget->getKind(); 
 }
 //--------------------------------------------------------------
-void testApp::exit()
+void ofApp::exit()
 {
     gui->saveSettings("GUI/guiSettings.xml");
     delete gui; 
 }
 //--------------------------------------------------------------
-void testApp::keyPressed(int key)
+void ofApp::keyPressed(int key)
 {
     switch (key) 
     {            
@@ -107,47 +107,47 @@ void testApp::keyPressed(int key)
     }
 }
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void ofApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y )
+void ofApp::mouseMoved(int x, int y )
 {
     
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button)
+void ofApp::mouseDragged(int x, int y, int button)
 {
  
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button)
+void ofApp::mousePressed(int x, int y, int button)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button)
+void ofApp::mouseReleased(int x, int y, int button)
 {
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h)
+void ofApp::windowResized(int w, int h)
 {
  
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
+void ofApp::gotMessage(ofMessage msg){
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
