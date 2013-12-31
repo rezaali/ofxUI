@@ -220,8 +220,8 @@ public:
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value);
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0);
     
-    ofxUITextInput* addTextInput(string _name, string _textstring, int _size = OFX_UI_FONT_SMALL);
-    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
+    ofxUITextInput* addTextInput(string _name, string _textstring, int _size = -1);
+    ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = -1);
     
     ofxUILabelToggle* addLabelToggle(string _name, bool _value, bool _justifyLeft = false);
     ofxUILabelToggle* addLabelToggle(string _name, bool _value, float w, float h = 0, float x = 0, float y = 0, bool _justifyLeft = false);

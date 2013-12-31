@@ -1824,6 +1824,10 @@ ofxUITextInput* ofxUICanvas::addTextInput(string _name, string _textstring, int 
     float h = 0;
     float x = 0;
     float y = 0;
+    if(_size == -1)
+    {
+        _size = widgetFontSize;
+    }
     ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, rect->getWidth()-widgetSpacing*2, h, x, y, _size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
@@ -1831,6 +1835,10 @@ ofxUITextInput* ofxUICanvas::addTextInput(string _name, string _textstring, int 
 
 ofxUITextInput* ofxUICanvas::addTextInput(string _name, string _textstring, float w, float h, float x, float y, int _size)
 {
+    if(_size == -1)
+    {
+        _size = widgetFontSize;
+    }
     ofxUITextInput* widget = new ofxUITextInput(_name, _textstring, w, h, x, y, _size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
