@@ -1,134 +1,52 @@
-#ifndef OFXUI_TAB_BAR
-#define OFXUI_TAB_BAR
+/**********************************************************************************
+ 
+ Copyright (C) 2012 Syed Reza Ali (www.syedrezaali.com)
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do
+ so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ 
+ **********************************************************************************/
+
+#pragma once
 
 #include "ofxUICanvas.h"
 #include "ofxUIScrollableCanvas.h"
+#include "ofxUIToggle.h"
 
 class ofxUITabBar : public ofxUICanvas
 {
 public:
-    ~ofxUITabBar()
-    {
-        ofRemoveListener(newGUIEvent, this, &ofxUITabBar::mainUiEvent);
-    }
-    
-    ofxUITabBar(float x, float y, float w, float h) : ofxUICanvas(x,y,w,h)
-    {
-        initTabBar();
-    }
-    
-    
-    ofxUITabBar() : ofxUICanvas()
-    {
-        initTabBar();
-    }
-    
-    void initTabBar()
-    {
-        kind = OFX_UI_WIDGET_TABBAR;
-        autoSizeToFitWidgets();
-        ofAddListener(newGUIEvent, this, &ofxUITabBar::mainUiEvent);
-        active = NULL; 
-    }
-    
-    void addCanvas(ofxUICanvas *_canvas)
-    {
-        ofxUIToggle* newToggle = addToggle(_canvas->getName(), false);
-        canvases.insert ( pair<ofxUIToggle*, ofxUICanvas*>( newToggle, _canvas) );
-        _canvas->disable();
-        autoSizeToFitWidgets();
-    }
-
-    void addCanvas(ofxUIScrollableCanvas *_canvas)
-    {
-        ofxUIToggle* newToggle = addToggle(_canvas->getName(), false);
-        canvases.insert ( pair<ofxUIToggle*, ofxUICanvas*>( newToggle, _canvas) );
-        _canvas->disable();
-        autoSizeToFitWidgets();
-    }
-    
-    void mainUiEvent(ofxUIEventArgs &event)
-    {
-        string name = event.widget->getName();
-        
-        for (map<ofxUIToggle*, ofxUICanvas*>::iterator it=canvases.begin(); it!=canvases.end(); ++it) {
-            if(it->second->getName() == name) {
-                active = it->second;
-                it->first->setValue(true);
-                it->second->enable();
-            } else {
-                it->first->setValue(false);
-                it->second->disable();
-            }
-            
-        }
-    }
-    
-    void enable()
-    {
-        ofxUICanvas::enable();
-        
-        if (active != NULL) {
-            active->enable();
-        }
-    }
-    
-    void disable()
-    {
-        ofxUICanvas::disable();
-
-        if (active != NULL) {
-            active->disable();
-        }
-    }
-    
-    void toggleVisible()
-    {
-        ofxUICanvas::toggleVisible();
-        
-        if (active != NULL) {
-            active->toggleVisible();
-        }
-    }
-    
-    ofxUICanvas* getActiveCanvas()
-    {
-        return active;
-    }
-    
-    bool isHit(int x, int y)
-    {                        
-        if (ofxUICanvas::isHit(x, y)) {
-            return true;
-        } else {
-            if (active != NULL) {
-                return active->isHit(x, y);
-            }
-        }
-        
-        return false;
-    }
-    
-    void saveSettings(string pathToSaveTo, string fileNamePrefix)
-    {                
-        for (map<ofxUIToggle*, ofxUICanvas*>::iterator it=canvases.begin(); it!=canvases.end(); ++it) {
-            it->second->saveSettings(pathToSaveTo + fileNamePrefix + it->second->getName() + ".xml");
-        }
-    }
-    
-    void loadSettings(string pathToLoadFrom, string fileNamePrefix)
-    {        
-        for (map<ofxUIToggle*, ofxUICanvas*>::iterator it=canvases.begin(); it!=canvases.end(); ++it) {
-            it->second->loadSettings(pathToLoadFrom + fileNamePrefix + it->second->getName() + ".xml");
-        }
-    }
+    ofxUITabBar();
+    ~ofxUITabBar();
+    ofxUITabBar(float x, float y, float w, float h);
+    void initTabBar();
+    void addCanvas(ofxUICanvas *_canvas);
+    void addCanvas(ofxUIScrollableCanvas *_canvas);
+    void mainUiEvent(ofxUIEventArgs &event);
+    void enable();
+    void disable();
+    void toggleVisible();
+    ofxUICanvas* getActiveCanvas();
+    bool isHit(int x, int y);
+    void saveSettings(string pathToSaveTo, string fileNamePrefix);
+    void loadSettings(string pathToLoadFrom, string fileNamePrefix);
     
 protected:
     map<ofxUIToggle*, ofxUICanvas*> canvases;
     ofxUICanvas *active;
-    
 };
-
-
-
-#endif

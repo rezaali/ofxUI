@@ -22,141 +22,28 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_IMAGE_TOGGLE
-#define OFXUI_IMAGE_TOGGLE
+#pragma once
 
-#include "ofxUIWidget.h"
+#include "ofxUIToggle.h"
+#include "ofxUIDefines.h"
 
 class ofxUIImageToggle : public ofxUIToggle
 {
 public:
-    ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
-    {
-        useReference = false; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, &_value, _pathURL, _name, _size);
-    }
-
-    ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
-    {
-        useReference = false; 
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, &_value, _pathURL, _name, _size);
-    }
-    
-    ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
-    {
-        useReference = true;         
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _value, _pathURL, _name, _size);
-    }
-    
-    ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM) : ofxUIToggle()
-    {
-        useReference = true;                 
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _value, _pathURL, _name, _size);
-    }
-
-    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
-    {
-        name = string(_name);
-		kind = OFX_UI_WIDGET_IMAGETOGGLE;
-        
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect);
-        
-        label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
-		label->setParent(label);
-		label->setRectParent(rect);
-        label->setEmbedded(true);
-        drawLabel = false;
-        label->setVisible(drawLabel);
-        
-        if(useReference)
-        {
-            value = _value;
-        }
-        else
-        {
-            value = new bool();
-            *value = *_value;
-        }
-        
-        setValue(*_value);
-        
-        img = new ofImage();
-        img->loadImage(_pathURL);
-        bChangedImage = false;
-    }
-    
-    virtual ~ofxUIImageToggle()
-    {
-        if(!bChangedImage)
-        {
-            delete img;
-        }
-    }
-    
-    virtual void drawBack()
-    {
-        if(draw_back && !draw_fill)
-        {
-            ofxUIFill();
-            ofxUISetColor(color_back);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
-        }
-    }
-    
-    virtual void drawFill()
-    {
-        if(draw_fill)
-        {
-            ofxUIFill();
-            ofxUISetColor(color_fill);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
-        }
-    }
-    
-    virtual void drawFillHighlight()
-    {
-        if(draw_fill_highlight)
-        {
-            ofxUIFill();
-            ofxUISetColor(color_fill_highlight);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
-        }
-    }
-    
-    virtual void drawOutlineHighlight()
-    {
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofxUISetColor(color_outline_highlight);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());
-        }
-    }
-    
-    virtual ofImage *getImage()
-    {
-        return img;
-    }
-    
-    virtual void setImage(ofImage *_img)
-    {
-        if(img != NULL && !bChangedImage)
-        {
-            delete img;
-            img = NULL;
-        }
-        img = _img;
-        bChangedImage = true; 
-    }
-    
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
+    ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
+    ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
+    ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
+    ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
+    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    virtual ~ofxUIImageToggle();
+    virtual void drawBack();
+    virtual void drawFill();
+    virtual void drawFillHighlight();
+    virtual void drawOutlineHighlight();
+    virtual ofImage *getImage();
+    virtual void setImage(ofImage *_img);
+                     
+protected:
     ofImage *img;
     bool bChangedImage;
 }; 
-
-#endif

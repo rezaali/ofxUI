@@ -22,10 +22,7 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_UTILS
-#define OFXUI_UTILS
-
-//Taken from openFrameworks (Thanks guys)
+#pragma once
 
 template <class T>
 string ofxUIToString(const T& value){
@@ -63,5 +60,3 @@ static float ofxUIMap(float value, float inputMin, float inputMax, float outputM
 		return outVal;
 	}    
 }
-
-#endif

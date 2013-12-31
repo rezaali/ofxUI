@@ -22,8 +22,7 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_OFWRAPPER
-#define OFXUI_OFWRAPPER
+#pragma once
 
 #include "ofMain.h"
 #include "ofPoint.h"
@@ -419,5 +418,3 @@ static int ofxUIGetWidth()
 {
     return ofGetWidth();
 }
-
-#endif

@@ -22,8 +22,7 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_WIDGETWITHLABEL
-#define OFXUI_WIDGETWITHLABEL
+#pragma once
 
 #include "ofxUIWidget.h"
 
@@ -32,64 +31,14 @@ class ofxUILabel;
 class ofxUIWidgetWithLabel : public ofxUIWidget           
 {
 public:
-    ofxUIWidgetWithLabel() : ofxUIWidget() 
-    {        
- 
-    }
-    
-    virtual ~ofxUIWidgetWithLabel() 
-    {
-
-    }
-        
-    virtual bool hasLabel()
-    {
-        return true; 
-    }
-    
-    void setVisible(bool _visible)
-    {
-        visible = _visible;
-        ofxUIWidget *labelWidget = (ofxUIWidget *) label;
-        labelWidget->setVisible(visible);        
-    }
-    
-    virtual ofxUILabel* getLabelWidget()
-    {
-        return label;
-    }
-    
-    virtual void toggleColors()
-    {
-        ofxUIColor fill = getColorFill();
-        float af = fill.a;
-        ofxUIColor back = getColorBack();
-        float ab = back.a;
-        
-        setColorFill(ofxUIColor(back, af));
-        setColorBack(ofxUIColor(fill, ab));
-    }
-    
-    virtual void setModal(bool _modal)      //allows for piping mouse/touch input to widgets that are outside of parent's rect/canvas
-    {
-        modal = _modal;
-        ofxUIWidget *labelWidget = (ofxUIWidget *) label;
-        labelWidget->setModal(modal);
-        if(parent != NULL)
-        {
-            if(modal)
-            {
-                parent->addModalWidget(this);
-            }
-            else
-            {
-                parent->removeModalWidget(this);
-            }
-        }
-    }
+    ofxUIWidgetWithLabel();
+    virtual ~ofxUIWidgetWithLabel();
+    virtual bool hasLabel();
+    void setVisible(bool _visible);
+    virtual ofxUILabel* getLabelWidget();
+    virtual void toggleColors();
+    virtual void setModal(bool _modal);
     
 protected:
     ofxUILabel *label;
 };
-
-#endif

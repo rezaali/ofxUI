@@ -22,181 +22,26 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_MULTI_IMAGE_TOGGLE
-#define OFXUI_MULTI_IMAGE_TOGGLE
+#pragma once
 
 #include "ofxUIToggle.h"
+#include "ofxUIDefines.h"
 
 class ofxUIMultiImageToggle : public ofxUIToggle
 {
 public:        
-    ofxUIMultiImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL) : ofxUIToggle()
-    {
-        useReference = false; 
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, &_value, _pathURL, _name, _size);
-    }
-    
-    ofxUIMultiImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIToggle()
-    {
-        useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, &_value, _pathURL, _name, _size);
-    }    
-    
-    ofxUIMultiImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name,  int _size= OFX_UI_FONT_SMALL) : ofxUIToggle()
-    {
-        useReference = true;
-        rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, _value, _pathURL, _name, _size);
-    }
-    
-    ofxUIMultiImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIToggle()
-    {
-        useReference = true;
-        rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, _value, _pathURL, _name, _size);
-    }
-    
-    
-    ~ofxUIMultiImageToggle()
-    {
-        delete down;
-        delete back;
-        delete over;
-        delete on;
-    }
-    
-    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
-    {
-		name = string(_name);  		
-		kind = OFX_UI_WIDGET_MULTIIMAGETOGGLE;
-        
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect); 
-        
-		label = new ofxUILabel(w+padding*2.0,0, (name+" LABEL"), name, _size); 
-		label->setParent(label); 
-		label->setRectParent(rect); 
-        label->setEmbedded(true);		
-
-        if(useReference)
-        {
-            value = _value;
-        }
-        else
-        {
-            value = new bool();
-            *value = *_value;
-        }
-        
-        setValue(*_value);
-        
-        drawLabel = true;
-        label->setVisible(drawLabel);      
-        
-        string coreURL = _pathURL;
-        string extension = "";
-        string period (".");
-        size_t found;        
-        
-        found=_pathURL.find(period);
-        if (found!=string::npos)        
-        {
-            coreURL = _pathURL.substr(0,found);
-            extension = _pathURL.substr(found);
-        }
-        
-        back = new ofImage();   back->loadImage(_pathURL);         
-        down = new ofImage();   down->loadImage(coreURL+"down"+extension);         
-        over = new ofImage();   over->loadImage(coreURL+"over"+extension);         
-        on = new ofImage();     on->loadImage(coreURL+"on"+extension);         
-    }       
-    
-    
-    
-    void drawBack()                     //NORMAL
-    {
-        if(draw_back && !draw_fill)
-        {
-            ofxUISetColor(255); 
-            back->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());       
-        }
-    }
-    
-    void drawOutlineHighlight()         //OVER
-    {
-        if(draw_outline_highlight)
-        {
-            ofxUISetColor(255); 
-            over->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());                      
-        }
-    }    
-    
-    void drawFill()                     
-    {
-        if(draw_fill)
-        {
-            ofxUISetColor(255); 
-            on->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
-        }        
-    }
-    
-    void drawFillHighlight()            //DOWN/ON
-    {
-        if(draw_fill_highlight)
-        {
-            ofxUISetColor(255); 
-            down->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
-        }        
-    }
-    
-    
-    virtual void stateChange()
-    {                
-        switch (state) {
-            case OFX_UI_STATE_NORMAL:
-            {            
-                draw_back = true; 
-                draw_fill_highlight = false;             
-                draw_outline_highlight = false;  
-				label->unfocus(); 								
-            }
-                break;
-            case OFX_UI_STATE_OVER:
-            {
-                draw_back = false;                 
-                draw_fill_highlight = false;            
-                draw_outline_highlight = true;  
-				label->focus(); 								
-            }
-                break;
-            case OFX_UI_STATE_DOWN:
-            {
-                draw_back = false;                  
-                draw_fill_highlight = true;            
-                draw_outline_highlight = false;             
-				label->focus(); 					
-            }
-                break;
-            case OFX_UI_STATE_SUSTAINED:
-            {
-                draw_fill_highlight = false;            
-                draw_outline_highlight = false;                         
-				label->unfocus(); 								
-            }
-                break;            
-                
-            default:
-                break;
-        }        
-    }    
-    
-    virtual void setValue(bool _value)
-	{
-		*value = _value;
-        draw_fill = *value;
-	}
+    ofxUIMultiImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name,  int _size = OFX_UI_FONT_SMALL);
+    ofxUIMultiImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUIMultiImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name,  int _size = OFX_UI_FONT_SMALL);
+    ofxUIMultiImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    ~ofxUIMultiImageToggle();
+    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    void drawBack();
+    void drawOutlineHighlight();
+    void drawFill();
+    void drawFillHighlight();
+    virtual void stateChange();
+    virtual void setValue(bool _value);
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     ofImage *back; 
@@ -204,6 +49,3 @@ protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent;
     ofImage *down;
     ofImage *on; 
 }; 
-
-#endif
-

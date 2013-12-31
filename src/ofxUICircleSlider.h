@@ -22,277 +22,33 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_CIRCLE_SLIDER
-#define OFXUI_CIRCLE_SLIDER
+#pragma once
 
 #include "ofxUISlider.h"
+#include "ofxUIDefines.h"
 
 class ofxUICircleSlider : public ofxUISlider
 {
 public:
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
-    {
-        useReference = false;         
-        rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, w, _min, _max, &_value, _name, _size); 		
-    }
-    
-    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
-    {
-        useReference = false;                 
-        rect = new ofxUIRectangle(0,0,w,w); 
-        init(w, w, _min, _max, &_value, _name, _size); 
-    }        
-    
-    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
-    {
-        useReference = true;                 
-        rect = new ofxUIRectangle(x,y,w,w); 
-        init(w, w, _min, _max, _value, _name, _size); 		
-    }
-    
-    ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUISlider()
-    {
-        useReference = true;                 
-        rect = new ofxUIRectangle(0,0,w,w); 
-        init(w, w, _min, _max, _value, _name, _size); 
-    }    
-    
-    void init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
-    {
-        name = string(_name);  				
-        kind = OFX_UI_WIDGET_CIRCLESLIDER;
-        
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-		paddedRect->setParent(rect);     
-        
-        draw_fill = true; 
-        draw_outline = true;
-        
-        value = *_value;                                               //the widget's value
-        if(useReference)
-        {
-            valueRef = _value; 
-        }
-        else
-        {
-            valueRef = new float(); 
-            *valueRef = value; 
-        }
-        
-		max = _max; 
-		min = _min; 
-        labelPrecision = 2;
-        
-		if(value > max)
-		{
-			value = max; 
-		}
-		if(value < min)
-		{
-			value = min; 
-		}
-		
-		value = ofxUIMap(value, min, max, 0.0, 1.0, true); 
-                
-        label = new ofxUILabel(0,w+padding,(name+" LABEL"), name, _size); 	
-        label->setDrawBack(false);
-		label->setParent(label); 
-		label->setRectParent(rect); 	
-        label->setEmbedded(true);        
-        increment = .0005;    
-        inputDirection = OFX_UI_DIRECTION_SOUTHNORTH;
-    }
-    
-    
-    void drawBack() 
-    {
-        if(draw_back)
-        {
-            ofxUIFill(); 
-            ofxUISetColor(color_back); 
-            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
-        }
-    }
-    
-    void drawOutline() 
-    {
-        if(draw_outline)
-        {
-            ofNoFill();
-            ofxUISetColor(color_outline); 
-            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
-        } 
-    }
-    
-    virtual void drawFill()
-    {
-        if(draw_fill)
-        {			
-            ofxUIFill(); 
-            ofxUISetColor(color_fill); 
-            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
-        }
-    }
-    
-    virtual void drawFillHighlight()
-    {
-        if(draw_fill_highlight)
-        {
-            ofxUIFill(); 
-            ofxUISetColor(color_fill_highlight); 
-            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), value*rect->getHalfWidth());
-            ofxUISetColor(label->getColorFillHighlight());             
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
-        }        
-    }
-    
-    virtual void drawOutlineHighlight()
-    {
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofxUISetColor(color_outline_highlight); 
-            ofxUICircle(rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight(), rect->getHalfWidth());
-            if(!draw_fill_highlight)
-            {
-                ofxUISetColor(label->getColorFill()); 
-                label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision)); 
-            }
-        }
-    }
-    
-    void mouseDragged(int x, int y, int button) 
-    {
-        if(hit)
-        {            
-            switch(inputDirection)
-            {
-                case OFX_UI_DIRECTION_NORTHSOUTH:
-                    value -= increment*(hitPoint.y-y); 
-                    valueClamp();                 
-                    break;
-                case OFX_UI_DIRECTION_SOUTHNORTH:
-                    value += increment*(hitPoint.y-y);
-                    valueClamp(); 
-                    break;                    
-                case OFX_UI_DIRECTION_EASTWEST:
-                    value += increment*(hitPoint.x-x);
-                    valueClamp(); 
-                    break;
-                case OFX_UI_DIRECTION_WESTEAST:
-                    value -= increment*(hitPoint.x-x); 
-                    valueClamp();                     
-                    break;
-            }
-            
-            hitPoint = ofxUIVec2f(x,y);    
-            updateValueRef();
-			triggerEvent(this);             
-            state = OFX_UI_STATE_DOWN;         
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;               
-        }
-        stateChange();     
-    }
-    
-    void mousePressed(int x, int y, int button) 
-    {
-        if(rect->inside(x, y))
-        {
-            hit = true; 
-            hitPoint = ofxUIVec2f(x,y); 
-            state = OFX_UI_STATE_DOWN;     
-			triggerEvent(this);            
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;        
-        }
-        stateChange();         
-    }
-    
-    void mouseReleased(int x, int y, int button) 
-    {
-        if(hit)
-        {
-#ifdef TARGET_OPENGLES
-            state = OFX_UI_STATE_NORMAL;        
-#else            
-            state = OFX_UI_STATE_OVER; 
-#endif 
-			triggerEvent(this); 
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;         
-        }
-        stateChange();   
-        hit = false; 
-    }
-    
-    void valueClamp()
-    {
-        if(value > 1.0)
-        {
-            value = 1.0;
-        }
-        else if(value < 0.0)
-        {
-            value = 0.0;
-        }                        
-    }
-    
-    void setInputDirection(ofxUIWidgetInputDirection _inputDirection)
-    {
-        inputDirection = _inputDirection; 
-    }
-    
-    void updateLabel()
-	{
-        
-	}
-    
-	void setParent(ofxUIWidget *_parent)
-	{
-		parent = _parent; 
-		paddedRect->height += label->getPaddingRect()->height; 
-
-		ofxUIRectangle *labelrect = label->getRect(); 
-        
-        while(labelrect->width > rect->width)
-        {
-            string labelstring = label->getLabel();
-            string::iterator it;
-            it=labelstring.end();
-            it--; 
-            labelstring.erase (it); 
-            label->setLabel(labelstring);
-        }                    
-        
-        float w = labelrect->getWidth(); 
-        float pw = rect->getWidth(); 
-        
-        labelrect->x = (int)(pw*.5 - w*.5-padding*.5); 
-    }	
-    
-    virtual bool isHit(float x, float y)
-    {
-        if(visible && ofDist(x, y, rect->getX()+rect->getHalfWidth(), rect->getY()+rect->getHalfHeight()) < rect->getHalfWidth())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size = OFX_UI_FONT_SMALL);
+    void init(float w, float h, float _min, float _max, float *_value, string _name, int _size);
+    void drawBack();
+    void drawOutline();
+    virtual void drawFill();
+    virtual void drawFillHighlight();
+    virtual void drawOutlineHighlight();
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void valueClamp();
+    void setInputDirection(ofxUIWidgetInputDirection _inputDirection);
+    void updateLabel();
+	void setParent(ofxUIWidget *_parent);
+    virtual bool isHit(float x, float y);
 protected:
     ofxUIWidgetInputDirection inputDirection;
     ofxUIVec2f hitPoint;
 }; 
-
-#endif

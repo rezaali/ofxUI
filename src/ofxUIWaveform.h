@@ -22,138 +22,28 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_WAVEFORM
-#define OFXUI_WAVEFORM
+#pragma once
 
 #include "ofxUIWidget.h"
 
 class ofxUIWaveform : public ofxUIWidget
 {
 public:    
-    ofxUIWaveform(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
-    {
-        rect = new ofxUIRectangle(x,y,w,h); 
-        init(w, h, _buffer, _bufferSize, _min, _max, _name);
-    }
+    ofxUIWaveform(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    ofxUIWaveform(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    virtual void drawBack();
+    virtual void drawFill();
+	void setParent(ofxUIWidget *_parent);
+    void setMax(float _max);
+    float getMax();
+    void setMin(float _min);
+    float getMin();
+    ofVec2f getMaxAndMind();
+    void setMaxAndMin(float _max, float _min);
     
-    ofxUIWaveform(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
-    {
-        rect = new ofxUIRectangle(0,0,w,h); 
-        init(w, h, _buffer, _bufferSize, _min, _max, _name);
-    }    
-    
-    void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
-    {
-        name = string(_name);  				
-        kind = OFX_UI_WIDGET_WAVEFORM; 
-
-        paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-        paddedRect->setParent(rect); 
-		
-        draw_fill = true; 
-        
-        if(_buffer != NULL)
-        {
-            buffer = _buffer;					//the widget's value
-        }
-        else
-        {
-            buffer = NULL; 
-        }
-        
-        bufferSize = _bufferSize; 
-        max = _max; 
-        min = _min; 		
-        scale = rect->getHeight()*.5;
-        inc = rect->getWidth()/((float)bufferSize-1.0);
-    }
-    
-    
-    virtual void drawBack()
-    {
-        if(draw_back)
-        {
-            ofxUIFill();
-            ofxUISetColor(color_back);
-            rect->draw();
-            
-            ofxUIDrawLine(rect->getX(), rect->getY()+rect->getHalfHeight(), rect->getX()+rect->getWidth(), rect->getY()+rect->getHalfHeight());
-        }
-    }
-    
-    
-    virtual void drawFill()
-    {
-        if(draw_fill)
-        {			
-			ofNoFill(); 
-			if(draw_fill_highlight)
-			{
-				ofxUISetColor(color_fill_highlight); 
-			}        
-			else 
-			{
-				ofxUISetColor(color_fill); 		 	
-			}
-            if(buffer != NULL)
-            {
-                ofPushMatrix(); 
-                ofTranslate(rect->getX(), rect->getY()+scale, 0);
-                ofSetLineWidth(1.5); 
-                ofBeginShape();		
-                for (int i = 0; i < bufferSize; i++)
-                {				
-                    ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, -scale, scale, true)); 
-                }
-                ofEndShape();
-                ofSetLineWidth(1); 
-                ofPopMatrix(); 
-            }
-        }
-    }
-		
-	void setParent(ofxUIWidget *_parent)
-	{
-		parent = _parent; 
-	}
-    
-    void setMax(float _max)
-    {
-        max = _max;
-    }
-    
-    float getMax()
-    {
-        return max;
-    }
-    
-    void setMin(float _min)
-    {
-        min = _min;
-    }
-    
-    float getMin()
-    {
-        return min;
-    }
-    
-    ofVec2f getMaxAndMind()
-    {
-        return ofVec2f(max, min);
-    }
-    
-    void setMaxAndMin(float _max, float _min)
-    {
-        max = _max;
-        min = _min;
-    }
-    
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+protected:
 	float *buffer; 
 	float max, min, scale, inc; 
 	int bufferSize; 
 }; 
-
-
-
-#endif

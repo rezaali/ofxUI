@@ -22,68 +22,20 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_FPS
-#define OFXUI_FPS
+#pragma once
 
 #include "ofxUIWidgetWithLabel.h"
 
 class ofxUIFPS : public ofxUIWidgetWithLabel
 {
 public:    
-    ofxUIFPS(float x, float y, int _size) : ofxUIWidgetWithLabel()
-    {
-        init(x, y, "FPS", "FPS: 000", _size);
-    }
+    ofxUIFPS(float x, float y, int _size);
+    ofxUIFPS(int _size);
+    void init(float x, float y, string _name, string _label, int _size);
+	void update();
+    void setLabelPrecision(int _precision);
+    void setParent(ofxUIWidget *_parent);
     
-    ofxUIFPS(int _size) : ofxUIWidgetWithLabel()
-    {
-        init(0, 0, "FPS", "FPS: 000", _size);
-    }
-    
-    void init(float x, float y, string _name, string _label, int _size)
-    {
-        rect = new ofxUIRectangle(x,y,0,0);
-		name = string(_name);
-		kind = OFX_UI_WIDGET_FPS; 
-        paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-		paddedRect->setParent(rect);
-
-        label = new ofxUILabel(0,0,(name+" LABEL"), _label, _size);
-		label->setRectParent(rect);
-        label->setEmbedded(true);
-        
-        labelPrecision = 0;
-        draw_back = OFX_UI_LABEL_DRAW_BACK;
-        draw_fill = false;
-        draw_back = false;
-    }
-    
-	void update()
-	{
-		label->setLabel(name + ": " + ofxUIToString(ofxUIGetFrameRate(), labelPrecision));
-	}	    
-    
-    void setLabelPrecision(int _precision) {
-        labelPrecision = _precision;
-    }
-
-    void setParent(ofxUIWidget *_parent)
-	{
-		parent = _parent;
-        ofxUIRectangle *labelrect = label->getRect();
-        
-        rect->setHeight(label->getRect()->getHeight());
-        rect->setWidth(label->getRect()->getWidth());         
-        
-		labelrect->y = 0;
-        labelrect->x = 0;
-		paddedRect->setHeight(rect->getHeight()+padding*2.0);
-        paddedRect->setWidth(rect->getWidth()+padding*2.0);
-	}
-
-    
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+protected:    
     int labelPrecision;    
 }; 
-
-#endif

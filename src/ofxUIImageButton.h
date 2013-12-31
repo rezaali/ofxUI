@@ -22,146 +22,28 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_IMAGE_BUTTON
-#define OFXUI_IMAGE_BUTTON
+#pragma once
 
-#include "ofxUIWidget.h"
+#include "ofxUIButton.h"
 
 class ofxUIImageButton : public ofxUIButton
 {
 public:
-    ofxUIImageButton() : ofxUIButton()
-    {
+    ofxUIImageButton();
+    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    virtual ~ofxUIImageButton();
+    virtual void drawBack();
+    virtual void drawFill();
+    virtual void drawFillHighlight();
+    virtual void drawOutlineHighlight();
+    virtual ofImage *getImage();
+    virtual void setImage(ofImage *_img);
     
-    }
-    
-    ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
-    {
-        useReference = false; 
-        rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, &_value, _pathURL, _name, _size);
-    }
-
-    ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
-    {
-        useReference = false;         
-        rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, &_value, _pathURL, _name, _size);         
-    }
-        
-    ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
-    {
-        useReference = true;         
-        rect = new ofxUIRectangle(x,y,w,h);
-        init(w, h, _value, _pathURL, _name, _size);         
-    }
-    
-    ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL) : ofxUIButton()
-    {
-        useReference = true;                 
-        rect = new ofxUIRectangle(0,0,w,h);
-        init(w, h, _value, _pathURL, _name, _size);         
-    }    
-    
-    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL)
-    {
-        name = string(_name);  		
-		kind = OFX_UI_WIDGET_IMAGEBUTTON; 		
-        
-		paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-		paddedRect->setParent(rect); 
-        
-        label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
-		label->setParent(label);
-		label->setRectParent(rect);
-        label->setEmbedded(true);
-        drawLabel = false;
-        label->setVisible(drawLabel);
-        
-        if(useReference)
-        {
-            value = _value; 
-        }
-        else
-        {
-            value = new bool(); 
-            *value = *_value; 
-        }
-        
-        setValue(*_value); 
-        
-        img = new ofImage(); 
-        img->loadImage(_pathURL);
-        bChangedImage = false;        
-    }
-    
-    virtual ~ofxUIImageButton()
-    {
-        if(!bChangedImage)
-        {
-            delete img;
-        }
-    }
-
-    virtual void drawBack()
-    {
-        if(draw_back && !draw_fill)
-        {
-            ofxUIFill();
-            ofxUISetColor(color_back);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
-        }
-    }
-    
-    virtual void drawFill()
-    {
-        if(draw_fill)
-        {
-            ofxUIFill(); 
-            ofxUISetColor(color_fill); 
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
-        }
-    }
-    
-    virtual void drawFillHighlight()
-    {
-        if(draw_fill_highlight)
-        {
-            ofxUIFill(); 
-            ofxUISetColor(color_fill_highlight); 
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight());             
-        }
-    }   
-    
-    virtual void drawOutlineHighlight()
-    {
-        if(draw_outline_highlight)
-        {
-            ofNoFill();
-            ofxUISetColor(color_outline_highlight);
-            img->draw(rect->getX(), rect->getY(), rect->getWidth(), rect->getHeight()); 
-        }
-    }   
-
-    virtual ofImage *getImage()
-    {
-        return img;
-    }
-    
-    virtual void setImage(ofImage *_img)
-    {
-        if(img != NULL && !bChangedImage)
-        {
-            delete img;
-            img = NULL;
-        }
-        img = _img;
-        bChangedImage = true;
-    }
-    
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
+protected:   
     ofImage *img;
     bool bChangedImage;    
 }; 
-
-#endif

@@ -22,140 +22,25 @@
  
  **********************************************************************************/
 
-#ifndef OFXUI_TOGGLE
-#define OFXUI_TOGGLE
+#pragma once
 
 #include "ofxUIButton.h"
 
 class ofxUIToggle : public ofxUIButton
 {
 public:
-    ofxUIToggle() : ofxUIButton()
-    {
-    
-    }
-    
-    ofxUIToggle(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) 
-        : ofxUIButton( _name, _value, w, h, x, y, _size )
-    {
-        kind = OFX_UI_WIDGET_TOGGLE;
-    }
-    
-    ofxUIToggle(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL) 
-        : ofxUIButton( _name, _value, w, h, x, y, _size )
-    {
-        kind = OFX_UI_WIDGET_TOGGLE;
-    }
-
-    // DON'T USE THE NEXT CONSTRUCTORS
-    // This is maintained for backward compatibility and will be removed on future releases
-    
-	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL) 
-	    : ofxUIButton( _name, _value, w, h, x, y, _size )
-    {
-		kind = OFX_UI_WIDGET_TOGGLE; 	        
-//        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }
-    
-	ofxUIToggle(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL)
-	    : ofxUIButton( _name, _value, w, h, 0, 0, _size )
-    {
-		kind = OFX_UI_WIDGET_TOGGLE; 	                
-//        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }
-    
-	ofxUIToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL) 
-	    : ofxUIButton( _name, _value, w, h, x, y, _size )
-    {
-		kind = OFX_UI_WIDGET_TOGGLE; 	        
-//        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }
-    
-	ofxUIToggle(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL)
-	    : ofxUIButton( _name, _value, w, h, 0, 0, _size )
-    {
-		kind = OFX_UI_WIDGET_TOGGLE; 	                
-//        ofLogWarning("OFXUITOGGLE: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-    }
-    
-    virtual void setDrawPadding(bool _draw_padded_rect)
-	{
-		draw_padded_rect = _draw_padded_rect; 
-        label->setDrawPadding(false);
-	}
-    
-    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline)
-	{
-		draw_padded_rect_outline = _draw_padded_rect_outline; 
-        label->setDrawPaddingOutline(false);
-	}      
-    
-    virtual void mouseMoved(int x, int y ) 
-    {
-        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
-        {
-            state = OFX_UI_STATE_OVER;         
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;        
-        }
-        stateChange();         
-    }
-    
-    virtual void mouseDragged(int x, int y, int button) 
-    {
-        if(hit)
-        {
-            state = OFX_UI_STATE_DOWN;         
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;        
-        }
-        stateChange();     
-    }
-    
-    virtual void mousePressed(int x, int y, int button) 
-    {
-        if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
-        {
-            hit = true;             
-            state = OFX_UI_STATE_DOWN;         
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;        
-        }
-        stateChange();         
-    }
-    
-    virtual void mouseReleased(int x, int y, int button) 
-    {
-        if((rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y))) && hit)
-        {
-            setValue(!(*value));
-#ifdef TARGET_OPENGLES
-            state = OFX_UI_STATE_NORMAL;        
-#else            
-            state = OFX_UI_STATE_OVER; 
-#endif 
-			triggerEvent(this); 
-        }    
-        else
-        {
-            state = OFX_UI_STATE_NORMAL;         
-        }
-        stateChange();     
-        hit = false; 
-    }
-    
-    virtual void setValue(bool _value)
-	{
-		*value = _value;
-        draw_fill = *value;
-//        label->setDrawBack((*value));
-	}
-}; 
-
-#endif
+    ofxUIToggle();
+    ofxUIToggle(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
+    ofxUIToggle(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
+	ofxUIToggle(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL);
+	ofxUIToggle(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL);
+	ofxUIToggle(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL);
+	ofxUIToggle(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL);
+    virtual void setDrawPadding(bool _draw_padded_rect);
+    virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline);
+    virtual void mouseMoved(int x, int y );
+    virtual void mouseDragged(int x, int y, int button);
+    virtual void mousePressed(int x, int y, int button);
+    virtual void mouseReleased(int x, int y, int button);
+    virtual void setValue(bool _value);
+};
