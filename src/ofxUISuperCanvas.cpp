@@ -199,59 +199,65 @@ void ofxUISuperCanvas::onMouseDragged(ofMouseEventArgs& data)
 
 #endif
 
+#ifndef OFX_UI_NO_XML
+
 void ofxUISuperCanvas::saveSettings(string fileName)
 {
-    ofXml *XML = new ofXml();
-    XML->addChild("UI");
-    XML->addChild("Canvas");
-    XML->setTo("Canvas");
-    XML->addValue("Kind", getKind());
-    XML->addValue("Name", getName());
-    XML->addValue("IsMinified", (bIsMinified ? 1 : 0));
-    XML->addValue("XPosition", rect->getX());
-    XML->addValue("YPosition", rect->getY());
-    XML->reset();
-    for(int i = 0; i < widgetsWithState.size(); i++) {
-        XML->reset();
-        XML->addChild("Widget");
-        XML->setTo("//Widget["+ofToString(i)+"]");
-        XML->addValue("Kind", widgetsWithState[i]->getKind());
-        XML->addValue("Name", widgetsWithState[i]->getName());
-        writeSpecificWidgetData(widgetsWithState[i], XML);
+    ofxXmlSettings *XML = new ofxXmlSettings();
+    XML->addTag("Canvas");
+    XML->pushTag("Canvas", 0);
+    XML->setValue("Kind", getKind(), 0);
+    XML->setValue("Name", getName(), 0);
+    XML->setValue("IsMinified", (bIsMinified ? 1 : 0), 0);
+    XML->setValue("XPosition", rect->getX(), 0);
+    XML->setValue("YPosition", rect->getY(), 0);
+    XML->popTag();
+    for(int i = 0; i < widgetsWithState.size(); i++)
+    {
+        int index = XML->addTag("Widget");
+        if(XML->pushTag("Widget", index))
+        {
+            XML->setValue("Kind", widgetsWithState[i]->getKind(), 0);
+            XML->setValue("Name", widgetsWithState[i]->getName(), 0);
+            writeSpecificWidgetData(widgetsWithState[i], XML);
+        }
+        XML->popTag();
     }
-    XML->save(fileName);
+    XML->saveFile(fileName);
     delete XML;
 }
 
 void ofxUISuperCanvas::loadSettings(string fileName)
 {
-    ofXml *XML = new ofXml();
-    if(XML->load(fileName))
+    ofxXmlSettings *XML = new ofxXmlSettings();
+    XML->loadFile(fileName);
+    int widgetTags = XML->getNumTags("Widget");
+    for(int i = 0; i < widgetTags; i++)
     {
-        int widgetTags = XML->getNumChildren("Widget");
-        for(int i = 0; i < widgetTags; i++)
+        XML->pushTag("Widget", i);
+        string name = XML->getValue("Name", "NULL", 0);
+        ofxUIWidget *widget = getWidget(name);
+        if(widget != NULL)
         {
-            XML->setTo("//Widget["+ofToString(i)+"]");
-            string name = XML->getValue("Name");
-            ofxUIWidget *widget = getWidget(name);
-            if(widget != NULL)
+            loadSpecificWidgetData(widget, XML);
+            if(bTriggerWidgetsUponLoad)
             {
-                loadSpecificWidgetData(widget, XML);
-                if(bTriggerWidgetsUponLoad)
-                {
-                    triggerEvent(widget);
-                }
+                triggerEvent(widget);
             }
         }
-        XML->setTo("//Canvas");
-        int value = XML->getIntValue("IsMinified");
-        setMinified((value ? 1 : 0));
-        rect->setX(XML->getFloatValue("XPosition"));
-        rect->setY(XML->getFloatValue("YPosition"));
+        XML->popTag();
     }
+    XML->pushTag("Canvas", 0);
+    int value = XML->getValue("IsMinified", (bIsMinified ? 1 : 0), 0);
+    setMinified((value ? 1 : 0));
+    rect->setX(XML->getValue("XPosition", rect->getX(), 0));
+    rect->setY(XML->getValue("YPosition", rect->getY(), 0));
+    XML->popTag();
     hasKeyBoard = false;
     delete XML;
 }
+
+#endif
 
 void ofxUISuperCanvas::addWidgetToHeader(ofxUIWidget *widget)
 {

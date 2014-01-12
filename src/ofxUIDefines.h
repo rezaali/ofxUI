@@ -24,6 +24,10 @@
 
 #pragma once
 
+#ifndef OFX_UI_NO_XML
+    #include "ofxXmlSettings.h"
+#endif
+
 #define OFX_UI_STATE_NORMAL 0
 #define OFX_UI_STATE_OVER 1
 #define OFX_UI_STATE_DOWN 2

@@ -80,12 +80,14 @@ public:
     void init(int w, int h, ofxUICanvas *sharedResources = NULL);
     void copyCanvasStyle(ofxUICanvas *styler);
     void copyCanvasProperties(ofxUICanvas *styler);
+#ifndef OFX_UI_NO_XML
     virtual void saveSettings(string fileName);
-    virtual void writeSpecificWidgetData(ofxUIWidget *widget, ofXml *XML);
+    virtual void writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML);
     void setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad);
     bool getTriggerWidgetsUponLoad();
     virtual void loadSettings(string fileName);
-    virtual void loadSpecificWidgetData(ofxUIWidget *widget, ofXml *XML);
+    virtual void loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML);
+#endif
     ofxUIFont *getFontLarge();
     ofxUIFont *getFontMedium();
     ofxUIFont *getFontSmall();
