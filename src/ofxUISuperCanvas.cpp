@@ -261,7 +261,14 @@ void ofxUISuperCanvas::loadSettings(string fileName)
 
 void ofxUISuperCanvas::addWidgetToHeader(ofxUIWidget *widget)
 {
-    //        widget->setEmbedded(true);
+    if(canvasTitle != NULL)
+    {
+        float y = widget->getRect()->getY();
+        float h = widget->getRect()->getHeight();
+        float th = canvasTitle->getRect()->getHeight();
+        float dh = (h-th)*0.5;
+        canvasTitle->getRect()->setY(y + dh);
+    }
     headerWidgets.push_back(widget);
 }
 

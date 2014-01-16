@@ -46,7 +46,7 @@ void ofxUI2DGraph::init(string _name, ofPoint _rangeX, ofPoint _rangeY, float _b
     xValues = _xValues;
     yValues = _yValues;
     
-    inc = MAX(rect->getHalfHeight(), rect->getHalfWidth())/4.+padding*.5;
+    inc = MAX(rect->getHalfHeight(), rect->getHalfWidth())/6.0;
 }
 
 void ofxUI2DGraph::drawBack()

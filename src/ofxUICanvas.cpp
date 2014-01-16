@@ -509,6 +509,15 @@ void ofxUICanvas::writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *X
         }
             break;
             
+        case OFX_UI_WIDGET_INTSLIDER_H:
+        case OFX_UI_WIDGET_INTSLIDER_V:
+        {
+            ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
+            XML->setValue("Value", slider->getValue(), 0);
+        }
+            break;
+
+            
         case OFX_UI_WIDGET_RSLIDER_H:
         case OFX_UI_WIDGET_RSLIDER_V:
         {
@@ -623,6 +632,15 @@ void ofxUICanvas::loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XM
         {
             ofxUISlider *slider = (ofxUISlider *) widget;
             float value = XML->getValue("Value", slider->getScaledValue(), 0);
+            slider->setValue(value);
+        }
+            break;
+            
+        case OFX_UI_WIDGET_INTSLIDER_H:
+        case OFX_UI_WIDGET_INTSLIDER_V:
+        {
+            ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
+            float value = XML->getValue("Value", slider->getValue(), 0);
             slider->setValue(value);
         }
             break;
