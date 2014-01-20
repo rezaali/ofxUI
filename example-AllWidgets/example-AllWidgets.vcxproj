@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
+		<Keyword>Win32Proj</Keyword>
+		<RootNamespace>example-AllWidgets</RootNamespace>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<PlatformToolset>v110</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<CharacterSet>Unicode</CharacterSet>
+		<WholeProgramOptimization>true</WholeProgramOptimization>
+		<PlatformToolset>v110</PlatformToolset>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksRelease.props" />
+	</ImportGroup>
+	<ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+		<Import Project="..\..\..\libs\openFrameworksCompiled\project\vs\openFrameworksDebug.props" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Configuration)\</IntDir>
+		<TargetName>$(ProjectName)_debug</TargetName>
+		<LinkIncremental>true</LinkIncremental>
+		<GenerateManifest>true</GenerateManifest>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<OutDir>bin\</OutDir>
+		<IntDir>obj\$(Configuration)\</IntDir>
+		<LinkIncremental>false</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<ClCompile>
+			<Optimization>Disabled</Optimization>
+			<MinimalRebuild>true</MinimalRebuild>
+			<BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUI\libs;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+		</ClCompile>
+		<Link>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<ClCompile>
+			<WholeProgramOptimization>false</WholeProgramOptimization>
+			<PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);..\..\..\addons\ofxUI\libs;..\..\..\addons\ofxUI\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src;src</AdditionalIncludeDirectories>
+			<CompileAs>CompileAsCpp</CompileAs>
+		</ClCompile>
+		<Link>
+			<IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+			<GenerateDebugInformation>false</GenerateDebugInformation>
+			<SubSystem>Console</SubSystem>
+			<OptimizeReferences>true</OptimizeReferences>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<RandomizedBaseAddress>false</RandomizedBaseAddress>
+			<AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClCompile Include="src\main.cpp" />
+		<ClCompile Include="src\ofApp.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUI2DGraph.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUI2DPad.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIBaseDraws.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIBiLabelSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUICanvas.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUICircleSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUICustomImageButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIDragableLabelButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIDropDownList.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIEventArgs.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIFPS.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIFPSSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIImage.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIImageButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIImageSampler.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIImageSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIImageToggle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIIntSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUILabel.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUILabelButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUILabelToggle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIMinimalSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIMovingGraph.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIMultiImageButton.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIMultiImageToggle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUINumberDialer.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIRadio.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIRangeSlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIRectangle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIRotarySlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIScrollableCanvas.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUISlider.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUISortableList.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUISpacer.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUISpectrum.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUISuperCanvas.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUITabBar.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUITextArea.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUITextInput.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIToggle.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIToggleMatrix.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIValuePlotter.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIWaveform.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIWidget.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxUI\src\ofxUIWidgetWithLabel.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+		<ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="src\ofApp.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUI.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUI2DGraph.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUI2DPad.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIBaseDraws.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIBiLabelSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUICanvas.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUICircleSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUICustomImageButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIDefines.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIDragableLabelButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIDropDownList.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIEventArgs.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIFPS.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIFPSSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIImage.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIImageButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIImageSampler.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIImageSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIImageToggle.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIIntSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUILabel.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUILabelButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUILabelToggle.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIMinimalSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIMovingGraph.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIMultiImageButton.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIMultiImageToggle.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUINumberDialer.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIOFWrapper.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIRadio.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIRangeSlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIRectangle.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIRotarySlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIScrollableCanvas.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUISlider.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUISortableList.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUISpacer.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUISpectrum.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUISuperCanvas.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUITabBar.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUITextArea.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUITextInput.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIToggle.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIToggleMatrix.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIUtils.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIValuePlotter.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIWaveform.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIWidget.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIWidgetWithLabel.h" />
+		<ClInclude Include="..\..\..\addons\ofxUI\src\ofxUIWrapper.h" />
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
+		<ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
+			<Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="icon.rc">
+			<AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
+		</ResourceCompile>
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>

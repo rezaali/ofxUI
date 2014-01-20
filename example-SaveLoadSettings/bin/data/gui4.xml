@@ -1,0 +1,41 @@
+<Canvas>
+    <Kind>40</Kind>
+    <Name>OFX_UI_WIDGET_CANVAS</Name>
+    <IsMinified>0</IsMinified>
+    <XPosition>636.000000000</XPosition>
+    <YPosition>0.000000000</YPosition>
+</Canvas>
+<Widget>
+    <Kind>26</Kind>
+    <Name>BILABEL</Name>
+    <Value>74.384239197</Value>
+</Widget>
+<Widget>
+    <Kind>25</Kind>
+    <Name>MINIMAL</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>FPS SLIDER</Name>
+    <Value>53.806190491</Value>
+</Widget>
+<Widget>
+    <Kind>28</Kind>
+    <Name>SAMPLER</Name>
+    <XValue>0.152709365</XValue>
+    <YValue>0.223235309</YValue>
+    <RColor>20</RColor>
+    <GColor>20</GColor>
+    <BColor>20</BColor>
+    <AColor>255</AColor>
+</Widget>
+<Widget>
+    <Kind>31</Kind>
+    <Name>IMAGE TOGGLE</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>44</Kind>
+    <Name>SORTABLE LIST</Name>
+</Widget>

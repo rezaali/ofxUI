@@ -1,0 +1,75 @@
+<Widget>
+    <Kind>8</Kind>
+    <Name>NDIALER</Name>
+    <Value>100.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Large</Name>
+    <Value>LARGE TEXTINPUT</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Medium</Name>
+    <Value>MEDIUM TEXTINPUT</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Small</Name>
+    <Value>SMALL TEXTINPUT</Value>
+</Widget>
+<Widget>
+    <Kind>12</Kind>
+    <Name>Text Input Autoclear</Name>
+    <Value>Auto Clear Disabled</Value>
+</Widget>
+<Widget>
+    <Kind>28</Kind>
+    <Name>OF LOGO 2</Name>
+    <XValue>0.238578677</XValue>
+    <YValue>0.395939082</YValue>
+    <RColor>250</RColor>
+    <GColor>236</GColor>
+    <BColor>88</BColor>
+    <AColor>255</AColor>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIRST</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SECOND</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>THIRD</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FOURTH</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>FIFTH</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SIXTH</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>SEVENTH</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>17</Kind>
+    <Name>EIGTHTH</Name>
+    <Value>0</Value>
+</Widget>
