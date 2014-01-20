@@ -87,7 +87,7 @@ void ofxUIMultiImageToggle::init(float w, float h, bool *_value, string _pathURL
     
     setValue(*_value);
     
-    drawLabel = true;
+    drawLabel = false;
     label->setVisible(drawLabel);
     
     string coreURL = _pathURL;

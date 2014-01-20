@@ -65,6 +65,7 @@ class ofxUIImageButton;
 class ofxUIMultiImageButton;
 class ofxUIMultiImageToggle;
 class ofxUITextArea;
+class ofxUISortableList;
 
 class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {
@@ -247,8 +248,8 @@ public:
     ofxUIMovingGraph* addMovingGraph(string _name, vector<float> _buffer, int _bufferSize, float _min, float _max, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT);
     ofxUIMovingGraph* addMovingGraph(string _name, vector<float> _buffer, int _bufferSize, float _min, float _max, float _w, float _h);
 
-    ofxUIImage *addImage(string _name, ofImage *_image, float _w, float _h);
-    ofxUIImage *addImage(string _name, ofImage *_image);
+    ofxUIImage *addImage(string _name, ofImage *_image, float _w, float _h, bool _showLabel = false);
+    ofxUIImage *addImage(string _name, ofImage *_image, bool _showLabel = false);
 
     ofxUIBaseDraws *addBaseDraws(string _name, ofBaseDraws *_base, float _w, float _h, bool _showLabel = false);
     ofxUIBaseDraws *addBaseDraws(string _name, ofBaseDraws *_base, bool _showLabel = false);
@@ -293,6 +294,8 @@ public:
     ofxUIMultiImageToggle *addMultiImageToggle(string _name, string _path, bool _value, int _size = OFX_UI_FONT_SMALL);
     
     ofxUITextArea* addTextArea(string _name, string _textstring, int _size = OFX_UI_FONT_MEDIUM);
+    
+    ofxUISortableList *addSortableList(string _name, vector<std::string> _items, int _size = -1);
     
     void resetPlacer();
     void setPlacer(ofxUIWidget *referenceWidget);

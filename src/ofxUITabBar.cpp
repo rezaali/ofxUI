@@ -66,13 +66,24 @@ void ofxUITabBar::addCanvas(ofxUIScrollableCanvas *_canvas)
 
 void ofxUITabBar::mainUiEvent(ofxUIEventArgs &event)
 {
-    string name = event.getName();    
-    for (map<ofxUIToggle*, ofxUICanvas*>::iterator it=canvases.begin(); it!=canvases.end(); ++it) {
-        if(it->second->getName() == name) {
+    string name = event.getName();
+    for (map<ofxUIToggle*, ofxUICanvas*>::iterator it=canvases.begin(); it!=canvases.end(); ++it)
+    {
+        if(active != NULL && active->getName() == name)
+        {
+            it->first->setValue(false);
+            it->second->disable();
+            active = NULL;
+        }
+        else if(it->second->getName() == name && event.getToggle()->getValue())
+        {
             active = it->second;
             it->first->setValue(true);
             it->second->enable();
-        } else {
+            it->second->setPosition(rect->getX() + rect->getWidth() + padding*0.5, this->rect->getY());
+        }
+        else
+        {
             it->first->setValue(false);
             it->second->disable();
         }        

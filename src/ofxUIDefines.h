@@ -41,21 +41,22 @@
 #define OFX_UI_GLOBAL_BUTTON_DIMENSION 16
 #define OFX_UI_GLOBAL_SPACING_HEIGHT 1
 
-#define OFX_UI_COLOR_BACK ofxUIColor(0, 25)                                    //the rect's back color
-#define OFX_UI_COLOR_OUTLINE ofxUIColor(255, 255, 255, 100)                    //the rect's outline color
-#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofxUIColor(255, 255, 255, 200)          //the rect's onMouseOver outline highlight color
-#define OFX_UI_COLOR_FILL ofxUIColor(255, 255, 255, 200)                       //the rect's fill color
-#define OFX_UI_COLOR_FILL_HIGHLIGHT ofxUIColor(255, 255, 255, 255)             //the rect's onMouseDown highlight color
-#define OFX_UI_COLOR_PADDED ofxUIColor(0, 100)                                 //the rect's padded color
-#define OFX_UI_COLOR_PADDED_OUTLINE ofxUIColor(255, 200)                       //the rect's padded outline color
-
-#define OFX_UI_COLOR_BACK_ALPHA 25
+#define OFX_UI_COLOR_BACK_ALPHA 100
 #define OFX_UI_COLOR_OUTLINE_ALPHA 100
 #define OFX_UI_COLOR_OUTLINE_HIGHLIGHT_ALPHA 200
 #define OFX_UI_COLOR_FILL_ALPHA 200
 #define OFX_UI_COLOR_FILL_HIGHLIGHT_ALPHA 255
 #define OFX_UI_COLOR_PADDED_ALPHA 100
 #define OFX_UI_COLOR_PADDED_OUTLINE_ALPHA 200
+
+#define OFX_UI_COLOR_BACK ofxUIColor(0, OFX_UI_COLOR_BACK_ALPHA)                                        //rect's back color
+#define OFX_UI_COLOR_OUTLINE ofxUIColor(255, 255, 255, OFX_UI_COLOR_OUTLINE_ALPHA)                      //rect's outline color
+#define OFX_UI_COLOR_OUTLINE_HIGHLIGHT ofxUIColor(255, 255, 255, OFX_UI_COLOR_OUTLINE_HIGHLIGHT_ALPHA)  //rect's onMouseOver outline highlight color
+#define OFX_UI_COLOR_FILL ofxUIColor(255, 255, 255, OFX_UI_COLOR_FILL_ALPHA)                            //rect's fill color
+#define OFX_UI_COLOR_FILL_HIGHLIGHT ofxUIColor(255, 255, 255, OFX_UI_COLOR_FILL_HIGHLIGHT_ALPHA)        //rect's onMouseDown highlight color
+#define OFX_UI_COLOR_PADDED ofxUIColor(0, OFX_UI_COLOR_PADDED_ALPHA)                                    //rect's padded color
+#define OFX_UI_COLOR_PADDED_OUTLINE ofxUIColor(255, OFX_UI_COLOR_PADDED_OUTLINE_ALPHA)                  //rect's padded outline color
+
 
 #define OFX_UI_DRAW_PADDING false
 #define OFX_UI_DRAW_PADDING_OUTLINE false

@@ -227,7 +227,7 @@ void ofxUIDropDownList::setShowCurrentSelected(bool _bShowCurrentSelected)
 
 void ofxUIDropDownList::checkAndSetTitleLabel()
 {
-    if(bShowCurrentSelected)
+    if(bShowCurrentSelected && selected.size() > 0)
     {
         string title = "";
         int index = 0;

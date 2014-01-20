@@ -29,7 +29,7 @@
 class ofxUIMultiImageButton : public ofxUIButton
 {
 public:        
-    ofxUIMultiImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size= OFX_UI_FONT_SMALL);
+    ofxUIMultiImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
     ofxUIMultiImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
     ofxUIMultiImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
     ofxUIMultiImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
