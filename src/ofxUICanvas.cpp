@@ -240,7 +240,14 @@ void ofxUICanvas::writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *X
             XML->setValue("Value", slider->getValue(), 0);
         }
             break;
-
+            
+        case OFX_UI_WIDGET_DOUBLESLIDER_H:
+        case OFX_UI_WIDGET_DOUBLESLIDER_V:
+        {
+            ofxUIDoubleSlider *slider = (ofxUIDoubleSlider *) widget;
+            XML->setValue("Value", slider->getValue(), 0);
+        }
+            break;
             
         case OFX_UI_WIDGET_RSLIDER_H:
         case OFX_UI_WIDGET_RSLIDER_V:
@@ -364,6 +371,15 @@ void ofxUICanvas::loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XM
         case OFX_UI_WIDGET_INTSLIDER_V:
         {
             ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
+            float value = XML->getValue("Value", slider->getValue(), 0);
+            slider->setValue(value);
+        }
+            break;
+            
+        case OFX_UI_WIDGET_DOUBLESLIDER_H:
+        case OFX_UI_WIDGET_DOUBLESLIDER_V:
+        {
+            ofxUIDoubleSlider *slider = (ofxUIDoubleSlider *) widget;
             float value = XML->getValue("Value", slider->getValue(), 0);
             slider->setValue(value);
         }
@@ -1528,6 +1544,34 @@ ofxUIIntSlider* ofxUICanvas::addIntSlider(string _name, int _min, int _max, int 
 ofxUIIntSlider* ofxUICanvas::addIntSlider(string _name, int _min, int _max, int *_value, float w, float h, float x, float y)
 {
     ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, w, h, x, y);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
+ofxUIDoubleSlider* ofxUICanvas::addDoubleSlider(string _name, double _min, double _max, double _value)
+{
+    ofxUIDoubleSlider* widget = new ofxUIDoubleSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
+ofxUIDoubleSlider* ofxUICanvas::addDoubleSlider(string _name, double _min, double _max, double _value, float w, float h, float x, float y)
+{
+    ofxUIDoubleSlider* widget = new ofxUIDoubleSlider(_name, _min, _max, _value, w, h, x, y);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
+ofxUIDoubleSlider* ofxUICanvas::addDoubleSlider(string _name, double _min, double _max, double *_value)
+{
+    ofxUIDoubleSlider* widget = new ofxUIDoubleSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
+ofxUIDoubleSlider* ofxUICanvas::addDoubleSlider(string _name, double _min, double _max, double *_value, float w, float h, float x, float y)
+{
+    ofxUIDoubleSlider* widget = new ofxUIDoubleSlider(_name, _min, _max, _value, w, h, x, y);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }

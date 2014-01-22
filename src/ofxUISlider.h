@@ -1,4 +1,4 @@
-/********************************************************************************** 
+/**********************************************************************************
  
  Copyright (C) 2012 Syed Reza Ali (www.syedrezaali.com)
  
@@ -26,18 +26,17 @@
 
 #include "ofxUIWidgetWithLabel.h"
 
-class ofxUISlider : public ofxUIWidgetWithLabel
+template<typename T>
+class ofxUISlider_ : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUISlider();
-    ofxUISlider(string _name, float _min, float _max, float _value, float w, float h, float x = 0, float y = 0);
-    ofxUISlider(string _name, float _min, float _max, float *_value, float w, float h, float x = 0, float y = 0);
-    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name);
-    ofxUISlider(float w, float h, float _min, float _max, float _value, string _name);
-    ofxUISlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name);
-    ofxUISlider(float w, float h, float _min, float _max, float *_value, string _name);
-    ~ofxUISlider();
-    virtual void init(string _name, float _min, float _max, float *_value, float w, float h, float x, float y);
+    ofxUISlider_();
+    ofxUISlider_(string _name, T _min, T _max, T _value, float w, float h, float x = 0, float y = 0);
+    ofxUISlider_(string _name, T _min, T _max, T *_value, float w, float h, float x = 0, float y = 0);
+    ~ofxUISlider_();
+    void setKind();
+    void setOrientation(float w, float h);
+    virtual void init(string _name, T _min, T _max, T *_value, float w, float h, float x, float y);
     
     virtual void update();
     
@@ -53,7 +52,7 @@ public:
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
-
+    
     void keyPressed(int key);
     void keyReleased(int key);
     void windowResized(int w, int h);
@@ -61,19 +60,19 @@ public:
     bool getSetClampValue();
     void setClampValue(bool _bClampValue);
     
-    float getIncrement();
-    void setIncrement(float _increment);
+    T getIncrement();
+    void setIncrement(T _increment);
 	
     virtual void input(float x, float y);
     void updateValueRef();
 	virtual void updateLabel();
     virtual void stateChange();
 	
-    void setValue(float _value);
-	float getValue();
+    void setValue(T _value);
+	T getValue();
 	
     float getPercentValue();
-	float getScaledValue();
+	T getScaledValue();
 	
     ofxUILabel *getLabel();
     void setLabelVisible(bool _labelVisible);
@@ -82,24 +81,28 @@ public:
     void setVisible(bool _visible);
 	virtual void setParent(ofxUIWidget *_parent);
     
+    void setMax(T _max, bool bKeepValueTheSame = false);
+    T getMax();
     
-    void setMax(float _max, bool bKeepValueTheSame = false);
-    float getMax();
-
-    void setMin(float _min, bool bKeepValueTheSame = false);
-    float getMin();
+    void setMin(T _min, bool bKeepValueTheSame = false);
+    T getMin();
     
     ofxUIVec2f getMaxAndMin();
-    void setMaxAndMin(float _max, float _min, bool bKeepValueTheSame = false);
+    void setMaxAndMin(T _max, T _min, bool bKeepValueTheSame = false);
     
     bool isDraggable();
     
 protected:
     bool bRoundedToNearestInt;
-    bool bClampValue; 
-    float value, increment;
-    float *valueRef; 
-    bool useReference;     
-	float max, min;  
+    bool bClampValue;
+    double value, increment;
+    T *valueRef;
+    bool useReference;
+	T max, min;
     int labelPrecision;
-}; 
+    int orientation; 
+};
+
+typedef ofxUISlider_<int> ofxUIIntSlider;
+typedef ofxUISlider_<float> ofxUISlider;
+typedef ofxUISlider_<double> ofxUIDoubleSlider;

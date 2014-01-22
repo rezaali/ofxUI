@@ -31,8 +31,7 @@
 #include "ofxUILabel.h"
 #include "ofxUIFPS.h"
 #include "ofxUISlider.h"
-#include "ofxUIIntSlider.h"
-//#include "ofxUIMultiSlider.h" //TO DO 
+//#include "ofxUIMultiSlider.h" //TO DO
 #include "ofxUIImageSlider.h"
 #include "ofxUIFPSSlider.h"
 #include "ofxUIMinimalSlider.h"

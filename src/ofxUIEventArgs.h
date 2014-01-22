@@ -25,11 +25,10 @@
 #pragma once
 
 #include "ofxUIWrapper.h"
-
-class ofxUIWidget;
-class ofxUIButton;
-class ofxUIToggle; 
-class ofxUISlider;
+#include "ofxUISlider.h"
+#include "ofxUIWidget.h"
+#include "ofxUIButton.h"
+#include "ofxUIToggle.h"
 
 class ofxUIEventArgs 
 {   

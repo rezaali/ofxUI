@@ -43,15 +43,20 @@ void ofApp::setup()
     gui0->addSpacer();
     gui0->addLabel("RANGE SLIDER");
 	gui0->addRangeSlider("RANGE", 0.0, 255.0, &blue, &green);
-    
+
+    gui0->addSpacer();
+    gui0->addLabel("TEMPLATED SLIDERS");
+	gui0->addIntSlider("INT SLIDER", 0, 100, 50);
+	gui0->addSlider("FLOAT SLIDER", 0.0, 100.0, 50.0);
+	gui0->addDoubleSlider("DOUBLE SLIDER", 0.0, 100.0, 50.0);
+
     gui0->addSpacer();
 	gui0->addLabel("ROTARY SLIDER");
     gui0->addRotarySlider("ROTARY", 0.0, 255.0, &red);
 
     gui0->autoSizeToFitWidgets();
     ofAddListener(gui0->newGUIEvent,this,&ofApp::guiEvent);
-    
-	
+    	
     gui1 = new ofxUISuperCanvas("MORE SLIDERS");
     gui1->setPosition(212, 0);
     

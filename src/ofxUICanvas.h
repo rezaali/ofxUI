@@ -26,6 +26,7 @@
 
 #include "ofxUIWidget.h"
 #include "ofxUIDefines.h"
+#include "ofxUISlider.h"
 #include <vector>
 #include <map>
 
@@ -33,8 +34,6 @@ class ofxUIEventArgs;
 class ofxUISpacer;
 class ofxUILabel;
 class ofxUIFPS;
-class ofxUISlider;
-class ofxUIIntSlider;
 class ofxUIRotarySlider;
 class ofxUIImageSlider;
 class ofxUINumberDialer;
@@ -175,6 +174,11 @@ public:
     ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int _value, float w, float h, float x = 0, float y = 0);
     ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int *_value);
     ofxUIIntSlider* addIntSlider(string _name, int _min, int _max, int *_value, float w, float h, float x = 0, float y = 0);
+
+    ofxUIDoubleSlider* addDoubleSlider(string _name, double _min, double _max, double _value);
+    ofxUIDoubleSlider* addDoubleSlider(string _name, double _min, double _max, double _value, float w, float h, float x = 0, float y = 0);
+    ofxUIDoubleSlider* addDoubleSlider(string _name, double _min, double _max, double *_value);
+    ofxUIDoubleSlider* addDoubleSlider(string _name, double _min, double _max, double *_value, float w, float h, float x = 0, float y = 0);
     
     ofxUIRotarySlider* addRotarySlider(string _name, float _min, float _max, float _value, int _size = OFX_UI_FONT_SMALL);
     ofxUIRotarySlider* addRotarySlider(string _name, float _min, float _max, float _value, float w, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
