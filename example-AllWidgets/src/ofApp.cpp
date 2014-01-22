@@ -18,6 +18,12 @@ void ofApp::setup(){
     setGUI3();
     setGUI4();
     setGUI5();
+    
+    gui1->loadSettings("gui1Settings.xml");
+    gui2->loadSettings("gui2Settings.xml");
+    gui3->loadSettings("gui3Settings.xml");
+    gui4->loadSettings("gui4Settings.xml");
+    gui5->loadSettings("gui5Settings.xml");
 }
 
 //--------------------------------------------------------------
@@ -50,6 +56,11 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
 	string name = e.getName();
 	int kind = e.getKind();
 	cout << "got event from: " << name << endl;
+    if(kind == OFX_UI_WIDGET_NUMBERDIALER)
+    {
+        ofxUINumberDialer *n = (ofxUINumberDialer *) e.widget;
+        cout << n->getValue() << endl;
+    }
 	
 	if(name == "RED")
 	{
@@ -102,6 +113,12 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
 //--------------------------------------------------------------
 void ofApp::exit()
 {
+    gui1->saveSettings("gui1Settings.xml");
+    gui2->saveSettings("gui2Settings.xml");
+    gui3->saveSettings("gui3Settings.xml");
+    gui4->saveSettings("gui4Settings.xml");
+    gui5->saveSettings("gui5Settings.xml");
+    
 	delete gui1;
 	delete gui2;
     delete gui3;
@@ -269,15 +286,15 @@ void ofApp::setGUI2()
     
     gui2->addSpacer();
     gui2->addLabel("NUMBER DIALER");
-    gui2->addNumberDialer("NUMBER DIALER", -10000, 10000, 5000, 1);
+    gui2->addNumberDialer("DIALER", -10000, 10000, 5000, 3);
     
     gui2->addSpacer();
     gui2->addLabel("LABEL BUTTON", OFX_UI_FONT_MEDIUM);
-    gui2->addLabelButton("LABEL BUTTON", false);
+    gui2->addLabelButton("LABEL BTN", false);
     
     gui2->addSpacer();
     gui2->addLabel("LABEL TOGGLES", OFX_UI_FONT_MEDIUM);
-    gui2->addLabelToggle("LABEL TOGGLE", false);
+    gui2->addLabelToggle("LABEL TGL", false);
     
     gui2->setPosition(212, 0);
     gui2->autoSizeToFitWidgets();
@@ -351,7 +368,7 @@ void ofApp::setGUI4()
     gui4->setGlobalButtonDimension(64); 
     gui4->addMultiImageButton("IMAGE BUTTON", "GUI/toggle.png", false);
     gui4->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
-    gui4->addMultiImageToggle("IMAGE BUTTON", "GUI/toggle.png", false);
+    gui4->addMultiImageToggle("IMAGE TOGGLE", "GUI/toggle.png", false);
     gui4->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     
     vector<std::string> items;

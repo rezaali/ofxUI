@@ -43,4 +43,9 @@ public:
     virtual void mousePressed(int x, int y, int button);
     virtual void mouseReleased(int x, int y, int button);
     virtual void setValue(bool _value);
+    bool hasState(){ return true; };
+#ifndef OFX_UI_NO_XML
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+#endif
 };

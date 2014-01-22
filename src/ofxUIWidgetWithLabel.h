@@ -38,6 +38,7 @@ public:
     virtual ofxUILabel* getLabelWidget();
     virtual void toggleColors();
     virtual void setModal(bool _modal);
+    virtual bool hasState();
     
 protected:
     ofxUILabel *label;

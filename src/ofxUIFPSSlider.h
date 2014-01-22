@@ -35,4 +35,5 @@ public:
     ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name);
     ofxUIFPSSlider(float w, float h, float _min, float _max, float *_value, string _name);
 	void update();
+    bool hasState() { return false; };
 }; 

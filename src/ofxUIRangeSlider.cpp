@@ -579,4 +579,21 @@ void ofxUIRangeSlider::setMaxAndMin(float _max, float _min)
 bool ofxUIRangeSlider::isDraggable()
 {
     return true;
-}  
+}
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIRangeSlider::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("HighValue", getScaledValueHigh(), 0);
+    XML->setValue("LowValue", getScaledValueLow(), 0);
+
+}
+
+void ofxUIRangeSlider::loadState(ofxXmlSettings *XML)
+{
+    setValueHigh(XML->getValue("HighValue", getScaledValueHigh(), 0));
+    setValueLow(XML->getValue("LowValue", getScaledValueLow(), 0));
+}
+
+#endif

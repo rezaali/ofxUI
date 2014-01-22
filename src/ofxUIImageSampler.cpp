@@ -251,3 +251,26 @@ bool ofxUIImageSampler::isDraggable()
 {
     return true;
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIImageSampler::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("XValue", getValue().x, 0);
+    XML->setValue("YValue", getValue().y, 0);
+    XML->setValue("RColor", getColor().r, 0);
+    XML->setValue("GColor", getColor().g, 0);
+    XML->setValue("BColor", getColor().b, 0);
+    XML->setValue("AColor", getColor().a, 0);
+}
+
+void ofxUIImageSampler::loadState(ofxXmlSettings *XML)
+{
+    setValue(ofxUIVec2f(XML->getValue("XValue", getValue().x, 0), XML->getValue("YValue", getValue().y, 0)));
+    setColor(ofxUIColor(XML->getValue("RColor", getColor().r, 0),
+                        XML->getValue("GColor", getColor().g, 0),
+                        XML->getValue("BColor", getColor().b, 0),
+                        XML->getValue("AColor", getColor().a, 0)));
+}
+
+#endif

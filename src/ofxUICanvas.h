@@ -82,11 +82,9 @@ public:
     void copyCanvasProperties(ofxUICanvas *styler);
 #ifndef OFX_UI_NO_XML
     virtual void saveSettings(string fileName);
-    virtual void writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML);
+    virtual void loadSettings(string fileName);
     void setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad);
     bool getTriggerWidgetsUponLoad();
-    virtual void loadSettings(string fileName);
-    virtual void loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML);
 #endif
     ofxUIFont *getFontLarge();
     ofxUIFont *getFontMedium();

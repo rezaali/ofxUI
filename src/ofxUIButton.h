@@ -55,7 +55,7 @@ public:
 	void toggleValue();
     virtual bool isHit(float x, float y);
     void setLabelPosition(ofxUIWidgetPosition pos);
-    
+    virtual bool hasState(){ return false; };
 protected:
     bool *value; 
     bool useReference; 

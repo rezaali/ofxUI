@@ -198,110 +198,12 @@ void ofxUICanvas::saveSettings(string fileName)
         {
             XML->setValue("Kind", widgetsWithState[i]->getKind(), 0);
             XML->setValue("Name", widgetsWithState[i]->getName(), 0);
-            writeSpecificWidgetData(widgetsWithState[i], XML);
+            widgetsWithState[i]->saveState(XML);
         }
         XML->popTag();
     }
     XML->saveFile(fileName);
     delete XML;
-}
-
-void ofxUICanvas::writeSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
-{
-    int kind = widget->getKind();
-    switch (kind) {
-        case OFX_UI_WIDGET_IMAGETOGGLE:
-        case OFX_UI_WIDGET_MULTIIMAGETOGGLE:
-        case OFX_UI_WIDGET_LABELTOGGLE:
-        case OFX_UI_WIDGET_TOGGLE:
-        {
-            ofxUIToggle *toggle = (ofxUIToggle *) widget;
-            XML->setValue("Value", (toggle->getValue() ? 1 : 0), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_IMAGESLIDER_H:
-        case OFX_UI_WIDGET_IMAGESLIDER_V:
-        case OFX_UI_WIDGET_BILABELSLIDER:
-        case OFX_UI_WIDGET_CIRCLESLIDER:
-        case OFX_UI_WIDGET_MINIMALSLIDER:
-        case OFX_UI_WIDGET_SLIDER_H:
-        case OFX_UI_WIDGET_SLIDER_V:
-        {
-            ofxUISlider *slider = (ofxUISlider *) widget;
-            XML->setValue("Value", slider->getScaledValue(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_INTSLIDER_H:
-        case OFX_UI_WIDGET_INTSLIDER_V:
-        {
-            ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
-            XML->setValue("Value", slider->getValue(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_DOUBLESLIDER_H:
-        case OFX_UI_WIDGET_DOUBLESLIDER_V:
-        {
-            ofxUIDoubleSlider *slider = (ofxUIDoubleSlider *) widget;
-            XML->setValue("Value", slider->getValue(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_RSLIDER_H:
-        case OFX_UI_WIDGET_RSLIDER_V:
-        {
-            ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget;
-            XML->setValue("HighValue", rslider->getScaledValueHigh(), 0);
-            XML->setValue("LowValue", rslider->getScaledValueLow(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_NUMBERDIALER:
-        {
-            ofxUINumberDialer *numdialer = (ofxUINumberDialer *) widget;
-            XML->setValue("Value", numdialer->getValue(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_2DPAD:
-        {
-            ofxUI2DPad *pad = (ofxUI2DPad *) widget;
-            XML->setValue("XValue", pad->getScaledValue().x, 0);
-            XML->setValue("YValue", pad->getScaledValue().y, 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_TEXTINPUT:
-        {
-            ofxUITextInput *textInput = (ofxUITextInput *) widget;
-            XML->setValue("Value", textInput->getTextString(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_ROTARYSLIDER:
-        {
-            ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
-            XML->setValue("Value", rotslider->getScaledValue(), 0);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_IMAGESAMPLER:
-        {
-            ofxUIImageSampler *imageSampler = (ofxUIImageSampler *) widget;
-            XML->setValue("XValue", imageSampler->getValue().x, 0);
-            XML->setValue("YValue", imageSampler->getValue().y, 0);
-            XML->setValue("RColor", imageSampler->getColor().r, 0);
-            XML->setValue("GColor", imageSampler->getColor().g, 0);
-            XML->setValue("BColor", imageSampler->getColor().b, 0);
-            XML->setValue("AColor", imageSampler->getColor().a, 0);
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 void ofxUICanvas::setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad)
@@ -324,9 +226,9 @@ void ofxUICanvas::loadSettings(string fileName)
         XML->pushTag("Widget", i);
         string name = XML->getValue("Name", "NULL", 0);
         ofxUIWidget *widget = getWidget(name);
-        if(widget != NULL)
+        if(widget != NULL && widget->hasState())
         {
-            loadSpecificWidgetData(widget, XML);
+            widget->loadState(XML);
             if(bTriggerWidgetsUponLoad){
                 triggerEvent(widget);
             }
@@ -335,120 +237,6 @@ void ofxUICanvas::loadSettings(string fileName)
     }
     hasKeyBoard = false;
     delete XML;
-}
-
-void ofxUICanvas::loadSpecificWidgetData(ofxUIWidget *widget, ofxXmlSettings *XML)
-{
-    int kind = widget->getKind();
-    switch (kind)
-    {
-        case OFX_UI_WIDGET_IMAGETOGGLE:
-        case OFX_UI_WIDGET_MULTIIMAGETOGGLE:
-        case OFX_UI_WIDGET_LABELTOGGLE:
-        case OFX_UI_WIDGET_TOGGLE:
-        {
-            ofxUIToggle *toggle = (ofxUIToggle *) widget;
-            int value = XML->getValue("Value", (toggle->getValue() ? 1 : 0), 0);
-            toggle->setValue((value ? 1 : 0));
-        }
-            break;
-            
-        case OFX_UI_WIDGET_IMAGESLIDER_H:
-        case OFX_UI_WIDGET_IMAGESLIDER_V:
-        case OFX_UI_WIDGET_BILABELSLIDER:
-        case OFX_UI_WIDGET_CIRCLESLIDER:
-        case OFX_UI_WIDGET_MINIMALSLIDER:
-        case OFX_UI_WIDGET_SLIDER_H:
-        case OFX_UI_WIDGET_SLIDER_V:
-        {
-            ofxUISlider *slider = (ofxUISlider *) widget;
-            float value = XML->getValue("Value", slider->getScaledValue(), 0);
-            slider->setValue(value);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_INTSLIDER_H:
-        case OFX_UI_WIDGET_INTSLIDER_V:
-        {
-            ofxUIIntSlider *slider = (ofxUIIntSlider *) widget;
-            float value = XML->getValue("Value", slider->getValue(), 0);
-            slider->setValue(value);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_DOUBLESLIDER_H:
-        case OFX_UI_WIDGET_DOUBLESLIDER_V:
-        {
-            ofxUIDoubleSlider *slider = (ofxUIDoubleSlider *) widget;
-            float value = XML->getValue("Value", slider->getValue(), 0);
-            slider->setValue(value);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_RSLIDER_H:
-        case OFX_UI_WIDGET_RSLIDER_V:
-        {
-            ofxUIRangeSlider *rslider = (ofxUIRangeSlider *) widget;
-            float valueHigh = XML->getValue("HighValue", rslider->getScaledValueHigh(), 0);
-            float valueLow = XML->getValue("LowValue", rslider->getScaledValueLow(), 0);
-            rslider->setValueHigh(valueHigh);
-            rslider->setValueLow(valueLow);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_NUMBERDIALER:
-        {
-            ofxUINumberDialer *numdialer = (ofxUINumberDialer *) widget;
-            float value = XML->getValue("Value", numdialer->getValue(), 0);
-            numdialer->setValue(value);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_2DPAD:
-        {
-            ofxUI2DPad *pad = (ofxUI2DPad *) widget;
-            float valueX = XML->getValue("XValue", pad->getScaledValue().x, 0);
-            float valueY = XML->getValue("YValue", pad->getScaledValue().y, 0);
-            pad->setValue(ofxUIVec3f(valueX, valueY));
-        }
-            break;
-            
-        case OFX_UI_WIDGET_TEXTINPUT:
-        {
-            ofxUITextInput *textInput = (ofxUITextInput *) widget;
-            string value = XML->getValue("Value", textInput->getTextString(), 0);
-            textInput->setTextString(value);
-            textInput->setTriggerType(OFX_UI_TEXTINPUT_ON_LOAD);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_ROTARYSLIDER:
-        {
-            ofxUIRotarySlider *rotslider = (ofxUIRotarySlider *) widget;
-            float value = XML->getValue("Value", rotslider->getScaledValue(), 0);
-            rotslider->setValue(value);
-        }
-            break;
-            
-        case OFX_UI_WIDGET_IMAGESAMPLER:
-        {
-            ofxUIImageSampler *imageSampler = (ofxUIImageSampler *) widget;
-            float valueX = XML->getValue("XValue", imageSampler->getValue().x, 0);
-            float valueY = XML->getValue("YValue", imageSampler->getValue().y, 0);
-            
-            int r = XML->getValue("RColor", imageSampler->getColor().r, 0);
-            int g = XML->getValue("GColor", imageSampler->getColor().g, 0);
-            int b = XML->getValue("BColor", imageSampler->getColor().b, 0);
-            int a = XML->getValue("AColor", imageSampler->getColor().a, 0);
-            
-            imageSampler->setValue(ofxUIVec2f(valueX, valueY));
-            imageSampler->setColor(ofxUIColor(r,g,b,a));
-        }
-            break;
-            
-        default:
-            break;
-    }
 }
 
 #endif
@@ -1107,6 +895,11 @@ void ofxUICanvas::removeWidget(ofxUIWidget *widget)
 
 void ofxUICanvas::addWidget(ofxUIWidget *widget)
 {
+    if(widget->hasState())
+    {
+       widgetsWithState.push_back(widget);
+    }
+    
     widget->setPadding(padding);
     for(int i = 0; i < widget->getEmbeddedWidgetsSize(); i++)
     {
@@ -1139,35 +932,6 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
             setLabelFont(rlabel);
             pushbackWidget(rlabel);
         }
-        
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_2DPAD)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_IMAGE)
-    {
-        
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_IMAGESAMPLER)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_RSLIDER_H || widget->getKind() == OFX_UI_WIDGET_RSLIDER_V)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_ROTARYSLIDER)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_BUTTON || widget->getKind() ==  OFX_UI_WIDGET_LABELBUTTON || widget->getKind() == OFX_UI_WIDGET_LABELTOGGLE || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGEBUTTON || widget->getKind() == OFX_UI_WIDGET_MULTIIMAGETOGGLE || widget->getKind() == OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
-    {
-        if(widget->getKind() != OFX_UI_WIDGET_BUTTON && widget->getKind() != OFX_UI_WIDGET_LABELBUTTON && widget->getKind() != OFX_UI_WIDGET_MULTIIMAGEBUTTON && widget->getKind() != OFX_UI_WIDGET_CUSTOMIMAGEBUTTON)
-        {
-            widgetsWithState.push_back(widget);
-        }
     }
     else if(widget->getKind() == OFX_UI_WIDGET_DROPDOWNLIST)
     {
@@ -1196,18 +960,6 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
             pushbackWidget(t);
         }
         widgetsWithState.push_back(list);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_TEXTINPUT)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_NUMBERDIALER)
-    {
-        widgetsWithState.push_back(widget);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_TOGGLE)
-    {
-        widgetsWithState.push_back(widget);
     }
     else if(widget->getKind() == OFX_UI_WIDGET_RADIO)
     {
@@ -1241,10 +993,7 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
             widgetsWithState.push_back(t);
         }
     }
-    else if(widget->getKind() == OFX_UI_WIDGET_IMAGETOGGLE)
-    {
-        widgetsWithState.push_back(widget);
-    }
+
     setWidgetDrawingProperties(widget);
     setWidgetColor(widget);
     widget->setParent(this);

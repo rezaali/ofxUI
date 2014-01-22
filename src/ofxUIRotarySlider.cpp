@@ -501,3 +501,17 @@ bool ofxUIRotarySlider::isHit(float x, float y)
         return false;
     }
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIRotarySlider::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Value", getScaledValue(), 0);   
+}
+
+void ofxUIRotarySlider::loadState(ofxXmlSettings *XML)
+{
+    setValue(XML->getValue("Value", getScaledValue(), 0));
+}
+
+#endif

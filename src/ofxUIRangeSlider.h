@@ -70,6 +70,11 @@ public:
     void setMin(float _min);
     void setMaxAndMin(float _max, float _min);
     bool isDraggable();
+    bool hasState(){ return true; };
+#ifndef OFX_UI_NO_XML
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+#endif
     
 protected:    
 	float valuelow, valuehigh, increment; 

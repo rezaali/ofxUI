@@ -573,3 +573,22 @@ ofxUIWidget *ofxUIWidget::getCanvasParent()
         }
     }
 }
+
+bool ofxUIWidget::hasState()
+{
+    return false;
+}
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIWidget::saveState(ofxXmlSettings *XML)
+{
+    
+}
+
+void ofxUIWidget::loadState(ofxXmlSettings *XML)
+{
+    
+}
+
+#endif

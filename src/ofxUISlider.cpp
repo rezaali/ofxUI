@@ -601,6 +601,23 @@ bool ofxUISlider_<T>::isDraggable()
     return true;
 }
 
+#ifndef OFX_UI_NO_XML
+
+template<typename T>
+void ofxUISlider_<T>::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Value", getScaledValue(), 0);
+}
+
+template<typename T>
+void ofxUISlider_<T>::loadState(ofxXmlSettings *XML)
+{
+    T value = XML->getValue("Value", getScaledValue(), 0);
+    setValue(value);
+}
+
+#endif
+
 template class ofxUISlider_<int>;
 template class ofxUISlider_<float>;
 template class ofxUISlider_<double>;

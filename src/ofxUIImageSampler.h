@@ -47,6 +47,11 @@ public:
     ofPoint getValue();
     void setValue(ofPoint _value);
     bool isDraggable();
+    bool hasState(){ return true; };
+#ifndef OFX_UI_NO_XML
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+#endif    
     
 protected: 
     ofColor sampledColor; 

@@ -510,3 +510,17 @@ void ofxUINumberDialer::setDisplayLabel(bool _displayLabel)
         paddedRect->width = rect->width+padding*2.0;
     }
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUINumberDialer::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Value", getValue(), 0);
+}
+
+void ofxUINumberDialer::loadState(ofxXmlSettings *XML)
+{
+    setValue(XML->getValue("Value", getValue(), 0));
+}
+
+#endif

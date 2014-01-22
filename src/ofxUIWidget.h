@@ -26,6 +26,10 @@
 
 #include "ofxUIWrapper.h"
 
+#ifndef OFX_UI_NO_XML
+    #include "ofxXmlSettings.h"
+#endif 
+
 class ofxUIWidget           
 {
 public:
@@ -151,6 +155,15 @@ public:
     virtual int getEmbeddedWidgetsSize();
     ofxUIWidget *getEmbeddedWidget(int index);
     ofxUIWidget *getCanvasParent();
+    
+    virtual bool hasState();
+    
+#ifndef OFX_UI_NO_XML   
+    
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+    
+#endif
     
 protected:
 	ofxUIWidget *parent;

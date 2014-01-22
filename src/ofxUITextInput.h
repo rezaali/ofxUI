@@ -55,6 +55,11 @@ public:
 	void setAutoClear(bool _autoclear);
     void setTriggerOnClick(bool _triggerOnClick);
     void recalculateDisplayString();
+    bool hasState(){ return true; };
+#ifndef OFX_UI_NO_XML
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+#endif    
 
 protected:
 	string textstring; 

@@ -79,3 +79,8 @@ void ofxUIWidgetWithLabel::setModal(bool _modal)
         }
     }
 }
+
+bool ofxUIWidgetWithLabel::hasState()
+{
+    return false; 
+}

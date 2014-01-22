@@ -499,3 +499,18 @@ void ofxUI2DPad::setLabelPrecision(int _precision)
     updateValueRef();
     updateLabel();
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUI2DPad::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("XValue", getScaledValue().x, 0);
+    XML->setValue("YValue", getScaledValue().y, 0);
+}
+
+void ofxUI2DPad::loadState(ofxXmlSettings *XML)
+{
+    setValue(ofxUIVec3f(XML->getValue("XValue", getScaledValue().x, 0), XML->getValue("YValue", getScaledValue().y, 0)));
+}
+
+#endif

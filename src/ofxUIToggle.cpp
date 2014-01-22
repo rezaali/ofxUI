@@ -148,3 +148,18 @@ void ofxUIToggle::setValue(bool _value)
     draw_fill = *value;
     //        label->setDrawBack((*value));
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIToggle::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Value", (getValue() ? 1 : 0), 0);
+}
+
+void ofxUIToggle::loadState(ofxXmlSettings *XML)
+{
+    int value = XML->getValue("Value", (getValue() ? 1 : 0), 0);
+    setValue((value ? 1 : 0));
+}
+
+#endif

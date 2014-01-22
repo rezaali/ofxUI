@@ -487,3 +487,18 @@ void ofxUITextInput::recalculateDisplayString()
     
     label->setLabel(displaystring);
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUITextInput::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Value", getTextString(), 0);    
+}
+
+void ofxUITextInput::loadState(ofxXmlSettings *XML)
+{
+    setTextString(XML->getValue("Value", getTextString(), 0));
+    setTriggerType(OFX_UI_TEXTINPUT_ON_LOAD);
+}
+
+#endif
