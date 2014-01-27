@@ -40,7 +40,6 @@ public:
     virtual void drawFill();
     virtual void setVisible(bool _visible);
     void setCropImageToFitRect(bool _cropImageToFitRect);
-	ofxUILabel *getLabel();
     void setImage(ofImage *_image);
 	virtual void setParent(ofxUIWidget *_parent);
     virtual bool isDraggable();

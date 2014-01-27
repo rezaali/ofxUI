@@ -234,3 +234,22 @@ void ofxUILabel::unfocus()
     draw_fill_highlight	= false;
     draw_fill = true;
 }
+
+void ofxUILabel::setVisible(bool _visible)
+{
+    visible = _visible;
+    if(parent != NULL)
+    {
+        parent->calculatePaddingRect();
+    }
+}
+
+bool ofxUILabel::isVisible()
+{
+    return visible;
+}
+
+void ofxUILabel::toggleVisible()
+{
+    setVisible(!visible);
+}

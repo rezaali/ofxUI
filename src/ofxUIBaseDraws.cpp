@@ -94,11 +94,6 @@ void ofxUIBaseDraws::setVisible(bool _visible)
     label->setVisible(visible && showLabel);
 }
 
-ofxUILabel *ofxUIBaseDraws::getLabel()
-{
-    return label;
-}
-
 void ofxUIBaseDraws::set(ofBaseDraws *_image)
 {
     image = _image;

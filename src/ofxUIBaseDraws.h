@@ -38,7 +38,6 @@ public:
     virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline);
     virtual void drawFill();
     virtual void setVisible(bool _visible);
-	ofxUILabel *getLabel();
     void set(ofBaseDraws *_image);
 	virtual void setParent(ofxUIWidget *_parent);
     virtual bool isDraggable();

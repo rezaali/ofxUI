@@ -42,7 +42,6 @@ public:
     virtual void mouseReleased(int x, int y, int button);
     virtual void stateChange();
     virtual void setVisible(bool _visible);
-	ofxUILabel *getLabel();
 	virtual void setParent(ofxUIWidget *_parent);
 	bool getValue();
     void setLabelVisible(bool _visible);

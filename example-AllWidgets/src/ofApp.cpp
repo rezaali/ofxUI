@@ -399,6 +399,10 @@ void ofApp::setGUI4()
     gui4->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
     gui4->addDropDownList("DROP DOWN LIST", items);
     
+    gui4->setGlobalButtonDimension(32);
+    gui4->addButton("BTN", false)->getLabelWidget()->setVisible(false);
+    gui4->addToggle("TGL", false)->setLabelVisible(false);
+    
     gui4->setPosition(212*3,0);
     gui4->autoSizeToFitWidgets();
     

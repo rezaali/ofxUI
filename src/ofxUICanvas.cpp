@@ -904,6 +904,7 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
     {
         ofxUIWidget *child = widget->getEmbeddedWidget(i);
         this->addWidget(child);
+        child->setParent(widget);
         child->setRectParent(widget->getRect());
     }
     

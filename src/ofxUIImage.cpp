@@ -113,11 +113,6 @@ void ofxUIImage::setCropImageToFitRect(bool _cropImageToFitRect)
     cropImageToFitRect = _cropImageToFitRect;
 }
 
-ofxUILabel *ofxUIImage::getLabel()
-{
-    return label;
-}
-
 void ofxUIImage::setImage(ofImage *_image)
 {
     image = _image;

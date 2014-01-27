@@ -204,11 +204,6 @@ void ofxUIButton::setVisible(bool _visible)
     calculatePaddingRect();
 }
 
-ofxUILabel *ofxUIButton::getLabel()
-{
-    return label;
-}
-
 void ofxUIButton::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;

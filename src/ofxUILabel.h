@@ -69,6 +69,10 @@ public:
     void focus();
 	void unfocus();
     
+    void setVisible(bool _visible);
+    bool isVisible();
+    void toggleVisible();
+    
 protected:    
 	int size;
 	string label; 
