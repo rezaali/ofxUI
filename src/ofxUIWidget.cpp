@@ -103,13 +103,11 @@ void ofxUIWidget::calculatePaddingRect()
     {
         if((*it)->isVisible())
         {
-            cout << name << " : " << (*it)->getName() << endl; 
             ofxUIRectangle *r = (*it)->getRect();
             r->getMaxX() > xMax ? (xMax = r->getMaxX()) : NULL;
             r->getMaxY() > yMax ? (yMax = r->getMaxY()) : NULL;
         }
     }
-    
     paddedRect->set(-padding, -padding, xMax+padding*2.0, yMax+padding*2.0);
 }
 
