@@ -30,12 +30,12 @@ class ofxUI2DGraph : public ofxUIWidget
 {
 public:    
     ofxUI2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _bufferSize, float * _xValues, float * _yValues, float w, float h, float x = 0, float y = 0);
+
+protected:
     void init(string _name, ofPoint _rangeX, ofPoint _rangeY, float _bufferSize, float * _xValues, float * _yValues, float w, float h, float x = 0, float y = 0);
-    virtual void drawBack();
-    virtual void drawFill();
-	void setParent(ofxUIWidget *_parent);
-    
-protected:    
+    void drawBack();
+    void drawFill();
+
 	float *xValues;
 	float *yValues;
     ofPoint rangeX, rangeY;

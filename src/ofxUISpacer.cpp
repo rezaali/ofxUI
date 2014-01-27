@@ -49,20 +49,12 @@ ofxUISpacer::ofxUISpacer(float w, float h, string _name) : ofxUIWidget()
 
 void ofxUISpacer::init(float x, float y, float w, float h)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string("OFX_UI_SPACER");
     kind = OFX_UI_WIDGET_SPACER;
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
-    
     draw_fill = true;
     draw_back = false;
-}
-
-void ofxUISpacer::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
 }
 
 void ofxUISpacer::toggleColor()

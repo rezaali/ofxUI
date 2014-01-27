@@ -31,7 +31,7 @@ class ofxUIWaveform : public ofxUIWidget
 public:    
     ofxUIWaveform(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
     ofxUIWaveform(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
-    void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    void init(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
     virtual void drawBack();
     virtual void drawFill();
 	void setParent(ofxUIWidget *_parent);

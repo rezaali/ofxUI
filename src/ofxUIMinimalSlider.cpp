@@ -37,49 +37,6 @@ ofxUIMinimalSlider::ofxUIMinimalSlider(string _name, float _min, float _max, flo
     init(_name, _min, _max, _value, w, h, x, y, _size);
 }
 
-ofxUIMinimalSlider::ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, int _size) : ofxUISlider()
-{
-    useReference = false;
-    init(_name, _min, _max, &_value, w, h, x, y, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIMinimalSlider::ofxUIMinimalSlider(float w, float h, float _min, float _max, float _value, string _name, int _size) : ofxUISlider()
-{
-    useReference = false;
-    init(_name, _min, _max, &_value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIMinimalSlider::ofxUIMinimalSlider(float w, float _min, float _max, float _value, string _name, int _size) : ofxUISlider()
-{
-    useReference = false;
-    init(_name, _min, _max, &_value, w, 0, 0, 0, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIMinimalSlider::ofxUIMinimalSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, int _size) : ofxUISlider()
-{
-    useReference = true;
-    init(_name, _min, _max, _value, w, h, x, y, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIMinimalSlider::ofxUIMinimalSlider(float w, float h, float _min, float _max, float *_value, string _name, int _size) : ofxUISlider()
-{
-    useReference = true;
-    init(_name, _min, _max, _value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIMinimalSlider::ofxUIMinimalSlider(float w, float _min, float _max, float *_value, string _name, int _size) : ofxUISlider()
-{
-    useReference = true;
-    init(_name, _min, _max, _value, w, 0, 0, 0, _size);
-    //        ofLogWarning("OFXUIMINIMALSLIDER: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-
 void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int _size)
 {
     if(h < .1)
@@ -91,12 +48,9 @@ void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_valu
         autoSize = false;
     }
     
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_MINIMALSLIDER;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     showValue = true;
@@ -128,10 +82,8 @@ void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_valu
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
     
     label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size);
-    label->setDrawBack(false);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
+    
     increment = fabs(max - min) / 10.0;
     bRoundedToNearestInt = false;
     bClampValue = false;
@@ -217,10 +169,9 @@ void ofxUIMinimalSlider::setParent(ofxUIWidget *_parent)
     float h = labelrect->getHeight();
     float ph = rect->getHeight();
     
-    labelrect->y = (int)(ph*.5 - h*.5);
-    labelrect->x = padding*2.0;
-    paddedRect->setHeight(rect->getHeight()+padding*2.0);
-    paddedRect->setWidth(rect->getWidth()+padding*2.0);
+    labelrect->setY((int)(ph*.5 - h*.5));
+    labelrect->setX(padding*2.0);
+    calculatePaddingRect(); 
     updateValueRef();
     updateLabel();
 }

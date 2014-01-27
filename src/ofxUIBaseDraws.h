@@ -33,7 +33,7 @@ public:
     ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name, bool _showLabel);
     ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name);
     ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name, bool _showLabel);
-    void init(float w, float h, ofBaseDraws* _image, string _name);
+    void init(float x, float y, float w, float h, ofBaseDraws* _image, string _name);
     virtual void setDrawPadding(bool _draw_padded_rect);
     virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline);
     virtual void drawFill();

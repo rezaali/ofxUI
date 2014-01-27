@@ -37,63 +37,17 @@ ofxUILabelButton::ofxUILabelButton(string _name, bool *_value, float w, float h,
     init(_name, _value, w, h, x, y, _size, _justifyLeft);
 }
 
-ofxUILabelButton::ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size) : ofxUIButton()
-{
-    useReference = false;
-    init(_name, &_value, w, 0, x, y, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUILabelButton::ofxUILabelButton(float w, bool _value, string _name, int _size, float h) : ofxUIButton()
-{
-    useReference = false;
-    init(_name, &_value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUILabelButton::ofxUILabelButton(float x, float y, bool _value, string _name, int _size) : ofxUIButton()
-{
-    useReference = false;
-    init(_name, &_value, 0, 0, x, y, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUILabelButton::ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size) : ofxUIButton()
-{
-    useReference = true;
-    init(_name, _value, w, 0, x, y, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUILabelButton::ofxUILabelButton(float w, bool *_value, string _name, int _size, float h) : ofxUIButton()
-{
-    useReference = true;
-    init(_name, _value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUILabelButton::ofxUILabelButton(float x, float y, bool *_value, string _name, int _size) : ofxUIButton()
-{
-    useReference = true;
-    init(_name, _value, 0, 0, x, y, _size);
-    //        ofLogWarning("OFXUILABELBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
 void ofxUILabelButton::init(string _name, bool *_value, float w, float h, float x, float y, int _size, bool _justifyLeft)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x, y, w, h);
     justifyLeft = _justifyLeft;
     autoSize = w == 0 ? true : false;
     name = string(_name);
     
     label = new ofxUILabel(0,0,(name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     
     kind = OFX_UI_WIDGET_LABELBUTTON;
-    paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
     
     if(useReference)
     {
@@ -126,23 +80,22 @@ void ofxUILabelButton::setLabelText(string labeltext)
 void ofxUILabelButton::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    float compareHeight = label->getPaddingRect()->height+padding*2.0;
-    if(rect->height == 0 || rect->height < compareHeight)
+    float compareHeight = label->getPaddingRect()->getHeight()+padding*2.0;
+    if(rect->getHeight() == 0 || rect->getHeight() < compareHeight)
     {
-        rect->height = compareHeight;
+        rect->setHeight(compareHeight);
     }
+
     ofxUIRectangle *labelrect = label->getRect();
-    
-    label->setParent(this);
     labelrect->setParent(rect);
     
     if(autoSize)
     {
-        rect->width = label->getPaddingRect()->width+padding*2.0;
+        rect->setWidth(label->getPaddingRect()->getWidth()+padding*2.0);
     }
     else
     {
-        while(labelrect->width > rect->width)
+        while(labelrect->getWidth() > rect->width)
         {
             string labelstring = label->getLabel();
             string::iterator it;
@@ -156,21 +109,18 @@ void ofxUILabelButton::setParent(ofxUIWidget *_parent)
     float h = labelrect->getHeight();
     float ph = rect->getHeight();
     
-    
-    labelrect->y = (int)(ph*.5 - h*.5);
+    labelrect->setY((int)(ph*.5 - h*.5));
     if(justifyLeft)
     {
-        labelrect->x = padding;
+        labelrect->setX(padding);
     }
     else
     {
         float w = labelrect->getWidth();
         float pw = rect->getWidth();
-        labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
+        labelrect->setX((int)(pw*.5 - w*.5-padding*.5));
     }
-    
-    paddedRect->height = rect->height+padding*2.0;
-    paddedRect->width = rect->width+padding*2.0;
+    calculatePaddingRect();
 }
 
 void ofxUILabelButton::setValue(bool _value)

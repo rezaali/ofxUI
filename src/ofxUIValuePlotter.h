@@ -31,11 +31,10 @@ class ofxUIValuePlotter : public ofxUIWidget
 public:
     ofxUIValuePlotter(float x, float y, float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name);
     ofxUIValuePlotter(float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name);
-    void init(float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name);
+    void init(float x, float y, float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name);
     virtual void update();
     virtual void drawBack();
     virtual void drawFill();
-	void setParent(ofxUIWidget *_parent);
     void addPoint(float _point);
     vector<float> &getBuffer();
     void setBuffer(vector<float> _buffer);

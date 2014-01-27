@@ -1,4 +1,4 @@
-/********************************************************************************** 
+/**********************************************************************************
  
  Copyright (C) 2012 Syed Reza Ali (www.syedrezaali.com)
  
@@ -24,29 +24,40 @@
 
 #pragma once
 
-#include "ofxUIWidget.h"
-#include "ofxUIDefines.h"
-
-class ofxUIMovingGraph : public ofxUIWidget
-{
-public:    
-    ofxUIMovingGraph(float x, float y, float w, float h, vector<float> _buffer, int _bufferSize, float _min, float _max, string _name);
-    ofxUIMovingGraph(float w, float h, vector<float> _buffer, int _bufferSize, float _min, float _max, string _name);
-    void init(float x, float y, float w, float h, vector<float> _buffer, int _bufferSize, float _min, float _max, string _name);
-    virtual void drawFill();
-	void setParent(ofxUIWidget *_parent);
-    void addPoint(float _point);
-    vector<float> &getBuffer();
-    void setBuffer(vector<float> _buffer);
-    void setMax(float _max);
-    float getMax();
-    void setMin(float _min);
-    float getMin();
-    ofVec2f getMaxAndMind();
-    void setMaxAndMin(float _max, float _min);
-
-protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
-    vector<float> buffer;
-    float max, min, scale, inc;
-    unsigned int bufferSize; 
-}; 
+#include "ofxUILabel.h"
+#include "ofxUIFPS.h"
+#include "ofxUISlider.h"
+//#include "ofxUIMultiSlider.h" //TO DO
+#include "ofxUIImageSlider.h"
+#include "ofxUIFPSSlider.h"
+#include "ofxUIMinimalSlider.h"
+#include "ofxUICircleSlider.h"
+#include "ofxUIBiLabelSlider.h"
+#include "ofxUIRangeSlider.h"
+#include "ofxUIToggle.h"
+#include "ofxUIButton.h"
+#include "ofxUIMultiImageButton.h"
+#include "ofxUIMultiImageToggle.h"
+#include "ofxUIRadio.h"
+#include "ofxUI2DPad.h"
+#include "ofxUI2DGraph.h"
+#include "ofxUITextInput.h"
+#include "ofxUITextArea.h"
+#include "ofxUINumberDialer.h"
+#include "ofxUILabelButton.h"
+#include "ofxUILabelToggle.h"
+#include "ofxUIDragableLabelButton.h"
+#include "ofxUISortableList.h"
+#include "ofxUIToggleMatrix.h"
+#include "ofxUIImageButton.h"
+#include "ofxUIImageToggle.h"
+#include "ofxUIRotarySlider.h"
+#include "ofxUISpacer.h"
+#include "ofxUIDropDownList.h"
+#include "ofxUIWaveform.h"
+#include "ofxUISpectrum.h"
+#include "ofxUIMovingGraph.h"
+#include "ofxUIValuePlotter.h"
+#include "ofxUIImage.h"
+#include "ofxUIBaseDraws.h"
+#include "ofxUIImageSampler.h"

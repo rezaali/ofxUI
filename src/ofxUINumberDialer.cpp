@@ -29,29 +29,25 @@
 ofxUINumberDialer::ofxUINumberDialer(float x, float y, float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,0,0);
-    init(_min, _max, &_value, _precision, _name, _size);
+    init(x,y,0,0, _min, _max, &_value, _precision, _name, _size);
 }
 
 ofxUINumberDialer::ofxUINumberDialer(float _min, float _max, float _value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,0,0);
-    init(_min, _max, &_value, _precision, _name, _size);
+    init(0,0,0,0, _min, _max, &_value, _precision, _name, _size);
 }
 
 ofxUINumberDialer::ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,0,0);
-    init(_min, _max, _value, _precision, _name, _size);
+    init(x,y,0,0, _min, _max, _value, _precision, _name, _size);
 }
 
 ofxUINumberDialer::ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,0,0);
-    init(_min, _max, _value, _precision, _name, _size);
+    init(0,0,0,0, _min, _max, _value, _precision, _name, _size);
 }
 
 ofxUINumberDialer::~ofxUINumberDialer()
@@ -62,8 +58,9 @@ ofxUINumberDialer::~ofxUINumberDialer()
     }
 }
 
-void ofxUINumberDialer::init(float _min, float _max, float *_value, int _precision, string _name, int _size)
+void ofxUINumberDialer::init(float x, float y, float w, float h, float _min, float _max, float *_value, int _precision, string _name, int _size)
 {
+    initRect(x, y, w, h);
     name = string(_name);
     kind = OFX_UI_WIDGET_NUMBERDIALER;
     
@@ -118,9 +115,6 @@ void ofxUINumberDialer::init(float _min, float _max, float *_value, int _precisi
     
     displaystring = textstring;
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
-    
     for(int i = 0; i < numOfPrecisionZones; i++)
     {
         temp+="0";
@@ -128,9 +122,7 @@ void ofxUINumberDialer::init(float _min, float _max, float *_value, int _precisi
     
     displayLabel = false;
     label = new ofxUILabel(padding,0,(name+" LABEL"), temp, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     label->setVisible(false);
     draw_fill = true;
 }
@@ -477,12 +469,10 @@ void ofxUINumberDialer::setParent(ofxUIWidget *_parent)
     ofxUIRectangle *labelrect = label->getRect();
     labelrect->setX(padding*2.0);
     float h = labelrect->getHeight();
-    float ph = rect->getHeight();
-    
-    labelrect->y = ph/2.0 - h/2.0;
-    
-    paddedRect->height = rect->height+padding*2.0;
-    paddedRect->width = rect->width+padding*2.0;
+    float ph = rect->getHeight();    
+    labelrect->setY(ph/2.0 - h/2.0);
+
+    calculatePaddingRect();
     setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));
 }
 

@@ -31,9 +31,8 @@ class ofxUISpectrum : public ofxUIWidget
 public:
     ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
     ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
-    void init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    void init(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
     virtual void drawFill();
-	void setParent(ofxUIWidget *_parent);
     void setMax(float _max);
     float getMax();
     void setMin(float _min);

@@ -185,9 +185,9 @@ void ofxUIRectangle::draw()
     }
 }
 
-float ofxUIRectangle::getX()
+float ofxUIRectangle::getX(bool recursive)
 {
-    if(parent != NULL)
+    if(parent != NULL && recursive)
     {
         return (x+parent->getX());
     }
@@ -197,9 +197,9 @@ float ofxUIRectangle::getX()
     }
 }
 
-float ofxUIRectangle::getY()
+float ofxUIRectangle::getY(bool recursive)
 {
-    if(parent != NULL)
+    if(parent != NULL && recursive)
     {
         return (y+parent->getY());
     }
@@ -231,22 +231,22 @@ float ofxUIRectangle::getHalfHeight()
 
 float ofxUIRectangle::getRelativeMinX()
 {
-    return MIN(getX(), getX() + getWidth());  // - width
+    return MIN(getX(), getX() + getWidth());    // - width
 }
 
 float ofxUIRectangle::getRelativeMinY()
 {
-    return MIN(getY(), getY() + getHeight());  // - height
+    return MIN(getY(), getY() + getHeight());   // - height
 }
 
 float ofxUIRectangle::getRelativeMaxX()
 {
-    return MAX(getX(), getX() + getWidth());  // - width
+    return MAX(getX(), getX() + getWidth());    // - width
 }
 
 float ofxUIRectangle::getRelativeMaxY()
 {
-    return MAX(getY(), getY() + getHeight());  // - height
+    return MAX(getY(), getY() + getHeight());   // - height
 }
 
 bool ofxUIRectangle::rIntersects(const ofxUIRectangle& rect)

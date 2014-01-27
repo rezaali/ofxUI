@@ -27,23 +27,19 @@
 
 ofxUIValuePlotter::ofxUIValuePlotter(float x, float y, float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _bufferSize, _min, _max, _value, _name);
+    init(x, y, w, h, _bufferSize, _min, _max, _value, _name);
 }
 
 ofxUIValuePlotter::ofxUIValuePlotter(float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _bufferSize, _min, _max, _value, _name);
+    init(0, 0, w, h, _bufferSize, _min, _max, _value, _name);
 }
 
-void ofxUIValuePlotter::init(float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name)
+void ofxUIValuePlotter::init(float x, float y, float w, float h, int _bufferSize, float _min, float _max, float *_value, string _name)
 {
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_VALUEPLOTTER;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
     
     value = _value;                                               //the widget's value
     
@@ -103,11 +99,6 @@ void ofxUIValuePlotter::drawFill()
         ofPopMatrix();
         
     }
-}
-
-void ofxUIValuePlotter::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
 }
 
 void ofxUIValuePlotter::addPoint(float _point)

@@ -28,38 +28,32 @@
 ofxUICircleSlider::ofxUICircleSlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,w);
-    init(w, w, _min, _max, &_value, _name, _size);
+    init(x, y, w, w, _min, _max, &_value, _name, _size);
 }
 
 ofxUICircleSlider::ofxUICircleSlider(float w, float _min, float _max, float _value, string _name, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,w);
-    init(w, w, _min, _max, &_value, _name, _size);
+    init(0, 0, w, w, _min, _max, &_value, _name, _size);
 }
 
 ofxUICircleSlider::ofxUICircleSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,w);
-    init(w, w, _min, _max, _value, _name, _size);
+    init(x, y, w, w, _min, _max, _value, _name, _size);
 }
 
 ofxUICircleSlider::ofxUICircleSlider(float w, float _min, float _max, float *_value, string _name, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,w);
-    init(w, w, _min, _max, _value, _name, _size);
+    init(0, 0, w, w, _min, _max, _value, _name, _size);
 }
 
-void ofxUICircleSlider::init(float w, float h, float _min, float _max, float *_value, string _name, int _size)
+void ofxUICircleSlider::init(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, int _size)
 {
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_CIRCLESLIDER;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     draw_outline = true;
@@ -78,6 +72,8 @@ void ofxUICircleSlider::init(float w, float h, float _min, float _max, float *_v
     max = _max;
     min = _min;
     labelPrecision = 2;
+    increment = .0005;
+    inputDirection = OFX_UI_DIRECTION_SOUTHNORTH;
     
     if(value > max)
     {
@@ -91,12 +87,7 @@ void ofxUICircleSlider::init(float w, float h, float _min, float _max, float *_v
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
     
     label = new ofxUILabel(0,w+padding,(name+" LABEL"), name, _size);
-    label->setDrawBack(false);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
-    increment = .0005;
-    inputDirection = OFX_UI_DIRECTION_SOUTHNORTH;
+    addEmbeddedWidget(label);
 }
 
 
@@ -253,11 +244,8 @@ void ofxUICircleSlider::updateLabel()
 void ofxUICircleSlider::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    paddedRect->height += label->getPaddingRect()->height;
-    
     ofxUIRectangle *labelrect = label->getRect();
-    
-    while(labelrect->width > rect->width)
+    while(labelrect->getWidth() > rect->getWidth())
     {
         string labelstring = label->getLabel();
         string::iterator it;
@@ -269,8 +257,8 @@ void ofxUICircleSlider::setParent(ofxUIWidget *_parent)
     
     float w = labelrect->getWidth();
     float pw = rect->getWidth();
-    
     labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
+    calculatePaddingRect();
 }
 
 bool ofxUICircleSlider::isHit(float x, float y)

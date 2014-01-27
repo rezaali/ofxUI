@@ -36,6 +36,10 @@ public:
     ofxUIWidget();
     virtual ~ofxUIWidget();
     
+    virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
+    virtual void initPaddingRect();
+    virtual void calculatePaddingRect();
+        
     virtual void update();
     virtual void draw();
     
@@ -92,8 +96,19 @@ public:
     virtual void stateChange();
     virtual bool isHit(float x, float y);
     
+//    virtual void positionWidget(ofxUIWidget *widget);
+//    virtual void positionWidgetDown(ofxUIWidget *widget);
+//    virtual void positionWidgetUp(ofxUIWidget *widget);
+//    virtual void positionWidgetLeft(ofxUIWidget *widget);
+//    virtual void positionWidgetRight(ofxUIWidget *widget);
+   
     virtual void addWidget(ofxUIWidget *widget);
     virtual void removeWidget(ofxUIWidget *widget);
+    
+    virtual void addEmbeddedWidget(ofxUIWidget *widget);
+    virtual void clearEmbeddedWidgets();
+    virtual int getEmbeddedWidgetsSize();
+    ofxUIWidget *getEmbeddedWidget(int index);
     
     virtual void setState(int _state);
     virtual void setFont(ofxUIFont *_font);
@@ -150,10 +165,6 @@ public:
     virtual void addModalWidget(ofxUIWidget *widget);
     virtual void removeModalWidget(ofxUIWidget *widget);
 
-    virtual void addEmbeddedWidget(ofxUIWidget *widget);
-    virtual void clearEmbeddedWidgets();
-    virtual int getEmbeddedWidgetsSize();
-    ofxUIWidget *getEmbeddedWidget(int index);
     ofxUIWidget *getCanvasParent();
     
     virtual bool hasState();

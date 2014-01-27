@@ -30,47 +30,16 @@ ofxUIDropDownList::ofxUIDropDownList(string _name, vector<string> items, float w
     init(_name, items, w, x, y, _size);
 }
 
-// DON'T USE THE NEXT CONSTRUCTORS
-// This is maintained for backward compatibility and will be removed on future releases
-
-ofxUIDropDownList::ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size) : ofxUIToggle()
-{
-    init(_name, items, w, x, y, _size);
-    //        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIDropDownList::ofxUIDropDownList(float w, string _name, vector<string> items, int _size) : ofxUIToggle()
-{
-    init(_name, items, w, 0, 0, _size);
-    //        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIDropDownList::ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size) : ofxUIToggle()
-{
-    init(_name, items, 0, x, y, _size);
-    //        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-//    ofxUIDropDownList(string _name, vector<string> items, int _size)
-//    {
-//        init(_name, items, 0, 0, 0, _size);
-//        ofLogWarning("OFXUIDROPDOWNLIST: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-//    }
-
 void ofxUIDropDownList::init(string _name, vector<string> items, float w, float x, float y, int _size)
 {
-    rect = new ofxUIRectangle(x,y,w,0);
-    autoSize = w == 0 ? true : false;
+    initRect(x,y,w,0);
+    autoSize = (w == 0) ? true : false;
     name = string(_name);
     kind = OFX_UI_WIDGET_DROPDOWNLIST;
-    paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
     
     size = _size;
     label = new ofxUILabel(0,0,(name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     
     value = new bool();
     *value = false;
@@ -78,7 +47,7 @@ void ofxUIDropDownList::init(string _name, vector<string> items, float w, float 
     
     bShowCurrentSelected = false;
     allowMultiple = false;
-    initToggles(items, _size);
+    addToggles(items);
     autoClose = false;
     singleSelected = NULL;
 }
@@ -135,20 +104,18 @@ void ofxUIDropDownList::addToggle(string toggleName)
     ofxUILabelToggle *ltoggle;
     if(autoSize)
     {
-        ltoggle = new ofxUILabelToggle(0, yt, false, toggleName, size);
+        ltoggle = new ofxUILabelToggle(toggleName, false, 0, 0, 0, 0, size);
     }
     else
     {
-        ltoggle = new ofxUILabelToggle(0, yt, rect->getWidth(), rect->getHeight(), false, toggleName, size);
+        ltoggle = new ofxUILabelToggle(toggleName, false, rect->getWidth(), rect->getHeight(), 0, 0, size);
     }
-    ltoggle->getRect()->setParent(this->getRect());
-    ltoggle->getRect()->y = rect->y+yt;
-    ltoggle->getRect()->x = rect->x;
+    ltoggle->getRect()->setY(yt);
+    ltoggle->getRect()->setX(0);
     ltoggle->setVisible(*value);
     ltoggle->setLabelVisible(*value);
+    addEmbeddedWidget(ltoggle);
     toggles.push_back(ltoggle);
-    parent->addWidget(ltoggle);
-    ltoggle->setParent(this);
     ltoggle->setModal(modal);
     if(isOpen())
     {
@@ -204,9 +171,7 @@ void ofxUIDropDownList::removeToggle(string toggleName)
             t->getRect()->x = 0;
             yt +=t->getRect()->getHeight();
         }
-        
     }
-    
 }
 
 bool* ofxUIDropDownList::getShowCurrentSelectedPtr()
@@ -264,28 +229,6 @@ vector<int> & ofxUIDropDownList::getSelectedIndeces()
     return selectedIndeces;
 }
 
-void ofxUIDropDownList::initToggles(vector<string> &items, int _size)
-{
-    float ty = 20;
-    for(unsigned int i = 0; i < items.size(); i++)
-    {
-        string tname = items[i];
-        ofxUILabelToggle *ltoggle;
-        if(autoSize)
-        {
-            ltoggle = new ofxUILabelToggle(0, ty, false, tname, _size);
-        }
-        else
-        {
-            ltoggle = new ofxUILabelToggle(0, ty, rect->getWidth(), false, tname, _size);
-        }
-        ltoggle->setVisible(*value);
-        ltoggle->setLabelVisible(*value);
-        toggles.push_back(ltoggle);
-        ty+=20;
-    }
-}
-
 void ofxUIDropDownList::setLabelText(string labeltext)
 {
     label->setLabel(labeltext);
@@ -296,23 +239,23 @@ void ofxUIDropDownList::setLabelText(string labeltext)
         float ph = rect->getHeight();
         float w = labelrect->getWidth();
         float pw = rect->getWidth();
-        labelrect->y = (int)(ph*.5 - h*.5);
-        labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
+        labelrect->setY((int)(ph*.5 - h*.5));
+        labelrect->setX((int)(pw*.5 - w*.5-padding*.5));
     }
 }
 
 void ofxUIDropDownList::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    rect->height = label->getPaddingRect()->height+padding*2.0;
+    rect->setHeight(label->getPaddingRect()->getHeight()+padding*2.0);
     ofxUIRectangle *labelrect = label->getRect();
     if(autoSize)
     {
-        rect->width = label->getPaddingRect()->width+padding*2.0;
+        rect->setWidth(label->getPaddingRect()->getWidth()+padding*2.0);
     }
     else
     {
-        while(labelrect->width+padding*4.0 > rect->width)
+        while(labelrect->getWidth()+padding*4.0 > rect->getWidth())
         {
             string labelstring = label->getLabel();
             string::iterator it;
@@ -328,19 +271,18 @@ void ofxUIDropDownList::setParent(ofxUIWidget *_parent)
     float w = labelrect->getWidth();
     float pw = rect->getWidth();
     
-    labelrect->y = (int)(ph*.5 - h*.5);
-    labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
-    paddedRect->height = rect->height+padding*2.0;
-    paddedRect->width = rect->width+padding*2.0;
-    
+    labelrect->setY((int)(ph*.5 - h*.5));
+    labelrect->setX((int)(pw*.5 - w*.5-padding*.5));
+    calculatePaddingRect();
+
     float yt = rect->height;
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUILabelToggle *t = toggles[i];
         t->setParent(this);
         t->getRect()->setParent(this->getRect());
-        t->getRect()->x = 0;
-        t->getRect()->y = yt;
+        t->getRect()->setX(0);
+        t->getRect()->setY(yt);
         yt +=t->getRect()->getHeight();
         if(autoSize)
         {

@@ -34,7 +34,6 @@ public:
     ofxUISpacer(float w, float h);
     ofxUISpacer(float w, float h, string _name);
     void init(float x, float y, float w, float h);
-	void setParent(ofxUIWidget *_parent);
     void toggleColor();
     void setToggleColor(bool _value);
 }; 

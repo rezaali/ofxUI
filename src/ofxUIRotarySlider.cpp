@@ -28,29 +28,25 @@
 ofxUIRotarySlider::ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float _value, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,w);
-    init(w, _min, _max, &_value, _name, _size);
+    init(x, y, w, _min, _max, &_value, _name, _size);
 }
 
 ofxUIRotarySlider::ofxUIRotarySlider(float w, float _min, float _max, float _value, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,w);
-    init(w, _min, _max, &_value, _name, _size);
+    init(0, 0, w, _min, _max, &_value, _name, _size);
 }
 
 ofxUIRotarySlider::ofxUIRotarySlider(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,w);
-    init(w, _min, _max, _value, _name, _size);
+    init(x, y, w, _min, _max, _value, _name, _size);
 }
 
 ofxUIRotarySlider::ofxUIRotarySlider(float w, float _min, float _max, float *_value, string _name, int _size) : ofxUIWidgetWithLabel()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,w);
-    init(w, _min, _max, _value, _name, _size);
+    init(0, 0, w, _min, _max, _value, _name, _size);
 }
 
 ofxUIRotarySlider::~ofxUIRotarySlider()
@@ -61,13 +57,11 @@ ofxUIRotarySlider::~ofxUIRotarySlider()
     }
 }
 
-void ofxUIRotarySlider::init(float w, float _min, float _max, float *_value, string _name, int _size)
+void ofxUIRotarySlider::init(float x, float y, float w, float _min, float _max, float *_value, string _name, int _size)
 {
+    initRect(x,y,w,w);
     name = string(_name);
     kind = OFX_UI_WIDGET_ROTARYSLIDER;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, w+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     
@@ -100,9 +94,7 @@ void ofxUIRotarySlider::init(float w, float _min, float _max, float *_value, str
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
     
     label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue(),2)), _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     increment = fabs(max - min) / 10.0;
 }
 
@@ -438,11 +430,7 @@ ofxUILabel *ofxUIRotarySlider::getLabel()
 void ofxUIRotarySlider::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    paddedRect->height += label->getPaddingRect()->height;
-    if(label->getPaddingRect()->width+padding*2.0 > paddedRect->width)
-    {
-        paddedRect->width = label->getPaddingRect()->width;
-    }
+    calculatePaddingRect();
     center = ofxUIVec2f(rect->getWidth()*.5, rect->getHeight()*.5);
     homePoint = ofxUIVec2f(rect->getWidth()*.5, rect->getHeight());
 }

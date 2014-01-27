@@ -37,15 +37,12 @@ ofxUIFPS::ofxUIFPS(int _size) : ofxUIWidgetWithLabel()
 
 void ofxUIFPS::init(float x, float y, string _name, string _label, int _size)
 {
-    rect = new ofxUIRectangle(x,y,0,0);
+    initRect(x, y, 0, 0);
     name = string(_name);
     kind = OFX_UI_WIDGET_FPS;
-    paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
     
     label = new ofxUILabel(0,0,(name+" LABEL"), _label, _size);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label); 
     
     labelPrecision = 0;
     draw_back = OFX_UI_LABEL_DRAW_BACK;
@@ -70,8 +67,7 @@ void ofxUIFPS::setParent(ofxUIWidget *_parent)
     rect->setHeight(label->getRect()->getHeight());
     rect->setWidth(label->getRect()->getWidth());
     
-    labelrect->y = 0;
-    labelrect->x = 0;
-    paddedRect->setHeight(rect->getHeight()+padding*2.0);
-    paddedRect->setWidth(rect->getWidth()+padding*2.0);
+    labelrect->setY(0);
+    labelrect->setX(0);
+    calculatePaddingRect();
 }

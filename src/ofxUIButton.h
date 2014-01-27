@@ -33,10 +33,6 @@ public:
     ofxUIButton();
     ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
-    ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL);
-    ofxUIButton(float w, float h, bool _value, string _name, int _size = OFX_UI_FONT_SMALL);
-    ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL);
-    ofxUIButton(float w, float h, bool *_value, string _name, int _size = OFX_UI_FONT_SMALL);
     ~ofxUIButton();
     virtual void init(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     virtual void drawFill();

@@ -27,23 +27,19 @@
 
 ofxUIWaveform::ofxUIWaveform(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _buffer, _bufferSize, _min, _max, _name);
+    init(x, y, w, h, _buffer, _bufferSize, _min, _max, _name);
 }
 
 ofxUIWaveform::ofxUIWaveform(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _buffer, _bufferSize, _min, _max, _name);
+    init(0, 0, w, h, _buffer, _bufferSize, _min, _max, _name);
 }
 
-void ofxUIWaveform::init(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
+void ofxUIWaveform::init(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
 {
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_WAVEFORM;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     

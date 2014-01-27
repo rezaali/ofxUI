@@ -26,45 +26,11 @@
 
 #include "ofxUIWidget.h"
 #include "ofxUIDefines.h"
+#include "ofxUIEventArgs.h"
+#include "ofxUIWidgets.h"
 #include "ofxUISlider.h"
 #include <vector>
 #include <map>
-
-class ofxUIEventArgs; 
-class ofxUISpacer;
-class ofxUILabel;
-class ofxUIFPS;
-class ofxUIRotarySlider;
-class ofxUIImageSlider;
-class ofxUINumberDialer;
-class ofxUIMinimalSlider;
-class ofxUIRangeSlider;
-class ofxUIFPSSlider;
-class ofxUIRadio;
-class ofxUIButton;
-class ofxUIToggle;
-class ofxUIToggleMatrix;
-class ofxUI2DPad;
-class ofxUITextInput;
-class ofxUILabelToggle;
-class ofxUILabelButton;
-class ofxUIDropDownList;
-class ofxUIWaveform;
-class ofxUISpectrum;
-class ofxUIMovingGraph;
-class ofxUIImage;
-class ofxUIBaseDraws;
-class ofxUIImageSampler;
-class ofxUIBiLabelSlider;
-class ofxUICircleSlider;
-class ofxUIValuePlotter;
-class ofxUI2DGraph;
-class ofxUIImageToggle;
-class ofxUIImageButton;
-class ofxUIMultiImageButton;
-class ofxUIMultiImageToggle;
-class ofxUITextArea;
-class ofxUISortableList;
 
 class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {

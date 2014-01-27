@@ -38,7 +38,7 @@ public:
     ofxUIBiLabelSlider(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL);
     ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL);
     ofxUIBiLabelSlider(float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size = OFX_UI_FONT_SMALL);
-    void init(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size);
+    void init(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size);
     virtual void setDrawPadding(bool _draw_padded_rect);
     virtual void setDrawPaddingOutline(bool _draw_padded_rect_outline);
     virtual void drawFill();

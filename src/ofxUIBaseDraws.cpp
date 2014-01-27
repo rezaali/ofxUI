@@ -27,47 +27,40 @@
 
 ofxUIBaseDraws::ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _image, _name);
+    init(x, y, w, h, _image, _name);
 }
 
 ofxUIBaseDraws::ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _image, _name);
+    init(x, y, w, h, _image, _name);
     showLabel = _showLabel;
 }
 
 ofxUIBaseDraws::ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _image, _name);
+    init(0, 0, w, h, _image, _name);
 }
 
 ofxUIBaseDraws::ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _image, _name);
+    init(0, 0, w, h, _image, _name);
     showLabel = _showLabel;
 }
 
-void ofxUIBaseDraws::init(float w, float h, ofBaseDraws* _image, string _name)
+void ofxUIBaseDraws::init(float x, float y, float w, float h, ofBaseDraws* _image, string _name)
 {
+    initRect(x, y, w, h);
     name = _name;
     kind = OFX_UI_WIDGET_BASE_DRAWS;
     showLabel = true;
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_back = false;
     draw_fill = true;
     
     image = _image;
     
-    label = new ofxUILabel(0,h+padding,(name+" LABEL"),name, OFX_UI_FONT_SMALL);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    label = new ofxUILabel(0,h+padding*2.0,(name+" LABEL"),name, OFX_UI_FONT_SMALL);
+    addEmbeddedWidget(label);
 }
 
 void ofxUIBaseDraws::setDrawPadding(bool _draw_padded_rect)
@@ -98,7 +91,7 @@ void ofxUIBaseDraws::drawFill()
 void ofxUIBaseDraws::setVisible(bool _visible)
 {
     visible = _visible;
-    label->setVisible(showLabel);
+    label->setVisible(visible && showLabel);
 }
 
 ofxUILabel *ofxUIBaseDraws::getLabel()
@@ -114,15 +107,8 @@ void ofxUIBaseDraws::set(ofBaseDraws *_image)
 void ofxUIBaseDraws::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    if(showLabel)
-    {
-        paddedRect->height += label->getPaddingRect()->height;
-    }
-    else
-    {
-        paddedRect->height += padding;
-    }
     label->setVisible(showLabel);
+    calculatePaddingRect();
 }
 
 bool ofxUIBaseDraws::isDraggable()

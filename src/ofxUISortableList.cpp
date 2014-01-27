@@ -46,7 +46,8 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
     label = new ofxUILabel(0, height+padding, (name+" LABEL"), name, _size);
     label->setParent(label);
     label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
+    
     drawLabel = true;
     bLabelRight = false;
     label->setVisible(drawLabel);
@@ -175,6 +176,7 @@ void ofxUISortableList::initDragableElements(vector<string> &items, int _size)//
         listItem = new ofxUIDraggableLabelButton(tname, "", width, itemHeight, (int)(padding/2), ty, _size);
         listItem->setVisible(true);
         listItem->setLabelVisible(true);
+        addEmbeddedWidget(listItem);
         listItem->setSortID(tname + index.str());
         listItems.push_back(listItem);
         ty+=(itemHeight+padding);

@@ -773,7 +773,6 @@ void ofxUICanvas::centerWidgetsOnCanvas(bool centerHorizontally, bool centerVert
             if(centerVertically) wr->y += moveDeltaY-padding;
         }
     }
-    //        addWidget(new ofxUISpacer(xMin+moveDeltaX, yMin+moveDeltaY, w, h));
 }
 
 void ofxUICanvas::centerWidgetsHorizontallyOnCanvas()
@@ -899,8 +898,8 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
     {
        widgetsWithState.push_back(widget);
     }
-    
     widget->setPadding(padding);
+    
     for(int i = 0; i < widget->getEmbeddedWidgetsSize(); i++)
     {
         ofxUIWidget *child = widget->getEmbeddedWidget(i);
@@ -908,92 +907,13 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget)
         child->setRectParent(widget->getRect());
     }
     
-    if(widget->hasLabel())
-    {
-        ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget;
-        ofxUILabel *label = wwl->getLabelWidget();
-        setLabelFont(label);
-        setWidgetColor(label);
-        pushbackWidget(label);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_LABEL)
+    if(widget->getKind() == OFX_UI_WIDGET_LABEL)
     {
         ofxUILabel *label = (ofxUILabel *) widget;
         setLabelFont(label);
         setWidgetColor(label);
     }
     
-    if(widget->getKind() == OFX_UI_WIDGET_SLIDER_H || widget->getKind() == OFX_UI_WIDGET_SLIDER_V || widget->getKind() == OFX_UI_WIDGET_INTSLIDER_H || widget->getKind() == OFX_UI_WIDGET_INTSLIDER_V || widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER || widget->getKind() == OFX_UI_WIDGET_MINIMALSLIDER || widget->getKind() == OFX_UI_WIDGET_CIRCLESLIDER || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_H || widget->getKind() == OFX_UI_WIDGET_IMAGESLIDER_V)
-    {
-        if(widget->getKind() == OFX_UI_WIDGET_BILABELSLIDER)
-        {
-            ofxUIBiLabelSlider *biSlider = (ofxUIBiLabelSlider *) widget;
-            ofxUILabel *rlabel = (ofxUILabel *) biSlider->getRightLabel();
-            setLabelFont(rlabel);
-            pushbackWidget(rlabel);
-        }
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_DROPDOWNLIST)
-    {
-        ofxUIDropDownList *list = (ofxUIDropDownList *) widget;
-        vector<ofxUILabelToggle *> toggles = list->getToggles();
-        for(unsigned int i = 0; i < toggles.size(); i++)
-        {
-            ofxUILabelToggle *t = toggles[i];
-            ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
-            setLabelFont(l2);
-            pushbackWidget(l2);
-            pushbackWidget(t);
-            widgetsWithState.push_back(t);
-        }
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_SORTABLELIST)
-    {
-        ofxUISortableList *list = (ofxUISortableList *) widget;
-        vector<ofxUIDraggableLabelButton*> toggles = list->getListItems();
-        for(int i = 0; i < toggles.size(); i++)
-        {
-            ofxUIDraggableLabelButton *t = toggles[i];
-            ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
-            setLabelFont(l2);
-            pushbackWidget(l2);
-            pushbackWidget(t);
-        }
-        widgetsWithState.push_back(list);
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_RADIO)
-    {
-        ofxUIRadio *radio = (ofxUIRadio *) widget;
-        vector<ofxUIToggle *> toggles = radio->getToggles();
-        
-        for(unsigned int i = 0; i < toggles.size(); i++)
-        {
-            ofxUIToggle *t = toggles[i];
-            ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
-            setLabelFont(l2);
-            pushbackWidget(t);
-            pushbackWidget(l2);
-            
-            widgetsWithState.push_back(t);
-        }
-    }
-    else if(widget->getKind() == OFX_UI_WIDGET_TOGGLEMATRIX)
-    {
-        ofxUIToggleMatrix *matrix = (ofxUIToggleMatrix *) widget;
-        vector<ofxUIToggle *> toggles = matrix->getToggles();
-        
-        for(unsigned int i = 0; i < toggles.size(); i++)
-        {
-            ofxUIToggle *t = toggles[i];
-            ofxUILabel *l2 = (ofxUILabel *) t->getLabel();
-            setLabelFont(l2);
-            pushbackWidget(t);
-            pushbackWidget(l2);
-            
-            widgetsWithState.push_back(t);
-        }
-    }
-
     setWidgetDrawingProperties(widget);
     setWidgetColor(widget);
     widget->setParent(this);
@@ -1683,7 +1603,7 @@ ofxUILabelButton* ofxUICanvas::addLabelButton(string _name, bool *_value, float 
 
 ofxUIDropDownList* ofxUICanvas::addDropDownList(string _name, vector<string> items)
 {
-    ofxUIDropDownList* widget = new ofxUIDropDownList(_name, items, rect->getWidth()-widgetSpacing*2, globalButtonDimension, 0, widgetFontSize);
+    ofxUIDropDownList* widget = new ofxUIDropDownList(_name, items, rect->getWidth()-widgetSpacing*2, 0, 0, widgetFontSize);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }

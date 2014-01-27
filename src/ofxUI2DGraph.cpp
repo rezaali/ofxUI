@@ -32,11 +32,9 @@ ofxUI2DGraph::ofxUI2DGraph(string _name, ofPoint _rangeX, ofPoint _rangeY, int _
 
 void ofxUI2DGraph::init(string _name, ofPoint _rangeX, ofPoint _rangeY, float _bufferSize, float * _xValues, float * _yValues, float w, float h, float x, float y)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x, y, w, h);
     name = string(_name);
     kind = OFX_UI_WIDGET_2DGRAPH;
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
     draw_fill = true;
     
     bufferSize = _bufferSize;
@@ -111,9 +109,4 @@ void ofxUI2DGraph::drawFill()
             ofPopMatrix();
         }
     }
-}
-
-void ofxUI2DGraph::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
 }

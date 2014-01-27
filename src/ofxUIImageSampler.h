@@ -36,7 +36,6 @@ public:
     void drawFill();
     void drawFillHighlight();
     void setVisible(bool _visible);
-    void setParent(ofxUIWidget *_parent);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);

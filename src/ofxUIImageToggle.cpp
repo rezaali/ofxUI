@@ -28,43 +28,35 @@
 ofxUIImageToggle::ofxUIImageToggle(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size) : ofxUIToggle()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, &_value, _pathURL, _name, _size);
+    init(x, y, w, h, &_value, _pathURL, _name, _size);
 }
 
 ofxUIImageToggle::ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size) : ofxUIToggle()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, &_value, _pathURL, _name, _size);
+    init(0, 0, w, h, &_value, _pathURL, _name, _size);
 }
 
 ofxUIImageToggle::ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size) : ofxUIToggle()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _value, _pathURL, _name, _size);
+    init(x, y, w, h, _value, _pathURL, _name, _size);
 }
 
 ofxUIImageToggle::ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size) : ofxUIToggle()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _value, _pathURL, _name, _size);
+    init(0, 0, w, h, _value, _pathURL, _name, _size);
 }
 
-void ofxUIImageToggle::init(float w, float h, bool *_value, string _pathURL, string _name, int _size)
+void ofxUIImageToggle::init(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size)
 {
+    initRect(x, y, w, h);
     name = string(_name);
     kind = OFX_UI_WIDGET_IMAGETOGGLE;
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
-    
     label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     drawLabel = false;
     label->setVisible(drawLabel);
     

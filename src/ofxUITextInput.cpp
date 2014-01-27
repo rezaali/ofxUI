@@ -30,38 +30,20 @@ ofxUITextInput::ofxUITextInput(string _name, string _textstring, float w, float 
     init(_name, _textstring, w, h, x, y, _size);
 }
 
-ofxUITextInput::ofxUITextInput(float x, float y, float w, string _name, string _textstring, int _size, float h) : ofxUIWidgetWithLabel()
-{
-    init(_name, _textstring, w, h, x, y, _size);
-    //        ofLogWarning("OFXUITEXTINPUT: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUITextInput::ofxUITextInput(float w, string _name, string _textstring, int _size, float h) : ofxUIWidgetWithLabel()
-{
-    init(_name, _textstring, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUITEXTINPUT: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
 void ofxUITextInput::init(string _name, string _textstring, float w, float h, float x, float y, int _size)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_TEXTINPUT;
     textstring = _textstring;
     defaultstring = _textstring;
     displaystring = _textstring;
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
-    
     clicked = false;                                            //the widget's value
     autoclear = true;
     triggerOnClick = true;
-    
-    label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    label = new ofxUILabel((name+" LABEL"), _size);
+    addEmbeddedWidget(label);
     
     triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
     cursorWidth = 0; spaceOffset = 0;
@@ -97,10 +79,10 @@ void ofxUITextInput::drawFill()
         ofxUISetColor(color_outline_highlight);
         rect->draw();
         
-        float h = label->getRect()->height;
+        float h = label->getRect()->getHeight();
         
         float ph = rect->getHeight();
-        label->getRect()->y = ph/2.0 - h/2.0;
+        label->getRect()->setY(ph/2.0 - h/2.0);
         
         ofxUIFill();
         ofxUISetColor(label->getColorFillHighlight(), 255.0*fabs(cos(theta)));
@@ -112,7 +94,7 @@ void ofxUITextInput::drawFill()
         
         float x = label->getRect()->getX()+spaceOffset;
         float y = label->getRect()->getY()-padding;
-        float t = label->getRect()->height+padding*2.0;
+        float t = label->getRect()->getHeight()+padding*2.0;
         ofxUIDrawRect(x, y, cursorWidth, t);
     }
     
@@ -398,7 +380,7 @@ void ofxUITextInput::setTextString(string s)
             temp+=s.at(i);
             float newWidth = label->getStringWidth(temp);
             
-            if(newWidth < rect->width-padding*4.0)
+            if(newWidth < rect->getWidth()-padding*2.0)
             {
                 textstring+=s.at(i);
                 label->setLabel(textstring);
@@ -416,24 +398,23 @@ void ofxUITextInput::setTextString(string s)
 void ofxUITextInput::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    if(rect->height == 0 || rect->height < label->getPaddingRect()->height+padding*2.0)
+    if(rect->getHeight() == 0 || rect->getHeight() < label->getPaddingRect()->getHeight()+padding*2.0)
     {
-        rect->height = label->getPaddingRect()->height+padding*2.0;
+        rect->setHeight(label->getPaddingRect()->getHeight()+padding*2.0);
     }
     label->setLabel(textstring);
     ofxUIRectangle *labelrect = label->getRect();
     float h = labelrect->getHeight();
     float ph = rect->getHeight();
     
-    labelrect->y = ph/2.0 - h/2.0;
-    defaultY = labelrect->y+labelrect->getHeight();
-    defaultX = labelrect->x;
-    
-    paddedRect->height = rect->height+padding*2.0;
+    labelrect->setY(ph/2.0 - h/2.0);
+    labelrect->setX(padding*2.0);
+    defaultY = labelrect->getY(false)+labelrect->getHeight();
+    defaultX = labelrect->getX(false);
     
     cursorWidth = label->getStringWidth(".");
     
-    while(label->getStringWidth(textstring) > rect->width-padding*4.0)
+    while(label->getStringWidth(textstring) > rect->getWidth()-padding*2.0)
     {
         string::iterator it;
         it=textstring.begin();
@@ -443,6 +424,7 @@ void ofxUITextInput::setParent(ofxUIWidget *_parent)
     defaultstring = textstring;
     displaystring = textstring;
     setTextString(textstring);
+    calculatePaddingRect();
 }
 
 void ofxUITextInput::setAutoClear(bool _autoclear)
@@ -458,7 +440,7 @@ void ofxUITextInput::setTriggerOnClick(bool _triggerOnClick)
 void ofxUITextInput::recalculateDisplayString()
 {
     // the maximum width of the displaystring
-    float maxWidth = rect->width-padding*4.0;
+    float maxWidth = rect->getWidth()-padding*2.0;
     
     displaystring = textstring;
     string stringBeforeCursor = displaystring.substr(0, cursorPosition);

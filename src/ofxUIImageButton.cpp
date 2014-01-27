@@ -33,43 +33,36 @@ ofxUIImageButton::ofxUIImageButton() : ofxUIButton()
 ofxUIImageButton::ofxUIImageButton(float x, float y, float w, float h, bool _value, string _pathURL, string _name, int _size) : ofxUIButton()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, &_value, _pathURL, _name, _size);
+    init(x, y, w, h, &_value, _pathURL, _name, _size);
 }
 
 ofxUIImageButton::ofxUIImageButton(float w, float h, bool _value, string _pathURL, string _name, int _size) : ofxUIButton()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, &_value, _pathURL, _name, _size);
+    init(0, 0, w, h, &_value, _pathURL, _name, _size);
 }
 
 ofxUIImageButton::ofxUIImageButton(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size) : ofxUIButton()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _value, _pathURL, _name, _size);
+    init(x, y, w, h, _value, _pathURL, _name, _size);
 }
 
 ofxUIImageButton::ofxUIImageButton(float w, float h, bool *_value, string _pathURL, string _name, int _size) : ofxUIButton()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _value, _pathURL, _name, _size);
+    init(0, 0, w, h, _value, _pathURL, _name, _size);
 }
 
-void ofxUIImageButton::init(float w, float h, bool *_value, string _pathURL, string _name, int _size)
+void ofxUIImageButton::init(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size)
 {
+    initRect(0,0,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_IMAGEBUTTON;
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
-    
     label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
+    
     drawLabel = false;
     label->setVisible(drawLabel);
     

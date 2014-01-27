@@ -32,69 +32,61 @@ ofxUILabel::ofxUILabel() : ofxUIWidget()
 
 ofxUILabel::ofxUILabel(float x, float y, string _name, string _label, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,0,0);
-    init(_name, _label, _size);
+    init(x, y, 0, 0, _name, _label, _size);
     autoSize = true;
 }
 
 ofxUILabel::ofxUILabel(float x, float y, string _name, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,0,0);
-    init(_name, _name, _size);
+    init(x, y, 0, 0, _name, _name, _size);
     autoSize = true;
 }
 
 ofxUILabel::ofxUILabel(string _name, string _label, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,0,0);
-    init(_name, _label, _size);
+    init(0, 0, 0, 0, _name, _label, _size);
     autoSize = true;
 }
 
 ofxUILabel::ofxUILabel(string _name, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,0,0);
-    init(_name, _name, _size);
+    init(0, 0, 0, 0, _name, _name, _size);
     autoSize = true;
 }
 
 ofxUILabel::ofxUILabel(float x, float y, float w, string _name, string _label, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,0);
-    init(_name, _label, _size);
+    init(x, y, w, 0, _name, _label, _size);
     autoSize = false;
 }
 
 ofxUILabel::ofxUILabel(float x, float y, float w, string _name, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,0);
-    init(_name, _name, _size);
+    init(x, y, w, 0, _name, _name, _size);
     autoSize = false;
 }
 
 ofxUILabel::ofxUILabel(float w, string _name, string _label, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,w,0);
-    init(_name, _label, _size);
+    init(0, 0, w, 0, _name, _label, _size);
     autoSize = false;
 }
 
 ofxUILabel::ofxUILabel(float w, string _name, int _size) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,w,0);
-    init(_name, _name, _size);
+    init(0, 0, w, 0, _name, _name, _size);
     autoSize = false;
 }
 
 ofxUILabel::ofxUILabel(float w, string _name, int _size, float h) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(_name, _name, _size);
+    init(0, 0, w, h, _name, _name, _size);
     autoSize = false;
 }
 
-void ofxUILabel::init(string _name, string _label, int _size)
+void ofxUILabel::init(float x, float y, float w, float h, string _name, string _label, int _size)
 {
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_LABEL;
     label = string(_label);
@@ -103,8 +95,6 @@ void ofxUILabel::init(string _name, string _label, int _size)
     font = NULL;
     draw_back = OFX_UI_LABEL_DRAW_BACK;
     draw_fill = true;
-    paddedRect = new ofxUIRectangle(-padding, -padding, padding*2.0, padding*2.0);
-    paddedRect->setParent(rect);
 }
 
 void ofxUILabel::drawBack()
@@ -183,18 +173,15 @@ void ofxUILabel::setLabel(string _label)
         float h = font->stringHeight("1");          //otherwise we get some funky non-uniform spacing :(
         rect->setWidth(w);
         rect->setHeight(h);
-        paddedRect->setWidth(w+padding*2.0);
-        paddedRect->setHeight(h+padding*2.0);
         xOffset = 0;
         yOffset = 0;
     }
     else
     {
-        while(getStringWidth(label) > rect->width-padding*4.0 && label.size())
+        while(getStringWidth(label) > rect->getWidth()-padding*4.0 && label.size())
         {
             label = label.substr(0, label.size()-1);
         }
-        //            float w = (int)font->stringWidth(label);
         float h = (int)font->stringHeight("1");     //otherwise we get some funky non-uniform spacing :(
         if(rect->getHeight() > 0)
         {
@@ -205,9 +192,6 @@ void ofxUILabel::setLabel(string _label)
             rect->setHeight(h);
             yOffset = 0;
         }
-        paddedRect->height = rect->getHeight()+padding*2.0;
-        paddedRect->width = rect->getWidth()+padding*2.0;
-        //            xOffset = (int) (rect->width*.5 - w*.5);
         xOffset = 0;
     }
 }
@@ -231,6 +215,7 @@ void ofxUILabel::setFont(ofxUIFont *_font)
 {
     font = _font;
     setLabel(label);
+    calculatePaddingRect();
 }
 
 int ofxUILabel::getSize()

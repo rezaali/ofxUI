@@ -34,7 +34,7 @@ public:
     ofxUINumberDialer(float x, float y, float _min, float _max, float *_value, int _precision, string _name, int _size);
     ofxUINumberDialer(float _min, float _max, float *_value, int _precision, string _name, int _size);
     ~ofxUINumberDialer();
-    void init(float _min, float _max, float *_value, int _precision, string _name, int _size);
+    void init(float x, float y, float w, float h, float _min, float _max, float *_value, int _precision, string _name, int _size);
     virtual void update();
     virtual void drawFill();
     virtual void drawFillHighlight();

@@ -28,76 +28,59 @@
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,h);
-    autoSize = false;
-    init(w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
+    init(x, y, w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float w, float h, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,h);
-    autoSize = false;
-    init(w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
+    init(0, 0, w, h, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,0);
-    autoSize = true;
-    init(w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
+    init(x, y, w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float w, float _min, float _max, float _value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,0);
-    autoSize = true;
-    init(w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
+    init(0, 0, w, 0, _min, _max, &_value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,h);
-    autoSize = false;
-    init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
+    init(x, y, w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,h);
-    autoSize = false;
-    init(w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
+    init(0, 0, w, h, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float x, float y, float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,0);
-    autoSize = true;
-    init(w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
+    init(x, y, w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
 }
 
 ofxUIBiLabelSlider::ofxUIBiLabelSlider(float w, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,0);
-    autoSize = true;
-    init(w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
+    init(0, 0, w, 0, _min, _max, _value, _name, _leftLabel, _rightLabel, _size);
 }
 
-void ofxUIBiLabelSlider::init(float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size)
+void ofxUIBiLabelSlider::init(float x, float y, float w, float h, float _min, float _max, float *_value, string _name, string _leftLabel, string _rightLabel, int _size)
 {
+    (h > 0) ? autoSize = false : autoSize = true;
+    initRect(x,y,w,h);
     name = string(_name);
     leftLabel = _leftLabel;
     rightLabel = _rightLabel;
     kind = OFX_UI_WIDGET_BILABELSLIDER;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     
@@ -125,19 +108,13 @@ void ofxUIBiLabelSlider::init(float w, float h, float _min, float _max, float *_
     }
     
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
+    increment = fabs(max - min) / 10.0;
     
     label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size);
-    label->setDrawBack(false);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     
     rlabel = new ofxUILabel(padding,h*.5,(name+" LABEL"), rightLabel, _size);
-    rlabel->setDrawBack(false);
-    rlabel->setParent(rlabel);
-    rlabel->setRectParent(rect);
-    
-    increment = fabs(max - min) / 10.0;
+    addEmbeddedWidget(rlabel);
 }
 
 void ofxUIBiLabelSlider::setDrawPadding(bool _draw_padded_rect)
@@ -201,22 +178,21 @@ void ofxUIBiLabelSlider::setParent(ofxUIWidget *_parent)
     ofxUIRectangle *labelrect = label->getRect();
     ofxUIRectangle *rightlabelrect = rlabel->getRect();
     
-    if(autoSize || rect->height < label->getPaddingRect()->height)
+    if(autoSize || rect->getHeight() < label->getPaddingRect()->getHeight())
     {
-        rect->height = label->getPaddingRect()->height;
+        rect->setHeight(label->getPaddingRect()->getHeight());
     }
     
     float h = labelrect->getHeight();
     float ph = rect->getHeight();
     
-    labelrect->y = (int)(ph*.5 - h*.5);
+    labelrect->setY((int)(ph*.5 - h*.5));
     
-    rightlabelrect->y = labelrect->y;
-    rightlabelrect->x = rect->getWidth()-rightlabelrect->getWidth()-padding*2.0;
-    labelrect->x = padding;
+    rightlabelrect->setY(labelrect->getY(false));
+    rightlabelrect->setX(rect->getWidth()-rightlabelrect->getWidth()-padding*2.0);
+    labelrect->setX(padding);
     
-    paddedRect->height = rect->getHeight()+padding*2.0;
-    paddedRect->width = rect->width+padding*2.0;
+    calculatePaddingRect();
     updateValueRef();
     updateLabel();
 }

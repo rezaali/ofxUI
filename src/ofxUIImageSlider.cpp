@@ -28,34 +28,30 @@
 ofxUIImageSlider::ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _pathURL, string _name) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _min, _max, &_value, _pathURL, _name);
+    init(x, y, w, h, _min, _max, &_value, _pathURL, _name);
 }
 
 ofxUIImageSlider::ofxUIImageSlider(float w, float h, float _min, float _max, float _value, string _pathURL, string _name) : ofxUISlider()
 {
     useReference = false;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _min, _max, &_value, _pathURL, _name);
+    init(0, 0, w, h, _min, _max, &_value, _pathURL, _name);
 }
-
 
 ofxUIImageSlider::ofxUIImageSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _min, _max, _value, _pathURL, _name);
+    init(x, y, w, h, _min, _max, _value, _pathURL, _name);
 }
 
 ofxUIImageSlider::ofxUIImageSlider(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name) : ofxUISlider()
 {
     useReference = true;
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _min, _max, _value, _pathURL, _name);
+    init(0, 0, w, h, _min, _max, _value, _pathURL, _name);
 }
 
-void ofxUIImageSlider::init(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
+void ofxUIImageSlider::init(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name)
 {
+    initRect(x, y, w, h);
     name = string(_name);
     if(w > h)
     {
@@ -65,9 +61,6 @@ void ofxUIImageSlider::init(float w, float h, float _min, float _max, float *_va
     {
         kind = OFX_UI_WIDGET_IMAGESLIDER_V;
     }
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     
@@ -106,9 +99,7 @@ void ofxUIImageSlider::init(float w, float h, float _min, float _max, float *_va
         label = new ofxUILabel(0,h+padding,(name+" LABEL"), name, OFX_UI_FONT_SMALL);
     }
     
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     increment = fabs(max - min) / 10.0;
     
     string coreURL = _pathURL;

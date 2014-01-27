@@ -34,7 +34,7 @@ public:
     ofxUIImageToggle(float w, float h, bool _value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
     ofxUIImageToggle(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
     ofxUIImageToggle(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_MEDIUM);
-    void init(float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
+    void init(float x, float y, float w, float h, bool *_value, string _pathURL, string _name, int _size = OFX_UI_FONT_SMALL);
     virtual ~ofxUIImageToggle();
     virtual void drawBack();
     virtual void drawFill();

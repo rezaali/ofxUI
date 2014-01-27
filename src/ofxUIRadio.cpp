@@ -29,29 +29,14 @@ ofxUIRadio::ofxUIRadio(string _name, vector<string> names, int _orientation, flo
     init(_name, names, _orientation, w, h, x, y, _size);
 }
 
-ofxUIRadio::ofxUIRadio(float x, float y, float w, float h, string _name, vector<string> names, int _orientation, int _size) : ofxUIWidget()
-{
-    init(_name, names, _orientation, w, h, x, y, _size);
-    //        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIRadio::ofxUIRadio(float w, float h, string _name, vector<string> names, int _orientation, int _size) : ofxUIWidget()
-{
-    init(_name, names, _orientation, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUIRADIO: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
 void ofxUIRadio::init(string _name, vector<string> names, int _orientation, float w, float h, float x, float y, int _size)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_RADIO;
     
     draw_back = false;
     orientation = _orientation;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
     
     if(names.size() == 0)
     {
@@ -62,9 +47,9 @@ void ofxUIRadio::init(string _name, vector<string> names, int _orientation, floa
         for(unsigned int i = 0; i < names.size(); i++)
         {
             string tname = names[i];
-            ofxUIToggle *toggle = new ofxUIToggle(0,0, w, h, false, tname, _size);
-            toggle->setEmbedded(true);
-            toggles.push_back(toggle);
+            ofxUIToggle *toggle = new ofxUIToggle(tname, false, w, h, 0, 0, _size);
+            addEmbeddedWidget(toggle);
+            toggles.push_back(toggle);            
         }
     }
     
@@ -148,21 +133,9 @@ void ofxUIRadio::setParent(ofxUIWidget *_parent)
             tWidth = xt;
         }
     }
-    paddedRect->x = -padding;
-    paddedRect->y = -padding;
-    
     rect->setWidth(tWidth - padding);
     rect->setHeight(tHeight - padding);
-    if(isEmbedded())
-    {
-        paddedRect->width = tWidth;
-        paddedRect->height = tHeight;
-    }
-    else
-    {
-        paddedRect->width = tWidth+padding;
-        paddedRect->height = tHeight+padding;
-    }
+    calculatePaddingRect();
 }
 
 vector<ofxUIToggle *> ofxUIRadio::getToggles()

@@ -57,12 +57,10 @@ ofxUISlider_<T>::~ofxUISlider_()
 template<typename T>
 void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, float h, float x, float y)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     setOrientation(w, h);
     setKind();
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     
@@ -100,10 +98,8 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     {
         label = new ofxUILabel(0,h+padding,string(name+" LABEL"), string(name), OFX_UI_FONT_SMALL);
     }
+    addEmbeddedWidget(label);
     
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
     increment = fabs(max - min) / 100.0;
     bRoundedToNearestInt = false;
     bClampValue = true;
@@ -532,19 +528,14 @@ void ofxUISlider_<T>::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
     label->getRect()->setY(rect->getHeight()+padding);
-    paddedRect->height = rect->getHeight() + label->getPaddingRect()->height + padding;
-    paddedRect->x = -padding;
-    paddedRect->y = -padding;
-    if(label->getPaddingRect()->width > paddedRect->width)
-    {
-        paddedRect->width = label->getPaddingRect()->width;
-    }
+    calculatePaddingRect();
     updateValueRef();
     updateLabel();
 }
 
 template<typename T>
-void ofxUISlider_<T>::setLabelPrecision(int _precision) {
+void ofxUISlider_<T>::setLabelPrecision(int _precision)
+{
     labelPrecision = _precision;
     updateValueRef();
     updateLabel();

@@ -30,15 +30,33 @@
 class ofxUILabelButton : public ofxUIButton
 {
 public:
-    ofxUILabelButton(string _name, bool _value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, bool _justifyLeft = false);
-    ofxUILabelButton(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, bool _justifyLeft = false);
-    ofxUILabelButton(float x, float y, float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM);
-    ofxUILabelButton(float w, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0);
-    ofxUILabelButton(float x, float y, bool _value, string _name, int _size = OFX_UI_FONT_MEDIUM);
-    ofxUILabelButton(float x, float y, float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM);
-    ofxUILabelButton(float w, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM, float h = 0);
-    ofxUILabelButton(float x, float y, bool *_value, string _name, int _size = OFX_UI_FONT_MEDIUM);    
-    virtual void init(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, bool _justifyLeft = false);
+    ofxUILabelButton(string _name,
+                     bool _value,
+                     float w = 0,
+                     float h = 0,
+                     float x = 0,
+                     float y = 0,
+                     int _size = OFX_UI_FONT_MEDIUM,
+                     bool _justifyLeft = false);
+    
+    ofxUILabelButton(string _name,
+                     bool *_value,
+                     float w = 0,
+                     float h = 0,
+                     float x = 0,
+                     float y = 0,
+                     int _size = OFX_UI_FONT_MEDIUM,
+                     bool _justifyLeft = false);
+    
+    virtual void init(string _name,
+                      bool *_value,
+                      float w,
+                      float h,
+                      float x = 0,
+                      float y = 0,
+                      int _size = OFX_UI_FONT_MEDIUM,
+                      bool _justifyLeft = false);
+    
     void setLabelText(string labeltext);
 	void setParent(ofxUIWidget *_parent);
     virtual void setValue(bool _value);

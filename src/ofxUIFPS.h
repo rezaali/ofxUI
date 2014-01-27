@@ -31,11 +31,11 @@ class ofxUIFPS : public ofxUIWidgetWithLabel
 public:    
     ofxUIFPS(float x, float y, int _size);
     ofxUIFPS(int _size);
-    void init(float x, float y, string _name, string _label, int _size);
-	void update();
     void setLabelPrecision(int _precision);
     void setParent(ofxUIWidget *_parent);
     
-protected:    
-    int labelPrecision;    
+protected:
+	void update();
+    void init(float x, float y, string _name, string _label, int _size);
+    int labelPrecision;
 }; 

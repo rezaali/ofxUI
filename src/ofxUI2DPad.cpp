@@ -37,65 +37,6 @@ ofxUI2DPad::ofxUI2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofx
     init(_name, _rangeX, _rangeY, _value, w, h, x, y);
 }
 
-// DON'T USE THE NEXT CONSTRUCTORS
-// This is maintained for backward compatibility and will be removed on future releases
-
-ofxUI2DPad::ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), &_value, w, h, x, y);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, _rangeX, _rangeY, &_value, w, h, x, y);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float w, float h, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), &_value, w, h, 0, 0);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, _rangeX, _rangeY, &_value, w, h, 0, 0);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), _value, w, h, x, y);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float x, float y, float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, _rangeX, _rangeY, _value, w, h, x, y);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float w, float h, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, ofxUIVec3f(0,w), ofxUIVec3f(0,h), _value, w, h, 0, 0);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUI2DPad::ofxUI2DPad(float w, float h, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, string _name) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, _rangeX, _rangeY, _value, w, h, 0, 0);
-    //        ofLogWarning("OFXUI2DPAD: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
 ofxUI2DPad::~ofxUI2DPad()
 {
     if(!useReference)
@@ -106,11 +47,9 @@ ofxUI2DPad::~ofxUI2DPad()
 
 void ofxUI2DPad::init(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x, float y)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x, y, w, h);
     name = string(_name);
     kind = OFX_UI_WIDGET_2DPAD;
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     draw_fill = true;
     draw_outline = true;
     value = *_value;                                               //the widget's value
@@ -149,10 +88,8 @@ void ofxUI2DPad::init(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxU
         value.y = 0;
     }
     
-    label = new ofxUILabel(0,h+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    label = new ofxUILabel(0,h+padding*2.0,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL);
+    addEmbeddedWidget(label);
     
     float horizontalRange = abs(rangeX.x - rangeX.y);
     float verticalRange = abs(rangeY.x - rangeY.y);
@@ -342,16 +279,6 @@ void ofxUI2DPad::keyPressed(int key)
     }
 }
 
-void ofxUI2DPad::keyReleased(int key)
-{
-    
-}
-
-void ofxUI2DPad::windowResized(int w, int h)
-{
-    
-}
-
 void ofxUI2DPad::input(float x, float y)
 {
     value.x = rect->percentInside(x, y).x;
@@ -373,8 +300,6 @@ void ofxUI2DPad::input(float x, float y)
     {
         value.y = 0.0;
     }
-    //		cout << "X: " << rect->percentInside(x, y).x << endl;
-    //		cout << "Y: " << rect->percentInside(x, y).y << endl;
     updateValueRef();
     updateLabel();
 }
@@ -476,16 +401,11 @@ ofxUIVec3f ofxUI2DPad::getScaledValue()
     return p;
 }
 
-ofxUILabel *ofxUI2DPad::getLabel()
-{
-    return label;
-}
-
 void ofxUI2DPad::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
     label->getRect()->setY(rect->getHeight()+padding);
-    paddedRect->height += label->getPaddingRect()->height+padding;
+    calculatePaddingRect();
 }
 
 bool ofxUI2DPad::isDraggable()

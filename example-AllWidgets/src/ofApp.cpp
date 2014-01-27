@@ -3,7 +3,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
-    red = 233; blue = 52; green = 27;
+    ofSetCircleResolution(120);
+    red = 233; blue = 233; green = 233;
     hideGUI = false;
     bdrawGrid = false;
 	bdrawPadding = false;
@@ -19,11 +20,23 @@ void ofApp::setup(){
     setGUI4();
     setGUI5();
     
-    gui1->loadSettings("gui1Settings.xml");
-    gui2->loadSettings("gui2Settings.xml");
-    gui3->loadSettings("gui3Settings.xml");
-    gui4->loadSettings("gui4Settings.xml");
-    gui5->loadSettings("gui5Settings.xml");
+//    gui1->toggleMinified();
+    gui2->toggleMinified();
+//    gui3->toggleMinified();
+//    gui4->toggleMinified();
+//    gui5->toggleMinified();
+    
+    gui1->toggleMinified();
+    gui2->toggleMinified();
+    gui3->toggleMinified();
+    gui4->toggleMinified();
+    gui5->toggleMinified();
+    
+//    gui1->loadSettings("gui1Settings.xml");
+//    gui2->loadSettings("gui2Settings.xml");
+//    gui3->loadSettings("gui3Settings.xml");
+//    gui4->loadSettings("gui4Settings.xml");
+//    gui5->loadSettings("gui5Settings.xml");
 }
 
 //--------------------------------------------------------------
@@ -145,6 +158,7 @@ void ofApp::keyPressed(int key){
             gui2->toggleVisible();
             gui3->toggleVisible();
             gui4->toggleVisible();
+            gui5->toggleVisible();
 			break;
             
 		case 'p':
@@ -153,6 +167,7 @@ void ofApp::keyPressed(int key){
 			gui2->setDrawWidgetPaddingOutline(bdrawPadding);
 			gui3->setDrawWidgetPaddingOutline(bdrawPadding);
 			gui4->setDrawWidgetPaddingOutline(bdrawPadding);
+			gui5->setDrawWidgetPaddingOutline(bdrawPadding);
 			break;
             
 		case '[':
@@ -160,6 +175,7 @@ void ofApp::keyPressed(int key){
 			gui2->setDrawWidgetPadding(false);
 			gui3->setDrawWidgetPadding(false);
 			gui4->setDrawWidgetPadding(false);
+			gui5->setDrawWidgetPadding(false);
 			break;
             
 		case ']':
@@ -167,6 +183,7 @@ void ofApp::keyPressed(int key){
 			gui2->setDrawWidgetPadding(true);
 			gui3->setDrawWidgetPadding(true);
 			gui4->setDrawWidgetPadding(true);
+			gui5->setDrawWidgetPadding(true);
 			break;
 			
         case '1':
@@ -184,7 +201,11 @@ void ofApp::keyPressed(int key){
         case '4':
             gui4->toggleVisible();
             break;
-            
+
+        case '5':
+            gui5->toggleVisible();
+            break;
+
 		default:
 			break;
 	}
@@ -263,13 +284,12 @@ void ofApp::setGUI2()
     gui2 = new ofxUISuperCanvas("PANEL 2: ADVANCED");
     
     gui2->addSpacer();
-	gui2->addLabel("TEXT INPUT", OFX_UI_FONT_SMALL);
-	gui2->setWidgetFontSize(OFX_UI_FONT_LARGE);
+	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
 	gui2->addTextInput("TEXT INPUT", "Input Text");
     gui2->addLabel("AUTO CLEAR DISABLED", OFX_UI_FONT_SMALL);
     gui2->addTextInput("TEXT INPUT2", "Input Text")->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-    
+
     gui2->addSpacer();
     gui2->addLabel("WAVEFORM DISPLAY");
 	gui2->addWaveform("WAVEFORM", buffer, 256, 0.0, 1.0);
@@ -307,31 +327,30 @@ void ofApp::setGUI3()
 	gui3 = new ofxUISuperCanvas("PANEL 3: ADVANCED");
     
     gui3->addSpacer();
-    gui3->setGlobalButtonDimension(32);
+    gui3->setGlobalButtonDimension(24);
     gui3->addLabel("MATRIX", OFX_UI_FONT_MEDIUM);
-    gui3->addToggleMatrix("MATRIX1", 4, 4);
+    gui3->addToggleMatrix("MATRIX1", 3, 3);
     gui3->addToggleMatrix("MATRIX2", 3, 6);
     gui3->addToggleMatrix("MATRIX3", 1, 4);
-    
+
     gui3->addSpacer();
     gui3->setGlobalButtonDimension(64);
     gui3->addImageButton("IMAGEBTN", "GUI/images/App.png", false);
-	gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
+    gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
     gui3->addImageToggle("IMAGETGL", "GUI/images/Preview.png", false);
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
-    
+
     gui3->addSpacer();
-    gui3->addLabel("DROP DOWN", OFX_UI_FONT_MEDIUM);
-    
     vector<string> items;
     items.push_back("FIRST ITEM");
     items.push_back("SECOND ITEM");
-    items.push_back("THIRD ITEM WHATS UP DOG");
+    items.push_back("THIRD ITEM");
     items.push_back("FOURTH ITEM");
     items.push_back("FIFTH ITEM");
     items.push_back("SIXTH ITEM");
-    
-    gui3->addDropDownList("DROP DOWN LIST", items, 200);
+
+    gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
+    gui3->addDropDownList("DROP DOWN LIST", items);
     gui3->setPosition(212*2, 0);
     gui3->autoSizeToFitWidgets();
     
@@ -375,8 +394,9 @@ void ofApp::setGUI4()
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
     items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
     gui4->setWidgetFontSize(OFX_UI_FONT_SMALL);
-    gui4->addSortableList("SORTABLE LIST", items);
+//    gui4->addSortableList("SORTABLE LIST", items);
 
+    gui4->addBaseDraws("BASE DRAW", img, true);
     gui4->setPosition(212*3,0);
     gui4->autoSizeToFitWidgets();
     

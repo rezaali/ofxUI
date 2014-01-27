@@ -42,37 +42,6 @@ ofxUIButton::ofxUIButton(string _name, bool *_value, float w, float h, float x, 
     init(_name, _value, w, h, x, y, _size);
 }
 
-// DON'T USE THE NEXT CONSTRUCTORS
-// This is maintained for backward compatibility and will be removed on future releases
-
-ofxUIButton::ofxUIButton(float x, float y, float w, float h, bool _value, string _name, int _size) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, &_value, w, h, x, y, _size);
-    //        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIButton::ofxUIButton(float w, float h, bool _value, string _name, int _size) : ofxUIWidgetWithLabel()
-{
-    useReference = false;
-    init(_name, &_value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIButton::ofxUIButton(float x, float y, float w, float h, bool *_value, string _name, int _size) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, _value, w, h, x, y, _size);
-    //        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
-ofxUIButton::ofxUIButton(float w, float h, bool *_value, string _name, int _size) : ofxUIWidgetWithLabel()
-{
-    useReference = true;
-    init(_name, _value, w, h, 0, 0, _size);
-    //        ofLogWarning("OFXUIBUTTON: DON'T USE THIS CONSTRUCTOR. THIS WILL BE REMOVED ON FUTURE RELEASES.");
-}
-
 ofxUIButton::~ofxUIButton()
 {
     if(!useReference)
@@ -83,17 +52,12 @@ ofxUIButton::~ofxUIButton()
 
 void ofxUIButton::init(string _name, bool *_value, float w, float h, float x, float y, int _size)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_BUTTON;
+    label = new ofxUILabel((name+" LABEL"),name,_size);
+    addEmbeddedWidget(label);
     
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
-    
-    label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
     drawLabel = true;
     bLabelRight = true;
     label->setVisible(drawLabel);
@@ -237,6 +201,7 @@ void ofxUIButton::setVisible(bool _visible)
 {
     visible = _visible;
     label->setVisible((drawLabel && visible));
+    calculatePaddingRect();
 }
 
 ofxUILabel *ofxUIButton::getLabel()
@@ -250,17 +215,9 @@ void ofxUIButton::setParent(ofxUIWidget *_parent)
     ofxUIRectangle *labelrect = label->getRect();
     float h = labelrect->getHeight();
     float ph = rect->getHeight();
-    labelrect->x = rect->getWidth()+padding*2.0;
-    labelrect->y = ph/2.0 - h/2.0;
-    
-    if(!drawLabel)
-    {
-        paddedRect->width = rect->width+padding*2.0;
-    }
-    else
-    {
-        paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
-    }
+    labelrect->setX(rect->getWidth()+padding);
+    labelrect->setY(ph/2.0 - h/2.0);
+    calculatePaddingRect();
 }
 
 bool ofxUIButton::getValue()
@@ -272,31 +229,13 @@ void ofxUIButton::setLabelVisible(bool _visible)
 {
     drawLabel = _visible;
     label->setVisible((drawLabel && visible));
-    if(!drawLabel)
-    {
-        paddedRect->width = rect->width+padding*2.0;
-        paddedRect->x = -padding;
-    }
-    else
-    {
-        //            paddedRect->width = rect->getWidth() + label->getPaddingRect()->getWidth() + padding*3.0;
-        paddedRect->width = rect->width+padding*2.0;
-        if(bLabelRight)
-        {
-            paddedRect->x = - padding;
-        }
-        else
-        {
-            paddedRect->x = label->getRect()->x - padding*2.0;
-        }
-    }
+    calculatePaddingRect();
 }
 
 void ofxUIButton::setValue(bool _value)
 {
     *value = _value;
     draw_fill = *value;
-    //        label->setDrawBack((*value));
 }
 
 void ofxUIButton::setValuePtr(bool *_value)
@@ -310,8 +249,8 @@ void ofxUIButton::setValuePtr(bool *_value)
     setValue(*value);
 }
 
-
-void ofxUIButton::toggleValue() {
+void ofxUIButton::toggleValue()
+{
     setValue(!(*value));
 }
 
@@ -334,17 +273,16 @@ void ofxUIButton::setLabelPosition(ofxUIWidgetPosition pos)
         case OFX_UI_WIDGET_POSITION_LEFT:
         {
             bLabelRight = false;
-            label->getRect()->x = - label->getRect()->getWidth() - padding*2;
-            paddedRect->x = label->getRect()->x - padding*2.0;
-            paddedRect->width = rect->width+padding*2.0;
+            label->getRect()->setX(-label->getRect()->getWidth() - padding*2);
+            calculatePaddingRect();
         }
             break;
             
         case OFX_UI_WIDGET_POSITION_RIGHT:
         {
             bLabelRight = true;
-            label->getRect()->x = rect->getWidth() + padding*2.0;
-            paddedRect->x = -padding;
+            label->getRect()->setX(rect->getWidth() + padding*2.0);
+            calculatePaddingRect();
         }
             break;
             

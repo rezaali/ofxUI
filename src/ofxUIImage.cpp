@@ -64,10 +64,8 @@ void ofxUIImage::init(float w, float h, ofImage *_image, string _name)
     
     image = _image;
     
-    label = new ofxUILabel(0,h+padding,(name+" LABEL"),name, OFX_UI_FONT_SMALL);
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    label = new ofxUILabel(0,h+padding*2.0,(name+" LABEL"),name, OFX_UI_FONT_SMALL);
+    addEmbeddedWidget(label);
     cropImageToFitRect = false;
 }
 
@@ -107,6 +105,7 @@ void ofxUIImage::setVisible(bool _visible)
 {
     visible = _visible;
     label->setVisible(showLabel && _visible);
+    calculatePaddingRect(); 
 }
 
 void ofxUIImage::setCropImageToFitRect(bool _cropImageToFitRect)
@@ -127,15 +126,8 @@ void ofxUIImage::setImage(ofImage *_image)
 void ofxUIImage::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    if(showLabel)
-    {
-        paddedRect->height += label->getPaddingRect()->height;
-    }
-    else
-    {
-        paddedRect->height += padding;
-    }
     label->setVisible(showLabel);
+    calculatePaddingRect();
 }
 
 bool ofxUIImage::isDraggable()

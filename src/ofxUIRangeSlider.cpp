@@ -79,7 +79,7 @@ ofxUIRangeSlider::~ofxUIRangeSlider()
 void ofxUIRangeSlider::init(string _name, float _min, float _max, float *_valuelow, float *_valuehigh, float w, float h,
           float x, float y, int _size)
 {
-    rect = new ofxUIRectangle(x,y,w,h);
+    initRect(x,y,w,h);
     name = string(_name);
     if(w > h)
     {
@@ -89,9 +89,6 @@ void ofxUIRangeSlider::init(string _name, float _min, float _max, float *_valuel
     {
         kind = OFX_UI_WIDGET_RSLIDER_V;
     }
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_fill = true;
     
@@ -147,10 +144,7 @@ void ofxUIRangeSlider::init(string _name, float _min, float _max, float *_valuel
     {
         label = new ofxUILabel(0,h+padding,(name+" LABEL"), name, _size);
     }
-    
-    label->setParent(label);
-    label->setRectParent(rect);
-    label->setEmbedded(true);
+    addEmbeddedWidget(label);
     
     increment = fabs(max - min) / 10.0;
 }
@@ -542,14 +536,7 @@ void ofxUIRangeSlider::setLabelPrecision(int _precision)
 void ofxUIRangeSlider::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    paddedRect->height += label->getPaddingRect()->height;
-    if(kind == OFX_UI_WIDGET_RSLIDER_V)
-    {
-        if(label->getPaddingRect()->width > paddedRect->width)
-        {
-            paddedRect->width = label->getPaddingRect()->width+padding;
-        }
-    }
+    calculatePaddingRect(); 
 }
 
 void ofxUIRangeSlider::setMax(float _max)

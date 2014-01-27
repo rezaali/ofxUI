@@ -33,7 +33,7 @@ class ofxUIToggleMatrix : public ofxUIWidget
 public:
     ofxUIToggleMatrix(float x, float y, float w, float h, int _rows, int _cols, string _name, int _size = OFX_UI_FONT_SMALL);
     ofxUIToggleMatrix(float w, float h, int _rows, int _cols, string _name, int _size = OFX_UI_FONT_SMALL);
-    void init(float w, float h, int _rows, int _cols, string _name, int _size = OFX_UI_FONT_SMALL);
+    void init(float x, float y, float w, float h, int _rows, int _cols, string _name, int _size = OFX_UI_FONT_SMALL);
     void setVisible(bool _visible);
 	void activateToggle(string _name);
 	void setParent(ofxUIWidget *_parent);

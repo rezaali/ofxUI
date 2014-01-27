@@ -36,7 +36,7 @@ public:
     ofxUIImageSlider(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name);
     ~ofxUIImageSlider();
     
-    virtual void init(float w, float h, float _min, float _max, float *_value, string _pathURL, string _name);
+    virtual void init(float x, float y, float w, float h, float _min, float _max, float *_value, string _pathURL, string _name);
     
     virtual void drawBack();
     virtual void drawOutline();

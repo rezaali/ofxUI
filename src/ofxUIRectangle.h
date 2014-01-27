@@ -38,10 +38,10 @@ public:
     void set(float px, float py, float w, float h);
     
     void setX(float px);
-    float getX();
+    float getX(bool recursive = true);
 
     void setY(float py);
-    float getY();
+    float getY(bool recursive = true);
     
 	void setHeight(float _height);
     float getWidth();
