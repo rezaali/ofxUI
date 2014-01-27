@@ -33,6 +33,8 @@ public:
 	ofxUISuperCanvas *gui3;
     ofxUISuperCanvas *gui4;
     ofxUISuperCanvas *gui5;
+    
+    ofxUITextInput *textInput; 
 
 	bool hideGUI;
 	

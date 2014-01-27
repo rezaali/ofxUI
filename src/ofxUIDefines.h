@@ -220,7 +220,11 @@ enum ofxUIThemeType
     OFX_UI_THEME_MINBLACK
 };
 
-#define OFX_UI_FONT_NAME "sans-serif"
+#ifdef TARGET_OF_IOS
+    #define OFX_UI_FONT_NAME "GUI/Helvetica.ttf"
+#else
+    #define OFX_UI_FONT_NAME "sans-serif"
+#endif
 
 #define OFX_UI_FONT_RESOLUTION 150
 #define OFX_UI_FONT_LARGE_SIZE 10

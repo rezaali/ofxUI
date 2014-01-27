@@ -38,8 +38,8 @@ ofxUIDraggableLabelButton::ofxUIDraggableLabelButton(string _name, bool *_value,
 
 void ofxUIDraggableLabelButton::init(string _name, bool *_value, float w, float h, float x, float y, int _size, bool _justifyLeft)
 {
-    saveX, posX = x;
-    saveY, posY = y;
+    saveX = posX = x;
+    saveY = posY = y;
     onPressed = false;
     isDraggedOut = false;
     kind = OFX_UI_WIDGET_DRAGABLELABELBUTTON;

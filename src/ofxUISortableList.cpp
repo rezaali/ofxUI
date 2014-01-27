@@ -213,7 +213,6 @@ void ofxUISortableList::goingDown()// what to do if the active widget is getting
 void ofxUISortableList::refreshPositions()// if the ordering changes - reflect it visually
 {
     float ty = padding;
-    int width = rect->getWidth() - padding + 2;
     for (int i = 0; i < listItems.size(); i++)
     {
         if(activeWidgetIndex != i)

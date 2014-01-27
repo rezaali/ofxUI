@@ -8,7 +8,8 @@ void ofApp::setup(){
     hideGUI = false;
     bdrawGrid = false;
 	bdrawPadding = false;
-    
+
+    textInput = NULL;
     img = new ofImage();
     img->loadImage("nerd_me.png");
     buffer = new float[256];
@@ -137,6 +138,15 @@ void ofApp::keyPressed(int key){
     }
 	switch (key)
 	{
+		case 't':
+        {
+            if(textInput != NULL)
+            {
+                textInput->setTextString(ofGetTimestampString());
+            }
+        }
+			break;
+
 		case 'f':
 			ofToggleFullscreen();
 			break;
@@ -273,7 +283,7 @@ void ofApp::setGUI2()
     
     gui2->addSpacer();
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-	gui2->addTextInput("TEXT INPUT", "Input Text");
+    textInput = gui2->addTextInput("TEXT INPUT", "Input Text");
     gui2->addLabel("AUTO CLEAR DISABLED", OFX_UI_FONT_SMALL);
     gui2->addTextInput("TEXT INPUT2", "Input Text")->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
@@ -342,6 +352,8 @@ void ofApp::setGUI3()
     items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
     gui3->setWidgetFontSize(OFX_UI_FONT_SMALL);
     gui3->addSortableList("SORTABLE LIST", items);
+
+    gui3->setGlobalButtonDimension(OFX_UI_GLOBAL_BUTTON_DIMENSION);
     
     gui3->setPosition(212*2, 0);
     gui3->autoSizeToFitWidgets();

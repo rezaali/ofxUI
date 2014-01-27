@@ -925,7 +925,6 @@ ofxUIWidget* ofxUICanvas::addWidgetPosition(ofxUIWidget *widget, ofxUIWidgetPosi
 {
     if(!reAdd) addWidget(widget);
     ofxUIRectangle *widgetRect = widget->getRect();
-    ofxUIRectangle *widgetPaddingRect = widget->getPaddingRect();
     ofxUIWidget* lastAdded = lastAddeds.empty() ? NULL : lastAddeds.back();
     if(lastAdded != NULL)
     {
