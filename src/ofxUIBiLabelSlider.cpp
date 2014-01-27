@@ -111,9 +111,11 @@ void ofxUIBiLabelSlider::init(float x, float y, float w, float h, float _min, fl
     increment = fabs(max - min) / 10.0;
     
     label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size);
+    label->setDrawBack(true);
     addEmbeddedWidget(label);
     
     rlabel = new ofxUILabel(padding,h*.5,(name+" LABEL"), rightLabel, _size);
+    rlabel->setDrawBack(true);
     addEmbeddedWidget(rlabel);
 }
 

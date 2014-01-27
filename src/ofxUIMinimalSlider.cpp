@@ -82,6 +82,7 @@ void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_valu
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
     
     label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size);
+    label->setDrawBack(true); 
     addEmbeddedWidget(label);
     
     increment = fabs(max - min) / 10.0;
