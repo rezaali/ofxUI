@@ -330,18 +330,10 @@
 		9E7BFFC41892FEF600AC7267 /* widgets */ = {
 			isa = PBXGroup;
 			children = (
-				9E7BFFC818932DC200AC7267 /* Done */,
 				FFD5D3C9D38E29DB72B32254 /* ofxUIDragableLabelButton.cpp */,
 				3C9066FB257B904A547019ED /* ofxUIDragableLabelButton.h */,
 				5613D5D24B00D8AD909F7E6A /* ofxUISortableList.cpp */,
 				E88F5D4D5E360FA5B5C8F99E /* ofxUISortableList.h */,
-			);
-			name = widgets;
-			sourceTree = "<group>";
-		};
-		9E7BFFC818932DC200AC7267 /* Done */ = {
-			isa = PBXGroup;
-			children = (
 				02FF3B8D243CFB85AE0909EB /* ofxUI2DGraph.cpp */,
 				653CFAE31336DAA04B1F1503 /* ofxUI2DGraph.h */,
 				1553D7111BCBE7834BCC0784 /* ofxUI2DPad.cpp */,
@@ -411,7 +403,7 @@
 				9345327AA463407B3DADBADE /* ofxUIWaveform.cpp */,
 				FCCBDB55B98DA36682809F03 /* ofxUIWaveform.h */,
 			);
-			name = Done;
+			name = widgets;
 			sourceTree = "<group>";
 		};
 		A492CE86424AB8905550BFD8 /* ofxUI */ = {

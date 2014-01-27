@@ -37,20 +37,14 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
     itemHeight = 30;
     padding = 2;
     int height = items.size() * itemHeight + (padding*items.size() + padding);
-    rect = new ofxUIRectangle(x,y,w,height);
-    setParent(this);
+    rect->setHeight(height);
     name = string(_name);
     kind = OFX_UI_WIDGET_SORTABLELIST;
     autoSize = false;
     
-    label = new ofxUILabel(0, height+padding, (name+" LABEL"), name, _size);
-    label->setParent(label);
-    label->setRectParent(rect);
-    addEmbeddedWidget(label);
-    
-    drawLabel = true;
+    label->setVisible(false);
+    drawLabel = false;
     bLabelRight = false;
-    label->setVisible(drawLabel);
     
     activeWidget = 0;
     activeWidgetIndex = -1;
@@ -60,12 +54,7 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
 void ofxUISortableList::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    for(int i = 0; i < listItems.size(); i++)
-    {
-        ofxUIDraggableLabelButton *t = listItems[i];
-        t->setParent(this);
-        t->getRect()->setParent(this->getRect());
-    }
+    calculatePaddingRect();
 }
 
 vector<ofxUIDraggableLabelButton*> ofxUISortableList::getListItems()
@@ -173,7 +162,7 @@ void ofxUISortableList::initDragableElements(vector<string> &items, int _size)//
         index << i;
         string tname = items[i];
         ofxUIDraggableLabelButton* listItem;
-        listItem = new ofxUIDraggableLabelButton(tname, "", width, itemHeight, (int)(padding/2), ty, _size);
+        listItem = new ofxUIDraggableLabelButton(tname, "", width, itemHeight, padding, ty, _size);
         listItem->setVisible(true);
         listItem->setLabelVisible(true);
         addEmbeddedWidget(listItem);

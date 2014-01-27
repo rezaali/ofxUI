@@ -20,18 +20,6 @@ void ofApp::setup(){
     setGUI4();
     setGUI5();
     
-//    gui1->toggleMinified();
-    gui2->toggleMinified();
-//    gui3->toggleMinified();
-//    gui4->toggleMinified();
-//    gui5->toggleMinified();
-    
-    gui1->toggleMinified();
-    gui2->toggleMinified();
-    gui3->toggleMinified();
-    gui4->toggleMinified();
-    gui5->toggleMinified();
-    
 //    gui1->loadSettings("gui1Settings.xml");
 //    gui2->loadSettings("gui2Settings.xml");
 //    gui3->loadSettings("gui3Settings.xml");
@@ -296,6 +284,15 @@ void ofApp::setGUI2()
     gui2->addLabel("SPECTRUM DISPLAY");
     gui2->addSpectrum("SPECTRUM", buffer, 256, 0.0, 1.0);
     
+    vector<float> buffer;
+    for(int i = 0; i < 256; i++)
+    {
+        buffer.push_back(0.0);
+    }
+
+    gui2->addLabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM);
+    mg = gui2->addMovingGraph("MOVING", buffer, 256, 0.0, 1.0);
+    
     gui2->addSpacer();
     gui2->addLabel("IMAGE DISPLAY");
 	gui2->addImage("IMAGE CAPTION", img);
@@ -339,18 +336,13 @@ void ofApp::setGUI3()
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
     gui3->addImageToggle("IMAGETGL", "GUI/images/Preview.png", false);
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
-
-    gui3->addSpacer();
+    
     vector<string> items;
-    items.push_back("FIRST ITEM");
-    items.push_back("SECOND ITEM");
-    items.push_back("THIRD ITEM");
-    items.push_back("FOURTH ITEM");
-    items.push_back("FIFTH ITEM");
-    items.push_back("SIXTH ITEM");
-
-    gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-    gui3->addDropDownList("DROP DOWN LIST", items);
+    items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
+    items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
+    gui3->setWidgetFontSize(OFX_UI_FONT_SMALL);
+    gui3->addSortableList("SORTABLE LIST", items);
+    
     gui3->setPosition(212*2, 0);
     gui3->autoSizeToFitWidgets();
     
@@ -370,16 +362,7 @@ void ofApp::setGUI4()
     
     gui4->addSpacer();
     gui4->addLabel("FPS SLIDER", OFX_UI_FONT_MEDIUM);
-    gui4->addFPSSlider("FPS SLIDER"); 
-    
-    vector<float> buffer;
-    for(int i = 0; i < 256; i++)
-    {
-        buffer.push_back(0.0);
-    }
-    
-    gui4->addLabel("MOVING GRAPH", OFX_UI_FONT_MEDIUM);
-    mg = (ofxUIMovingGraph *) gui4->addMovingGraph("MOVING GRAPH", buffer, 256, 0, 1.0);
+    gui4->addFPSSlider("FPS SLIDER");
     
     gui4->addSpacer();
     gui4->addLabel("IMAGE SAMPLER", OFX_UI_FONT_MEDIUM);
@@ -390,13 +373,20 @@ void ofApp::setGUI4()
     gui4->addMultiImageToggle("IMAGE TOGGLE", "GUI/toggle.png", false);
     gui4->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     
-    vector<std::string> items;
-    items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
-    items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
-    gui4->setWidgetFontSize(OFX_UI_FONT_SMALL);
-//    gui4->addSortableList("SORTABLE LIST", items);
-
     gui4->addBaseDraws("BASE DRAW", img, true);
+    
+    gui4->addSpacer();
+    vector<string> items;
+    items.push_back("FIRST ITEM");
+    items.push_back("SECOND ITEM");
+    items.push_back("THIRD ITEM");
+    items.push_back("FOURTH ITEM");
+    items.push_back("FIFTH ITEM");
+    items.push_back("SIXTH ITEM");
+    
+    gui4->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
+    gui4->addDropDownList("DROP DOWN LIST", items);
+    
     gui4->setPosition(212*3,0);
     gui4->autoSizeToFitWidgets();
     
