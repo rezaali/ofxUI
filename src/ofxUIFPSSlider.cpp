@@ -26,9 +26,21 @@
 #include "ofxUI.h"
 
 ofxUIFPSSlider::ofxUIFPSSlider(string _name, float w, float h, float _max, float x, float y)
-: ofxUISlider(_name, 0.0, _max, 0.0, w, h, x, y)
-{
-}
+: ofxUISlider(_name, 0.0, _max, 0.0, w, h, x,y){}
+
+ofxUIFPSSlider::ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float _value, string _name)
+: ofxUISlider(_name, _min, _max, _value, w, h, x,y){}
+
+ofxUIFPSSlider::ofxUIFPSSlider(float w, float h, float _min, float _max, float _value, string _name)
+: ofxUISlider(_name, _min, _max, _value, w, h, 0.0,0.0){}
+
+ofxUIFPSSlider::ofxUIFPSSlider(float x, float y, float w, float h, float _min, float _max, float *_value, string _name)
+: ofxUISlider(_name, _min, _max, _value, w, h, x,y){}
+
+ofxUIFPSSlider::ofxUIFPSSlider(float w, float h, float _min, float _max, float *_value, string _name)
+: ofxUISlider(_name, _min, _max, _value, w, h, 0.0,0.0){}
+
+
 
 void ofxUIFPSSlider::update()
 {
