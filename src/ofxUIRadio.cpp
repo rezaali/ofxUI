@@ -134,7 +134,7 @@ void ofxUIRadio::setParent(ofxUIWidget *_parent)
         }
     }
     rect->setWidth(tWidth - padding);
-    rect->setHeight(tHeight - padding);
+    rect->setHeight(tHeight - padding*2.0);
     calculatePaddingRect();
 }
 

@@ -55,11 +55,9 @@ public:
     void updateValueRef();
 	void updateLabel();
     void stateChange();
-    void setVisible(bool _visible);
 	void setValue(float _value);
 	float getValue();
 	float getScaledValue();
-	ofxUILabel *getLabel();
 	void setParent(ofxUIWidget *_parent);
     bool isDraggable();
     void setMax(float _max);

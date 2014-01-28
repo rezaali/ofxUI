@@ -34,8 +34,6 @@ public:
     virtual void init(string _name, bool *_value, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, bool _justifyLeft = false);
     void setLabelText(string labeltext);
 	void setParent(ofxUIWidget *_parent);
-    void setLabelVisible(bool _visible);
-    void setVisible(bool _visible);
     
 protected:    
     bool autoSize; 

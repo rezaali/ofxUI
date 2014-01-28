@@ -37,7 +37,7 @@ ofxUIImageSampler::ofxUIImageSampler(float w, float h, ofImage *_image, string _
 
 void ofxUIImageSampler::initSampler()
 {
-    showLabel = false;
+    setLabelVisible(false);
     value.x = .5;
     value.y = .5;
     input(value.x*rect->getWidth(),value.y*rect->getHeight());
@@ -87,12 +87,6 @@ void ofxUIImageSampler::drawFillHighlight()
         ofxUIDrawRect(rect->getX()+value.x*rect->getWidth(), rect->getY()+value.y*rect->getHeight(), squareSize, squareSize);
         ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
     }
-}
-
-void ofxUIImageSampler::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible && showLabel);
 }
 
 void ofxUIImageSampler::mouseDragged(int x, int y, int button)

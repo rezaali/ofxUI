@@ -49,12 +49,10 @@ public:
     void updateValueRef();
 	void updateLabel();
     void stateChange();
-    void setVisible(bool _visible);
 	void setValue(ofxUIVec3f _value);
 	ofxUIVec3f getValue();
 	ofxUIVec3f getPercentValue();
 	ofxUIVec3f getScaledValue();
-	void setParent(ofxUIWidget *_parent);
     bool isDraggable();
     void setLabelPrecision(int _precision);
     bool hasState(){ return true; };

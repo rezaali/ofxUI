@@ -33,7 +33,7 @@ ofxUIBaseDraws::ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* 
 ofxUIBaseDraws::ofxUIBaseDraws(float x, float y, float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
     init(x, y, w, h, _image, _name);
-    showLabel = _showLabel;
+    setLabelVisible(_showLabel);
 }
 
 ofxUIBaseDraws::ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name) : ofxUIWidgetWithLabel()
@@ -44,7 +44,7 @@ ofxUIBaseDraws::ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _na
 ofxUIBaseDraws::ofxUIBaseDraws(float w, float h, ofBaseDraws* _image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
     init(0, 0, w, h, _image, _name);
-    showLabel = _showLabel;
+    setLabelVisible(_showLabel);
 }
 
 void ofxUIBaseDraws::init(float x, float y, float w, float h, ofBaseDraws* _image, string _name)
@@ -52,7 +52,6 @@ void ofxUIBaseDraws::init(float x, float y, float w, float h, ofBaseDraws* _imag
     initRect(x, y, w, h);
     name = _name;
     kind = OFX_UI_WIDGET_BASE_DRAWS;
-    showLabel = true;
     
     draw_back = false;
     draw_fill = true;
@@ -88,22 +87,9 @@ void ofxUIBaseDraws::drawFill()
     }
 }
 
-void ofxUIBaseDraws::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible && showLabel);
-}
-
 void ofxUIBaseDraws::set(ofBaseDraws *_image)
 {
     image = _image;
-}
-
-void ofxUIBaseDraws::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
-    label->setVisible(showLabel);
-    calculatePaddingRect();
 }
 
 bool ofxUIBaseDraws::isDraggable()

@@ -398,13 +398,6 @@ void ofxUIRotarySlider::stateChange()
     }
 }
 
-void ofxUIRotarySlider::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
-}
-
-
 void ofxUIRotarySlider::setValue(float _value)
 {
     value = ofxUIMap(_value, min, max, 0.0, 1.0, true);
@@ -420,11 +413,6 @@ float ofxUIRotarySlider::getValue()
 float ofxUIRotarySlider::getScaledValue()
 {
     return ofxUIMap(value, 0.0, 1.0, min, max, true);
-}
-
-ofxUILabel *ofxUIRotarySlider::getLabel()
-{
-    return label;
 }
 
 void ofxUIRotarySlider::setParent(ofxUIWidget *_parent)

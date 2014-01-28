@@ -34,7 +34,6 @@ public:
     void init(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);
     virtual void drawBack();
     virtual void drawFill();
-    void setVisible(bool _visible);
     string getTextString();
 	void setTextString(string s);
     void formatTextString();

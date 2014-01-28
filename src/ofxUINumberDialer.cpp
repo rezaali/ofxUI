@@ -120,11 +120,12 @@ void ofxUINumberDialer::init(float x, float y, float w, float h, float _min, flo
         temp+="0";
     }
     
-    displayLabel = false;
+    draw_fill = true;
+    drawLabel = false;
+    
     label = new ofxUILabel(padding,0,(name+" LABEL"), temp, _size);
     addEmbeddedWidget(label);
-    label->setVisible(false);
-    draw_fill = true;
+    label->setVisible(drawLabel);
 }
 
 void ofxUINumberDialer::update()
@@ -146,11 +147,6 @@ void ofxUINumberDialer::drawFill()
         float y = label->getRect()->getY()+label->getRect()->getHeight();
         float w = label->getStringWidth("_");
         
-        if(displayLabel)
-        {
-            label->drawString(x+rect->getWidth(), y, name);
-        }
-        
         for(unsigned int i = 0; i < displaystring.size(); i++)
         {
             float tw = label->getStringWidth(displaystring.substr(i,1));
@@ -170,11 +166,6 @@ void ofxUINumberDialer::drawFillHighlight()
         float y = label->getRect()->getY()+label->getRect()->getHeight();
         float w = label->getStringWidth("_");
         ofxUIDrawRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
-        
-        if(displayLabel)
-        {
-            label->drawString(x+rect->getWidth(), y, name);
-        }
         
         for(unsigned int i = 0; i < displaystring.size(); i++)
         {
@@ -430,17 +421,6 @@ void ofxUINumberDialer::stateChange()
     }
 }
 
-void ofxUINumberDialer::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(false);
-}
-
-ofxUILabel *ofxUINumberDialer::getLabel()
-{
-    return label;
-}
-
 string ofxUINumberDialer::getTextString()
 {
     return textstring;
@@ -486,19 +466,6 @@ string ofxUINumberDialer::numToString(float value, int precision, int width, cha
     ostringstream out;
     out << fixed << setfill(fill) << setw(width) << setprecision(precision) << value;
     return out.str();
-}
-
-void ofxUINumberDialer::setDisplayLabel(bool _displayLabel)
-{
-    displayLabel = _displayLabel;
-    if(displayLabel)
-    {
-        paddedRect->width = rect->width+padding*2.0 + label->getStringWidth(name)+padding*3.0;
-    }
-    else
-    {
-        paddedRect->width = rect->width+padding*2.0;
-    }
 }
 
 #ifndef OFX_UI_NO_XML

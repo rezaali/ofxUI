@@ -55,15 +55,12 @@ public:
     void updateValueRef();
 	void updateLabel();
     void stateChange();
-    void setVisible(bool _visible);
 	void setValueLow(float _value);
 	void setValueHigh(float _value);
 	float getPercentValueLow();
 	float getPercentValueHigh();
 	float getScaledValueLow();
 	float getScaledValueHigh();
-	ofxUILabel *getLabel();
-    void setLabelVisible(bool _labelVisible);
     void setLabelPrecision(int _precision);
 	void setParent(ofxUIWidget *_parent);
     void setMax(float _max);

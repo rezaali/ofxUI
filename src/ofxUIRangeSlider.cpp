@@ -476,12 +476,6 @@ void ofxUIRangeSlider::stateChange()
     }
 }
 
-void ofxUIRangeSlider::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
-}
-
 void ofxUIRangeSlider::setValueLow(float _value)
 {
     valuelow = ofxUIMap(_value, min, max, 0.0, 1.0, true);
@@ -514,16 +508,6 @@ float ofxUIRangeSlider::getScaledValueLow()
 float ofxUIRangeSlider::getScaledValueHigh()
 {
     return ofxUIMap(valuehigh, 0.0, 1.0, min, max, true);
-}
-
-ofxUILabel *ofxUIRangeSlider::getLabel()
-{
-    return label;
-}
-
-void ofxUIRangeSlider::setLabelVisible(bool _labelVisible)
-{
-    label->setVisible(_labelVisible);
 }
 
 void ofxUIRangeSlider::setLabelPrecision(int _precision)

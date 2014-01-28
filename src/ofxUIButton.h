@@ -41,10 +41,8 @@ public:
     virtual void mousePressed(int x, int y, int button);
     virtual void mouseReleased(int x, int y, int button);
     virtual void stateChange();
-    virtual void setVisible(bool _visible);
 	virtual void setParent(ofxUIWidget *_parent);
 	bool getValue();
-    void setLabelVisible(bool _visible);
     virtual void setValue(bool _value);
     virtual void setValuePtr(bool *_value);
 	void toggleValue();
@@ -54,6 +52,5 @@ public:
 protected:
     bool *value; 
     bool useReference; 
-    bool drawLabel;
     bool bLabelRight; 
 }; 

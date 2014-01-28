@@ -62,9 +62,7 @@ void ofxUIImageButton::init(float x, float y, float w, float h, bool *_value, st
     
     label = new ofxUILabel(w+padding,0, (name+" LABEL"), name, _size);
     addEmbeddedWidget(label);
-    
-    drawLabel = false;
-    label->setVisible(drawLabel);
+    setLabelVisible(false); 
     
     if(useReference)
     {

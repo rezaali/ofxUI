@@ -129,15 +129,3 @@ void ofxUILabelButton::setValue(bool _value)
     draw_fill = *value;
     label->setDrawBack((*value));
 }
-
-void ofxUILabelButton::setLabelVisible(bool _visible)
-{
-    drawLabel = _visible;
-    label->setVisible(drawLabel);
-}
-
-void ofxUILabelButton::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible((visible && drawLabel));
-}

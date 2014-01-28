@@ -39,9 +39,11 @@ void ofxUITextArea::init(string _name, string _textstring, float w, float h, flo
     setDrawFill(true);
     setDrawBack(false);
     drawShadow = false;
+    drawLabel = false;
     
     label = new ofxUILabel(padding*2.0,0,(name+" LABEL"), _size);
     addEmbeddedWidget(label);
+    label->setVisible(drawLabel);
     
     if(h == 0)
     {
@@ -82,12 +84,6 @@ void ofxUITextArea::drawFill()
             label->drawString(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
         }
     }
-}
-
-void ofxUITextArea::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(false);
 }
 
 string ofxUITextArea::getTextString()
@@ -191,8 +187,7 @@ void ofxUITextArea::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
     formatTextString();
-    label->setVisible(false);
-    calculatePaddingRect(); 
+    calculatePaddingRect();
 }
 
 void ofxUITextArea::setDrawShadow(bool _drawShadow)

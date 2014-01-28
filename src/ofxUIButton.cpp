@@ -58,9 +58,7 @@ void ofxUIButton::init(string _name, bool *_value, float w, float h, float x, fl
     label = new ofxUILabel((name+" LABEL"),name,_size);
     addEmbeddedWidget(label);
     
-    drawLabel = true;
     bLabelRight = true;
-    label->setVisible(drawLabel);
     
     if(useReference)
     {
@@ -197,13 +195,6 @@ void ofxUIButton::stateChange()
     }
 }
 
-void ofxUIButton::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible((drawLabel && visible));
-    calculatePaddingRect();
-}
-
 void ofxUIButton::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
@@ -219,14 +210,6 @@ bool ofxUIButton::getValue()
 {
     return *value;
 }
-
-void ofxUIButton::setLabelVisible(bool _visible)
-{
-    drawLabel = _visible;
-    label->setVisible((drawLabel && visible));
-    calculatePaddingRect();
-}
-
 void ofxUIButton::setValue(bool _value)
 {
     *value = _value;

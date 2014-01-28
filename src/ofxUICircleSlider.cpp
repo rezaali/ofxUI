@@ -257,7 +257,7 @@ void ofxUICircleSlider::setParent(ofxUIWidget *_parent)
     
     float w = labelrect->getWidth();
     float pw = rect->getWidth();
-    labelrect->x = (int)(pw*.5 - w*.5-padding*.5);
+    labelrect->setX((int)(pw*.5 - w*.5-padding*.5)); 
     calculatePaddingRect();
 }
 

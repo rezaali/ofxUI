@@ -42,9 +42,7 @@ public:
     void keyPressed(int key);
     void unClick();
     void stateChange();
-    void setVisible(bool _visible);
 	bool isClicked();
-	ofxUILabel *getLabel();
 	string getTextString();
     void setTriggerType(int _triggerType);
     int getTriggerType();

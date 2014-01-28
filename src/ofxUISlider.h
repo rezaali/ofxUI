@@ -73,12 +73,9 @@ public:
 	
     float getPercentValue();
 	T getScaledValue();
-	
-    ofxUILabel *getLabel();
-    void setLabelVisible(bool _labelVisible);
+
     void setLabelPrecision(int _precision);
     
-    void setVisible(bool _visible);
 	virtual void setParent(ofxUIWidget *_parent);
     
     void setMax(T _max, bool bKeepValueTheSame = false);

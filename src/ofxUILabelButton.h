@@ -60,8 +60,6 @@ public:
     void setLabelText(string labeltext);
 	void setParent(ofxUIWidget *_parent);
     virtual void setValue(bool _value);
-    void setLabelVisible(bool _visible);
-    void setVisible(bool _visible);
     
 protected:    //inherited: ofxUIRectangle *rect; ofxUIWidget *parent; 
     bool autoSize;

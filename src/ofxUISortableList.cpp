@@ -51,12 +51,6 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
     initDragableElements(items, _size);
 }
 
-void ofxUISortableList::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
-    calculatePaddingRect();
-}
-
 vector<ofxUIDraggableLabelButton*> ofxUISortableList::getListItems()
 {
     return listItems;

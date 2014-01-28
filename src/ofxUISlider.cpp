@@ -99,6 +99,7 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
         label = new ofxUILabel(0,h+padding,string(name+" LABEL"), string(name), OFX_UI_FONT_SMALL);
     }
     addEmbeddedWidget(label);
+    label->setVisible(drawLabel);
     
     increment = fabs(max - min) / 100.0;
     bRoundedToNearestInt = false;
@@ -501,26 +502,6 @@ template<typename T>
 T ofxUISlider_<T>::getScaledValue()
 {
     return ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
-}
-
-template<typename T>
-ofxUILabel *ofxUISlider_<T>::getLabel()
-{
-    return label;
-}
-
-template<typename T>
-void ofxUISlider_<T>::setLabelVisible(bool _labelVisible)
-{
-    label->setVisible(_labelVisible);
-    paddedRect->height -= label->getPaddingRect()->height;
-}
-
-template<typename T>
-void ofxUISlider_<T>::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
 }
 
 template<typename T>

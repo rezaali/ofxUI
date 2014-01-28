@@ -351,12 +351,6 @@ void ofxUI2DPad::stateChange()
     }
 }
 
-void ofxUI2DPad::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
-}
-
 void ofxUI2DPad::setValue(ofxUIVec3f _value)
 {
     if(_value.x > rangeX.y)
@@ -399,13 +393,6 @@ ofxUIVec3f ofxUI2DPad::getScaledValue()
     p.x = ofxUIMap(p.x, 0, 1, rangeX.x, rangeX.y, true);
     p.y = ofxUIMap(p.y, 0, 1, rangeY.x, rangeY.y, true);
     return p;
-}
-
-void ofxUI2DPad::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
-    label->getRect()->setY(rect->getHeight()+padding);
-    calculatePaddingRect();
 }
 
 bool ofxUI2DPad::isDraggable()

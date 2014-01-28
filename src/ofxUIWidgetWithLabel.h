@@ -34,12 +34,15 @@ public:
     ofxUIWidgetWithLabel();
     virtual ~ofxUIWidgetWithLabel();
     virtual bool hasLabel();
-    void setVisible(bool _visible);
+    virtual void setVisible(bool _visible);
+	virtual void setParent(ofxUIWidget *_parent);
     virtual ofxUILabel* getLabelWidget();
+    virtual void setLabelVisible(bool _visible);
     virtual void toggleColors();
     virtual void setModal(bool _modal);
     virtual bool hasState();
     
 protected:
     ofxUILabel *label;
+    bool drawLabel;    
 };

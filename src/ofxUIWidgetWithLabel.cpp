@@ -23,10 +23,11 @@
  **********************************************************************************/
 
 #include "ofxUIWidgetWithLabel.h"
+#include "ofxUILabel.h"
 
 ofxUIWidgetWithLabel::ofxUIWidgetWithLabel() : ofxUIWidget()
 {
-    
+    drawLabel = true; 
 }
 
 ofxUIWidgetWithLabel::~ofxUIWidgetWithLabel()
@@ -42,13 +43,25 @@ bool ofxUIWidgetWithLabel::ofxUIWidgetWithLabel::hasLabel()
 void ofxUIWidgetWithLabel::setVisible(bool _visible)
 {
     visible = _visible;
-    ofxUIWidget *labelWidget = (ofxUIWidget *) label;
-    labelWidget->setVisible(visible);
+    label->setVisible((drawLabel && visible));
+}
+
+void ofxUIWidgetWithLabel::setParent(ofxUIWidget *_parent)
+{
+    ofxUIWidget::setParent(_parent);
+    calculatePaddingRect(); 
 }
 
 ofxUILabel* ofxUIWidgetWithLabel::getLabelWidget()
 {
     return label;
+}
+
+void ofxUIWidgetWithLabel::setLabelVisible(bool _visible)
+{
+    drawLabel = _visible;
+    label->setVisible((drawLabel && visible));
+    calculatePaddingRect();
 }
 
 void ofxUIWidgetWithLabel::toggleColors()

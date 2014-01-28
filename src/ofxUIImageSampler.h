@@ -35,7 +35,6 @@ public:
     void setSquareSize(float _squareSize);
     void drawFill();
     void drawFillHighlight();
-    void setVisible(bool _visible);
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);

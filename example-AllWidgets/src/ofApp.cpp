@@ -21,11 +21,11 @@ void ofApp::setup(){
     setGUI4();
     setGUI5();
     
-//    gui1->loadSettings("gui1Settings.xml");
-//    gui2->loadSettings("gui2Settings.xml");
-//    gui3->loadSettings("gui3Settings.xml");
-//    gui4->loadSettings("gui4Settings.xml");
-//    gui5->loadSettings("gui5Settings.xml");
+    gui1->loadSettings("gui1Settings.xml");
+    gui2->loadSettings("gui2Settings.xml");
+    gui3->loadSettings("gui3Settings.xml");
+    gui4->loadSettings("gui4Settings.xml");
+    gui5->loadSettings("gui5Settings.xml");
 }
 
 //--------------------------------------------------------------
@@ -238,7 +238,7 @@ void ofApp::setGUI1()
     
     gui1->addSpacer();
 	gui1->addLabel("H SLIDERS");
-	gui1->addSlider("RED", 0.0, 255.0, red); 
+	gui1->addSlider("RED", 0.0, 255.0, red);
 	gui1->addSlider("GREEN", 0.0, 255.0, green);
 	gui1->addSlider("BLUE", 0.0, 255.0, blue);
     
@@ -386,7 +386,12 @@ void ofApp::setGUI4()
     gui4->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     
     gui4->addBaseDraws("BASE DRAW", img, true);
-    
+
+    gui4->addSpacer();
+    gui4->setGlobalButtonDimension(32);
+    gui4->addButton("BTN", false)->setLabelVisible(false);
+    gui4->addToggle("TGL", false)->setLabelVisible(false); 
+
     gui4->addSpacer();
     vector<string> items;
     items.push_back("FIRST ITEM");
@@ -398,10 +403,6 @@ void ofApp::setGUI4()
     
     gui4->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
     gui4->addDropDownList("DROP DOWN LIST", items);
-    
-    gui4->setGlobalButtonDimension(32);
-    gui4->addButton("BTN", false)->getLabelWidget()->setVisible(false);
-    gui4->addToggle("TGL", false)->setLabelVisible(false);
     
     gui4->setPosition(212*3,0);
     gui4->autoSizeToFitWidgets();

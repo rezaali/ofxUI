@@ -44,12 +44,13 @@ void ofxUIDropDownList::init(string _name, vector<string> items, float w, float 
     value = new bool();
     *value = false;
     draw_fill = *value;
-    
+
     bShowCurrentSelected = false;
     allowMultiple = false;
     addToggles(items);
     autoClose = false;
     singleSelected = NULL;
+    setValue(false);
 }
 
 void ofxUIDropDownList::draw()
@@ -279,6 +280,7 @@ void ofxUIDropDownList::setParent(ofxUIWidget *_parent)
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUILabelToggle *t = toggles[i];
+        t->setVisible(isOpen());
         t->setParent(this);
         t->getRect()->setParent(this->getRect());
         t->getRect()->setX(0);
@@ -336,6 +338,7 @@ void ofxUIDropDownList::setVisible(bool _visible)
     {
         ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
         toggle->setVisible((visible && isOpen()));
+        toggle->setLabelVisible((visible && isOpen()));
     }
 }
 

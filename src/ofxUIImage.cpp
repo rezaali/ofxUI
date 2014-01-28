@@ -27,37 +27,31 @@
 
 ofxUIImage::ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _image, _name);
+    init(x, y, w, h, _image, _name);
 }
 
 ofxUIImage::ofxUIImage(float x, float y, float w, float h, ofImage *_image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w, h, _image, _name);
-    showLabel = _showLabel;
+    init(x, y, w, h, _image, _name);
+    setLabelVisible(_showLabel);
 }
 
 ofxUIImage::ofxUIImage(float w, float h, ofImage *_image, string _name) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _image, _name);
+    init(0, 0, w, h, _image, _name);
 }
 
 ofxUIImage::ofxUIImage(float w, float h, ofImage *_image, string _name, bool _showLabel) : ofxUIWidgetWithLabel()
 {
-    rect = new ofxUIRectangle(0,0,w,h);
-    init(w, h, _image, _name);
-    showLabel = _showLabel;
+    init(0, 0, w, h, _image, _name);
+    setLabelVisible(_showLabel);
 }
 
-void ofxUIImage::init(float w, float h, ofImage *_image, string _name)
+void ofxUIImage::init(float x, float y, float w, float h, ofImage *_image, string _name)
 {
+    initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_IMAGE;
-    showLabel = true;
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
     
     draw_back = false;
     draw_fill = true;
@@ -101,13 +95,6 @@ void ofxUIImage::drawFill()
     }
 }
 
-void ofxUIImage::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(showLabel && _visible);
-    calculatePaddingRect(); 
-}
-
 void ofxUIImage::setCropImageToFitRect(bool _cropImageToFitRect)
 {
     cropImageToFitRect = _cropImageToFitRect;
@@ -116,13 +103,6 @@ void ofxUIImage::setCropImageToFitRect(bool _cropImageToFitRect)
 void ofxUIImage::setImage(ofImage *_image)
 {
     image = _image;
-}
-
-void ofxUIImage::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
-    label->setVisible(showLabel);
-    calculatePaddingRect();
 }
 
 bool ofxUIImage::isDraggable()

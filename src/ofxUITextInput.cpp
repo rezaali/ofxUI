@@ -335,20 +335,9 @@ void ofxUITextInput::stateChange()
     }
 }
 
-void ofxUITextInput::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
-}
-
 bool ofxUITextInput::isClicked()
 {
     return clicked;
-}
-
-ofxUILabel *ofxUITextInput::getLabel()
-{
-    return label;
 }
 
 string ofxUITextInput::getTextString()

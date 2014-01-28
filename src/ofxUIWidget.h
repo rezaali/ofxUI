@@ -96,12 +96,6 @@ public:
     virtual void stateChange();
     virtual bool isHit(float x, float y);
     
-//    virtual void positionWidget(ofxUIWidget *widget);
-//    virtual void positionWidgetDown(ofxUIWidget *widget);
-//    virtual void positionWidgetUp(ofxUIWidget *widget);
-//    virtual void positionWidgetLeft(ofxUIWidget *widget);
-//    virtual void positionWidgetRight(ofxUIWidget *widget);
-   
     virtual void addWidget(ofxUIWidget *widget);
     virtual void removeWidget(ofxUIWidget *widget);
     

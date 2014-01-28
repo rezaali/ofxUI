@@ -123,15 +123,3 @@ void ofxUILabelToggle::setParent(ofxUIWidget *_parent)
     }
     calculatePaddingRect();
 }
-
-void ofxUILabelToggle::setLabelVisible(bool _visible)
-{
-    drawLabel = _visible;
-    label->setVisible(drawLabel);
-}
-
-void ofxUILabelToggle::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible((visible && drawLabel));
-}

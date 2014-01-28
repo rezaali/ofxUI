@@ -51,22 +51,18 @@ public:
     void keyReleased(int key);
     void windowResized(int w, int h);
     void stateChange();
-    void setVisible(bool _visible);
-	ofxUILabel *getLabel();
 	string getTextString();
 	void setTextString(string s);
 	void setParent(ofxUIWidget *_parent);
     bool isDraggable();
     string numToString(float value, int precision, int width, char fill);
-    void setDisplayLabel(bool _displayLabel);
     bool hasState(){ return true; };
 #ifndef OFX_UI_NO_XML
     virtual void saveState(ofxXmlSettings *XML);
     virtual void loadState(ofxXmlSettings *XML);
 #endif    
     
-protected:    
-    bool displayLabel;
+protected:
 	string textstring;
     string displaystring;
     int precision; 
