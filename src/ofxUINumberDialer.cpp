@@ -87,7 +87,6 @@ void ofxUINumberDialer::init(float x, float y, float w, float h, float _min, flo
     precision = _precision;
     currentPrecisionZone = 1;
     
-    
     string minString = ofxUIToString(min, precision);
     string maxString = ofxUIToString(max, precision);
     if(minString.length() > maxString.length())
@@ -123,9 +122,8 @@ void ofxUINumberDialer::init(float x, float y, float w, float h, float _min, flo
     draw_fill = true;
     drawLabel = false;
     
-    label = new ofxUILabel(padding,0,(name+" LABEL"), temp, _size);
+    label = new ofxUILabel(0,0,(name+" LABEL"), temp, _size);
     addEmbeddedWidget(label);
-    label->setVisible(drawLabel);
 }
 
 void ofxUINumberDialer::update()
@@ -143,7 +141,7 @@ void ofxUINumberDialer::drawFill()
     {
         ofxUIFill();
         ofxUISetColor(color_fill);
-        float x = label->getRect()->getX();
+        float x = rect->getX()+padding;
         float y = label->getRect()->getY()+label->getRect()->getHeight();
         float w = label->getStringWidth("_");
         
@@ -162,7 +160,7 @@ void ofxUINumberDialer::drawFillHighlight()
     {
         ofxUIFill();
         ofxUISetColor(color_fill_highlight);
-        float x = label->getRect()->getX();
+        float x = rect->getX()+padding;
         float y = label->getRect()->getY()+label->getRect()->getHeight();
         float w = label->getStringWidth("_");
         ofxUIDrawRect(x+currentPrecisionZone*w,y+padding*.5,w, padding*.5);
@@ -438,7 +436,6 @@ void ofxUINumberDialer::setTextString(string s)
     }
     textstring = s;
     displaystring = s;
-    label->setLabel(displaystring);
 }
 
 void ofxUINumberDialer::setParent(ofxUIWidget *_parent)
@@ -451,9 +448,10 @@ void ofxUINumberDialer::setParent(ofxUIWidget *_parent)
     float h = labelrect->getHeight();
     float ph = rect->getHeight();    
     labelrect->setY(ph/2.0 - h/2.0);
-
-    calculatePaddingRect();
+    labelrect->setX(rect->getWidth()+padding);
+    label->setLabel(name); 
     setTextString(numToString(abs(*value), precision, numOfPrecisionZones, '0'));
+    calculatePaddingRect();    
 }
 
 bool ofxUINumberDialer::isDraggable()

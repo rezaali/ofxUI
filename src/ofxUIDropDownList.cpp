@@ -50,7 +50,6 @@ void ofxUIDropDownList::init(string _name, vector<string> items, float w, float 
     addToggles(items);
     autoClose = false;
     singleSelected = NULL;
-    setValue(false);
 }
 
 void ofxUIDropDownList::draw()
@@ -114,7 +113,6 @@ void ofxUIDropDownList::addToggle(string toggleName)
     ltoggle->getRect()->setY(yt);
     ltoggle->getRect()->setX(0);
     ltoggle->setVisible(*value);
-    ltoggle->setLabelVisible(*value);
     addEmbeddedWidget(ltoggle);
     toggles.push_back(ltoggle);
     ltoggle->setModal(modal);
@@ -166,10 +164,8 @@ void ofxUIDropDownList::removeToggle(string toggleName)
         for(unsigned int i = 0; i < toggles.size(); i++)
         {
             ofxUILabelToggle *t = toggles[i];
-            t->setParent(this);
-            t->getRect()->setParent(this->getRect());
-            t->getRect()->y = yt;
-            t->getRect()->x = 0;
+            t->getRect()->setY(yt);
+            t->getRect()->setX(0);
             yt +=t->getRect()->getHeight();
         }
     }
@@ -274,24 +270,18 @@ void ofxUIDropDownList::setParent(ofxUIWidget *_parent)
     
     labelrect->setY((int)(ph*.5 - h*.5));
     labelrect->setX((int)(pw*.5 - w*.5-padding*.5));
-    calculatePaddingRect();
-
-    float yt = rect->height;
+    
+    float yt = rect->getHeight();
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
-        ofxUILabelToggle *t = toggles[i];
-        t->setVisible(isOpen());
-        t->setParent(this);
-        t->getRect()->setParent(this->getRect());
-        t->getRect()->setX(0);
-        t->getRect()->setY(yt);
-        yt +=t->getRect()->getHeight();
-        if(autoSize)
-        {
-            t->getRect()->setWidth(rect->getWidth());
-        }
-        t->getPaddingRect()->setWidth(paddedRect->getWidth());
+        ofxUILabelToggle *toggle = (ofxUILabelToggle *)toggles[i];
+        ofxUIRectangle *trect = toggle->getRect();
+        toggle->setParent(this);
+        trect->setParent(rect);
+        trect->setY(yt);
+        yt+=trect->getHeight();
     }
+    paddedRect->set(-padding, -padding, rect->getWidth()+padding*2.0, rect->getHeight()+padding*2.0);
 }
 
 void ofxUIDropDownList::mouseReleased(int x, int y, int button)
@@ -333,12 +323,11 @@ void ofxUIDropDownList::close()
 void ofxUIDropDownList::setVisible(bool _visible)
 {
     visible = _visible;
-    label->setVisible(visible);
+    label->setVisible((visible && drawLabel));
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
         toggle->setVisible((visible && isOpen()));
-        toggle->setLabelVisible((visible && isOpen()));
     }
 }
 
@@ -348,7 +337,6 @@ void ofxUIDropDownList::setToggleVisibility(bool _value)
     {
         ofxUILabelToggle * toggle = (ofxUILabelToggle *) toggles[i];
         toggle->setVisible(_value);
-        toggle->setLabelVisible(_value);
     }
 }
 

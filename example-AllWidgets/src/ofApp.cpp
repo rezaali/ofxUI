@@ -271,7 +271,7 @@ void ofApp::setGUI1()
     
     string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block.";
     gui1->addSpacer();
-    gui1->addTextArea("textarea", textString, OFX_UI_FONT_MEDIUM);
+    gui1->addTextArea("textarea", textString, OFX_UI_FONT_SMALL);
     
     gui1->autoSizeToFitWidgets();
 	ofAddListener(gui1->newGUIEvent,this,&ofApp::guiEvent);
@@ -310,10 +310,11 @@ void ofApp::setGUI2()
     gui2->addSpacer();
     gui2->addLabel("FPS LABEL");
     gui2->addFPS();
-    
+
+    gui2->setWidgetFontSize(OFX_UI_FONT_SMALL);
     gui2->addSpacer();
     gui2->addLabel("NUMBER DIALER");
-    gui2->addNumberDialer("DIALER", -10000, 10000, 5000, 3);
+    gui2->addNumberDialer("DIALER", -10000, 10000, 5000, 3); 
     
     gui2->addSpacer();
     gui2->addLabel("LABEL BUTTON", OFX_UI_FONT_MEDIUM);
@@ -350,8 +351,14 @@ void ofApp::setGUI3()
     vector<string> items;
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
     items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
+    
+    gui3->addSpacer();
     gui3->setWidgetFontSize(OFX_UI_FONT_SMALL);
     gui3->addSortableList("SORTABLE LIST", items);
+    
+    gui3->addSpacer();
+    gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
+    gui3->addDropDownList("DROP DOWN LIST", items);
 
     gui3->setGlobalButtonDimension(OFX_UI_GLOBAL_BUTTON_DIMENSION);
     
@@ -390,19 +397,7 @@ void ofApp::setGUI4()
     gui4->addSpacer();
     gui4->setGlobalButtonDimension(32);
     gui4->addButton("BTN", false)->setLabelVisible(false);
-    gui4->addToggle("TGL", false)->setLabelVisible(false); 
-
-    gui4->addSpacer();
-    vector<string> items;
-    items.push_back("FIRST ITEM");
-    items.push_back("SECOND ITEM");
-    items.push_back("THIRD ITEM");
-    items.push_back("FOURTH ITEM");
-    items.push_back("FIFTH ITEM");
-    items.push_back("SIXTH ITEM");
-    
-    gui4->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-    gui4->addDropDownList("DROP DOWN LIST", items);
+    gui4->addToggle("TGL", false)->setLabelVisible(false);
     
     gui4->setPosition(212*3,0);
     gui4->autoSizeToFitWidgets();

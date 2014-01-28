@@ -74,14 +74,17 @@ void ofxUISuperCanvas::setDeltaTime(float _deltaTime)
 
 void ofxUISuperCanvas::setMinified(bool _bIsMinified)
 {
-    bIsMinified = _bIsMinified;
-    if(bIsMinified)
+    if(bIsMinified != _bIsMinified)
     {
-        minify();
-    }
-    else
-    {
-        maximize();
+        bIsMinified = _bIsMinified;
+        if(bIsMinified)
+        {
+            minify();
+        }
+        else
+        {
+            maximize();
+        }
     }
 }
 
