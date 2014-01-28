@@ -367,6 +367,7 @@ void ofxUICanvas::disable()
 
 void ofxUICanvas::update()
 {
+    if (!isVisible()) { return; } // Custom to save framerate
     for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
     {
         (*it)->update();
@@ -1507,6 +1508,23 @@ ofxUI2DPad* ofxUICanvas::add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }
+
+/* CUSTOM ENVELOPE EDITOR */
+ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value)
+{
+    float dim = rect->getWidth()-widgetSpacing*2;
+    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, dim, dim, 0, 0);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
+ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x, float y)
+{
+    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, w, h, x, y);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    return widget;
+}
+
 
 ofxUITextInput* ofxUICanvas::addTextInput(string _name, string _textstring, int _size)
 {
