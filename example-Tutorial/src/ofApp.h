@@ -25,6 +25,4 @@ class ofApp : public ofBaseApp{
     ofxUICanvas *gui; 
     void exit(); 
     void guiEvent(ofxUIEventArgs &e);
-    
-    
 };

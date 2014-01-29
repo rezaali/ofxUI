@@ -32,8 +32,8 @@ typedef ofVec2f ofxUIVec2f;
 typedef ofTrueTypeFont ofxUIFont; 
 typedef ofColor ofxUIColor;
 
-#ifdef TARGET_OPENGLES
-#define OFX_UI_TARGET_TOUCH
+#if (TARGET_OF_IPHONE) || (TARGET_OF_IOS) || (TARGET_ANDROID)
+    #define OFX_UI_TARGET_TOUCH
 #endif
 
 #define OFX_UI_RECTMODE_CORNER OF_RECTMODE_CORNER

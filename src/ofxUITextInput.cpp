@@ -142,7 +142,7 @@ void ofxUITextInput::mousePressed(int x, int y, int button)
             theta = 0;
             hit = true;
         }
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         clicked = true;
         theta = 0;
         hit = true;
@@ -172,7 +172,7 @@ void ofxUITextInput::mouseReleased(int x, int y, int button)
 {
     if(hit)
     {
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         state = OFX_UI_STATE_NORMAL;
 #else
         state = OFX_UI_STATE_OVER;

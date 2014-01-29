@@ -28,12 +28,24 @@
 ofxUICanvas::~ofxUICanvas()
 {
     disable();
-    delete GUIevent;
+    if(GUIevent != NULL)
+    {
+        delete GUIevent;
+    }
     if(!hasSharedResources)
     {
-        delete font_large;
-        delete font_medium;
-        delete font_small;
+        if(font_large != NULL)
+        {
+            delete font_large;
+        }
+        if(font_medium != NULL)
+        {
+            delete font_medium;
+        }
+        if(font_small != NULL)
+        {
+            delete font_small;
+        }
     }
     for(vector<ofxUIWidget *>::iterator it = widgets.begin(); it != widgets.end(); ++it)
     {
@@ -45,47 +57,42 @@ ofxUICanvas::~ofxUICanvas()
 
 ofxUICanvas::ofxUICanvas(ofxUIRectangle r) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(r);
-    init(r.width,r.height);
+    init(r.getX(false), r.getY(false), r.width, r.height);
 }
 
 ofxUICanvas::ofxUICanvas(float x, float y, float w, float h) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w,h);
+    init(x, y, w, h);
 }
 
 ofxUICanvas::ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(x,y,w,h);
-    init(w,h, sharedResources);
+    init(x, y, w, h,sharedResources);
 }
 
 ofxUICanvas::ofxUICanvas(float defaultWidthSize, float defaultHeightSize) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,defaultWidthSize,defaultHeightSize);
-    init(defaultWidthSize, defaultHeightSize);
+    init(0, 0, defaultWidthSize, defaultHeightSize);
     setGlobalCanvasWidth(defaultWidthSize);
 }
 
 ofxUICanvas::ofxUICanvas(ofxUICanvas *sharedResources, float defaultWidthSize, float defaultHeightSize) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0,0,defaultWidthSize,defaultHeightSize);
-    init(defaultWidthSize, defaultHeightSize, sharedResources);
+    init(0, 0, defaultWidthSize, defaultHeightSize, sharedResources);
     setGlobalCanvasWidth(defaultWidthSize);
 }
 
 ofxUICanvas::ofxUICanvas(string title) : ofxUIWidget()
 {
-    rect = new ofxUIRectangle(0, 0, 316, ofxUIGetHeight());
-    init(46, ofxUIGetHeight());
+    init(0, 0, 46, ofxUIGetHeight());
     addWidgetDown(new ofxUILabel(title, OFX_UI_FONT_LARGE));
     addWidgetDown(new ofxUISpacer(0, 20));
     addWidgetDown(new ofxUIFPSSlider(300, 20, 0, 1000, ofGetFrameRate(), "FPS"));
 }
 
-void ofxUICanvas::init(int w, int h, ofxUICanvas *sharedResources)
+void ofxUICanvas::init(int x, int y, int w, int h, ofxUICanvas *sharedResources)
 {
+    initRect(x, y, w, h);
     name = string("OFX_UI_WIDGET_CANVAS");
     kind = OFX_UI_WIDGET_CANVAS;
     
@@ -98,9 +105,6 @@ void ofxUICanvas::init(int w, int h, ofxUICanvas *sharedResources)
     autoDraw = true;
     autoUpdate = true;
     bTriggerWidgetsUponLoad = true;
-    
-    paddedRect = new ofxUIRectangle(-padding, -padding, w+padding*2.0, h+padding*2.0);
-    paddedRect->setParent(rect);
     
     if(sharedResources != NULL)
     {

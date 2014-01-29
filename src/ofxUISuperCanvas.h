@@ -42,7 +42,7 @@ public:
     void toggleMinified();
     ofxUILabel *getCanvasTitle();
 
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
     virtual void touchDown(float x, float y, int id);
     virtual void touchMoved(float x, float y, int id);
     virtual void touchUp(float x, float y, int id);

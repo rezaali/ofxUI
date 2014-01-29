@@ -289,7 +289,7 @@ void ofxUIDropDownList::mouseReleased(int x, int y, int button)
     if(rect->inside(x, y) && hit)
     {
         setValue(!(*value));
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         state = OFX_UI_STATE_NORMAL;
 #else
         state = OFX_UI_STATE_OVER;

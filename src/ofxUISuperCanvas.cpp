@@ -103,7 +103,7 @@ ofxUILabel *ofxUISuperCanvas::getCanvasTitle()
     return canvasTitle;
 }
 
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
 
 void ofxUISuperCanvas::touchDown(float x, float y, int id)
 {

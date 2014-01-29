@@ -36,14 +36,14 @@ class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {
 public:
     ~ofxUICanvas();
+    ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
     ofxUICanvas(ofxUIRectangle r);
     ofxUICanvas(float x, float y, float w, float h);
     ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources);
-    ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
     ofxUICanvas(ofxUICanvas *sharedResources, float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
     ofxUICanvas(string title);
     
-    void init(int w, int h, ofxUICanvas *sharedResources = NULL);
+    void init(int x, int y, int w, int h, ofxUICanvas *sharedResources = NULL);
     void copyCanvasStyle(ofxUICanvas *styler);
     void copyCanvasProperties(ofxUICanvas *styler);
 #ifndef OFX_UI_NO_XML

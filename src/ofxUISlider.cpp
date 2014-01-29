@@ -321,7 +321,7 @@ void ofxUISlider_<T>::mouseReleased(int x, int y, int button)
 {
     if(hit)
     {
-#ifdef TARGET_OPENGLES
+#ifdef OFX_UI_TARGET_TOUCH
         state = OFX_UI_STATE_NORMAL;
 #else
         state = OFX_UI_STATE_OVER;

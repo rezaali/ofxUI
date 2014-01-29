@@ -11,7 +11,6 @@ void ofApp::setup()
     gui->autoSizeToFitWidgets(); 
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent); 
     gui->loadSettings("settings.xml");
-    
 }
 
 //--------------------------------------------------------------

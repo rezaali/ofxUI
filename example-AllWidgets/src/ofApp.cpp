@@ -377,7 +377,7 @@ void ofApp::setGUI4()
     gui4->addBiLabelSlider("BILABEL", "HOT", "COLD", 0, 100, 50);
     
     gui4->addLabel("MINIMAL SLIDER");
-    gui4->addMinimalSlider("MINIMAL", 0, 100, 50.0);
+    gui4->addMinimalSlider("MINIMAL", 0, 100, 50.0)->getLabelWidget()->setColorFill(ofColor(255, 255, 0));
     
     gui4->addSpacer();
     gui4->addLabel("FPS SLIDER", OFX_UI_FONT_MEDIUM);
