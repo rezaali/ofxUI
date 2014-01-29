@@ -57,6 +57,7 @@ public:
     void stateChange();
 	void setValue(float _value);
 	float getValue();
+    float getNormalizedValue();
 	float getScaledValue();
 	void setParent(ofxUIWidget *_parent);
     bool isDraggable();
@@ -81,6 +82,8 @@ protected:
     ofxUIVec2f center; 
     ofxUIVec2f hitPoint; 
     ofxUIVec2f homePoint; 
-    float outerRadius, innerRadius; 
+    float outerRadius, innerRadius;
+    string valueString; 
+    
     
 }; 

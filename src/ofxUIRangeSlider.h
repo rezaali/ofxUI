@@ -57,7 +57,11 @@ public:
     void stateChange();
 	void setValueLow(float _value);
 	void setValueHigh(float _value);
-	float getPercentValueLow();
+    float getValueLow();
+    float getValueHigh();
+    float getNormalizedValueLow();
+    float getNormalizedValueHigh();
+    float getPercentValueLow();
 	float getPercentValueHigh();
 	float getScaledValueLow();
 	float getScaledValueHigh();
@@ -82,5 +86,7 @@ protected:
 	bool hitHigh, hitLow, hitCenter; 
 	float hitPoint; 
 	float max, min; 
-    int labelPrecision;        
+    int labelPrecision;
+    string valuelowString;
+    string valuehighString; 
 }; 

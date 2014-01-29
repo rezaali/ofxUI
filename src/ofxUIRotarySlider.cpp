@@ -92,8 +92,8 @@ void ofxUIRotarySlider::init(float x, float y, float w, float _min, float _max, 
     innerRadius = rect->getWidth()*.25;
     
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
-    
-    label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue(),2)), _size);
+    valueString = ofxUIToString(getValue(),2);
+    label = new ofxUILabel(0,w+padding,(name+" LABEL"), (name + ": " + valueString), _size);
     addEmbeddedWidget(label);
     increment = fabs(max - min) / 10.0;
 }
@@ -103,6 +103,7 @@ void ofxUIRotarySlider::update()
     if(useReference)
     {
         value = ofxUIMap(*valueRef, min, max, 0.0, 1.0, true);
+        updateLabel();
     }
 }
 
@@ -329,15 +330,7 @@ void ofxUIRotarySlider::input(float x, float y)
     ofVec2f cVector = center-homePoint;
     value = ofxUIMap(cVector.angle(mappedHitPoint), -180, 180, 0, 1.0, true);
     
-    if(value > 1.0)
-    {
-        value = 1.0;
-    }
-    else if(value < 0.0)
-    {
-        value = 0.0;
-    }
-    
+    value = MIN(1.0, MAX(0.0, value));
     updateValueRef();
     updateLabel();
 }
@@ -349,7 +342,8 @@ void ofxUIRotarySlider::updateValueRef()
 
 void ofxUIRotarySlider::updateLabel()
 {
-    label->setLabel(name + ": " + ofxUIToString(getScaledValue(),2));
+    valueString = ofxUIToString(getValue(),2);
+    label->setLabel(name + ": " + valueString);
 }
 
 void ofxUIRotarySlider::stateChange()
@@ -406,6 +400,11 @@ void ofxUIRotarySlider::setValue(float _value)
 }
 
 float ofxUIRotarySlider::getValue()
+{
+    return (*valueRef); 
+}
+
+float ofxUIRotarySlider::getNormalizedValue()
 {
     return value;
 }
