@@ -70,6 +70,7 @@ public:
 	
     void setValue(T _value);
 	T getValue();
+    T getNormalizedValue();
 	
     float getPercentValue();
 	T getScaledValue();

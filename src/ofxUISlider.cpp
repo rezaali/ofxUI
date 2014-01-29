@@ -487,6 +487,12 @@ T ofxUISlider_<T>::getValue()
 }
 
 template<typename T>
+T ofxUISlider_<T>::getNormalizedValue()
+{
+    return value;
+}
+
+template<typename T>
 float ofxUISlider_<T>::getPercentValue()
 {
     return value;
