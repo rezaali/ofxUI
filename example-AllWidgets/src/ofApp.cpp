@@ -91,6 +91,10 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
 	{
 		ofxUIToggle *toggle = (ofxUIToggle *) e.getToggle();
 		bdrawGrid = toggle->getValue();
+        if(textInput != NULL)
+        {
+            textInput->setFocus(bdrawGrid);
+        }
 	}
     else if(name == "TEXT INPUT")
     {
@@ -143,6 +147,15 @@ void ofApp::keyPressed(int key){
             if(textInput != NULL)
             {
                 textInput->setTextString(ofGetTimestampString());
+            }
+        }
+			break;
+            
+		case 'r':
+        {
+            if(textInput != NULL)
+            {
+                textInput->setFocus(!textInput->isFocused());
             }
         }
 			break;

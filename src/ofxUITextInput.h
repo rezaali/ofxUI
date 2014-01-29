@@ -49,6 +49,8 @@ public:
 	void setTextString(string s);
 	void setParent(ofxUIWidget *_parent);
 	void setAutoClear(bool _autoclear);
+    bool isFocused();
+    void setFocus(bool _focus); 
     void setTriggerOnClick(bool _triggerOnClick);
     void recalculateDisplayString();
     bool hasState(){ return true; };

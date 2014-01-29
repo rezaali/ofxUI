@@ -421,6 +421,31 @@ void ofxUITextInput::setAutoClear(bool _autoclear)
     autoclear = _autoclear;
 }
 
+void ofxUITextInput::setFocus(bool _focus)
+{
+    if(_focus)
+    {
+        cursorPosition = label->getLabel().length();
+        state = OFX_UI_STATE_DOWN;
+        triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
+        clicked = true;
+        stateChange();
+        triggerEvent(this);
+    }
+    else
+    {
+        cursorPosition = label->getLabel().length();
+        stateChange();
+        unClick();
+    }
+}
+
+bool ofxUITextInput::isFocused()
+{
+    return isClicked();
+}
+
+
 void ofxUITextInput::setTriggerOnClick(bool _triggerOnClick)
 {
     triggerOnClick = _triggerOnClick;
