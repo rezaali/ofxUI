@@ -67,20 +67,20 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
 	if(name == "RED")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "RED " << slider->getScaledValue() << endl;
-		red = slider->getScaledValue();
+		cout << "RED " << slider->getValue() << endl;
+		red = slider->getValue();
 	}
 	else if(name == "GREEN")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "GREEN " << slider->getScaledValue() << endl;
-		green = slider->getScaledValue();
+		cout << "GREEN " << slider->getValue() << endl;
+		green = slider->getValue();
 	}	
 	else if(name == "BLUE")
 	{
 		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "BLUE " << slider->getScaledValue() << endl;
-		blue = slider->getScaledValue();
+		cout << "BLUE " << slider->getValue() << endl;
+		blue = slider->getValue();
 	}
 	else if(name == "BUTTON")
 	{
@@ -322,7 +322,7 @@ void ofApp::setGUI2()
     
     gui2->addSpacer();
     gui2->addLabel("LABEL TOGGLES", OFX_UI_FONT_MEDIUM);
-    gui2->addLabelToggle("LABEL TGL", false);
+    gui2->addLabelToggle("LABEL TGL", false)->getLabelWidget()->setColorFill(ofColor(255, 0, 0));
     
     gui2->setPosition(212, 0);
     gui2->autoSizeToFitWidgets();

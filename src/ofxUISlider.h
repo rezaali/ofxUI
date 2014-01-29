@@ -102,7 +102,8 @@ protected:
     bool useReference;
 	T max, min;
     int labelPrecision;
-    int orientation; 
+    int orientation;
+    string valueString; 
 };
 
 typedef ofxUISlider_<int> ofxUIIntSlider;

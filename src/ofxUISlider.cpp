@@ -89,6 +89,7 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     }
     
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);    
+    valueString = ofxUIToString(getScaledValue(),labelPrecision);
     
     if(orientation == OFX_UI_ORIENTATION_HORIZONTAL)
     {
@@ -263,7 +264,7 @@ void ofxUISlider_<T>::drawFillHighlight()
         }
         if(kind == OFX_UI_WIDGET_SLIDER_V)
         {
-            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*MIN(MAX(value, 0.0), 1.0), ofxUIToString(getScaledValue(),labelPrecision));
+            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*MIN(MAX(value, 0.0), 1.0), valueString);
         }
     }
 }
@@ -412,15 +413,7 @@ void ofxUISlider_<T>::input(float x, float y)
         value = 1.0-rect->percentInside(x, y).y;
     }
     
-    if(value > 1.0)
-    {
-        value = 1.0;
-    }
-    else if(value < 0.0)
-    {
-        value = 0.0;
-    }
-    
+    value = MIN(1.0, MAX(0.0, value));
     updateValueRef();
     updateLabel();
 }
@@ -434,9 +427,10 @@ void ofxUISlider_<T>::updateValueRef()
 template<typename T>
 void ofxUISlider_<T>::updateLabel()
 {
+    valueString = ofxUIToString(getValue(),labelPrecision);
     if(orientation == OFX_UI_ORIENTATION_HORIZONTAL)
     {
-        label->setLabel(name + ": " + ofxUIToString(getScaledValue(),labelPrecision));
+        label->setLabel(name + ": " + valueString);
     }
 }
 
@@ -489,7 +483,7 @@ void ofxUISlider_<T>::setValue(T _value)
 template<typename T>
 T ofxUISlider_<T>::getValue()
 {
-    return value;
+    return (*valueRef);
 }
 
 template<typename T>
@@ -578,13 +572,13 @@ bool ofxUISlider_<T>::isDraggable()
 template<typename T>
 void ofxUISlider_<T>::saveState(ofxXmlSettings *XML)
 {
-    XML->setValue("Value", getScaledValue(), 0);
+    XML->setValue("Value", getValue(), 0);
 }
 
 template<typename T>
 void ofxUISlider_<T>::loadState(ofxXmlSettings *XML)
 {
-    T value = XML->getValue("Value", getScaledValue(), 0);
+    T value = XML->getValue("Value", getValue(), 0);
     setValue(value);
 }
 

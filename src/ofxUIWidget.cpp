@@ -645,6 +645,10 @@ ofxUIWidget *ofxUIWidget::getCanvasParent()
         else
         {
             parent = parent->getParent();
+            if(parent == NULL)
+            {
+                return NULL; 
+            }
         }
     }
     return NULL; 
