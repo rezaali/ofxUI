@@ -37,6 +37,8 @@ class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 public:
     ~ofxUICanvas();
     ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
+    ofxUICanvas(const ofxUICanvas &other);              // Mitchell Nordine 2/2/14
+    ofxUICanvas& operator=(const ofxUICanvas &other);   // Mitchell Nordine 2/2/14
     ofxUICanvas(ofxUIRectangle r);
     ofxUICanvas(float x, float y, float w, float h);
     ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources);
@@ -102,6 +104,7 @@ public:
     virtual void addModalWidget(ofxUIWidget *widget);
     virtual void removeModalWidget(ofxUIWidget *widget);
     virtual void removeWidgets();
+    virtual void clearWidgets();  // Mitchell Nordine 2/2/14
     void removeWidget(ofxUIWidget *widget);
     void addWidget(ofxUIWidget *widget);
 	
@@ -190,6 +193,10 @@ public:
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x = 0, float y = 0);
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value);
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0);
+    
+    /* CUSTOM ENVELOPE EDITOR */
+    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value);
+    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x = 0, float y = 0);
     
     ofxUITextInput* addTextInput(string _name, string _textstring, int _size = -1);
     ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = -1);

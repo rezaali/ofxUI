@@ -29,6 +29,18 @@ ofxUIDropDownList::ofxUIDropDownList(string _name, vector<string> items, float w
 {
     init(_name, items, w, x, y, _size);
 }
+ofxUIDropDownList::ofxUIDropDownList(float x, float y, float w, string _name, vector<string> items, int _size)
+{
+    init(_name, items, w, x, y, _size);
+}
+ofxUIDropDownList::ofxUIDropDownList(float w, string _name, vector<string> items, int _size)
+{
+    init(_name, items, w, _size);
+}
+ofxUIDropDownList::ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size)
+{
+    init(_name, items, 0, x, y, _size);
+}
 
 void ofxUIDropDownList::init(string _name, vector<string> items, float w, float x, float y, int _size)
 {
