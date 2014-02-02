@@ -97,6 +97,11 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
             textInput->setFocus(bdrawGrid);
         }
 	}
+    else if(name == "RADIO VERTICAL")
+    {
+        ofxUIRadio *radio = (ofxUIRadio *) e.widget;
+        cout << radio->getName() << " value: " << radio->getValue() << " active name: " << radio->getActiveName() << endl; 
+    }
     else if(name == "TEXT INPUT")
     {
         ofxUITextInput *textinput = (ofxUITextInput *) e.widget;
@@ -187,7 +192,7 @@ void ofApp::keyPressed(int key){
             }
         }
 			break;
-
+            
 		case 'f':
 			ofToggleFullscreen();
 			break;

@@ -39,12 +39,14 @@ public:
 	void setParent(ofxUIWidget *_parent);
 	vector<ofxUIToggle *> getToggles();
 	ofxUIToggle* getActive();
+	string getActiveName();
+    int getValue();
 	void triggerEvent(ofxUIWidget *child);
     void addToggle(ofxUIToggle *toggle);
     
 protected:
+    int value; 
 	int orientation; 
 	vector<ofxUIToggle *> toggles; 		
-    ofxUIToggle *active; 
-    bool allowMultiple;    
+    ofxUIToggle *active;     
 }; 

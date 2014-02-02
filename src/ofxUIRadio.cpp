@@ -38,6 +38,8 @@ void ofxUIRadio::init(string _name, vector<string> names, int _orientation, floa
     draw_back = false;
     orientation = _orientation;
     
+    value = -1;
+    
     if(names.size() == 0)
     {
         setEmbedded(true);
@@ -54,7 +56,6 @@ void ofxUIRadio::init(string _name, vector<string> names, int _orientation, floa
     }
     
     active = NULL;
-    allowMultiple = false;
 }
 
 void ofxUIRadio::setVisible(bool _visible)
@@ -75,6 +76,7 @@ void ofxUIRadio::activateToggle(string _name)
         {
             t->setValue(true);
             active = t;
+            value = i;
         }
         else
         {
@@ -87,6 +89,7 @@ void ofxUIRadio::triggerSelf()
 {
     if(parent != NULL)
     {
+        parent->triggerEvent(this);
         parent->triggerEvent(active);
     }
 }
@@ -150,14 +153,8 @@ ofxUIToggle* ofxUIRadio::getActive()
 
 void ofxUIRadio::triggerEvent(ofxUIWidget *child)
 {
-    if(!allowMultiple)
-    {
-        activateToggle(child->getName().c_str());
-    }
-    if(parent != NULL)
-    {
-        parent->triggerEvent(child);
-    }
+    activateToggle(child->getName().c_str());
+    triggerSelf();
 }
 
 void ofxUIRadio::addToggle(ofxUIToggle *toggle)
@@ -167,5 +164,18 @@ void ofxUIRadio::addToggle(ofxUIToggle *toggle)
     if(toggle->getValue())
     {
         activateToggle(toggle->getName());
+    }
+}
+
+int ofxUIRadio::getValue()
+{
+    return value;
+}
+
+string ofxUIRadio::getActiveName()
+{
+    if(active != NULL)
+    {
+        return active->getName();
     }
 }
