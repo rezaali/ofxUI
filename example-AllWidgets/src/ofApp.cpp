@@ -104,20 +104,20 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
     }
     else if(name == "TEXT INPUT")
     {
-        ofxUITextInput *textinput = (ofxUITextInput *) e.widget;
-        if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
+        ofxUITextInput *ti = (ofxUITextInput *) e.widget;
+        if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
         {
             cout << "ON ENTER: ";
         }
-        else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
+        else if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
         {
             cout << "ON FOCUS: ";
         }
-        else if(textinput->getTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
+        else if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
         {
             cout << "ON BLUR: ";
         }
-        string output = textinput->getTextString();
+        string output = ti->getTextString();
         cout << output << endl;
     }
 }
@@ -348,6 +348,7 @@ void ofApp::setGUI2()
     gui2->addSpacer();
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
     textInput = gui2->addTextInput("TEXT INPUT", "Input Text");
+    textInput->setAutoUnfocus(false); 
     gui2->addLabel("AUTO CLEAR DISABLED", OFX_UI_FONT_SMALL);
     gui2->addTextInput("TEXT INPUT2", "Input Text")->setAutoClear(false);
 	gui2->setWidgetFontSize(OFX_UI_FONT_MEDIUM);

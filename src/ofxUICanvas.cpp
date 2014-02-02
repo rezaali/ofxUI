@@ -3006,35 +3006,10 @@ void ofxUICanvas::checkForKeyFocus(ofxUIWidget *child)
     if(child->getKind() == OFX_UI_WIDGET_TEXTINPUT)
     {
         ofxUITextInput *textinput = (ofxUITextInput *) child;
-        switch(textinput->getTriggerType())
+        if(textinput->isFocused())
         {
-            case OFX_UI_TEXTINPUT_ON_FOCUS:
-            {
-                hasKeyBoard = true;
-                return;
-            }
-                break;
-                
-            case OFX_UI_TEXTINPUT_ON_ENTER:
-            {
-                hasKeyBoard = false;
-                return;
-            }
-                break; 
-                
-            case OFX_UI_TEXTINPUT_ON_UNFOCUS:
-            {
-                hasKeyBoard = false; 
-                return;
-            }
-                break; 
-                
-            default:
-            {
-                hasKeyBoard = false; 
-                return; 
-            }
-                break;                     
+            hasKeyBoard = true;
+            return;        
         }
     }        
     hasKeyBoard = false;
