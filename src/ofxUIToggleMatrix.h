@@ -37,10 +37,15 @@ public:
     void setVisible(bool _visible);
 	void activateToggle(string _name);
 	void setParent(ofxUIWidget *_parent);
-    void setAllToggles(bool _value);
-    void setAllTogglesAndTrigger(bool _value);
-    void setToggle(unsigned int x, unsigned int y, bool _value);
-    void setToggleAndTrigger(int x, int y, bool _value);
+    
+    void setAllToggles(bool _value, bool _trigger = true);
+    void setToggle(unsigned int row, unsigned int col, bool _value, bool _trigger = true);
+    ofxUIToggle * getToggle(unsigned int row, unsigned int col);
+    bool getState(int row, int col);
+    
+    int getColumnCount();
+    int getRowCount();
+    
 	vector<ofxUIToggle *> getToggles();
 	vector<ofxUIToggle *> *getTogglesPtr();
 	void triggerEvent(ofxUIWidget *child);

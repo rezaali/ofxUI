@@ -116,42 +116,59 @@ void ofxUIToggleMatrix::setParent(ofxUIWidget *_parent)
     calculatePaddingRect();
 }
 
-void ofxUIToggleMatrix::setAllToggles(bool _value)
+void ofxUIToggleMatrix::setAllToggles(bool _value, bool _trigger)
 {
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUIToggle *t = toggles[i];
         t->setValue(_value);
+        if(_trigger)
+        {
+            parent->triggerEvent(t);
+        }
     }
+    parent->triggerEvent(this);
 }
 
-void ofxUIToggleMatrix::setAllTogglesAndTrigger(bool _value)
+void ofxUIToggleMatrix::setToggle(unsigned int row, unsigned int col, bool _value, bool _trigger)
 {
-    for(unsigned int i = 0; i < toggles.size(); i++)
+    ofxUIToggle *t = getToggle(row, col);
+    if(t != NULL)
     {
-        ofxUIToggle *t = toggles[i];
         t->setValue(_value);
+        if(_trigger)
+            parent->triggerEvent(t);
     }
-    
-    for(unsigned int i = 0; i < toggles.size(); i++)
-    {
-        triggerEvent(toggles[i]);
-    }
+    parent->triggerEvent(this);
 }
 
-void ofxUIToggleMatrix::setToggle(unsigned int x, unsigned int y, bool _value)
+ofxUIToggle * ofxUIToggleMatrix::getToggle(unsigned int row, unsigned int col)
 {
-    if(x*y < toggles.size())
+    if(row*col < toggles.size())
     {
-        toggles[x+y*rows]->setValue(_value);
+        return toggles[col+row*cols];
     }
+    return NULL;
 }
 
-void ofxUIToggleMatrix::setToggleAndTrigger(int x, int y, bool _value)
+bool ofxUIToggleMatrix::getState(int row, int col)
 {
-    setToggle(x,y,_value);
-    triggerEvent(toggles[x+y*rows]);
-    
+    ofxUIToggle *t = getToggle(row, col);
+    if(t != NULL)
+    {
+        return t->getValue();
+    }
+    return false;
+}
+
+int ofxUIToggleMatrix::getColumnCount()
+{
+    return cols;
+}
+
+int ofxUIToggleMatrix::getRowCount()
+{
+    return rows;
 }
 
 vector<ofxUIToggle *> ofxUIToggleMatrix::getToggles()

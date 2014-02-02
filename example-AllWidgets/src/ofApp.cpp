@@ -157,6 +157,24 @@ void ofApp::keyPressed(int key){
         }
 			break;
 
+		case 'T':
+        {
+            if(tm != NULL)
+            {
+                int cols = tm->getColumnCount();
+                int rows = tm->getRowCount();
+                for(int row = 0; row < rows; row++)
+                {
+                    for(int col = 0; col < cols; col++)
+                    {
+                        cout << tm->getState(row, col) << "\t";
+                    }
+                    cout << endl;
+                }
+            }
+        }
+			break;
+
 		case 'd':
         {
             if(ddl != NULL)
@@ -384,7 +402,7 @@ void ofApp::setGUI3()
     gui3->setGlobalButtonDimension(24);
     gui3->addLabel("MATRIX", OFX_UI_FONT_MEDIUM);
     gui3->addToggleMatrix("MATRIX1", 3, 3);
-    gui3->addToggleMatrix("MATRIX2", 3, 6);
+    tm = gui3->addToggleMatrix("MATRIX2", 3, 6);
     gui3->addToggleMatrix("MATRIX3", 1, 4);
 
     gui3->addSpacer();

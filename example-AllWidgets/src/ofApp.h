@@ -46,6 +46,7 @@ public:
     
     ofxUIMovingGraph *mg;
     ofxUIDropDownList *ddl;
+    ofxUIToggleMatrix *tm;
     
     float *buffer;
     ofImage *img;
