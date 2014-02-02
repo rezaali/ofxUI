@@ -32,7 +32,7 @@ typedef ofVec2f ofxUIVec2f;
 typedef ofTrueTypeFont ofxUIFont; 
 typedef ofColor ofxUIColor;
 
-#if (TARGET_OF_IPHONE) || (TARGET_OF_IOS) || (TARGET_ANDROID)
+#if TARGET_OF_IPHONE || TARGET_OF_IOS || TARGET_ANDROID
     #define OFX_UI_TARGET_TOUCH
 #endif
 
