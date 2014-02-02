@@ -226,6 +226,18 @@ vector<int> & ofxUIDropDownList::getSelectedIndeces()
     return selectedIndeces;
 }
 
+vector<string> ofxUIDropDownList::getSelectedNames()
+{
+    vector<string> names;
+    
+    for(vector<ofxUIWidget *>::iterator it = selected.begin(); it != selected.end(); ++it)
+    {
+        ofxUILabelToggle *lt = (ofxUILabelToggle *) (*it);
+        names.push_back(lt->getName());
+    }
+    return names;
+}
+
 void ofxUIDropDownList::setLabelText(string labeltext)
 {
     label->setLabel(labeltext);

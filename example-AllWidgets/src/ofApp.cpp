@@ -9,6 +9,7 @@ void ofApp::setup(){
     bdrawGrid = false;
 	bdrawPadding = false;
 
+    ddl = NULL;
     textInput = NULL;
     img = new ofImage();
     img->loadImage("nerd_me.png");
@@ -147,6 +148,33 @@ void ofApp::keyPressed(int key){
             if(textInput != NULL)
             {
                 textInput->setTextString(ofGetTimestampString());
+            }
+        }
+			break;
+
+		case 'd':
+        {
+            if(ddl != NULL)
+            {
+                vector<ofxUIWidget *> selected = ddl->getSelected();
+                for(vector<ofxUIWidget *>::iterator it = selected.begin(); it != selected.end(); ++it)
+                {
+                    ofxUILabelToggle *lt = (ofxUILabelToggle *) (*it);
+                    cout << lt->getName() << endl;
+                }
+            }
+        }
+			break;
+            
+        case 'D':
+        {
+            if(ddl != NULL)
+            {
+                vector<string> names = ddl->getSelectedNames();
+                for(vector<string>::iterator it = names.begin(); it != names.end(); ++it)
+                {
+                    cout << (*it) << endl;
+                }
             }
         }
 			break;
@@ -371,7 +399,8 @@ void ofApp::setGUI3()
     
     gui3->addSpacer();
     gui3->setWidgetFontSize(OFX_UI_FONT_MEDIUM);
-    gui3->addDropDownList("DROP DOWN LIST", items);
+    ddl = gui3->addDropDownList("DROP DOWN LIST", items);
+    ddl->setAllowMultiple(true);
 
     gui3->setGlobalButtonDimension(OFX_UI_GLOBAL_BUTTON_DIMENSION);
     

@@ -47,6 +47,7 @@ public:
     void checkAndSetTitleLabel();
     vector<ofxUIWidget *> & getSelected();
     vector<int> & getSelectedIndeces();
+    vector<string> getSelectedNames(); 
     void setLabelText(string labeltext);
     void setParent(ofxUIWidget *_parent);
     void mouseReleased(int x, int y, int button);
