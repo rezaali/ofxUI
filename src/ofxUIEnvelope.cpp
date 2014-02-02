@@ -13,10 +13,6 @@ bool comparePointsX(ofVec3f pointA, ofVec3f pointB)
     return pointA.x < pointB.x;
 }
 
-//--------------------------------------------------------------------------------//
-// ADD POINT TO ENVELOPE
-//--------------------------------------------------------------------------------//
-
 void ofxUIEnvelope::addPoint(double x, double y, float curve)
 {
     ofVec3f point = ofVec3f(x, y, curve);
@@ -31,11 +27,7 @@ void ofxUIEnvelope::sortPointsByX()
     return;
 }
 
-//--------------------------------------------------------------------------------//
-// RETURN Y @ X
-//--------------------------------------------------------------------------------//
-/* Interpolates through envelope points to find value y at position x. */
-
+//Interpolates through envelope points to find value y at position x.
 double ofxUIEnvelope::getY(double _x)
 {
     
@@ -55,11 +47,7 @@ double ofxUIEnvelope::getY(double _x)
     
 }
 
-//--------------------------------------------------------------------------------//
-// INTERPOLATE BETWEEN POINTS
-//--------------------------------------------------------------------------------//
-/* Interpolates via a bezier curve whose depth is start.z */
-
+// Interpolates via a bezier curve whose depth is start.z
 double ofxUIEnvelope::interpolate(ofVec3f start, ofVec3f end)
 {
     

@@ -36,6 +36,8 @@ class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {
 public:
     ~ofxUICanvas();
+    ofxUICanvas(const ofxUICanvas &other); // Mitchell Nordine 2/2/14
+    ofxUICanvas& operator=(const ofxUICanvas &other); // Mitchell Nordine 2/2/14
     ofxUICanvas(ofxUIRectangle r);
     ofxUICanvas(float x, float y, float w, float h);
     ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources);
@@ -102,6 +104,7 @@ public:
     virtual void addModalWidget(ofxUIWidget *widget);
     virtual void removeModalWidget(ofxUIWidget *widget);
     virtual void removeWidgets();
+    virtual void clearWidgets();  // Mitchell Nordine 2/2/14
     void removeWidget(ofxUIWidget *widget);
     void addWidget(ofxUIWidget *widget);
 	

@@ -73,6 +73,89 @@ ofxUIWidget::~ofxUIWidget()
     }
 }
 
+// Mitchell Nordine - custom copy constructor for heap allocation handling.
+ofxUIWidget::ofxUIWidget(const ofxUIWidget &other)
+: name(other.name),
+kind(other.kind),
+visible(other.visible),
+ID(other.ID),
+hit(other.hit),
+state(other.state),
+embedded(other.embedded),
+modal(other.modal),
+draw_back(other.draw_back),
+draw_outline(other.draw_outline),
+draw_outline_highlight(other.draw_outline_highlight),
+draw_fill(other.draw_fill),
+draw_fill_highlight(other.draw_fill_highlight),
+color_back(other.color_back),
+color_outline(other.color_outline),
+color_outline_highlight(other.color_outline_highlight),
+color_fill(other.color_fill),
+color_fill_highlight(other.color_fill_highlight),
+padding(other.padding),
+draw_padded_rect(other.draw_padded_rect),
+draw_padded_rect_outline(other.draw_padded_rect_outline)
+{
+    parent = other.parent;
+    if (other.rect) {
+        rect = new ofxUIRectangle(*other.rect);
+    }
+    else {
+        rect = NULL;
+    }
+    if (other.paddedRect) {
+        paddedRect = new ofxUIRectangle(*other.paddedRect);
+        paddedRect->setParent(rect);
+        calculatePaddingRect();
+    }
+    else {
+        paddedRect = NULL;
+    }
+}
+
+// Mitchell Nordine - custom assignment operator for heap allocation handling.
+ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other)
+{
+    name = other.name;
+    kind = other.kind;
+    visible = other.visible;
+    ID = other.ID;
+    hit = other.hit;
+    state = other.state;
+    embedded = other.embedded;
+    modal = other.modal;
+    draw_back = other.draw_back;
+    draw_outline = other.draw_outline;
+    draw_outline_highlight = other.draw_outline_highlight;
+    draw_fill = other.draw_fill;
+    draw_fill_highlight = other.draw_fill_highlight;
+    color_back = other.color_back;
+    color_outline = other.color_outline;
+    color_outline_highlight = other.color_outline_highlight;
+    color_fill = other.color_fill;
+    color_fill_highlight = other.color_fill_highlight;
+    padding = other.padding;
+    draw_padded_rect = other.draw_padded_rect;
+    draw_padded_rect_outline = other.draw_padded_rect_outline;
+    parent = other.parent;
+    if (other.rect) {
+        rect = new ofxUIRectangle(*other.rect);
+    }
+    else {
+        rect = NULL;
+    }
+    if (other.paddedRect) {
+        paddedRect = new ofxUIRectangle(*other.paddedRect);
+        paddedRect->setParent(rect);
+        calculatePaddingRect();
+    }
+    else {
+        paddedRect = NULL;
+    }
+    return *this;
+}
+
 void ofxUIWidget::initRect(float x, float y, float w, float h)
 {
     if(rect != NULL)

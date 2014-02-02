@@ -15,13 +15,9 @@
 /* This is needed for ofxUIEnvelope::sortPointsByX(). */
 bool comparePointsX(ofVec3f pointA, ofVec3f pointB);
 
-/* Class */
-
 class ofxUIEnvelope {
     
 public:
-    
-    /* Functions */
     
     void addPoint(double x, double y, float curve = 0);
     void sortPointsByX();
@@ -31,8 +27,6 @@ private:
     
     double interpolate(ofVec3f start, ofVec3f end);
     double getBezierPt(float n1, float n2, float percentage);
-    
-    /* Variable Declaration */
     
     double x, y;
     double interpolation;

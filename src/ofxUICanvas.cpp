@@ -43,6 +43,137 @@ ofxUICanvas::~ofxUICanvas()
     widgets.clear();
 }
 
+// Copy constructor to handle heap allocation during a copy.
+ofxUICanvas::ofxUICanvas(const ofxUICanvas &other)
+: bInsideCanvas(other.bInsideCanvas),
+state(other.state),
+hasSharedResources(other.hasSharedResources),
+autoDraw(other.autoDraw),
+autoUpdate(other.autoUpdate),
+widgets_map(other.widgets_map),
+widgets(other.widgets),
+widgetsAreModal(other.widgetsAreModal),
+widgetsWithState(other.widgetsWithState),
+lastAddeds(other.lastAddeds),
+activeFocusedWidget(other.activeFocusedWidget),
+enable_highlight_outline(other.enable_highlight_outline),
+enable_highlight_fill(other.enable_highlight_fill),
+enabled(other.enabled),
+bTriggerWidgetsUponLoad(other.bTriggerWidgetsUponLoad),
+uniqueIDs(other.uniqueIDs),
+hasKeyBoard(other.hasKeyBoard),
+widgetSpacing(other.widgetSpacing),
+globalCanvasWidth(other.globalCanvasWidth),
+globalSliderHeight(other.globalSliderHeight),
+globalGraphHeight(other.globalGraphHeight),
+globalButtonDimension(other.globalButtonDimension),
+globalSpacerHeight(other.globalSpacerHeight),
+fontName(other.fontName),
+widgetPosition(other.widgetPosition),
+widgetAlign(other.widgetAlign),
+widgetFontSize(other.widgetFontSize),
+widget_color_back(other.widget_color_back),
+widget_color_outline(other.widget_color_outline),
+widget_color_outline_highlight(other.widget_color_outline_highlight),
+widget_color_fill(other.widget_color_fill),
+widget_color_fill_highlight(other.widget_color_fill_highlight),
+widget_color_padded_rect(other.widget_color_padded_rect),
+widget_color_padded_rect_outline(other.widget_color_padded_rect_outline),
+bDrawWidgetPadding(other.bDrawWidgetPadding),
+bDrawWidgetPaddingOutline(other.bDrawWidgetPaddingOutline)
+{
+    if (other.font_large) {
+        font_large = new ofxUIFont(*other.font_large);
+    }
+    else {
+        font_large = NULL;
+    }
+    if (other.font_medium) {
+        font_medium = new ofxUIFont(*other.font_medium);
+    }
+    else {
+        font_medium = NULL;
+    }
+    if (other.font_small) {
+        font_small = new ofxUIFont(*other.font_small);
+    }
+    else {
+        font_small = NULL;
+    }
+    if (other.GUIevent) {
+        GUIevent = new ofxUIEventArgs(*other.GUIevent);
+    }
+    else {
+        GUIevent = NULL;
+    }
+}
+
+// Assignment operator to handle heap allocation during assignment.
+ofxUICanvas& ofxUICanvas::operator=(const ofxUICanvas &other)
+{
+    bInsideCanvas = other.bInsideCanvas;
+    state = other.state;
+    hasSharedResources = other.hasSharedResources;
+    autoDraw = other.autoDraw;
+    autoUpdate = other.autoUpdate;
+    widgets_map = other.widgets_map;
+    widgets = other.widgets;
+    widgetsAreModal = other.widgetsAreModal;
+    widgetsWithState = other.widgetsWithState;
+    lastAddeds = other.lastAddeds;
+    activeFocusedWidget = other.activeFocusedWidget;
+    enable_highlight_outline = other.enable_highlight_outline;
+    enable_highlight_fill = other.enable_highlight_fill;
+    enabled = other.enabled;
+    bTriggerWidgetsUponLoad = other.bTriggerWidgetsUponLoad;
+    uniqueIDs = other.uniqueIDs;
+    hasKeyBoard = other.hasKeyBoard;
+    widgetSpacing = other.widgetSpacing;
+    globalCanvasWidth = other.globalCanvasWidth;
+    globalSliderHeight = other.globalSliderHeight;
+    globalGraphHeight = other.globalGraphHeight;
+    globalButtonDimension = other.globalButtonDimension;
+    globalSpacerHeight = other.globalSpacerHeight;
+    fontName = other.fontName;
+    widgetPosition = other.widgetPosition;
+    widgetAlign = other.widgetAlign;
+    widgetFontSize = other.widgetFontSize;
+    widget_color_back = other.widget_color_back;
+    widget_color_outline = other.widget_color_outline;
+    widget_color_outline_highlight = other.widget_color_outline_highlight;
+    widget_color_fill = other.widget_color_fill;
+    widget_color_fill_highlight = other.widget_color_fill_highlight;
+    widget_color_padded_rect = other.widget_color_padded_rect;
+    widget_color_padded_rect_outline = other.widget_color_padded_rect_outline;
+    bDrawWidgetPadding = other.bDrawWidgetPadding;
+    bDrawWidgetPaddingOutline = other.bDrawWidgetPaddingOutline;
+    if (other.font_large) {
+        font_large = new ofxUIFont(*other.font_large);
+    }
+    else {
+        font_large = NULL;
+    }
+    if (other.font_medium) {
+        font_medium = new ofxUIFont(*other.font_medium);
+    }
+    else {
+        font_medium = NULL;
+    }
+    if (other.font_small) {
+        font_small = new ofxUIFont(*other.font_small);
+    }
+    else {
+        font_small = NULL;
+    }
+    if (other.GUIevent) {
+        GUIevent = new ofxUIEventArgs(*other.GUIevent);
+    }
+    else {
+        GUIevent = NULL;
+    }
+    return *this;
+}
+
 ofxUICanvas::ofxUICanvas(ofxUIRectangle r) : ofxUIWidget()
 {
     rect = new ofxUIRectangle(r);
@@ -813,13 +944,19 @@ void ofxUICanvas::removeWidgets()
         ofxUIWidget *w = (*it);
         delete w;
     }
+    clearWidgets();
+    resetPlacer();
+}
+
+// To be called before destructor if "widgets" are pointing to stack-based widgets.
+void ofxUICanvas::clearWidgets()
+{
     widgets.clear();
     widgets_map.clear();
     widgetsAreModal.clear();
     widgetsWithState.clear();
     lastAddeds.clear();
     activeFocusedWidget = NULL;
-    resetPlacer();
 }
 
 void ofxUICanvas::removeWidget(ofxUIWidget *widget)

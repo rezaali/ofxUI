@@ -35,6 +35,8 @@ class ofxUIWidget
 public:
     ofxUIWidget();
     virtual ~ofxUIWidget();
+    ofxUIWidget(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
+    ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
     
     virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
     virtual void initPaddingRect();

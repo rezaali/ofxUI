@@ -25,6 +25,26 @@
 #include "ofxUISuperCanvas.h"
 #include "ofxUI.h"
 
+
+ofxUISuperCanvas::ofxUISuperCanvas(const ofxUISuperCanvas &other)
+: size(other.size),
+title(other.title),
+hitPoint(other.hitPoint),
+deltaTime(other.deltaTime),
+lastHitTime(other.lastHitTime),
+bIsMinified(other.bIsMinified),
+bTitleLabelHit(other.bTitleLabelHit)
+{
+    if (other.canvasTitle) {
+        canvasTitle = new ofxUILabel(*other.canvasTitle);
+        headerWidgets.push_back(canvasTitle);
+        addWidgetPosition(canvasTitle, widgetPosition, widgetAlign);
+    }
+    else {
+        canvasTitle = NULL;
+    }
+}
+
 ofxUISuperCanvas::ofxUISuperCanvas(string _label, ofxUIRectangle r, int _size) : ofxUICanvas(r)
 {
     superInit(_label, _size);
