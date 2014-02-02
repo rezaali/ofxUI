@@ -115,6 +115,13 @@ void ofxUIDropDownList::addToggle(string toggleName)
     ltoggle->setVisible(*value);
     addEmbeddedWidget(ltoggle);
     toggles.push_back(ltoggle);
+    if(parent != NULL)
+    {
+        parent->addWidget(ltoggle);
+        
+    }
+    ltoggle->setParent(this);
+    ltoggle->setRectParent(rect);    
     ltoggle->setModal(modal);
     if(isOpen())
     {
