@@ -59,6 +59,7 @@ ofxUIWidget::ofxUIWidget()
     
     embedded = false;
     modal = false;
+    setTriggerType(OFX_UI_TRIGGER_ALL);
 }
 
 ofxUIWidget::~ofxUIWidget()
@@ -246,6 +247,16 @@ void ofxUIWidget::touchCancelled(float x, float y, int id)
     }
 }
 #endif
+
+void ofxUIWidget::setTriggerType(ofxUITriggerType _triggerType)
+{
+    triggerType = _triggerType;
+}
+
+ofxUITriggerType ofxUIWidget::getTriggerType()
+{
+    return triggerType;
+}
 
 void ofxUIWidget::setParent(ofxUIWidget *_parent)
 {

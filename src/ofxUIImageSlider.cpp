@@ -303,21 +303,13 @@ void ofxUIImageSlider::input(float x, float y)
 {
     if(kind == OFX_UI_WIDGET_IMAGESLIDER_H)
     {
-        value = imageRect->percentInside(x, y).x;
+        value = MIN(1.0, MAX(0.0, imageRect->percentInside(x, y).x));
     }
     else
     {
-        value = 1.0-imageRect->percentInside(x, y).y;
+        value = MIN(1.0, MAX(0.0, 1.0-imageRect->percentInside(x, y).y));
     }
-    
-    if(value > 1.0)
-    {
-        value = 1.0;
-    }
-    else if(value < 0.0)
-    {
-        value = 0.0;
-    }
+
     updateLabel();
 }
 

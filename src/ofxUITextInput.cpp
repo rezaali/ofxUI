@@ -46,7 +46,7 @@ void ofxUITextInput::init(string _name, string _textstring, float w, float h, fl
     label = new ofxUILabel((name+" LABEL"), _size);
     addEmbeddedWidget(label);
     
-    triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
+    inputTriggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
     cursorWidth = 0; spaceOffset = 0;
     theta = 0;
     autoUnfocus = true;
@@ -151,7 +151,7 @@ void ofxUITextInput::mousePressed(int x, int y, int button)
         cursorPosition = label->getLabel().length();
         
         state = OFX_UI_STATE_DOWN;
-        triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
+        inputTriggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
         
         if(triggerOnClick)
         {
@@ -178,7 +178,7 @@ void ofxUITextInput::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
-        //			triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
+        //			inputTriggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
         //			triggerEvent(this);
     }
     else
@@ -218,7 +218,7 @@ void ofxUITextInput::keyPressed(int key)
                 
             case OF_KEY_RETURN:
                 
-                triggerType = OFX_UI_TEXTINPUT_ON_ENTER;
+                inputTriggerType = OFX_UI_TEXTINPUT_ON_ENTER;
                 if(autoUnfocus)
                 {
                     clicked = false;
@@ -301,7 +301,7 @@ void ofxUITextInput::unClick()
     if(clicked)
     {
         clicked = false;
-        triggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
+        inputTriggerType = OFX_UI_TEXTINPUT_ON_UNFOCUS;
         triggerEvent(this);
     }
 }
@@ -351,14 +351,14 @@ string ofxUITextInput::getTextString()
     return textstring;
 }
 
-void ofxUITextInput::setTriggerType(int _triggerType)
+void ofxUITextInput::setInputTriggerType(int _triggerType)
 {
-    triggerType = _triggerType;
+    inputTriggerType = _triggerType;
 }
 
-int ofxUITextInput::getTriggerType()
+int ofxUITextInput::getInputTriggerType()
 {
-    return triggerType;
+    return inputTriggerType;
 }
 
 void ofxUITextInput::setTextString(string s)
@@ -433,7 +433,7 @@ void ofxUITextInput::setFocus(bool _focus)
     {
         cursorPosition = 0;
         state = OFX_UI_STATE_DOWN;
-        triggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
+        inputTriggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
         clicked = true;
         stateChange();
         triggerEvent(this);
@@ -504,7 +504,7 @@ void ofxUITextInput::saveState(ofxXmlSettings *XML)
 void ofxUITextInput::loadState(ofxXmlSettings *XML)
 {
     setTextString(XML->getValue("Value", getTextString(), 0));
-    setTriggerType(OFX_UI_TEXTINPUT_ON_LOAD);
+    setInputTriggerType(OFX_UI_TEXTINPUT_ON_LOAD);
 }
 
 #endif

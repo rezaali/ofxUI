@@ -190,8 +190,11 @@ void ofxUIRotarySlider::mouseDragged(int x, int y, int button)
     if(hit)
     {
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_CHANGE)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -206,8 +209,11 @@ void ofxUIRotarySlider::mousePressed(int x, int y, int button)
     {
         hit = true;
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_BEGIN)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -225,8 +231,11 @@ void ofxUIRotarySlider::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_END)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {

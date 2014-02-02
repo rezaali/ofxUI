@@ -117,6 +117,7 @@ void ofxUIBiLabelSlider::init(float x, float y, float w, float h, float _min, fl
     rlabel = new ofxUILabel(padding,h*.5,(name+" LABEL"), rightLabel, _size);
     rlabel->setDrawBack(true);
     addEmbeddedWidget(rlabel);
+    setTriggerType(OFX_UI_TRIGGER_ALL);    
 }
 
 void ofxUIBiLabelSlider::setDrawPadding(bool _draw_padded_rect)
@@ -153,17 +154,8 @@ void ofxUIBiLabelSlider::drawFillHighlight()
 }
 
 void ofxUIBiLabelSlider::input(float x, float y)
-{
-    value = rect->percentInside(x, y).x;
-    
-    if(value > 1.0)
-    {
-        value = 1.0;
-    }
-    else if(value < 0.0)
-    {
-        value = 0.0;
-    }
+{    
+    value = MIN(1.0, MAX(0.0, rect->percentInside(x, y).x));
     updateValueRef();
     updateLabel();
 }

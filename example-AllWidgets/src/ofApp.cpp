@@ -105,15 +105,15 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
     else if(name == "TEXT INPUT")
     {
         ofxUITextInput *ti = (ofxUITextInput *) e.widget;
-        if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
+        if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_ENTER)
         {
             cout << "ON ENTER: ";
         }
-        else if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
+        else if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_FOCUS)
         {
             cout << "ON FOCUS: ";
         }
-        else if(ti->getTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
+        else if(ti->getInputTriggerType() == OFX_UI_TEXTINPUT_ON_UNFOCUS)
         {
             cout << "ON BLUR: ";
         }
@@ -215,6 +215,16 @@ void ofApp::keyPressed(int key){
 			ofToggleFullscreen();
 			break;
             
+        case 'F':
+        {
+            if(tm != NULL)
+            {
+                tm->setDrawOutlineHighLight(!tm->getDrawOutlineHighLight());
+//                tm->setDrawPaddingOutline(!tm->getDrawPaddingOutline());
+            }
+        }
+			break;
+            
 		case 'h':
             gui1->toggleVisible();
             gui2->toggleVisible();
@@ -302,9 +312,9 @@ void ofApp::setGUI1()
     
     gui1->addSpacer();
 	gui1->addLabel("H SLIDERS");
-	gui1->addSlider("RED", 0.0, 255.0, red);
-	gui1->addSlider("GREEN", 0.0, 255.0, green);
-	gui1->addSlider("BLUE", 0.0, 255.0, blue);
+	gui1->addSlider("RED", 0.0, 255.0, red)->setTriggerType(OFX_UI_TRIGGER_ALL);
+	gui1->addSlider("GREEN", 0.0, 255.0, green)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE|OFX_UI_TRIGGER_END);
+	gui1->addSlider("BLUE", 0.0, 255.0, blue)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE);
     
     gui1->addSpacer();
     gui1->addLabel("V SLIDERS");

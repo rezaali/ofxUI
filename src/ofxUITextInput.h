@@ -44,8 +44,8 @@ public:
     void stateChange();
 	bool isClicked();
 	string getTextString();
-    void setTriggerType(int _triggerType);
-    int getTriggerType();
+    void setInputTriggerType(int _triggerType);
+    int getInputTriggerType();
 	void setTextString(string s);
 	void setParent(ofxUIWidget *_parent);
 	void setAutoClear(bool _autoclear);
@@ -71,7 +71,7 @@ protected:
 	float spaceOffset;		
 	bool autoclear; 
 	float defaultY, defaultX; 	
-	int triggerType;
+	int inputTriggerType;
     int maxsize;
     bool triggerOnClick;
     

@@ -171,6 +171,17 @@ enum ofxUIWidgetColorType
     
 };
 
+enum ofxUITriggerType
+{
+    OFX_UI_TRIGGER_NONE     = 0x00,
+    OFX_UI_TRIGGER_BEGIN    = 0x01,
+    OFX_UI_TRIGGER_CHANGE   = 0x02,
+    OFX_UI_TRIGGER_END      = 0x04,
+    OFX_UI_TRIGGER_ALL      = 0x07
+};
+
+#define ofxUITriggerType int
+
 enum ofxUIThemeType
 {
     OFX_UI_THEME_DEFAULT = 0,

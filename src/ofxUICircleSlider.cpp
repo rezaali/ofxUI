@@ -152,29 +152,32 @@ void ofxUICircleSlider::mouseDragged(int x, int y, int button)
 {
     if(hit)
     {
-        switch(inputDirection)
+        if(triggerType & OFX_UI_TRIGGER_CHANGE)
         {
-            case OFX_UI_DIRECTION_NORTHSOUTH:
-                value -= increment*(hitPoint.y-y);
-                valueClamp();
-                break;
-            case OFX_UI_DIRECTION_SOUTHNORTH:
-                value += increment*(hitPoint.y-y);
-                valueClamp();
-                break;
-            case OFX_UI_DIRECTION_EASTWEST:
-                value += increment*(hitPoint.x-x);
-                valueClamp();
-                break;
-            case OFX_UI_DIRECTION_WESTEAST:
-                value -= increment*(hitPoint.x-x);
-                valueClamp();
-                break;
+            switch(inputDirection)
+            {
+                case OFX_UI_DIRECTION_NORTHSOUTH:
+                    value -= increment*(hitPoint.y-y);
+                    valueClamp();
+                    break;
+                case OFX_UI_DIRECTION_SOUTHNORTH:
+                    value += increment*(hitPoint.y-y);
+                    valueClamp();
+                    break;
+                case OFX_UI_DIRECTION_EASTWEST:
+                    value += increment*(hitPoint.x-x);
+                    valueClamp();
+                    break;
+                case OFX_UI_DIRECTION_WESTEAST:
+                    value -= increment*(hitPoint.x-x);
+                    valueClamp();
+                    break;
+            }
+            
+            hitPoint = ofxUIVec2f(x,y);
+            updateValueRef();
+            triggerEvent(this);
         }
-        
-        hitPoint = ofxUIVec2f(x,y);
-        updateValueRef();
-        triggerEvent(this);
         state = OFX_UI_STATE_DOWN;
     }
     else
@@ -191,7 +194,10 @@ void ofxUICircleSlider::mousePressed(int x, int y, int button)
         hit = true;
         hitPoint = ofxUIVec2f(x,y);
         state = OFX_UI_STATE_DOWN;
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_BEGIN)
+        {
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -209,7 +215,10 @@ void ofxUICircleSlider::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_END)
+        {
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -221,14 +230,7 @@ void ofxUICircleSlider::mouseReleased(int x, int y, int button)
 
 void ofxUICircleSlider::valueClamp()
 {
-    if(value > 1.0)
-    {
-        value = 1.0;
-    }
-    else if(value < 0.0)
-    {
-        value = 0.0;
-    }
+    value = MIN(1.0, MAX(0.0, value));
 }
 
 void ofxUICircleSlider::setInputDirection(ofxUIWidgetInputDirection _inputDirection)

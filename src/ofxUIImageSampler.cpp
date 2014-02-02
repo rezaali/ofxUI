@@ -94,8 +94,11 @@ void ofxUIImageSampler::mouseDragged(int x, int y, int button)
     if(hit)
     {
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_CHANGE)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -110,8 +113,11 @@ void ofxUIImageSampler::mousePressed(int x, int y, int button)
     {
         hit = true;
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_BEGIN)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -129,8 +135,11 @@ void ofxUIImageSampler::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
-        input(x, y);
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_END)
+        {
+            input(x, y);
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -175,25 +184,9 @@ void ofxUIImageSampler::stateChange()
 
 void ofxUIImageSampler::input(int x, int y)
 {
-    value.x = rect->percentInside(x, y).x;
-    value.y = rect->percentInside(x, y).y;
-    if(value.x > 1.0)
-    {
-        value.x = 1.0;
-    }
-    else if(value.x < 0.0)
-    {
-        value.x = 0.0;
-    }
-    
-    if(value.y > 1.0)
-    {
-        value.y = 1.0;
-    }
-    else if(value.y < 0.0)
-    {
-        value.y = 0.0;
-    }
+    value.x = MIN(1.0, MAX(0.0, rect->percentInside(x, y).x));
+    value.y = MIN(1.0, MAX(0.0, rect->percentInside(x, y).y));
+
     sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));          //why one? well because if we get to the end, we sample the beginning...
 }
 
@@ -214,25 +207,7 @@ ofPoint ofxUIImageSampler::getValue()
 
 void ofxUIImageSampler::setValue(ofPoint _value)
 {
-    value = _value;
-    if(value.x > 1.0)
-    {
-        value.x = 1.0;
-    }
-    else if(value.x < 0.0)
-    {
-        value.x = 0.0;
-    }
-    
-    if(value.y > 1.0)
-    {
-        value.y = 1.0;
-    }
-    else if(value.y < 0.0)
-    {
-        value.y = 0.0;
-    }
-    sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));          //why one? well because if we get to the end, we sample the beginning...
+    input(_value.x, _value.y); 
 }
 
 bool ofxUIImageSampler::isDraggable()
