@@ -1,201 +1,122 @@
-//
-//  ofxUIEnvelopeEditor.cpp
-//  GenMax
-//
-//  Created by Mitchell Nordine on 28/01/2014.
-//
-//
+/**********************************************************************************
+ 
+ Copyright (C) 2012 Syed Reza Ali (www.syedrezaali.com)
+ Created by Mitchell Nordine on 28/01/2014.
+ Refactored & Edited by Reza Ali on 02/02/2014
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ of the Software, and to permit persons to whom the Software is furnished to do
+ so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ 
+ **********************************************************************************/
 
 #include "ofxUIEnvelopeEditor.h"
 #include "ofxUI.h"
+#include "ofxUIUtils.h"
 
-void ofxUIEnvelopeEditor::init(string _name, ofVec2f _value,
-          float w, float h, float x, float y)
+ofxUIEnvelopeEditor::ofxUIEnvelopeEditor(string _name, float w, float h, float x, float y) : ofxUIWidgetWithLabel()
 {
-    
-    rect = new ofxUIRectangle(x,y,w,h);
+    useReference = false;
+    init(_name, NULL, w, h, x, y);
+}
+
+ofxUIEnvelopeEditor::ofxUIEnvelopeEditor(string _name, ofxUIEnvelope *_envelope, float w, float h, float x, float y) :ofxUIWidgetWithLabel()
+{
+    useReference = true;
+    init(_name, _envelope, w, h, x, y);
+}
+
+ofxUIEnvelopeEditor::~ofxUIEnvelopeEditor()
+{
+    if(!useReference)
+    {
+        delete envelope;
+    }
+}
+
+void ofxUIEnvelopeEditor::init(string _name, ofxUIEnvelope *_envelope, float w, float h, float x, float y)
+{
+    initRect(x, y, w, h);
     name = string(_name);
-    kind = OFX_UI_WIDGET_2DPAD;
-    paddedRect = new ofxUIRectangle(-padding, -padding,
-                                    w+padding*2.0, h+padding);
-    paddedRect->setParent(rect);
+    kind = OFX_UI_WIDGET_ENVELOPEEDITOR;
+    
     draw_fill = true;
     draw_outline = true;
-    value = _value;         //the widget's value
+    
+    if(useReference)
+    {
+        envelope = _envelope;
+    }
+    else
+    {
+        envelope = new ofxUIEnvelope();
+    }
     
     labelPrecision = 2;
-    
-    if(value.x > 1)
-    {
-        value.x = 1;
-    }
-    else if(value.x < 0)
-    {
-        value.x = 0;
-    }
-    
-    if(value.y > 1)
-    {
-        value.y = 1;
-    }
-    else if(value.y < 0)
-    {
-        value.y = 0;
-    }
-    
-    label = new ofxUILabel(0,h+padding*2.0,(name+" LABEL"), (name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision)), OFX_UI_FONT_SMALL);
+    label = new ofxUILabel(0,h+padding*2.0,(name+" LABEL"), (name + ":"), OFX_UI_FONT_SMALL);
     addEmbeddedWidget(label);
-    
+
+    hitThreshold = 0.05;
+    pointNodeRadius = OFX_UI_GLOBAL_PADDING*1.5;
+    pointNodeRectWidth = OFX_UI_GLOBAL_PADDING*2.5;
+    pointNodeRectHeight = OFX_UI_GLOBAL_PADDING*2.5;
+    bHitPoint = false;
+    bHitCurve = false;
+    hitPoint = NULL;
+    hitCurve = NULL;
+    hitCurveNext = NULL;
 }
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::update()
-{
-    updateEnvelopeData();
-}
-
-//----------------------------------------------------
 
 void ofxUIEnvelopeEditor::updateEnvelopeData()
 {
+    envelope->sortPointsByX();
     
-    tempEnv = *envelope;
-    
-    envPosX = rect->getX();
-    envPosY = rect->getY() + rect->getHeight();
+    float rX = rect->getX();
+    float rY = rect->getY();
     
     polyline.clear();
     
-    /* Add Envelope Vertices (non-frequency) */
-    for (int i=0; i < rect->getWidth() && !isFrequency; i++) {
-        
-        currentX = envPosX + i;
-        currentY = envPosY + (1-tempEnv.getY((double)i/rect->getWidth())
-                              * rect->getHeight());
-        
-        polyline.addVertex(currentX, currentY);
-        
+    for(int i = 0; i < rect->getWidth(); i++)
+    {
+        float x = rX + i;
+        float nx = (double)i/rect->getWidth();
+        float y = rY + envelope->getY(nx)*rect->getHeight();
+        polyline.addVertex(x, y);
     }
-    
-    /* Add Envelope Vertices for Frequency Type  */
-    for (int i=0; i < rect->getWidth() && isFrequency; i++) {
-        
-        currentX = envPosX + i;
-        currentY = envPosY
-        + (1 - toOriginal(tempEnv.getY((double)i/rect->getWidth()))
-           * rect->getHeight());
-        
-        polyline.addVertex(currentX, currentY);
-        
-    }
-    
-    
-    return;
-    
 }
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::setDrawPadding(bool _draw_padded_rect)
-{
-    draw_padded_rect = _draw_padded_rect;
-    label->setDrawPadding(false);
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::setDrawPaddingOutline(bool _draw_padded_rect_outline)
-{
-    draw_padded_rect_outline = _draw_padded_rect_outline;
-    label->setDrawPaddingOutline(false);
-}
-
-//----------------------------------------------------
 
 void ofxUIEnvelopeEditor::drawFill()
 {
     if(draw_fill)
     {
         ofxUIFill();
-        
         ofxUISetColor(color_fill);
-        
-        ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
-        
-        ofxUIDrawRect(rect->getX() + value.x * rect->getWidth(),
-                      rect->getY() + value.y * rect->getHeight(),
-                      OFX_UI_GLOBAL_WIDGET_SPACING,
-                      OFX_UI_GLOBAL_WIDGET_SPACING);
-        
-        ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
-        
-        /*** Draw envelope to box here ***/
-        
-        if (isFrequency == true) {
-            drawFrequencyEnvelope();
-        }
-        else if (isFrequency == false) {
-            drawEnvelope();
-        }
-        
-        /* Crosshair */
-        
-        ofxUIDrawLine(rect->getX() + value.x * rect->getWidth(),
-                      rect->getY(),
-                      rect->getX() + value.x * rect->getWidth(),
-                      rect->getY() + rect->getHeight());
-        
-        ofxUIDrawLine(rect->getX(),
-                      rect->getY() + value.y * rect->getHeight(),
-                      rect->getX() + rect->getWidth(),
-                      rect->getY() + value.y * rect->getHeight());
+        drawEnvelope();
+        updateEnvelopeData();
     }
 }
 
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::drawFillHighlight()
+void ofxUIEnvelopeEditor::setParent(ofxUIWidget *_parent)
 {
-    if(draw_fill_highlight)
-    {
-        ofxUIFill();
-        
-        ofxUISetColor(color_fill_highlight);
-        
-        ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
-        
-        ofxUIDrawRect(rect->getX() + value.x * rect->getWidth(),
-                      rect->getY() + value.y * rect->getHeight(),
-                      OFX_UI_GLOBAL_WIDGET_SPACING,
-                      OFX_UI_GLOBAL_WIDGET_SPACING);
-        
-        ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
-        
-        ofxUIDrawLine(rect->getX() + value.x * rect->getWidth(),
-                      rect->getY(),
-                      rect->getX() + value.x * rect->getWidth(),
-                      rect->getY() + rect->getHeight());
-        
-        ofxUIDrawLine(rect->getX(),
-                      rect->getY() + value.y * rect->getHeight(),
-                      rect->getX() + rect->getWidth(),
-                      rect->getY() + value.y * rect->getHeight());
-        
-        label->drawString(rect->getX() + value.x * rect->getWidth()
-                          + OFX_UI_GLOBAL_WIDGET_SPACING,
-                          rect->getY() + value.y * rect->getHeight(),
-                          "(" + ofxUIToString(getScaledValue().x,labelPrecision)
-                          + ", " + ofxUIToString(getScaledValue().y,labelPrecision)
-                          +")");
-    }
+    ofxUIWidgetWithLabel::setParent(_parent);
 }
 
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::mouseMoved(int x, int y )
+void ofxUIEnvelopeEditor::mouseMoved(int x, int y)
 {
-    
     if(rect->inside(x, y))
     {
         state = OFX_UI_STATE_OVER;
@@ -207,19 +128,22 @@ void ofxUIEnvelopeEditor::mouseMoved(int x, int y )
     stateChange();
 }
 
-//----------------------------------------------------
-
 void ofxUIEnvelopeEditor::mouseDragged(int x, int y, int button)
 {
-    if(hit)
+    if(hit && (bHitPoint || bHitCurve))
     {
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        
-        /* These functions move the envelope points */
-        moveGrabbedPoint();
-        moveGrabbedCurve();
-        
+        ofxUIVec2f pos = rect->percentInside(x, y);
+        pos.x = MIN(1.0, MAX(0.0, pos.x));
+        pos.y = MIN(1.0, MAX(0.0, pos.y));
+        if(bHitPoint)
+        {
+            moveGrabbedPoint(pos.x, pos.y);            
+        }
+        else if(bHitCurve)
+        {
+            moveGrabbedCurve(pos.x, pos.y);
+        }
         triggerEvent(this);
     }
     else
@@ -235,23 +159,23 @@ void ofxUIEnvelopeEditor::mousePressed(int x, int y, int button)
 {
     if(rect->inside(x, y))
     {
-        /* For Left Clicks */
-        if (button == 0) {
-            isRightClick = false;
-        }
-        else if (button == 2) {
-            isRightClick = true;
-        }
-        
         hit = true;
         state = OFX_UI_STATE_DOWN;
-        input(x, y);
-        
-        /* Check for envelope point proximity here */
-        checkForPointNode();
+
+        ofxUIVec2f pos = rect->percentInside(x, y);
+        pos.x = MIN(1.0, MAX(0.0, pos.x));
+        pos.y = MIN(1.0, MAX(0.0, pos.y));
+
+        if(button == 0)
+        {            
+            checkForClosestPointNode(pos.x, pos.y);
+        }
+        else if(!bHitCurve && !hitPoint)
+        {
+            deleteClosestPointNode(pos.x, pos.y);
+        }
         
         triggerEvent(this);
-        
     }
     else
     {
@@ -264,7 +188,6 @@ void ofxUIEnvelopeEditor::mousePressed(int x, int y, int button)
 
 void ofxUIEnvelopeEditor::mouseReleased(int x, int y, int button)
 {
-    
     if(hit)
     {
 #ifdef TARGET_OPENGLES
@@ -272,147 +195,34 @@ void ofxUIEnvelopeEditor::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
-        
-        input(x, y);
-        
-        /* Resets envelope point check booleans */
-        if (isPointGrabbed) {
-            isPointGrabbed = false;
+
+        if(bHitPoint)
+        {
+            bHitPoint = false;
+            hitPoint = NULL;
         }
-        else if (isCurveGrabbed) {
-            isCurveGrabbed = false;
+        else if(bHitCurve)
+        {
+            bHitCurve = false;
+            hitCurve = NULL;
+            hitCurveNext = NULL;
         }
-        else if (isRightClick) {
-            isRightClick = false;
+        else
+        {
+            ofxUIVec2f pos = rect->percentInside(x, y);
+            pos.x = MIN(1.0, MAX(0.0, pos.x));
+            pos.y = MIN(1.0, MAX(0.0, pos.y));
+            addEnvelopePoint(pos.x, pos.y);
+            triggerEvent(this);            
         }
-        
-        /* Add an envelope point if no other interaction has occured */
-        else{
-            addEnvelopePoint();
-        }
-        
-        triggerEvent(this);
     }
     else
     {
         state = OFX_UI_STATE_NORMAL;
     }
-    stateCheck = abs(stateCheck - 1);
     stateChange();
     hit = false;
 }
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::keyPressed(int key)
-{
-    if(state == OFX_UI_STATE_OVER)
-    {
-        switch (key)
-        {
-            case OF_KEY_RIGHT:
-            {
-                ofxUIVec3f p = getScaledValue();
-                p.x+=increment;
-                value.x = ofxUIMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0, true);
-                updateLabel();
-                triggerEvent(this);
-            }
-                break;
-                
-            case OF_KEY_UP:
-            {
-                ofxUIVec3f p = getScaledValue();
-                p.y +=increment;
-                value.y = ofxUIMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0, true);
-                updateLabel();
-                triggerEvent(this);
-            }
-                break;
-                
-            case OF_KEY_LEFT:
-            {
-                ofxUIVec3f p = getScaledValue();
-                p.x-=increment;
-                value.x = ofxUIMap(p.x, rangeX.x, rangeX.y, 0.0, 1.0, true);
-                updateLabel();
-                triggerEvent(this);
-            }
-                break;
-                
-            case OF_KEY_DOWN:
-            {
-                ofxUIVec3f p = getScaledValue();
-                p.y -=increment;
-                value.y = ofxUIMap(p.y, rangeY.x, rangeY.y, 0.0, 1.0, true);
-                updateLabel();
-                triggerEvent(this);
-            }
-                break;
-                
-            default:
-                break;
-        }
-    }
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::keyReleased(int key)
-{
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::windowResized(int w, int h)
-{
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::input(float x, float y)
-{
-    
-    value.x = rect->percentInside(x, y).x;
-    value.y = rect->percentInside(x, y).y;
-    if(value.x > 1.0)
-    {
-        value.x = 1.0;
-    }
-    else if(value.x < 0.0)
-    {
-        value.x = 0.0;
-    }
-    
-    if(value.y > 1.0)
-    {
-        value.y = 1.0;
-    }
-    else if(value.y < 0.0)
-    {
-        value.y = 0.0;
-    }
-    
-    /* Convert to "Frequency Input" if isFrequency == true (this is converted
-     back to original in the drawEnvelopeFrequency function) */
-    if (isFrequency == true) {
-        value.y = toFrequency(value.y);
-    }
-    
-    updateLabel();
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::updateLabel()
-{
-    label->setLabel(name + ": " + ofxUIToString(getScaledValue().x,labelPrecision) + ", " + ofxUIToString(getScaledValue().y,labelPrecision));
-}
-
-//----------------------------------------------------
 
 void ofxUIEnvelopeEditor::stateChange()
 {
@@ -433,7 +243,6 @@ void ofxUIEnvelopeEditor::stateChange()
             break;
         case OFX_UI_STATE_DOWN:
         {
-            draw_fill_highlight = true;
             draw_outline_highlight = true;
             label->focus();
         }
@@ -451,80 +260,10 @@ void ofxUIEnvelopeEditor::stateChange()
     }
 }
 
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::setVisible(bool _visible)
-{
-    visible = _visible;
-    label->setVisible(visible);
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::setValue(ofVec2f _value)
-{
-    if(_value.x > rangeX.y)
-    {
-        _value.x = rangeX.y;
-    }
-    else if(_value.x < rangeX.x)
-    {
-        _value.x = rangeX.x;
-    }
-    
-    if(_value.y > rangeY.y)
-    {
-        _value.y = rangeY.y;
-    }
-    else if(_value.y < rangeY.x)
-    {
-        _value.y = rangeY.x;
-    }
-    
-    updateLabel();
-}
-
-//----------------------------------------------------
-
-ofVec2f ofxUIEnvelopeEditor::getValue()
-{
-    return value;
-}
-
-//----------------------------------------------------
-
-ofVec2f ofxUIEnvelopeEditor::getPercentValue()
-{
-    return value;
-}
-
-//----------------------------------------------------
-
-ofxUIVec3f ofxUIEnvelopeEditor::getScaledValue()
-{
-    ofxUIVec3f p = value;
-    p.x = ofxUIMap(p.x, 0, 1, rangeX.x, rangeX.y, true);
-    p.y = ofxUIMap(p.y, 0, 1, rangeY.x, rangeY.y, true);
-    return p;
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::setParent(ofxUIWidget *_parent)
-{
-    parent = _parent;
-    label->getRect()->setY(rect->getHeight()+padding);
-    calculatePaddingRect();
-}
-
-//----------------------------------------------------
-
 bool ofxUIEnvelopeEditor::isDraggable()
 {
     return true;
 }
-
-//----------------------------------------------------
 
 void ofxUIEnvelopeEditor::setLabelPrecision(int _precision)
 {
@@ -532,266 +271,154 @@ void ofxUIEnvelopeEditor::setLabelPrecision(int _precision)
     updateLabel();
 }
 
-//----------------------------------------------------
-
 #ifndef OFX_UI_NO_XML
 
 void ofxUIEnvelopeEditor::saveState(ofxXmlSettings *XML)
 {
-    XML->setValue("XValue", getScaledValue().x, 0);
-    XML->setValue("YValue", getScaledValue().y, 0);
+//    XML->setValue("XValue", getScaledValue().x, 0);
+//    XML->setValue("YValue", getScaledValue().y, 0);
 }
-
-//----------------------------------------------------
 
 void ofxUIEnvelopeEditor::loadState(ofxXmlSettings *XML)
 {
-    setValue(ofxUIVec3f(XML->getValue("XValue", getScaledValue().x, 0), XML->getValue("YValue", getScaledValue().y, 0)));
+//    setValue(ofxUIVec3f(XML->getValue("XValue", getScaledValue().x, 0), XML->getValue("YValue", getScaledValue().y, 0)));
 }
 
 #endif
 
-//----------------------------------------------------
-// ADD POINT AT X - Y
-
-void ofxUIEnvelopeEditor::addEnvelopePoint(){
-    envelope->addPoint(value.x, 1.0f-value.y);
+void ofxUIEnvelopeEditor::addEnvelopePoint(float x, float y)
+{
+    envelope->addPoint(x, y);
 }
-
-//----------------------------------------------------
-// The envelope that is to be controlled may be changed at any time
 
 void ofxUIEnvelopeEditor::setEnvelope(ofxUIEnvelope *_envelope)
 {
+    if(!useReference)
+    {
+        delete envelope;
+        useReference = true;
+    }
     envelope = _envelope;
 }
 
-//----------------------------------------------------
-// draw envelope
-
 void ofxUIEnvelopeEditor::drawEnvelope(){
     
-    for (int i=0; i < tempEnv.points.size()-1 && 1 < tempEnv.points.size();
-         i++)
+    vector<ofVec3f> points = envelope->getPoints();
+    int size = points.size();
+    float rX = rect->getX();
+    float rY = rect->getY();
+    
+    ofxUISetRectMode(OFX_UI_RECTMODE_CENTER);
+    ofxUINoFill();
+    for (int i = 0; i < size; i++)
     {
+        float x = rX + points[i].x*rect->getWidth();
+        float y = rY + points[i].y*rect->getHeight();
         
-        currentX = envPosX
-        + tempEnv.points.at(i).x *rect->getWidth();
-        currentY = rect->getY()
-        + (1 - tempEnv.points.at(i).y) *rect->getHeight();
+        ofxUICircle(x, y, pointNodeRadius);
         
-        nextX = envPosX
-        + tempEnv.points.at(i+1).x *rect->getWidth();
-        nextY = rect->getY()
-        + (1 - tempEnv.points.at(i+1).y) *rect->getHeight();
-        
-        halfwayBetweenX = (currentX+nextX)/2;
-        
-        /* Draw Points */
-        ofCircle(currentX, currentY, 5.0f);
-        
-        /* Draw Bezier Curve Control Squares */
-        ofxUIDrawRect(halfwayBetweenX
-                      - (pointNodeRectWidth/2),
-                      envPosY
-                      + 1
-                      - tempEnv.getY((halfwayBetweenX-envPosX)/rect->getWidth())
-                      * rect->getHeight()
-                      - (pointNodeRectHeight/2),
-                      pointNodeRectWidth,
-                      pointNodeRectHeight);
-        
-    }
-    
-    polyline.draw();
-    
-}
-
-//----------------------------------------------------
-// draw frequency envelope
-
-void ofxUIEnvelopeEditor::drawFrequencyEnvelope(){
-    
-    for (int i=0; i < tempEnv.points.size()-1 && 1 < tempEnv.points.size();
-         i++)
-    {
-        
-        currentX = envPosX
-        + tempEnv.points.at(i).x *rect->getWidth();
-        currentY = rect->getY()
-        + (1 - toOriginal(tempEnv.points.at(i).y)) *rect->getHeight();
-        
-        nextX = envPosX
-        + tempEnv.points.at(i+1).x *rect->getWidth();
-        nextY = rect->getY()
-        + (1 - toOriginal(tempEnv.points.at(i+1).y)) *rect->getHeight();
-        
-        halfwayBetweenX = (currentX+nextX)/2;
-        
-        /* Draw Points */
-        ofCircle(currentX, currentY, pointNodeRadius);
-        
-        /* Draw Bezier Curve Control Squares */
-        ofxUIDrawRect(halfwayBetweenX - (pointNodeRectWidth/2),
-                      envPosY + 1
-                      - toOriginal
-                        (tempEnv.getY((halfwayBetweenX-envPosX)/rect->getWidth()))
-                      * rect->getHeight() - (pointNodeRectHeight/2),
-                      pointNodeRectWidth,
-                      pointNodeRectHeight);
-        
-        
-        
-    }
-    
-    polyline.draw();
-    
-}
-
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::checkForPointNode()
-{
-    
-    tempEnv = *envelope;
-    
-    float pX, pY, difference;
-    float rW = rect->getWidth();
-    float rH = rect->getHeight();
-    int size = tempEnv.points.size();
-    
-    for (int i=0; i<size; i++) {
-        
-        pX = tempEnv.points.at(i).x;
-        pY = tempEnv.points.at(i).y;
-        
-        difference = abs( (pX*rW + pY*rH) - (value.x*rW + (1-value.y)*rH) );
-        
-        if (difference <= pointNodeRadius && isRightClick == false) {
-            isPointGrabbed = true;
-            grabbedPoint = &envelope->points.at(i);
-            return;
+        if(i < size-1)
+        {
+            float nx = rX + points[i+1].x*rect->getWidth();
+            float hx = (x + nx)/2.0;
+            ofxUIDrawRect(hx, rY + envelope->getY((hx-rX)/rect->getWidth())*rect->getHeight(), pointNodeRectWidth, pointNodeRectHeight);
         }
-        else if (difference <= pointNodeRadius && isRightClick == true) {
+    }
+    ofxUIFill();
+    ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
+    
+    polyline.draw();
+}
+
+bool ofxUIEnvelopeEditor::checkForClosestPointNode(float x, float y)
+{
+    vector<ofxUIVec3f> &points = envelope->getPoints();
+    int size = envelope->points.size();
+    
+    for(int i=0; i < size; i++)
+    {
+        if(ofDist(points[i].x, points[i].y, x, y) <= hitThreshold)
+        {
+            bHitPoint = true;
+            hitPoint = &points[i];
+            return bHitPoint;
+        }
+        
+        if(checkForClosestCurveNode(i, x, y))
+        {
+            return true;
+        }
+    }
+}
+
+bool ofxUIEnvelopeEditor::deleteClosestPointNode(float x, float y)
+{
+    int size = envelope->points.size();
+    
+    for(int i=0; i < size; i++)
+    {
+        if(ofDist(envelope->points[i].x, envelope->points[i].y, x, y) <= hitThreshold)
+        {
             envelope->points.erase(envelope->points.begin()+i);
+            return true;
         }
-        else {
-            isPointGrabbed = false;
+    }
+    return false;
+}
+
+
+bool ofxUIEnvelopeEditor::checkForClosestCurveNode(int i, float x, float y)
+{
+    int size = envelope->points.size();
+    if(i < size-1)
+    {
+        float rW = rect->getWidth();
+        float rH = rect->getHeight();
+        
+        float cX = envelope->points[i].x;
+        float cY = envelope->points[i].y;
+
+        float nX = envelope->points[i+1].x;
+        float nY = envelope->points[i+1].y;
+        
+        float hX = (cX+nX)/2.0f;
+        float hY = envelope->getY(hX);
+        
+        float distance = ofDist(hX, hY, x, y);
+        
+        if (distance <= hitThreshold)
+        {
+            bHitCurve = true;
+            hitCurve = &envelope->points[i];
+            hitCurveNext = &envelope->points[i+1];
+            return true;
         }
-        
-        /* Check for Curve Nodes */
-        if (i < size-1) {
-            checkForCurveNode(i);
-            if (isCurveGrabbed == true) {
-                return;
-            }
+    }
+    return false;
+}
+
+void ofxUIEnvelopeEditor::moveGrabbedPoint(float x, float y)
+{
+    if(hitPoint != NULL)
+    {
+        hitPoint->x = x;
+        hitPoint->y = y;
+    }
+}
+
+void ofxUIEnvelopeEditor::moveGrabbedCurve(float x, float y)
+{
+    if(hitCurveNext != NULL && hitCurve != NULL)
+    {
+        float curveBasePoint = (hitCurve->y + hitCurveNext->y)/2.0f;
+
+        if(hitCurveNext->y >= hitCurve->y)
+        {
+            hitCurve->z = ofxUIMap(y, curveBasePoint, hitCurveNext->y, 0.0f, 1.0f, true);
         }
-        
-    }
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::checkForCurveNode(int i)
-{
-    
-    float currentX, currentY, nextX, nextY, difference,
-    halfwayBetweenX, halfwayBetweenY;
-    float rW = rect->getWidth();
-    float rH = rect->getHeight();
-    
-    currentX = tempEnv.points.at(i).x;
-    currentY = 1.0f - tempEnv.points.at(i).y;
-    nextX = tempEnv.points.at(i+1).x;
-    nextY = 1.0f - tempEnv.points.at(i+1).y;
-    
-    halfwayBetweenX = (currentX+nextX)/2.0f;
-    halfwayBetweenY = tempEnv.getY(halfwayBetweenX);
-    
-    difference = abs( (halfwayBetweenX*rW + halfwayBetweenY*rH)
-                     - (value.x*rW + (1-value.y)*rH) );
-    
-    if (difference <= pointNodeRadius && isRightClick == false) {
-        isCurveGrabbed = true;
-        grabbedPoint = &envelope->points.at(i);
-        nextPoint = &envelope->points.at(i+1);
-        return;
-    }
-    else {
-        isCurveGrabbed = false;
-    }
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::moveGrabbedPoint()
-{
-    
-    if (isPointGrabbed == true) {
-        grabbedPoint->x = value.x;
-        grabbedPoint->y = 1 - value.y;
-        /*cout << "x = " + ofToString(value.x) + " | y = " + ofToString(value.y)
-         << endl;*/
-    }
-    
-}
-
-//----------------------------------------------------
-
-void ofxUIEnvelopeEditor::moveGrabbedCurve()
-{
-    
-    if (isCurveGrabbed == true) {
-        
-        float curveMover;
-        float curveBasePoint = (grabbedPoint->y + nextPoint->y)/2.0f;
-        
-        if (nextPoint->y >= grabbedPoint->y) {
-            curveMover = ofMap((1-value.y), curveBasePoint, nextPoint->y,
-                               0.0f, 1.0f);
+        else if(hitCurveNext->y < hitCurve->y)
+        {
+            hitCurve->z = ofxUIMap(y, curveBasePoint, hitCurve->y, 0.0f, -1.0f, true);
         }
-        else if (nextPoint->y < grabbedPoint->y) {
-            curveMover = ofMap((1-value.y), curveBasePoint, grabbedPoint->y,
-                               0.0f, -1.0f);
-        }
-        
-        grabbedPoint->z = ofClamp(curveMover, -1.0f, 1.0f);
-        
     }
-    
 }
-
-//----------------------------------------------------
-
-double ofxUIEnvelopeEditor::toFrequency(double value)
-{
-    
-    value = value-1;
-    
-    double frequency = pow(value, 3.0);
-    
-    frequency += 1;
-    
-    return frequency;
-    
-}
-
-//----------------------------------------------------
-
-double ofxUIEnvelopeEditor::toOriginal(double frequency)
-{
-    
-    double original = pow(frequency, 1.0/3.0);
-    
-    return original;
-    
-}
-
-//----------------------------------------------------
-
-
-
-//----------------------------------------------------

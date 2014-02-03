@@ -47,6 +47,12 @@ double ofxUIEnvelope::getY(double _x)
     
 }
 
+vector<ofVec3f> & ofxUIEnvelope::getPoints()
+{
+    return points;
+}
+
+
 // Interpolates via a bezier curve whose depth is start.z
 double ofxUIEnvelope::interpolate(ofVec3f start, ofVec3f end)
 {

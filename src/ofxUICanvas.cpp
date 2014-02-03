@@ -1651,16 +1651,24 @@ ofxUI2DPad* ofxUICanvas::add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _
 }
 
 /* CUSTOM ENVELOPE EDITOR */
-ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value)
+ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float h)
 {
+    if(h == -1)
+    {
+        h = globalGraphHeight;
+    }
     float dim = rect->getWidth()-widgetSpacing*2;
-    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, dim, dim, 0, 0);
+    ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, dim, h, 0, 0);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }
 
 ofxUIEnvelopeEditor* ofxUICanvas::addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x, float y)
 {
+    if(h == -1)
+    {
+        h = globalGraphHeight;
+    }
     ofxUIEnvelopeEditor* widget = new ofxUIEnvelopeEditor(_name, w, h, x, y);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;

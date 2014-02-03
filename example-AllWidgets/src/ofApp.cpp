@@ -24,7 +24,7 @@ void ofApp::setup(){
     
     gui1->loadSettings("gui1Settings.xml");
     gui2->loadSettings("gui2Settings.xml");
-    gui3->loadSettings("gui3Settings.xml");
+//    gui3->loadSettings("gui3Settings.xml");
     gui4->loadSettings("gui4Settings.xml");
     gui5->loadSettings("gui5Settings.xml");
 }
@@ -127,7 +127,7 @@ void ofApp::exit()
 {
     gui1->saveSettings("gui1Settings.xml");
     gui2->saveSettings("gui2Settings.xml");
-    gui3->saveSettings("gui3Settings.xml");
+//    gui3->saveSettings("gui3Settings.xml");
     gui4->saveSettings("gui4Settings.xml");
     gui5->saveSettings("gui5Settings.xml");
     
@@ -138,6 +138,7 @@ void ofApp::exit()
     delete gui5;
 	delete[] buffer;
     delete img;
+    delete env;
 }
 
 //--------------------------------------------------------------
@@ -422,6 +423,15 @@ void ofApp::setGUI3()
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_RIGHT);
     gui3->addImageToggle("IMAGETGL", "GUI/images/Preview.png", false);
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
+
+    gui3->addSpacer();
+    env = new ofxUIEnvelope();
+    for(float i = 0; i <= 5; i++)
+    {
+        env->addPoint(i/5.0, i/5.0);
+    }
+    
+    gui3->addWidgetDown(new ofxUIEnvelopeEditor("ENV", env, 200, 128));
     
     vector<string> items;
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");

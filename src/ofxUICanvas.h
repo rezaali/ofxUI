@@ -195,8 +195,8 @@ public:
     ofxUI2DPad* add2DPad(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f *_value, float w, float h, float x = 0, float y = 0);
     
     /* CUSTOM ENVELOPE EDITOR */
-    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value);
-    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h, float x = 0, float y = 0);
+    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float h = -1);
+    ofxUIEnvelopeEditor* addEnvelopeEditor(string _name, ofxUIVec3f _rangeX, ofxUIVec3f _rangeY, ofxUIVec3f _value, float w, float h = -1, float x = 0, float y = 0);
     
     ofxUITextInput* addTextInput(string _name, string _textstring, int _size = -1);
     ofxUITextInput* addTextInput(string _name, string _textstring, float w, float h = 0, float x = 0, float y = 0, int _size = -1);

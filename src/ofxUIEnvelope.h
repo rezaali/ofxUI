@@ -22,6 +22,7 @@ public:
     void addPoint(double x, double y, float curve = 0);
     void sortPointsByX();
     double getY(double _x);
+    vector<ofVec3f> & getPoints(); 
     
 private:
     
