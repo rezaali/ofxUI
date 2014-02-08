@@ -24,7 +24,7 @@ void ofApp::setup(){
     
     gui1->loadSettings("gui1Settings.xml");
     gui2->loadSettings("gui2Settings.xml");
-//    gui3->loadSettings("gui3Settings.xml");
+    gui3->loadSettings("gui3Settings.xml");
     gui4->loadSettings("gui4Settings.xml");
     gui5->loadSettings("gui5Settings.xml");
 }
@@ -65,24 +65,14 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
         cout << n->getValue() << endl;
     }
 	
-	if(name == "RED")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "RED " << slider->getValue() << endl;
-		red = slider->getValue();
-	}
-	else if(name == "GREEN")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "GREEN " << slider->getValue() << endl;
-		green = slider->getValue();
-	}	
-	else if(name == "BLUE")
-	{
-		ofxUISlider *slider = (ofxUISlider *) e.getSlider();
-		cout << "BLUE " << slider->getValue() << endl;
-		blue = slider->getValue();
-	}
+    if(name == "SAMPLER")
+    {
+        ofxUIImageSampler *is = (ofxUIImageSampler *) e.widget;
+        ofColor clr = is->getColor();
+        red = clr.r;
+        blue = clr.b;
+        green = clr.g;
+    }
 	else if(name == "BUTTON")
 	{
 		ofxUIButton *button = (ofxUIButton *) e.getButton();
@@ -127,7 +117,7 @@ void ofApp::exit()
 {
     gui1->saveSettings("gui1Settings.xml");
     gui2->saveSettings("gui2Settings.xml");
-//    gui3->saveSettings("gui3Settings.xml");
+    gui3->saveSettings("gui3Settings.xml");
     gui4->saveSettings("gui4Settings.xml");
     gui5->saveSettings("gui5Settings.xml");
     
@@ -313,9 +303,9 @@ void ofApp::setGUI1()
     
     gui1->addSpacer();
 	gui1->addLabel("H SLIDERS");
-	gui1->addSlider("RED", 0.0, 255.0, red)->setTriggerType(OFX_UI_TRIGGER_ALL);
-	gui1->addSlider("GREEN", 0.0, 255.0, green)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE|OFX_UI_TRIGGER_END);
-	gui1->addSlider("BLUE", 0.0, 255.0, blue)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE);
+	gui1->addSlider("RED", 0.0, 255.0, &red)->setTriggerType(OFX_UI_TRIGGER_ALL);
+	gui1->addSlider("GREEN", 0.0, 255.0, &green)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE|OFX_UI_TRIGGER_END);
+	gui1->addSlider("BLUE", 0.0, 255.0, &blue)->setTriggerType(OFX_UI_TRIGGER_BEGIN|OFX_UI_TRIGGER_CHANGE);
     
     gui1->addSpacer();
     gui1->addLabel("V SLIDERS");

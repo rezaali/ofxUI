@@ -207,7 +207,9 @@ ofPoint ofxUIImageSampler::getValue()
 
 void ofxUIImageSampler::setValue(ofPoint _value)
 {
-    input(_value.x, _value.y); 
+    value.x = MIN(1.0, MAX(0.0, _value.x));
+    value.y = MIN(1.0, MAX(0.0, _value.y));
+    sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));
 }
 
 bool ofxUIImageSampler::isDraggable()
