@@ -184,10 +184,8 @@ void ofxUIImageSampler::stateChange()
 
 void ofxUIImageSampler::input(int x, int y)
 {
-    value.x = MIN(1.0, MAX(0.0, rect->percentInside(x, y).x));
-    value.y = MIN(1.0, MAX(0.0, rect->percentInside(x, y).y));
-
-    sampledColor = image->getColor(value.x*(image->getWidth()-1), value.y*(image->getHeight()-1));          //why one? well because if we get to the end, we sample the beginning...
+    ofxUIVec2f _v = rect->percentInside(x, y);
+    setValue(_v);
 }
 
 ofColor& ofxUIImageSampler::getColor()
