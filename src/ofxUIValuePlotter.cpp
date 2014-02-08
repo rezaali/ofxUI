@@ -61,7 +61,7 @@ void ofxUIValuePlotter::update()
     addPoint(*value);
 }
 
-void ofxUIValuePlotter::ofxUIValuePlotter::drawBack()
+void ofxUIValuePlotter::drawBack()
 {
     if(draw_back)
     {

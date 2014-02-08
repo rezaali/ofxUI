@@ -35,7 +35,7 @@ ofxUIWidgetWithLabel::~ofxUIWidgetWithLabel()
     
 }
 
-bool ofxUIWidgetWithLabel::ofxUIWidgetWithLabel::hasLabel()
+bool ofxUIWidgetWithLabel::hasLabel()
 {
     return true;
 }
