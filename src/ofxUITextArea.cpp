@@ -33,8 +33,9 @@ ofxUITextArea::ofxUITextArea(string _name, string _textstring, float w, float h,
 void ofxUITextArea::init(string _name, string _textstring, float w, float h, float x, float y, int _size)
 {
     initRect(x,y,w,h);
-    name = string(_name);
-    kind = OFX_UI_WIDGET_TEXTAREA;
+    setName(_name);
+    setKind(OFX_UI_WIDGET_TEXTAREA);
+    
     textstring = _textstring;
     setDrawFill(true);
     setDrawBack(false);

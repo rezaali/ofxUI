@@ -511,6 +511,11 @@ ofxUIColor& ofxUIWidget::getColorFillHighlight()
     return color_fill_highlight;
 }
 
+void ofxUIWidget::setKind(int _kind)
+{
+    kind = _kind;
+}
+
 int ofxUIWidget::getKind()
 {
     return kind;

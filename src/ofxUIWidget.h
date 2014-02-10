@@ -92,6 +92,7 @@ public:
     
     void setID(int _id);
     int getID();
+    virtual void setKind(int _kind);
     virtual int getKind();
     
     virtual bool isDraggable();
