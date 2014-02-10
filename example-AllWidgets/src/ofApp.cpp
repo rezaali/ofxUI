@@ -336,6 +336,7 @@ void ofApp::setGUI1()
     
     string textString = "This widget is a text area widget. Use this when you need to display a paragraph of text. It takes care of formatting the text to fit the block.";
     gui1->addSpacer();
+    
     gui1->addTextArea("textarea", textString, OFX_UI_FONT_SMALL);
     
     gui1->autoSizeToFitWidgets();

@@ -268,7 +268,6 @@ bool ofxUIEnvelopeEditor::isDraggable()
 void ofxUIEnvelopeEditor::setLabelPrecision(int _precision)
 {
     labelPrecision = _precision;
-    updateLabel();
 }
 
 #ifndef OFX_UI_NO_XML

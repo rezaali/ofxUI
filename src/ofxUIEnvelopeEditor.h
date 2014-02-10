@@ -52,7 +52,6 @@ public:
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
-	void updateLabel();
     void stateChange();
     bool isDraggable();
     void setLabelPrecision(int _precision);
