@@ -102,7 +102,7 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     addEmbeddedWidget(label);
     label->setVisible(drawLabel);
     
-    increment = fabs(max - min) / 100.0;
+    increment = ABS(max - min) / 100.0;
     bRoundedToNearestInt = false;
     bClampValue = true;
 }
