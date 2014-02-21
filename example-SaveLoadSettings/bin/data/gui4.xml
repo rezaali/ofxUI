@@ -8,17 +8,12 @@
 <Widget>
     <Kind>26</Kind>
     <Name>BILABEL</Name>
-    <Value>74.384239197</Value>
+    <Value>75.000000000</Value>
 </Widget>
 <Widget>
     <Kind>25</Kind>
     <Name>MINIMAL</Name>
     <Value>0.000000000</Value>
-</Widget>
-<Widget>
-    <Kind>4</Kind>
-    <Name>FPS SLIDER</Name>
-    <Value>59.998012543</Value>
 </Widget>
 <Widget>
     <Kind>28</Kind>
@@ -34,8 +29,4 @@
     <Kind>31</Kind>
     <Name>IMAGE TOGGLE</Name>
     <Value>1</Value>
-</Widget>
-<Widget>
-    <Kind>44</Kind>
-    <Name>SORTABLE LIST</Name>
 </Widget>

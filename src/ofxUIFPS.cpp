@@ -62,7 +62,6 @@ void ofxUIFPS::setLabelPrecision(int _precision) {
 void ofxUIFPS::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    ofxUIRectangle *labelrect = label->getRect();
     rect->setHeight(label->getRect()->getHeight());
     rect->setWidth(label->getRect()->getWidth());    
     calculatePaddingRect();

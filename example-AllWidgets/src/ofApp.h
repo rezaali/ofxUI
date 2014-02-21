@@ -50,5 +50,4 @@ public:
     
     float *buffer;
     ofImage *img;
-    ofxUIEnvelope *env; 
 };

@@ -27,9 +27,13 @@
 #include "ofMain.h"
 #include "ofPoint.h"
 
+#ifndef OFX_UI_FONT_RENDERER
+#define OFX_UI_FONT_RENDERER ofTrueTypeFont
+#endif
+
 typedef ofVec3f ofxUIVec3f;
 typedef ofVec2f ofxUIVec2f;
-typedef ofTrueTypeFont ofxUIFont; 
+typedef OFX_UI_FONT_RENDERER ofxUIFont;
 typedef ofColor ofxUIColor;
 
 #if defined( TARGET_OF_IPHONE ) || defined( TARGET_OF_IOS ) || defined( TARGET_ANDROID )

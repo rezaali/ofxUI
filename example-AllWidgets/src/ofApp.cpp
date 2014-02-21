@@ -128,7 +128,6 @@ void ofApp::exit()
     delete gui5;
 	delete[] buffer;
     delete img;
-    delete env;
 }
 
 //--------------------------------------------------------------
@@ -416,14 +415,6 @@ void ofApp::setGUI3()
     gui3->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
 
     gui3->addSpacer();
-    env = new ofxUIEnvelope();
-    for(float i = 0; i <= 5; i++)
-    {
-        env->addPoint(i/5.0, i/5.0);
-    }
-    
-    gui3->addWidgetDown(new ofxUIEnvelopeEditor("ENV", env, 200, 128));
-    
     vector<string> items;
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
     items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");

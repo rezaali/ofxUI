@@ -178,4 +178,5 @@ string ofxUIRadio::getActiveName()
     {
         return active->getName();
     }
+    return ""; 
 }

@@ -20,8 +20,6 @@
 		9E42EF5C189EECDB00C2F4E4 /* ofxUICircleSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211B9189EE9470079DE42 /* ofxUICircleSlider.cpp */; };
 		9E42EF5D189EECDB00C2F4E4 /* ofxUIDragableLabelButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211BC189EE9470079DE42 /* ofxUIDragableLabelButton.cpp */; };
 		9E42EF5E189EECDB00C2F4E4 /* ofxUIDropDownList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211BE189EE9470079DE42 /* ofxUIDropDownList.cpp */; };
-		9E42EF5F189EECDB00C2F4E4 /* ofxUIEnvelope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211C0189EE9470079DE42 /* ofxUIEnvelope.cpp */; };
-		9E42EF60189EECDB00C2F4E4 /* ofxUIEnvelopeEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211C2189EE9470079DE42 /* ofxUIEnvelopeEditor.cpp */; };
 		9E42EF61189EECDB00C2F4E4 /* ofxUIEventArgs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211C4189EE9470079DE42 /* ofxUIEventArgs.cpp */; };
 		9E42EF62189EECDB00C2F4E4 /* ofxUIFPS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211C6189EE9470079DE42 /* ofxUIFPS.cpp */; };
 		9E42EF63189EECDB00C2F4E4 /* ofxUIFPSSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E7211C8189EE9470079DE42 /* ofxUIFPSSlider.cpp */; };
@@ -134,10 +132,6 @@
 		9E7211BD189EE9470079DE42 /* ofxUIDragableLabelButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIDragableLabelButton.h; sourceTree = "<group>"; };
 		9E7211BE189EE9470079DE42 /* ofxUIDropDownList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIDropDownList.cpp; sourceTree = "<group>"; };
 		9E7211BF189EE9470079DE42 /* ofxUIDropDownList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIDropDownList.h; sourceTree = "<group>"; };
-		9E7211C0189EE9470079DE42 /* ofxUIEnvelope.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIEnvelope.cpp; sourceTree = "<group>"; };
-		9E7211C1189EE9470079DE42 /* ofxUIEnvelope.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIEnvelope.h; sourceTree = "<group>"; };
-		9E7211C2189EE9470079DE42 /* ofxUIEnvelopeEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIEnvelopeEditor.cpp; sourceTree = "<group>"; };
-		9E7211C3189EE9470079DE42 /* ofxUIEnvelopeEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIEnvelopeEditor.h; sourceTree = "<group>"; };
 		9E7211C4189EE9470079DE42 /* ofxUIEventArgs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIEventArgs.cpp; sourceTree = "<group>"; };
 		9E7211C5189EE9470079DE42 /* ofxUIEventArgs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxUIEventArgs.h; sourceTree = "<group>"; };
 		9E7211C6189EE9470079DE42 /* ofxUIFPS.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxUIFPS.cpp; sourceTree = "<group>"; };
@@ -320,10 +314,6 @@
 				9E7211BD189EE9470079DE42 /* ofxUIDragableLabelButton.h */,
 				9E7211BE189EE9470079DE42 /* ofxUIDropDownList.cpp */,
 				9E7211BF189EE9470079DE42 /* ofxUIDropDownList.h */,
-				9E7211C0189EE9470079DE42 /* ofxUIEnvelope.cpp */,
-				9E7211C1189EE9470079DE42 /* ofxUIEnvelope.h */,
-				9E7211C2189EE9470079DE42 /* ofxUIEnvelopeEditor.cpp */,
-				9E7211C3189EE9470079DE42 /* ofxUIEnvelopeEditor.h */,
 				9E7211EF189EE9480079DE42 /* ofxUISlider.cpp */,
 				9E7211F0189EE9480079DE42 /* ofxUISlider.h */,
 				9E7211C4189EE9470079DE42 /* ofxUIEventArgs.cpp */,
@@ -587,8 +577,6 @@
 				9E42EF5C189EECDB00C2F4E4 /* ofxUICircleSlider.cpp in Sources */,
 				9E42EF5D189EECDB00C2F4E4 /* ofxUIDragableLabelButton.cpp in Sources */,
 				9E42EF5E189EECDB00C2F4E4 /* ofxUIDropDownList.cpp in Sources */,
-				9E42EF5F189EECDB00C2F4E4 /* ofxUIEnvelope.cpp in Sources */,
-				9E42EF60189EECDB00C2F4E4 /* ofxUIEnvelopeEditor.cpp in Sources */,
 				9E42EF61189EECDB00C2F4E4 /* ofxUIEventArgs.cpp in Sources */,
 				9E42EF62189EECDB00C2F4E4 /* ofxUIFPS.cpp in Sources */,
 				9E42EF63189EECDB00C2F4E4 /* ofxUIFPSSlider.cpp in Sources */,

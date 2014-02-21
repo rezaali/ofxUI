@@ -28,6 +28,19 @@
     #include "ofxXmlSettings.h"
 #endif
 
+#ifdef TARGET_OF_IOS
+    #define OFX_UI_FONT_NAME "GUI/Helvetica.ttf"
+#else
+    #define OFX_UI_FONT_NAME "sans-serif"
+#endif
+
+#define OFX_UI_FONT_RESOLUTION 150
+#define OFX_UI_FONT_LARGE_SIZE 10
+#define OFX_UI_FONT_MEDIUM_SIZE 8
+#define OFX_UI_FONT_SMALL_SIZE 6
+
+#define OFX_UI_LABEL_DRAW_BACK false
+
 #define OFX_UI_STATE_NORMAL 0
 #define OFX_UI_STATE_OVER 1
 #define OFX_UI_STATE_DOWN 2
@@ -56,7 +69,6 @@
 #define OFX_UI_COLOR_FILL_HIGHLIGHT ofxUIColor(255, 255, 255, OFX_UI_COLOR_FILL_HIGHLIGHT_ALPHA)        //rect's onMouseDown highlight color
 #define OFX_UI_COLOR_PADDED ofxUIColor(0, OFX_UI_COLOR_PADDED_ALPHA)                                    //rect's padded color
 #define OFX_UI_COLOR_PADDED_OUTLINE ofxUIColor(255, OFX_UI_COLOR_PADDED_OUTLINE_ALPHA)                  //rect's padded outline color
-
 
 #define OFX_UI_DRAW_PADDING false
 #define OFX_UI_DRAW_PADDING_OUTLINE false
@@ -231,16 +243,3 @@ enum ofxUIThemeType
     OFX_UI_THEME_GRAYDAY,
     OFX_UI_THEME_MINBLACK
 };
-
-#ifdef TARGET_OF_IOS
-    #define OFX_UI_FONT_NAME "GUI/Helvetica.ttf"
-#else
-    #define OFX_UI_FONT_NAME "sans-serif"
-#endif
-
-#define OFX_UI_FONT_RESOLUTION 150
-#define OFX_UI_FONT_LARGE_SIZE 10
-#define OFX_UI_FONT_MEDIUM_SIZE 8
-#define OFX_UI_FONT_SMALL_SIZE 6
-
-#define OFX_UI_LABEL_DRAW_BACK false

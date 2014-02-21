@@ -36,9 +36,9 @@ void ofxUITextInput::init(string _name, string _textstring, float w, float h, fl
     initRect(x,y,w,h);
     name = string(_name);
     kind = OFX_UI_WIDGET_TEXTINPUT;
-    textstring = _textstring;
-    defaultstring = _textstring;
-    displaystring = _textstring;
+    textstring = string(_textstring);
+    defaultstring = string(_textstring);
+    displaystring = string(_textstring);
     
     clicked = false;                                            //the widget's value
     autoclear = true;
@@ -408,7 +408,6 @@ void ofxUITextInput::setParent(ofxUIWidget *_parent)
     defaultX = labelrect->getX(false);
     
     cursorWidth = label->getStringWidth(".");
-    
     while(label->getStringWidth(textstring) > rect->getWidth()-padding*2.0)
     {
         string::iterator it;

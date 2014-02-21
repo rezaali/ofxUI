@@ -201,6 +201,11 @@
     <Value>0</Value>
 </Widget>
 <Widget>
+    <Kind>22</Kind>
+    <Name>DROP DOWN LIST</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
     <Kind>17</Kind>
     <Name>FIRST ITEM</Name>
     <Value>0</Value>

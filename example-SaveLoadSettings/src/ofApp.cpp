@@ -281,7 +281,7 @@ void ofApp::setGUI2()
     
     gui2->addSpacer();
     gui2->addLabel("NUMBER DIALER");
-    gui2->addNumberDialer("NUMBER DIALER", -10000, 10000, 5000, 1);
+    gui2->addNumberDialer("DIALER", -10000, 10000, 5000, 1);
     
     gui2->addSpacer();
     gui2->addLabel("LABEL BUTTON", OFX_UI_FONT_MEDIUM);

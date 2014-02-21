@@ -34,6 +34,11 @@
     <AColor>255</AColor>
 </Widget>
 <Widget>
+    <Kind>22</Kind>
+    <Name>DDL</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
     <Kind>17</Kind>
     <Name>FIRST</Name>
     <Value>0</Value>
@@ -51,6 +56,11 @@
 <Widget>
     <Kind>17</Kind>
     <Name>FOURTH</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>22</Kind>
+    <Name>MULTIPLE</Name>
     <Value>0</Value>
 </Widget>
 <Widget>

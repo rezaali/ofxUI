@@ -40,7 +40,6 @@
 #include "ofxUIMultiImageToggle.h"
 #include "ofxUIRadio.h"
 #include "ofxUI2DPad.h"
-#include "ofxUIEnvelopeEditor.h" // Custom Envelope Editor Widget
 #include "ofxUI2DGraph.h"
 #include "ofxUITextInput.h"
 #include "ofxUITextArea.h"

@@ -20,14 +20,14 @@ void ofApp::setup()
     gui->addWidgetDown(new ofxUILabel("CUSTOM WIDGET LAYOUT", OFX_UI_FONT_LARGE), OFX_UI_ALIGN_RIGHT);
     
     gui->addWidget(new ofxUILabel(360, 300, "2D PAD", OFX_UI_FONT_MEDIUM)); 				
-    gui->addWidgetSouthOf(new ofxUI2DPad(320, 190, ofPoint(320*.5,190*.5), "PAD"), "2D PAD");
-    gui->addWidgetWestOf(new ofxUITextInput(160, "TEXT INPUT", "Input Text", OFX_UI_FONT_LARGE), "PAD"); 
+    gui->addWidgetSouthOf(new ofxUI2DPad("PAD", ofPoint(0, 320), ofPoint(0, 190), ofPoint(320*.5,190*.5), 320, 190), "2D PAD");
+    gui->addWidgetWestOf(new ofxUITextInput("TEXT INPUT", "Input Text", 320, dim, 0, 0, OFX_UI_FONT_MEDIUM), "PAD");
     gui->addWidgetEastOf(new ofxUISlider("0", 0.0, 255.0, 150, dim, 190), "PAD");
-    gui->addWidgetNorthOf(new ofxUIToggle(dim, dim, false, "D_GRID"), "TEXT INPUT");      
-    gui->addWidgetWestOf(new ofxUIToggle(dim, dim, true, "D2"), "D_GRID"); 
+    gui->addWidgetNorthOf(new ofxUIToggle("D_GRID", false, dim, dim), "2D PAD");
+    gui->addWidgetWestOf(new ofxUIToggle("D2", true, dim, dim), "D_GRID");
     gui->addWidgetNorthOf(new ofxUISlider("GREEN", 0.0, 255.0, &green, 320, dim), "D2");
     gui->addWidgetNorthOf(new ofxUISlider("BLUE", 0.0, 255.0, &blue, 320, dim), "GREEN");
-    gui->addWidgetLeft(new ofxUIToggle(dim, dim, true, "NEW")); 
+    gui->addWidgetLeft(new ofxUIToggle("NEW", true, dim, dim));
     
     gui->addWidgetSouthOf(new ofxUISlider("RED", 0.0, 255.0, &red, 320, dim), "PAD");
     gui->autoSizeToFitWidgets(); 
