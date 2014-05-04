@@ -30,6 +30,8 @@
 #include "ofxUIButton.h"
 #include "ofxUIToggle.h"
 
+class ofxUICanvas;
+
 class ofxUIEventArgs 
 {   
 public:
@@ -38,7 +40,13 @@ public:
     ofxUIButton *getButton();
     ofxUIToggle *getToggle();
     ofxUISlider *getSlider();
+    ofxUICanvas *getCanvasParent();
+    ofxUIWidget *getParent();
+
     string getName();
+    string getParentName();
+    string getCanvasParentName();
+    
     int getKind();
     
     ofxUIWidget *widget;

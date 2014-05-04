@@ -50,9 +50,45 @@ ofxUISlider *ofxUIEventArgs::getSlider()
     return (ofxUISlider *) widget;
 }
 
+ofxUICanvas *ofxUIEventArgs::getCanvasParent()
+{
+    return (ofxUICanvas *) widget->getCanvasParent();
+}
+
+ofxUIWidget *ofxUIEventArgs::getParent()
+{
+    return widget->getParent();
+}
+
 string ofxUIEventArgs::getName()
 {
     return widget->getName();
+}
+
+string ofxUIEventArgs::getParentName()
+{
+    ofxUIWidget *parent = widget->getParent();
+    if(parent != NULL)
+    {
+        return parent->getName();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+string ofxUIEventArgs::getCanvasParentName()
+{
+    ofxUIWidget *parent = widget->getCanvasParent();
+    if(parent != NULL)
+    {
+        return parent->getName();
+    }
+    else
+    {
+        return "";
+    }
 }
 
 int ofxUIEventArgs::getKind()

@@ -56,7 +56,7 @@ public:
     virtual void drawPadded();
     virtual void drawPaddedOutline();
     virtual void draw();
-    virtual void setPosition(int x, int y);
+    virtual void setPosition(int x, int y); 
     virtual void setDimensions(float _width, float _height);
     void drawScrollableRect();
 

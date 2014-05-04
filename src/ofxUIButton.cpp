@@ -58,7 +58,7 @@ void ofxUIButton::init(string _name, bool *_value, float w, float h, float x, fl
     label = new ofxUILabel((name+" LABEL"),name,_size);
     addEmbeddedWidget(label);
     
-    bLabelRight = true;
+    labelPosition = OFX_UI_WIDGET_POSITION_RIGHT;
     
     if(useReference)
     {
@@ -198,12 +198,7 @@ void ofxUIButton::stateChange()
 void ofxUIButton::setParent(ofxUIWidget *_parent)
 {
     parent = _parent;
-    ofxUIRectangle *labelrect = label->getRect();
-    float h = labelrect->getHeight();
-    float ph = rect->getHeight();
-    labelrect->setX(rect->getWidth()+padding);
-    labelrect->setY(ph/2.0 - h/2.0);
-    calculatePaddingRect();
+    setLabelPosition(labelPosition);
 }
 
 bool ofxUIButton::getValue()
@@ -246,25 +241,45 @@ bool ofxUIButton::isHit(float x, float y)
 
 void ofxUIButton::setLabelPosition(ofxUIWidgetPosition pos)
 {
-    switch (pos)
+    labelPosition = pos;
+    switch (labelPosition)
     {
         case OFX_UI_WIDGET_POSITION_LEFT:
         {
-            bLabelRight = false;
-            label->getRect()->setX(-label->getRect()->getWidth() - padding*2);
-            calculatePaddingRect();
+            ofxUIRectangle *labelrect = label->getRect();
+            float h = labelrect->getHeight();
+            float ph = rect->getHeight();
+            labelrect->setX(-label->getRect()->getWidth() - padding*2);
+            labelrect->setY(ph/2.0 - h/2.0);
         }
             break;
             
         case OFX_UI_WIDGET_POSITION_RIGHT:
         {
-            bLabelRight = true;
-            label->getRect()->setX(rect->getWidth() + padding*2.0);
-            calculatePaddingRect();
+            ofxUIRectangle *labelrect = label->getRect();
+            float h = labelrect->getHeight();
+            float ph = rect->getHeight();
+            labelrect->setX(rect->getWidth()+padding);
+            labelrect->setY(ph/2.0 - h/2.0);
+        }
+            break;
+            
+        case OFX_UI_WIDGET_POSITION_DOWN:
+        {
+            label->getRect()->setX(0);
+            label->getRect()->setY(rect->getHeight() + padding);
+        }
+            break;
+            
+        case OFX_UI_WIDGET_POSITION_UP:
+        {
+            label->getRect()->setX(0);
+            label->getRect()->setY(-label->getRect()->getHeight() - padding);
         }
             break;
             
         default:
             break;
     }
+   calculatePaddingRect();
 }

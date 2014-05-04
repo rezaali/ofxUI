@@ -88,7 +88,7 @@ void ofxUIValuePlotter::drawFill()
         }
         ofPushMatrix();
         ofTranslate(rect->getX(), rect->getY()+scale, 0);
-        ofSetLineWidth(1.5);
+        ofSetLineWidth(2.0);
         ofBeginShape();
         for (unsigned int i = 0; i < bufferSize; i++)
         {

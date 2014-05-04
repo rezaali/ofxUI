@@ -120,7 +120,6 @@ void ofxUINumberDialer::init(float x, float y, float w, float h, float _min, flo
     }
     
     draw_fill = true;
-    drawLabel = false;
     
     label = new ofxUILabel(0,0,(name+" LABEL"), temp, _size);
     addEmbeddedWidget(label);

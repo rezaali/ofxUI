@@ -374,10 +374,10 @@ void ofxUIScrollableCanvas::draw()
 
 void ofxUIScrollableCanvas::setPosition(int x, int y)
 {
-    rect->x = x;
-    rect->y = y;
     sRect->x = x;
     sRect->y = y;
+    rect->x = x;
+    rect->y = y;
 }
 
 void ofxUIScrollableCanvas::setDimensions(float _width, float _height)

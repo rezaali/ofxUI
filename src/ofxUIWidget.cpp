@@ -732,25 +732,35 @@ ofxUIWidget *ofxUIWidget::getCanvasParent()
 {
     bool notFoundParentCanvas = true;
     ofxUIWidget *parent = this->getParent();
-    
-    while (notFoundParentCanvas)
+    if(parent != NULL)
     {
-        int kind = parent->getKind();
-        if( kind == OFX_UI_WIDGET_CANVAS || kind == OFX_UI_WIDGET_SCROLLABLECANVAS || kind == OFX_UI_WIDGET_SUPERCANVAS || OFX_UI_WIDGET_TABBAR)
+        while (notFoundParentCanvas)
         {
-            notFoundParentCanvas = false;
-            return parent;
-        }
-        else
-        {
-            parent = parent->getParent();
-            if(parent == NULL)
+            int _kind = parent->getKind();
+            if( _kind == OFX_UI_WIDGET_CANVAS || _kind == OFX_UI_WIDGET_SCROLLABLECANVAS || _kind == OFX_UI_WIDGET_SUPERCANVAS || _kind  ==OFX_UI_WIDGET_TABBAR)
             {
-                return NULL; 
+                notFoundParentCanvas = false;
+                return parent;
+            }
+            else
+            {
+                parent = parent->getParent();
+                if(parent == NULL)
+                {
+                    return NULL; 
+                }
             }
         }
     }
-    return NULL; 
+    else
+    {
+        int _kind = getKind();
+        if( _kind == OFX_UI_WIDGET_CANVAS || _kind == OFX_UI_WIDGET_SCROLLABLECANVAS || _kind == OFX_UI_WIDGET_SUPERCANVAS || _kind == OFX_UI_WIDGET_TABBAR)
+        {
+            return this;
+        }
+    }
+    return NULL;
 }
 
 bool ofxUIWidget::hasState()

@@ -27,12 +27,12 @@
 
 ofxUIFPS::ofxUIFPS(float x, float y, int _size) : ofxUIWidgetWithLabel()
 {
-    init(x, y, "FPS", "FPS: 000", _size);
+    init(x, y, "FPS", "FPS: 0000", _size);
 }
 
 ofxUIFPS::ofxUIFPS(int _size) : ofxUIWidgetWithLabel()
 {
-    init(0, 0, "FPS", "FPS: 000", _size);
+    init(0, 0, "FPS", "FPS: 0000", _size);
 }
 
 void ofxUIFPS::init(float x, float y, string _name, string _label, int _size)

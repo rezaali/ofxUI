@@ -52,5 +52,5 @@ public:
 protected:
     bool *value; 
     bool useReference; 
-    bool bLabelRight; 
+    ofxUIWidgetPosition labelPosition; 
 }; 

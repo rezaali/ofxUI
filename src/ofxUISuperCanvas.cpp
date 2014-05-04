@@ -123,6 +123,12 @@ ofxUILabel *ofxUISuperCanvas::getCanvasTitle()
     return canvasTitle;
 }
 
+void ofxUISuperCanvas::autoSizeToFitWidgets()
+{
+    ofxUICanvas::autoSizeToFitWidgets();
+    canvasTitle->getRect()->setWidth(rect->getWidth()-widgetSpacing*2);    
+}
+
 #ifdef OFX_UI_TARGET_TOUCH
 
 void ofxUISuperCanvas::touchDown(float x, float y, int id)
@@ -169,6 +175,7 @@ void ofxUISuperCanvas::touchDoubleTap(float x, float y, int id)
     if(rect->inside(x, y) && canvasTitle->isHit(x, y))
     {
         toggleMinified();
+        triggerEvent(this);
         return;
     }
     canvasTouchDoubleTap(x, y, id);
@@ -202,6 +209,7 @@ void ofxUISuperCanvas::onMousePressed(ofMouseEventArgs& data)
         if((ofGetElapsedTimef() - lastHitTime) < deltaTime)
         {
             toggleMinified();
+            triggerEvent(this);            
             return;
         }
         lastHitTime = ofGetElapsedTimef();
@@ -299,11 +307,11 @@ void ofxUISuperCanvas::removeWidgets()
 {
     ofxUICanvas::removeWidgets();
     headerWidgets.clear();
-    
+    resetPlacer(); 
     canvasTitle = new ofxUILabel(rect->getWidth()-widgetSpacing*2, title, size);
     canvasTitle->setEmbedded(true);
     headerWidgets.push_back(canvasTitle);
-    addWidgetPosition(canvasTitle, widgetPosition, widgetAlign);
+    addWidgetPosition(canvasTitle, OFX_UI_WIDGET_POSITION_DOWN, OFX_UI_ALIGN_FREE);
 }
 
 void ofxUISuperCanvas::minify()

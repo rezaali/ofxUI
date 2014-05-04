@@ -1118,7 +1118,7 @@ ofxUIWidget* ofxUICanvas::addWidgetPosition(ofxUIWidget *widget, ofxUIWidgetPosi
             
             break;
         case OFX_UI_ALIGN_CENTER:   //Experimental
-            
+            widgetRect->x = (rect->getWidth()-widgetRect->getWidth())*0.5;
             break;
         case OFX_UI_ALIGN_RIGHT:
             widgetRect->x = rect->getWidth()-widgetRect->getWidth()-widgetSpacing;
@@ -1334,7 +1334,7 @@ ofxUISlider* ofxUICanvas::addSlider(string _name, float _min, float _max, float 
 ofxUIIntSlider* ofxUICanvas::addIntSlider(string _name, int _min, int _max, int _value)
 {
     ofxUIIntSlider* widget = new ofxUIIntSlider(_name, _min, _max, _value, rect->getWidth()-widgetSpacing*2, globalSliderHeight, 0, 0);
-    addWidgetPosition(widget, widgetPosition, widgetAlign);
+    addWidgetPosition(widget, widgetPosition, widgetAlign);    
     return widget;
 }
 

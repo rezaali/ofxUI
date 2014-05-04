@@ -44,7 +44,6 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
     
     label->setVisible(false);
     drawLabel = false;
-    bLabelRight = false;
     
     activeWidget = 0;
     activeWidgetIndex = -1;
