@@ -36,9 +36,11 @@ class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {
 public:
     ~ofxUICanvas();
+    //Default Constructor:
     ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
     ofxUICanvas(const ofxUICanvas &other);              // Mitchell Nordine 2/2/14
     ofxUICanvas& operator=(const ofxUICanvas &other);   // Mitchell Nordine 2/2/14
+    
     ofxUICanvas(ofxUIRectangle r);
     ofxUICanvas(float x, float y, float w, float h);
     ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources);
@@ -327,10 +329,9 @@ protected:
 	ofxUIFont *font_large;
 	ofxUIFont *font_medium; 		
 	ofxUIFont *font_small;
+    ofxUIEventArgs *GUIevent;
+
     bool bInsideCanvas;
- 	
-	ofxUIEventArgs *GUIevent; 
-    int state;
     bool hasSharedResources;
     bool autoDraw;
     bool autoUpdate;
@@ -340,8 +341,8 @@ protected:
     map<string, ofxUIWidget*> widgetsAreModal;
 	vector<ofxUIWidget*> widgetsWithState;
 	vector<ofxUIWidget*> lastAddeds; 
-	ofxUIWidget *activeFocusedWidget; 
-	bool enable_highlight_outline; 
+
+	bool enable_highlight_outline;
 	bool enable_highlight_fill;
 	bool enabled;
     bool bTriggerWidgetsUponLoad;

@@ -25,9 +25,9 @@
 #include "ofxUIWidgetWithLabel.h"
 #include "ofxUILabel.h"
 
-ofxUIWidgetWithLabel::ofxUIWidgetWithLabel() : ofxUIWidget()
+ofxUIWidgetWithLabel::ofxUIWidgetWithLabel() : ofxUIWidget(), drawLabel(true)
 {
-    drawLabel = true; 
+    
 }
 
 ofxUIWidgetWithLabel::~ofxUIWidgetWithLabel()

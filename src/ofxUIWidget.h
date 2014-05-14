@@ -37,7 +37,7 @@ public:
     ofxUIWidget();
     virtual ~ofxUIWidget();
     ofxUIWidget(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
-    ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
+    virtual ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
     
     virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
     virtual void initPaddingRect();
@@ -92,8 +92,8 @@ public:
     
     void setID(int _id);
     int getID();
-    virtual void setKind(int _kind);
-    virtual int getKind();
+    virtual void setKind(ofxUIWidgetType _kind);
+    virtual ofxUIWidgetType getKind();
     
     virtual bool isDraggable();
     virtual bool hasLabel();
@@ -183,7 +183,7 @@ protected:
 	ofxUIFont *font;
 	
     std::string name;                    
-	int kind; 
+	ofxUIWidgetType kind; 
 	bool visible;
     int ID;
     bool hit; 
