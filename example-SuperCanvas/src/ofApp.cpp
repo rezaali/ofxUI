@@ -21,7 +21,7 @@ void ofApp::setup()
     
     gui = new ofxUISuperCanvas("SUPER COMPACT", OFX_UI_FONT_MEDIUM);
     gui->addSpacer(); 
-    gui->addTextArea("TEXT AREA", "Double tap the title above to toggle minified mode. Draw the title above to move the canvas around. All these settings are saved up exiting. This is super indead.");
+    gui->addTextArea("TEXT AREA", "Double tap the title above to toggle minified mode. Draw the title above to move the canvas around. All these settings are saved upon exiting. This is super indeed.");
     gui->addSpacer();
     gui->addSlider("RADIUS", 0.0, 255.0, &radius);
     gui->addSlider("RED", 0.0, 255.0, &red);

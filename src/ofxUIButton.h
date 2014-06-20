@@ -30,7 +30,7 @@
 class ofxUIButton : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIButton();
+    ofxUIButton();    
     ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     ~ofxUIButton();

@@ -42,7 +42,8 @@ public:
     virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
     virtual void initPaddingRect();
     virtual void calculatePaddingRect();
-        
+    
+    virtual void setup(); 
     virtual void update();
     virtual void draw();
     

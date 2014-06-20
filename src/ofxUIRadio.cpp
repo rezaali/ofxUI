@@ -72,7 +72,7 @@ void ofxUIRadio::activateToggle(string _name)
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUIToggle *t = toggles[i];
-        if(!(t->getName().compare(_name.c_str())))
+        if(t->getName() == _name)
         {
             t->setValue(true);
             active = t;
@@ -153,7 +153,7 @@ ofxUIToggle* ofxUIRadio::getActive()
 
 void ofxUIRadio::triggerEvent(ofxUIWidget *child)
 {
-    activateToggle(child->getName().c_str());
+    activateToggle(child->getName());
     triggerSelf();
 }
 

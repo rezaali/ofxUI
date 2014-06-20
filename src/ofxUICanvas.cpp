@@ -26,7 +26,6 @@
 #include "ofxUI.h"
 
 ofxUICanvas::~ofxUICanvas() {
-    cout << "DELETING CANVAS" << endl;
     disable();
     if(GUIevent != NULL) {
         delete GUIevent;
@@ -136,12 +135,11 @@ ofxUICanvas& ofxUICanvas::operator=(const ofxUICanvas &other) {
     else {
         init(0,0,OFX_UI_GLOBAL_CANVAS_WIDTH, OFX_UI_GLOBAL_CANVAS_WIDTH);
     }
-    //Handle Adding Widgets...
-    //widgets_map(other.widgets_map),                         //might be problematic
-    //widgets(other.widgets),                                 //might be problematic
-    //widgetsAreModal(other.widgetsAreModal),                 //might be problematic
-    //widgetsWithState(other.widgetsWithState),               //might be problematic
-    //lastAddeds(other.lastAddeds),                           //might be problematic
+    for(int i = 0; i < other.widgets.size(); ++i)
+    {
+        addWidget((new ofxUIWidget(*(other.widgets[i]))));
+    }
+
     return *this;
 }
 
@@ -282,7 +280,6 @@ hasKeyBoard(false),
 bInsideCanvas(false),
 enabled(false)
 {
-    cout << "CREATING CANVAS" << endl;
     init(0, 0, defaultWidthSize, defaultHeightSize);
     setGlobalCanvasWidth(defaultWidthSize);
 }
@@ -355,11 +352,9 @@ hasKeyBoard(false),
 bInsideCanvas(false),
 enabled(false)
 {
-    cout << "STRING CANVAS" << endl;
-    init(0, 0, 46, ofxUIGetHeight());
-    addWidgetDown(new ofxUILabel(title, OFX_UI_FONT_LARGE));
-    addWidgetDown(new ofxUISpacer(0, 20));
-    addWidgetDown(new ofxUIFPSSlider(300, 20, 0, 1000, ofGetFrameRate(), "FPS"));
+    init(0,0,OFX_UI_GLOBAL_CANVAS_WIDTH, OFX_UI_GLOBAL_CANVAS_WIDTH);
+    addLabel(title);
+    addSpacer();
 }
 
 void ofxUICanvas::init(int x, int y, int w, int h, ofxUICanvas *sharedResources) {
@@ -599,19 +594,19 @@ void ofxUICanvas::update() {
 
 void ofxUICanvas::draw() {
     ofxUIPushStyle();
-    
+
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_LIGHTING);
-    
+
     glEnable(GL_BLEND);
 #ifndef OFX_UI_TARGET_TOUCH
     glBlendEquation(GL_FUNC_ADD);
 #endif
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
     ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
     ofxUISetLineWidth(1.0);
-    
+
     drawPadded();
     drawPaddedOutline();
     drawBack();
@@ -619,7 +614,7 @@ void ofxUICanvas::draw() {
     drawFillHighlight();
     drawOutline();
     drawOutlineHighlight();
-    
+
     vector<ofxUIWidget *>::reverse_iterator it = widgets.rbegin();
     vector<ofxUIWidget *>::reverse_iterator eit = widgets.rend();
     for(; it != eit; ++it) {
@@ -1735,9 +1730,9 @@ ofxUIDropDownList* ofxUICanvas::addDropDownList(string _name, vector<string> ite
 }
 
 ofxUIWaveform* ofxUICanvas::addWaveform(string _name, float *_buffer, int _bufferSize, float _min, float _max, float _h) {
-    if(_h != globalGraphHeight)
+    if(_h == -1)
     {
-        _h = globalGraphHeight;
+        _h = getGlobalGraphHeight();
     }
     ofxUIWaveform* widget = new ofxUIWaveform(rect->getWidth()-widgetSpacing*2, _h, _buffer, _bufferSize, _min, _max, _name);
     addWidgetPosition(widget, widgetPosition, widgetAlign);

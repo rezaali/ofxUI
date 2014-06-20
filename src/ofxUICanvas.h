@@ -212,7 +212,7 @@ public:
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items);
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items, float w, float x = 0, float y = 0);
 
-    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT);
+    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = -1);
     ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min, float _max, float _w, float _h);
     
     ofxUISpectrum* addSpectrum(string _name, float *_buffer, int _bufferSize, float _min = 0.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT);

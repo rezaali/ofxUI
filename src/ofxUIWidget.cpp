@@ -76,7 +76,8 @@ ofxUIWidget::ofxUIWidget(const ofxUIWidget &other)
 : parent(NULL),
 rect(NULL),
 paddedRect(NULL),
-font(NULL),
+//font(NULL),
+font(other.font),
 name(other.name),
 kind(other.kind),
 ID(other.ID),
@@ -98,29 +99,15 @@ color_fill(other.color_fill),
 color_fill_highlight(other.color_fill_highlight),
 color_padded_rect(other.color_padded_rect),
 color_padded_rect_outline(other.color_padded_rect_outline),
-embedded(other.embedded),                               //might be problematic
+embedded(other.embedded),                               
 modal(other.modal),
 triggerType(OFX_UI_TRIGGER_ALL)
 {
-    if(other.parent) {
-        parent = other.parent;
-    }
-    else {
-        parent = NULL;
-    }
     if (other.rect) {
-        rect = new ofxUIRectangle(*other.rect);
+        initRect(other.rect->getX(), other.rect->getY(), other.rect->getWidth(), other.rect->getHeight());
     }
     else {
-        rect = NULL;
-    }
-    if (other.paddedRect) {
-        paddedRect = new ofxUIRectangle(*other.paddedRect);
-        paddedRect->setParent(rect);
-        calculatePaddingRect();
-    }
-    else {
-        paddedRect = NULL;
+        initRect();
     }
 }
 
@@ -147,25 +134,11 @@ ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other) {
     padding = other.padding;
     draw_padded_rect = other.draw_padded_rect;
     draw_padded_rect_outline = other.draw_padded_rect_outline;
-    if(other.parent) {
-        parent = other.parent;
-    }
-    else {
-        parent = NULL; 
-    }
     if (other.rect) {
-        rect = new ofxUIRectangle(*other.rect);
+        initRect(other.rect->getX(), other.rect->getY(), other.rect->getWidth(), other.rect->getHeight());
     }
     else {
-        rect = NULL;
-    }
-    if (other.paddedRect) {
-        paddedRect = new ofxUIRectangle(*other.paddedRect);
-        paddedRect->setParent(rect);
-        calculatePaddingRect();
-    }
-    else {
-        paddedRect = NULL;
+        initRect();
     }
     return *this;
 }
@@ -202,6 +175,10 @@ void ofxUIWidget::calculatePaddingRect() {
     paddedRect->set(-padding, -padding, xMax+padding*2.0, yMax+padding*2.0);
 }
 
+void ofxUIWidget::setup() {
+    //Custom Setup for Widgets
+}
+
 void ofxUIWidget::update() {
 
 }
@@ -214,12 +191,9 @@ void ofxUIWidget::draw() {
     
     drawPadded();
     drawPaddedOutline();
-    
     drawBack();
-    
     drawOutline();
     drawOutlineHighlight();
-    
     drawFill();
     drawFillHighlight();
     
