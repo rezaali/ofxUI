@@ -101,10 +101,12 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     }
     addEmbeddedWidget(label);
     label->setVisible(drawLabel);
-    
+
     increment = ABS(max - min) / 100.0;
     bRoundedToNearestInt = false;
     bClampValue = true;
+    bSticky = false;
+    stickyValue = increment*10.0; 
 }
 
 template<typename T>
@@ -170,6 +172,26 @@ template<typename T>
 void ofxUISlider_<T>::setClampValue(bool _bClampValue)
 {
     bClampValue = _bClampValue;
+}
+
+template<typename T>
+ofxUISlider_<T>* ofxUISlider_<T>::enableSticky(bool _bSticky)
+{
+    bSticky = _bSticky;
+    return this;
+}
+
+template<typename T>
+ofxUISlider_<T>* ofxUISlider_<T>::setStickyValue(double _stickyValue)
+{
+    stickyValue = _stickyValue;
+    return this;
+}
+
+template<typename T>
+double ofxUISlider_<T>::getStickyValue()
+{
+    return stickyValue;
 }
 
 template<typename T>
@@ -510,7 +532,12 @@ float ofxUISlider_<T>::getPercentValue()
 template<typename T>
 T ofxUISlider_<T>::getScaledValue()
 {
-    return ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
+    T val = ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
+    if(bSticky)
+    {
+        val = ceil(val/stickyValue)*stickyValue;
+    }
+    return val; 
 }
 
 template<typename T>
