@@ -108,7 +108,10 @@ void ofxUIMinimalSlider::drawFillHighlight()
         ofxUISetColor(color_fill_highlight);
         ofxUIDrawRect(rect->getX(), rect->getY(), rect->getWidth()*MIN(MAX(value, 0.0), 1.0), rect->getHeight());
         ofxUISetColor(label->getColorFillHighlight());
-        label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision));
+        if(drawLabel)
+        {
+            label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision));
+        }
     }
 }
 
@@ -119,7 +122,7 @@ void ofxUIMinimalSlider::drawOutlineHighlight()
         ofNoFill();
         ofxUISetColor(color_outline_highlight);
         rect->draw();
-        if(!draw_fill_highlight)
+        if(!draw_fill_highlight && drawLabel)
         {
             ofxUISetColor(label->getColorFill());
             label->drawString(rect->getX()+rect->getWidth()+padding, label->getRect()->getHeight()/2.0+rect->getY()+rect->getHeight()-rect->getHeight()*.5, ofxUIToString(getScaledValue(),labelPrecision));

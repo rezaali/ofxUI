@@ -946,6 +946,19 @@ void ofxUICanvas::autoSizeToFitWidgets()
     setDimensions(maxWidth, maxHeight);
 }
 
+void ofxUICanvas::alignWidgetsVertically(ofxUIWidget *widgetToBeAligned, ofxUIWidget *widgetToBeingAlignedTo)
+{
+    float yRef = widgetToBeingAlignedTo->getRect()->getY();
+    float hRef = widgetToBeingAlignedTo->getRect()->getHeight();
+    
+    float yWgt = widgetToBeAligned->getRect()->getY();
+    float hWgt = widgetToBeAligned->getRect()->getHeight();
+    
+    float y = (hRef - hWgt)*0.5;
+    
+    widgetToBeAligned->getRect()->setY(yWgt+y);
+}
+    
 void ofxUICanvas::centerWidgetsOnCanvas(bool centerHorizontally, bool centerVertically)
 {
     float xMin = 0;
