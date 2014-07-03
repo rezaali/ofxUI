@@ -106,7 +106,7 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     bRoundedToNearestInt = false;
     bClampValue = true;
     bSticky = false;
-    stickyValue = increment*10.0; 
+    stickyValue = MAX(10.0*ceil(increment), 1.0);
 }
 
 template<typename T>
@@ -402,6 +402,11 @@ void ofxUISlider_<T>::keyPressed(int key)
 #endif
                 bRoundedToNearestInt = true;
                 break;
+
+            case OF_KEY_COMMAND:
+                bSticky = true;
+                break;
+                
             default:
                 break;
         }
@@ -412,6 +417,7 @@ template<typename T>
 void ofxUISlider_<T>::keyReleased(int key)
 {
     bRoundedToNearestInt = false;
+    bSticky = false;
 }
 
 template<typename T>
@@ -533,7 +539,7 @@ template<typename T>
 T ofxUISlider_<T>::getScaledValue()
 {
     T val = ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
-    if(bSticky)
+    if(!bRoundedToNearestInt && bSticky)
     {
         val = ceil(val/stickyValue)*stickyValue;
     }

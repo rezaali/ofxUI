@@ -125,6 +125,24 @@ void ofxUIToggle::setValue(bool _value)
     draw_fill = *value;
 }
 
+void ofxUIToggle::keyPressed(int key)
+{
+    if(getIsBindedToKey(key) && !bKeyHit)
+    {
+        bKeyHit = true;
+        toggleValue();
+        triggerEvent(this);
+    }
+}
+
+void ofxUIToggle::keyReleased(int key)
+{
+    if(getIsBindedToKey(key) && bKeyHit)
+    {
+        bKeyHit = false; 
+    }
+}
+
 #ifndef OFX_UI_NO_XML
 
 void ofxUIToggle::saveState(ofxXmlSettings *XML)

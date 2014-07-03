@@ -156,6 +156,7 @@ void ofxUIMinimalSlider::setParent(ofxUIWidget *_parent)
         labelstring.erase (it);
         label->setLabel(labelstring);
     }
+    
     if(autoSize || rect->getHeight() <= label->getPaddingRect()->getHeight())
     {
         rect->setHeight(label->getPaddingRect()->getHeight()+padding*2.0);

@@ -24,24 +24,14 @@
 
 #pragma once
 
-#include "ofxUIWidget.h"
+#include "ofxUIWaveform.h"
 
-class ofxUISpectrum : public ofxUIWidget
+class ofxUISpectrum : public ofxUIWaveform
 {
 public:
     ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
     ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
-    void init(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name);
+    virtual void drawBack();
     virtual void drawFill();
-    void setMax(float _max);
-    float getMax();
-    void setMin(float _min);
-    float getMin();
-    ofVec2f getMaxAndMind();
-    void setMaxAndMin(float _max, float _min);
-    
 protected:   
-	float *buffer; 
-	float max, min, scale, inc; 
-	int bufferSize; 
 }; 

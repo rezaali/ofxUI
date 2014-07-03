@@ -49,8 +49,12 @@ public:
     virtual bool isHit(float x, float y);
     void setLabelPosition(ofxUIWidgetPosition pos);
     virtual bool hasState(){ return false; };
+
+    virtual void keyPressed(int key);
+    virtual void keyReleased(int key);
+    
 protected:
     bool *value; 
     bool useReference; 
-    ofxUIWidgetPosition labelPosition; 
+    ofxUIWidgetPosition labelPosition;
 }; 

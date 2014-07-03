@@ -171,7 +171,12 @@ public:
     
     virtual bool hasState();
     
-#ifndef OFX_UI_NO_XML   
+    virtual bool getIsBindedToKey(int key); 
+    virtual void bindToKey(int key);
+    virtual void unbindToKey(int key);
+    virtual void unbindAllKeys(); 
+
+#ifndef OFX_UI_NO_XML
     
     virtual void saveState(ofxXmlSettings *XML);
     virtual void loadState(ofxXmlSettings *XML);
@@ -214,7 +219,9 @@ protected:
 	ofxUIColor color_padded_rect_outline;
     
     vector<ofxUIWidget *> embeddedWidgets; 
-    
+
+    bool bKeyHit;
+    map<int, bool> keyBindings;
 #ifdef OFX_UI_TARGET_TOUCH       
     int touchId;     
 #endif

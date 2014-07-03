@@ -157,7 +157,7 @@ void ofxUIRadio::triggerEvent(ofxUIWidget *child)
     triggerSelf();
 }
 
-void ofxUIRadio::addToggle(ofxUIToggle *toggle)
+ofxUIToggle *ofxUIRadio::addToggle(ofxUIToggle *toggle)
 {
     toggle->setParent(this);
     toggles.push_back(toggle);
@@ -165,6 +165,7 @@ void ofxUIRadio::addToggle(ofxUIToggle *toggle)
     {
         activateToggle(toggle->getName());
     }
+    return toggle;
 }
 
 int ofxUIRadio::getValue()

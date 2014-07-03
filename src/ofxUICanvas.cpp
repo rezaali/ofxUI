@@ -811,24 +811,23 @@ void ofxUICanvas::windowResized(int w, int h) {
 
 #endif
 
-void ofxUICanvas::keyPressed(int key) {
-    if(bInsideCanvas) {
-        vector<ofxUIWidget *>::iterator it = widgets.begin();
-        vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            (*it)->keyPressed(key);
-        }
+void ofxUICanvas::keyPressed(int key)
+{
+    vector<ofxUIWidget *>::iterator it = widgets.begin();
+    vector<ofxUIWidget *>::iterator eit = widgets.end();
+    for(; it != eit; ++it)
+    {
+        (*it)->keyPressed(key);
     }
 }
 
 void ofxUICanvas::keyReleased(int key)
 {
-    if(bInsideCanvas) {
-        vector<ofxUIWidget *>::iterator it = widgets.begin();
-        vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            (*it)->keyReleased(key);
-        }
+    vector<ofxUIWidget *>::iterator it = widgets.begin();
+    vector<ofxUIWidget *>::iterator eit = widgets.end();
+    for(; it != eit; ++it)
+    {
+        (*it)->keyReleased(key);
     }
 }
 
@@ -1491,7 +1490,16 @@ ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, floa
     return widget;
 }
 
-ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x, float y, int size) {
+ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x, float y, int size)
+{
+    if(w < 0)
+    {
+        w = rect->getWidth()-widgetSpacing*2;
+    }
+    if(h < 0)
+    {
+        h = globalSliderHeight;
+    }
     ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
@@ -1503,7 +1511,16 @@ ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, floa
     return widget;
 }
 
-ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int size) {
+ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int size)
+{
+    if(w < 0)
+    {
+        w = rect->getWidth()-widgetSpacing*2;
+    }
+    if(h < 0)
+    {
+        h = globalSliderHeight;
+    }
     ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
