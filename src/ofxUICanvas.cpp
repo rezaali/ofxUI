@@ -75,8 +75,6 @@ widgetAlign(other.widgetAlign),
 widgetFontSize(other.widgetFontSize),
 enable_highlight_outline(other.enable_highlight_outline),
 enable_highlight_fill(other.enable_highlight_fill),
-autoDraw(other.autoDraw),
-autoUpdate(other.autoUpdate),
 bTriggerWidgetsUponLoad(other.bTriggerWidgetsUponLoad),
 uniqueIDs(other.uniqueIDs),                             //might be problematic
 hasKeyBoard(other.hasKeyBoard),
@@ -121,8 +119,6 @@ ofxUICanvas& ofxUICanvas::operator=(const ofxUICanvas &other) {
     widgetFontSize = other.widgetFontSize;
     enable_highlight_outline = other.enable_highlight_outline;
     enable_highlight_fill = other.enable_highlight_fill;
-    autoDraw = other.autoDraw;
-    autoUpdate = other.autoUpdate;
     bTriggerWidgetsUponLoad = other.bTriggerWidgetsUponLoad;
     uniqueIDs = other.uniqueIDs;
     hasKeyBoard = other.hasKeyBoard;
@@ -167,8 +163,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -202,8 +196,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -237,8 +229,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -272,8 +262,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -308,8 +296,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -344,8 +330,6 @@ widgetAlign(OFX_UI_ALIGN_LEFT),
 widgetFontSize(OFX_UI_FONT_SMALL),
 enable_highlight_outline(false),
 enable_highlight_fill(false),
-autoDraw(true),
-autoUpdate(true),
 bTriggerWidgetsUponLoad(true),
 uniqueIDs(0),
 hasKeyBoard(false),
@@ -2929,14 +2913,6 @@ void ofxUICanvas::removeWidget(string _name) {
     if(w != NULL) {
         removeWidget(w);
     }
-}
-
-void ofxUICanvas::setAutoUpdate(bool _autoUpdate) {
-    autoUpdate = _autoUpdate;
-}
-
-void ofxUICanvas::setAutoDraw(bool _autoDraw) {
-    autoDraw = _autoDraw;
 }
 
 void ofxUICanvas::setPosition(int x, int y) {

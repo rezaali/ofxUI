@@ -305,8 +305,6 @@ public:
 	void setWidgetColor(int _target, ofxUIColor _color);
     ofxUIWidget *getWidget(string _name, int widgetID = -1);
     void removeWidget(string _name);
-    virtual void setAutoUpdate(bool _autoUpdate);
-    virtual void setAutoDraw(bool _autoDraw);
     virtual void setPosition(int x, int y);
     virtual void setHeight(float _height);
     virtual void setWidth(float _width);
@@ -334,8 +332,6 @@ protected:
 
     bool bInsideCanvas;
     bool hasSharedResources;
-    bool autoDraw;
-    bool autoUpdate;
     
     multimap<string, ofxUIWidget*> widgets_map;
 	vector<ofxUIWidget*> widgets;
