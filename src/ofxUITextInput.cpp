@@ -415,6 +415,7 @@ void ofxUITextInput::setTextString(string s)
         label->setLabel(textstring);
     }
     displaystring = textstring;
+    cursorPosition = textstring.length();
 }
 
 void ofxUITextInput::setParent(ofxUIWidget *_parent)
