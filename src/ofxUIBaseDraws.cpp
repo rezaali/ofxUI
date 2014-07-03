@@ -76,6 +76,7 @@ void ofxUIBaseDraws::setDrawPaddingOutline(bool _draw_padded_rect_outline)
 
 void ofxUIBaseDraws::drawFill()
 {
+    ofSetDepthTest(false);
     if(draw_fill)
     {
         if(image != NULL)

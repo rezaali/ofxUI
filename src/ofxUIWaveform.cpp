@@ -45,20 +45,18 @@ void ofxUIWaveform::init(float x, float y, float w, float h, float *_buffer, int
     
     if(_buffer != NULL)
     {
-        buffer = _buffer;					//the widget's value
+        setBuffer(_buffer);
     }
     else
     {
-        buffer = NULL;
+        setBuffer(NULL);
     }
     
-    bufferSize = _bufferSize;
+    setBufferSize(_bufferSize);
     max = _max;
     min = _min;
     scale = rect->getHeight()*.5;
-    inc = rect->getWidth()/((float)bufferSize-1.0);
 }
-
 
 void ofxUIWaveform::drawBack()
 {
@@ -71,7 +69,6 @@ void ofxUIWaveform::drawBack()
         ofxUIDrawLine(rect->getX(), rect->getY()+rect->getHalfHeight(), rect->getX()+rect->getWidth(), rect->getY()+rect->getHalfHeight());
     }
 }
-
 
 void ofxUIWaveform::drawFill()
 {
@@ -94,7 +91,7 @@ void ofxUIWaveform::drawFill()
             ofBeginShape();
             for (int i = 0; i < bufferSize; i++)
             {
-                ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, -scale, scale, true));
+                ofVertex(inc*(float)i, ofxUIMap(buffer[i], min, max, scale, -scale, true));
             }
             ofEndShape();
             ofSetLineWidth(1);
@@ -103,9 +100,15 @@ void ofxUIWaveform::drawFill()
     }
 }
 
-void ofxUIWaveform::setParent(ofxUIWidget *_parent)
+void ofxUIWaveform::setBuffer(float *_buffer)
 {
-    parent = _parent;
+    buffer = _buffer;
+}
+
+void ofxUIWaveform::setBufferSize(int _bufferSize)
+{
+    bufferSize = _bufferSize;
+    inc = rect->getWidth()/((float)bufferSize-1.0);
 }
 
 void ofxUIWaveform::setMax(float _max)

@@ -631,17 +631,22 @@ void ofxUICanvas::exit() {
 
 #ifdef OFX_UI_TARGET_TOUCH
 
-void ofxUICanvas::canvasTouchDown(float x, float y, int id) {
-    if(rect->inside(x, y)) {
+void ofxUICanvas::canvasTouchDown(float x, float y, int id)
+{
+    if(rect->inside(x, y))
+    {
         vector<ofxUIWidget *>::iterator it = widgets.begin();
         vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            if((*it)->isVisible()) {
+        for(; it != eit; ++it)
+        {
+            if((*it)->isVisible())
+            {
                 (*it)->touchDown(x, y, id);
             }
         }
     }
-    else {
+    else
+    {
         map<string, ofxUIWidget*>::iterator it = widgetsAreModal.begin();
         map<string, ofxUIWidget*>::iterator eit = widgetsAreModal.end();
         for (; it != eit; ++it)
@@ -651,43 +656,54 @@ void ofxUICanvas::canvasTouchDown(float x, float y, int id) {
     }
 }
 
-void ofxUICanvas::canvasTouchMoved(float x, float y, int id) {
+void ofxUICanvas::canvasTouchMoved(float x, float y, int id)
+{
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
-        if((*it)->isVisible()) {
+    for(; it != eit; ++it)
+    {
+        if((*it)->isVisible())
+        {
             (*it)->touchMoved(x, y, id);
         }
     }
 }
 
-void ofxUICanvas::canvasTouchUp(float x, float y, int id) {
+void ofxUICanvas::canvasTouchUp(float x, float y, int id)
+{
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
+    for(; it != eit; ++it)
     {
-        if((*it)->isVisible()) {
+        if((*it)->isVisible())
+        {
             (*it)->touchUp(x, y, id);
         }
     }
 }
 
-void ofxUICanvas::canvasTouchDoubleTap(float x, float y, int id) {
-    if(rect->inside(x, y)) {
+void ofxUICanvas::canvasTouchDoubleTap(float x, float y, int id)
+{
+    if(rect->inside(x, y))
+    {
         vector<ofxUIWidget *>::iterator it = widgets.begin();
         vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            if((*it)->isVisible()) {
+        for(; it != eit; ++it)
+        {
+            if((*it)->isVisible())
+            {
                 (*it)->touchDoubleTap(x, y, id);
             }
         }
     }
-    else {
+    else
+    {
         map<string, ofxUIWidget*>::iterator it = widgetsAreModal.begin();
         map<string, ofxUIWidget*>::iterator eit = widgetsAreModal.end();
         for(; it != eit; ++it)
         {
-            if((*it).second->isVisible()) {
+            if((*it).second->isVisible())
+            {
                 (*it).second->touchDoubleTap(x, y, id);
             }
         }
@@ -811,24 +827,23 @@ void ofxUICanvas::windowResized(int w, int h) {
 
 #endif
 
-void ofxUICanvas::keyPressed(int key) {
-    if(bInsideCanvas) {
-        vector<ofxUIWidget *>::iterator it = widgets.begin();
-        vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            (*it)->keyPressed(key);
-        }
+void ofxUICanvas::keyPressed(int key)
+{
+    vector<ofxUIWidget *>::iterator it = widgets.begin();
+    vector<ofxUIWidget *>::iterator eit = widgets.end();
+    for(; it != eit; ++it)
+    {
+        (*it)->keyPressed(key);
     }
 }
 
 void ofxUICanvas::keyReleased(int key)
 {
-    if(bInsideCanvas) {
-        vector<ofxUIWidget *>::iterator it = widgets.begin();
-        vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            (*it)->keyReleased(key);
-        }
+    vector<ofxUIWidget *>::iterator it = widgets.begin();
+    vector<ofxUIWidget *>::iterator eit = widgets.end();
+    for(; it != eit; ++it)
+    {
+        (*it)->keyReleased(key);
     }
 }
 
@@ -946,6 +961,19 @@ void ofxUICanvas::autoSizeToFitWidgets()
     setDimensions(maxWidth, maxHeight);
 }
 
+void ofxUICanvas::alignWidgetsVertically(ofxUIWidget *widgetToBeAligned, ofxUIWidget *widgetToBeingAlignedTo)
+{
+    float yRef = widgetToBeingAlignedTo->getRect()->getY();
+    float hRef = widgetToBeingAlignedTo->getRect()->getHeight();
+    
+    float yWgt = widgetToBeAligned->getRect()->getY();
+    float hWgt = widgetToBeAligned->getRect()->getHeight();
+    
+    float y = (hRef - hWgt)*0.5;
+    
+    widgetToBeAligned->getRect()->setY(yWgt+y);
+}
+    
 void ofxUICanvas::centerWidgetsOnCanvas(bool centerHorizontally, bool centerVertically)
 {
     float xMin = 0;
@@ -1478,7 +1506,16 @@ ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, floa
     return widget;
 }
 
-ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x, float y, int size) {
+ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float _value, float w, float h, float x, float y, int size)
+{
+    if(w < 0)
+    {
+        w = rect->getWidth()-widgetSpacing*2;
+    }
+    if(h < 0)
+    {
+        h = globalSliderHeight;
+    }
     ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
@@ -1490,7 +1527,16 @@ ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, floa
     return widget;
 }
 
-ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int size) {
+ofxUIMinimalSlider* ofxUICanvas::addMinimalSlider(string _name, float _min, float _max, float *_value, float w, float h, float x, float y, int size)
+{
+    if(w < 0)
+    {
+        w = rect->getWidth()-widgetSpacing*2;
+    }
+    if(h < 0)
+    {
+        h = globalSliderHeight;
+    }
     ofxUIMinimalSlider* widget = new ofxUIMinimalSlider(_name, _min, _max, _value, w, h, x, y, size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;

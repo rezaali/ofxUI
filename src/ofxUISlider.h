@@ -60,6 +60,10 @@ public:
     bool getSetClampValue();
     void setClampValue(bool _bClampValue);
     
+    ofxUISlider_<T>* enableSticky(bool _bSticky);
+    ofxUISlider_<T>* setStickyValue(double _stickyValue);
+    double getStickyValue();
+    
     T getIncrement();
     void setIncrement(T _increment);
 	
@@ -96,6 +100,8 @@ public:
 #endif    
     
 protected:
+    bool bSticky;
+    double stickyValue;
     bool bRoundedToNearestInt;
     bool bClampValue;
     double value, increment;

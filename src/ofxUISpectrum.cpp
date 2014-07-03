@@ -25,40 +25,22 @@
 #include "ofxUISpectrum.h"
 #include "ofxUI.h"
 
-ofxUISpectrum::ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
+ofxUISpectrum::ofxUISpectrum(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWaveform(x, y, w, h, _buffer, _bufferSize, _min, _max, _name)
 {
-    init(x,y,w,h,_buffer, _bufferSize, _min, _max, _name);
-}
-
-ofxUISpectrum::ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWidget()
-{
-    init(0,0,w,h,_buffer, _bufferSize, _min, _max, _name);
-}
-
-void ofxUISpectrum::init(float x, float y, float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name)
-{
-    initRect(x,y,w,h);
-    name = string(_name);
     kind = OFX_UI_WIDGET_SPECTRUM;
-    
-    draw_fill = true;
-    
-    if(_buffer != NULL)
-    {
-        buffer = _buffer;					//the widget's value
-    }
-    else
-    {
-        buffer = NULL;
-    }
-    
-    bufferSize = _bufferSize;
-    max = _max;
-    min = _min;
-    scale = rect->getHeight();
-    inc = rect->getWidth()/((float)bufferSize-1.0);
+    scale = rect->getHeight();    
 }
 
+ofxUISpectrum::ofxUISpectrum(float w, float h, float *_buffer, int _bufferSize, float _min, float _max, string _name) : ofxUIWaveform(0, 0, w, h, _buffer, _bufferSize, _min, _max, _name)
+{
+    kind = OFX_UI_WIDGET_SPECTRUM;
+    scale = rect->getHeight();
+}
+
+void ofxUISpectrum::drawBack()
+{
+    ofxUIWidget::drawBack();
+}
 
 void ofxUISpectrum::drawFill()
 {
@@ -88,35 +70,4 @@ void ofxUISpectrum::drawFill()
             ofPopMatrix();
         }
     }
-}
-
-void ofxUISpectrum::setMax(float _max)
-{
-    max = _max;
-}
-
-float ofxUISpectrum::getMax()
-{
-    return max;
-}
-
-void ofxUISpectrum::setMin(float _min)
-{
-    min = _min;
-}
-
-float ofxUISpectrum::getMin()
-{
-    return min;
-}
-
-ofVec2f ofxUISpectrum::getMaxAndMind()
-{
-    return ofVec2f(max, min);
-}
-
-void ofxUISpectrum::setMaxAndMin(float _max, float _min)
-{
-    max = _max;
-    min = _min;
 }

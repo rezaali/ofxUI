@@ -42,7 +42,7 @@ public:
 	string getActiveName();
     int getValue();
 	void triggerEvent(ofxUIWidget *child);
-    void addToggle(ofxUIToggle *toggle);
+    ofxUIToggle *addToggle(ofxUIToggle *toggle);
     
 protected:
     int value; 

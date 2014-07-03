@@ -99,6 +99,7 @@ public:
     
     void stateChange();
     virtual void autoSizeToFitWidgets();
+    virtual void alignWidgetsVertically(ofxUIWidget *widgetToBeAligned, ofxUIWidget *widgetToBeingAlignedTo);
     virtual void centerWidgetsOnCanvas(bool centerHorizontally=true, bool centerVertically=true);
     virtual void centerWidgetsHorizontallyOnCanvas();
     virtual void centerWidgetsVerticallyOnCanvas();

@@ -53,6 +53,7 @@ color_padded_rect(OFX_UI_COLOR_PADDED),
 color_padded_rect_outline(OFX_UI_COLOR_PADDED_OUTLINE),
 embedded(false),
 modal(false),
+bKeyHit(false),
 triggerType(OFX_UI_TRIGGER_ALL)
 {
 #ifdef OFX_UI_TARGET_TOUCH
@@ -69,6 +70,7 @@ ofxUIWidget::~ofxUIWidget() {
     {
         delete paddedRect;
     }
+    keyBindings.clear();
 }
 
 // Mitchell Nordine - custom copy constructor for heap allocation handling.
@@ -101,6 +103,8 @@ color_padded_rect(other.color_padded_rect),
 color_padded_rect_outline(other.color_padded_rect_outline),
 embedded(other.embedded),                               
 modal(other.modal),
+bKeyHit(other.bKeyHit),
+keyBindings(other.keyBindings),
 triggerType(OFX_UI_TRIGGER_ALL)
 {
     if (other.rect) {
@@ -134,6 +138,8 @@ ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other) {
     padding = other.padding;
     draw_padded_rect = other.draw_padded_rect;
     draw_padded_rect_outline = other.draw_padded_rect_outline;
+    triggerType = other.triggerType;
+    bKeyHit = other.bKeyHit;
     if (other.rect) {
         initRect(other.rect->getX(), other.rect->getY(), other.rect->getWidth(), other.rect->getHeight());
     }
@@ -637,8 +643,34 @@ ofxUIWidget *ofxUIWidget::getCanvasParent() {
     return NULL;
 }
 
-bool ofxUIWidget::hasState() {
+bool ofxUIWidget::hasState()
+{
     return false;
+}
+
+bool ofxUIWidget::getIsBindedToKey(int key)
+{
+    map<int,bool>::iterator it = keyBindings.find(key);
+    if(it != keyBindings.end() && it->second)
+    {
+        return true;
+    }
+    return false;
+}
+
+void ofxUIWidget::bindToKey(int key)
+{
+    keyBindings[key] = true;
+}
+
+void ofxUIWidget::unbindToKey(int key)
+{
+    keyBindings[key] = false;
+}
+
+void ofxUIWidget::unbindAllKeys()
+{
+    keyBindings.clear();
 }
 
 #ifndef OFX_UI_NO_XML

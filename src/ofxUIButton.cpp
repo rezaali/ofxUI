@@ -109,7 +109,10 @@ void ofxUIButton::mouseDragged(int x, int y, int button)
             hit = false;
             state = OFX_UI_STATE_NORMAL;
             toggleValue();
-            triggerEvent(this);
+            if(triggerType & OFX_UI_TRIGGER_END)
+            {
+                triggerEvent(this);
+            }
         }
         stateChange();
     }
@@ -122,7 +125,10 @@ void ofxUIButton::mousePressed(int x, int y, int button)
         hit = true;
         state = OFX_UI_STATE_DOWN;
         toggleValue();
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_BEGIN)
+        {
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -148,7 +154,10 @@ void ofxUIButton::mouseReleased(int x, int y, int button)
         }
 #endif
         toggleValue();
-        triggerEvent(this);
+        if(triggerType & OFX_UI_TRIGGER_END)
+        {
+            triggerEvent(this);
+        }
     }
     else
     {
@@ -282,4 +291,30 @@ void ofxUIButton::setLabelPosition(ofxUIWidgetPosition pos)
             break;
     }
    calculatePaddingRect();
+}
+
+void ofxUIButton::keyPressed(int key)
+{
+    if(getIsBindedToKey(key) && !bKeyHit)
+    {
+        bKeyHit = true;
+        toggleValue();
+        if(triggerType & OFX_UI_TRIGGER_BEGIN)
+        {
+            triggerEvent(this);
+        }
+    }
+}
+
+void ofxUIButton::keyReleased(int key)
+{
+    if(getIsBindedToKey(key) && bKeyHit)
+    {
+        bKeyHit = false; 
+        toggleValue();
+        if(triggerType & OFX_UI_TRIGGER_END)
+        {
+            triggerEvent(this);
+        }
+    }
 }
