@@ -631,17 +631,22 @@ void ofxUICanvas::exit() {
 
 #ifdef OFX_UI_TARGET_TOUCH
 
-void ofxUICanvas::canvasTouchDown(float x, float y, int id) {
-    if(rect->inside(x, y)) {
+void ofxUICanvas::canvasTouchDown(float x, float y, int id)
+{
+    if(rect->inside(x, y))
+    {
         vector<ofxUIWidget *>::iterator it = widgets.begin();
         vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            if((*it)->isVisible()) {
+        for(; it != eit; ++it)
+        {
+            if((*it)->isVisible())
+            {
                 (*it)->touchDown(x, y, id);
             }
         }
     }
-    else {
+    else
+    {
         map<string, ofxUIWidget*>::iterator it = widgetsAreModal.begin();
         map<string, ofxUIWidget*>::iterator eit = widgetsAreModal.end();
         for (; it != eit; ++it)
@@ -651,43 +656,54 @@ void ofxUICanvas::canvasTouchDown(float x, float y, int id) {
     }
 }
 
-void ofxUICanvas::canvasTouchMoved(float x, float y, int id) {
+void ofxUICanvas::canvasTouchMoved(float x, float y, int id)
+{
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
-        if((*it)->isVisible()) {
+    for(; it != eit; ++it)
+    {
+        if((*it)->isVisible())
+        {
             (*it)->touchMoved(x, y, id);
         }
     }
 }
 
-void ofxUICanvas::canvasTouchUp(float x, float y, int id) {
+void ofxUICanvas::canvasTouchUp(float x, float y, int id)
+{
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
+    for(; it != eit; ++it)
     {
-        if((*it)->isVisible()) {
+        if((*it)->isVisible())
+        {
             (*it)->touchUp(x, y, id);
         }
     }
 }
 
-void ofxUICanvas::canvasTouchDoubleTap(float x, float y, int id) {
-    if(rect->inside(x, y)) {
+void ofxUICanvas::canvasTouchDoubleTap(float x, float y, int id)
+{
+    if(rect->inside(x, y))
+    {
         vector<ofxUIWidget *>::iterator it = widgets.begin();
         vector<ofxUIWidget *>::iterator eit = widgets.end();
-        for(; it != eit; ++it) {
-            if((*it)->isVisible()) {
+        for(; it != eit; ++it)
+        {
+            if((*it)->isVisible())
+            {
                 (*it)->touchDoubleTap(x, y, id);
             }
         }
     }
-    else {
+    else
+    {
         map<string, ofxUIWidget*>::iterator it = widgetsAreModal.begin();
         map<string, ofxUIWidget*>::iterator eit = widgetsAreModal.end();
         for(; it != eit; ++it)
         {
-            if((*it).second->isVisible()) {
+            if((*it).second->isVisible())
+            {
                 (*it).second->touchDoubleTap(x, y, id);
             }
         }
