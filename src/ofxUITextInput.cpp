@@ -288,9 +288,10 @@ void ofxUITextInput::keyPressed(int key)
                 
             default:
             {
-                if (onlyNumericInput) {
-                    cout << key << endl;
-                    if((!isdigit(key) && key != 46  && key != 45) || (key == 45 && cursorPosition != 0)) {
+                if (onlyNumericInput)
+                {
+                    if((!isdigit(key) && key != 46  && key != 45) || (key == 45 && cursorPosition != 0))
+                    {
                         // The key pressed is not numeric (0-9) or the '.' character.
                         // Or the '-' character at the beginning of the string.
                         break;
