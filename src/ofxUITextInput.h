@@ -44,12 +44,15 @@ public:
     void stateChange();
 	bool isClicked();
 	string getTextString();
+    int getIntValue();
+    float getFloatValue();
     void setInputTriggerType(int _triggerType);
     int getInputTriggerType();
 	void setTextString(string s);
 	void setParent(ofxUIWidget *_parent);
 	void setAutoClear(bool _autoclear);
     void setAutoUnfocus(bool _autoUnfocus);
+    void setOnlyNumericInput(bool _onlyNumericInput);
     bool isFocused();
     void setFocus(bool _focus); 
     void setTriggerOnClick(bool _triggerOnClick);
@@ -63,7 +66,8 @@ public:
 protected:
 	string textstring; 
 	string defaultstring; 
-    string displaystring; 
+    string displaystring;
+    bool onlyNumericInput;
 	bool clicked;
     bool autoUnfocus; 
 	float theta; 
