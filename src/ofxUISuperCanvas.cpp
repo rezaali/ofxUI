@@ -129,6 +129,40 @@ void ofxUISuperCanvas::autoSizeToFitWidgets()
     canvasTitle->getRect()->setWidth(rect->getWidth()-widgetSpacing*2);    
 }
 
+void ofxUISuperCanvas::keyPressed(int key)
+{
+    if(getIsBindedToKey(key) && !bKeyHit)
+    {
+        bKeyHit = true;
+        lastPosition = ofxUIVec2f(rect->getX(), rect->getY());
+        setMinified(false);
+        rect->setX(ofGetMouseX());
+        rect->setY(ofGetMouseY()); 
+        if(getTriggerType() & OFX_UI_TRIGGER_BEGIN)
+        {
+            triggerEvent(this);
+        }
+    }
+
+    ofxUICanvas::keyPressed(key);
+}
+
+void ofxUISuperCanvas::keyReleased(int key)
+{
+    if(getIsBindedToKey(key) && bKeyHit)
+    {
+        bKeyHit = false;
+        setMinified(true);
+        rect->setX(lastPosition.x);
+        rect->setY(lastPosition.y);
+        if(getTriggerType() & OFX_UI_TRIGGER_END)
+        {
+            triggerEvent(this);
+        }
+    }
+    ofxUICanvas::keyReleased(key);
+}
+
 #ifdef OFX_UI_TARGET_TOUCH
 
 void ofxUISuperCanvas::touchDown(float x, float y, int id)
@@ -174,8 +208,22 @@ void ofxUISuperCanvas::touchDoubleTap(float x, float y, int id)
 {
     if(rect->inside(x, y) && canvasTitle->isHit(x, y))
     {
-        toggleMinified();
-        triggerEvent(this);
+        if(isMinified())
+        {
+            setMinified(false);
+            if(getTriggerType() & OFX_UI_TRIGGER_BEGIN)
+            {
+                triggerEvent(this);
+            }
+        }
+        else
+        {
+            setMinified(true);
+            if(getTriggerType() & OFX_UI_TRIGGER_END)
+            {
+                triggerEvent(this);
+            }
+        }
         return;
     }
     canvasTouchDoubleTap(x, y, id);
@@ -208,8 +256,22 @@ void ofxUISuperCanvas::onMousePressed(ofMouseEventArgs& data)
         
         if((ofGetElapsedTimef() - lastHitTime) < deltaTime)
         {
-            toggleMinified();
-            triggerEvent(this);            
+            if(isMinified())
+            {
+                setMinified(false);
+                if(getTriggerType() & OFX_UI_TRIGGER_BEGIN)
+                {
+                    triggerEvent(this);
+                }
+            }
+            else
+            {
+                setMinified(true);
+                if(getTriggerType() & OFX_UI_TRIGGER_END)
+                {
+                    triggerEvent(this);
+                }
+            }
             return;
         }
         lastHitTime = ofGetElapsedTimef();

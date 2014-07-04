@@ -293,43 +293,53 @@ void ofxUIWidget::touchCancelled(float x, float y, int id) {
 }
 #endif
 
-void ofxUIWidget::setTriggerType(ofxUITriggerType _triggerType) {
+void ofxUIWidget::setTriggerType(ofxUITriggerType _triggerType)
+{
     triggerType = _triggerType;
 }
 
-ofxUITriggerType ofxUIWidget::getTriggerType() {
+ofxUITriggerType ofxUIWidget::getTriggerType()
+{
     return triggerType;
 }
 
-void ofxUIWidget::setParent(ofxUIWidget *_parent) {
+void ofxUIWidget::setParent(ofxUIWidget *_parent)
+{
     parent = _parent;
 }
 
-void ofxUIWidget::setRectParent(ofxUIRectangle *_prect) {
+void ofxUIWidget::setRectParent(ofxUIRectangle *_prect)
+{
     rect->setParent(_prect);
 }
 
-ofxUIWidget *ofxUIWidget::getParent() {
+ofxUIWidget *ofxUIWidget::getParent()
+{
     return parent;
 }
 
-ofxUIRectangle* ofxUIWidget::getRect() {
+ofxUIRectangle* ofxUIWidget::getRect()
+{
     return rect;
 }
 
-void ofxUIWidget::setName(string _name) {
+void ofxUIWidget::setName(string _name)
+{
     name = string(_name);
 }
 
-void ofxUIWidget::setState(int _state) {
+void ofxUIWidget::setState(int _state)
+{
     state = _state;
 }
 
-void ofxUIWidget::setDrawPadding(bool _draw_padded_rect) {
+void ofxUIWidget::setDrawPadding(bool _draw_padded_rect)
+{
     draw_padded_rect = _draw_padded_rect;
 }
 
-void ofxUIWidget::setDrawPaddingOutline(bool _draw_padded_rect_outline) {
+void ofxUIWidget::setDrawPaddingOutline(bool _draw_padded_rect_outline)
+{
     draw_padded_rect_outline = _draw_padded_rect_outline;
 }
 
@@ -675,11 +685,13 @@ void ofxUIWidget::unbindAllKeys()
 
 #ifndef OFX_UI_NO_XML
 
-void ofxUIWidget::saveState(ofxXmlSettings *XML) {
+void ofxUIWidget::saveState(ofxXmlSettings *XML)
+{
     
 }
 
-void ofxUIWidget::loadState(ofxXmlSettings *XML) {
+void ofxUIWidget::loadState(ofxXmlSettings *XML)
+{
     
 }
 

@@ -146,6 +146,7 @@ void ofxUILabel::drawStringShadow(float x, float y, string _string)
 
 float ofxUILabel::getStringWidth(string s)
 {
+    replace(s.begin(), s.end(), ' ', '_');      //VIA: @gameoverhack
     return font->stringWidth(s);
 }
 
