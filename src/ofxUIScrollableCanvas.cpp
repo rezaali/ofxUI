@@ -252,10 +252,16 @@ void ofxUIScrollableCanvas::update()
         }
         
         acc.limit(50);
-        vel +=acc;
+        vel += acc;
         vel.limit(100);
-        if(scrollX && fabs(vel.x) > 1.0) rect->x += floor(vel.x);
-        if(scrollY && fabs(vel.y) > 1.0) rect->y += floor(vel.y);
+        if(scrollX && fabs(vel.x) > 1.0)
+        {
+            rect->x += floor(vel.x);
+        }
+        if(scrollY && fabs(vel.y) > 1.0)
+        {
+            rect->y += floor(vel.y);
+        }
         
         vel *=damping;
         acc.set(0);

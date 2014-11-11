@@ -25,25 +25,32 @@
 #include "ofxUICanvas.h"
 #include "ofxUI.h"
 
-ofxUICanvas::~ofxUICanvas() {
+ofxUICanvas::~ofxUICanvas()
+{
     disable();
-    if(GUIevent != NULL) {
+    if(GUIevent != NULL)
+    {
         delete GUIevent;
     }
-    if(hasSharedResources == false) {
-        if(font_large != NULL) {
+    if(hasSharedResources == false)
+    {
+        if(font_large != NULL)
+        {
             delete font_large;
         }
-        if(font_medium != NULL) {
+        if(font_medium != NULL)
+        {
             delete font_medium;
         }
-        if(font_small != NULL) {
+        if(font_small != NULL)
+        {
             delete font_small;
         }
     }
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
+    for(; it != eit; ++it)
+    {
         ofxUIWidget *w = (*it);
         delete w;
     }
@@ -96,7 +103,8 @@ enabled(other.enabled)
 }
 
 // Assignment operator to handle heap allocation during assignment.
-ofxUICanvas& ofxUICanvas::operator=(const ofxUICanvas &other) {
+ofxUICanvas& ofxUICanvas::operator=(const ofxUICanvas &other)
+{
     hasSharedResources = false;
     widget_color_back = other.widget_color_back;
     widget_color_outline = other.widget_color_outline;
@@ -341,16 +349,19 @@ enabled(false)
     addSpacer();
 }
 
-void ofxUICanvas::init(int x, int y, int w, int h, ofxUICanvas *sharedResources) {
+void ofxUICanvas::init(int x, int y, int w, int h, ofxUICanvas *sharedResources)
+{
     initRect(x, y, w, h);
     name = string("OFX_UI_WIDGET_CANVAS");
     kind = OFX_UI_WIDGET_CANVAS;
-    if(hasSharedResources) {
+    if(hasSharedResources)
+    {
         font_large = sharedResources->getFontLarge();
         font_medium = sharedResources->getFontMedium();
         font_small = sharedResources->getFontSmall();
     }
-    else {
+    else
+    {
         font_large = new ofxUIFont();
         font_medium = new ofxUIFont();
         font_small = new ofxUIFont();
@@ -362,7 +373,8 @@ void ofxUICanvas::init(int x, int y, int w, int h, ofxUICanvas *sharedResources)
     enable();
 }
 
-void ofxUICanvas::copyCanvasStyle(ofxUICanvas *styler) {
+void ofxUICanvas::copyCanvasStyle(ofxUICanvas *styler)
+{
     setUIColors(styler->getWidgetColorBack(),
                 styler->getWidgetColorOutline(),
                 styler->getWidgetColorOutlineHighlight(),
@@ -407,7 +419,8 @@ void ofxUICanvas::copyCanvasProperties(ofxUICanvas *styler) {
 
 #ifndef OFX_UI_NO_XML
 
-void ofxUICanvas::saveSettings(string fileName) {
+void ofxUICanvas::saveSettings(string fileName)
+{
     ofxXmlSettings *XML = new ofxXmlSettings();
     int len = widgetsWithState.size();
     for(int i = 0; i < len; ++i) {
@@ -423,15 +436,18 @@ void ofxUICanvas::saveSettings(string fileName) {
     delete XML;
 }
 
-void ofxUICanvas::setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad) {
+void ofxUICanvas::setTriggerWidgetsUponLoad(bool _bTriggerWidgetsUponLoad)
+{
     bTriggerWidgetsUponLoad = _bTriggerWidgetsUponLoad;
 }
 
-bool ofxUICanvas::getTriggerWidgetsUponLoad() {
+bool ofxUICanvas::getTriggerWidgetsUponLoad()
+{
     return bTriggerWidgetsUponLoad;
 }
 
-void ofxUICanvas::loadSettings(string fileName) {
+void ofxUICanvas::loadSettings(string fileName)
+{
     ofxXmlSettings *XML = new ofxXmlSettings();
     XML->loadFile(fileName);
     int widgetTags = XML->getNumTags("Widget");
@@ -453,15 +469,18 @@ void ofxUICanvas::loadSettings(string fileName) {
 
 #endif
 
-ofxUIFont *ofxUICanvas::getFontLarge() {
+ofxUIFont *ofxUICanvas::getFontLarge()
+{
     return font_large;
 }
 
-ofxUIFont *ofxUICanvas::getFontMedium() {
+ofxUIFont *ofxUICanvas::getFontMedium()
+{
     return font_medium;
 }
 
-ofxUIFont *ofxUICanvas::getFontSmall() {
+ofxUIFont *ofxUICanvas::getFontSmall()
+{
     return font_small;
 }
 
@@ -567,11 +586,13 @@ void ofxUICanvas::disable() {
     }
 }
 
-void ofxUICanvas::update() {
+void ofxUICanvas::update()
+{
     if (!isVisible()) { return; } // Custom to save framerate
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
+    for(; it != eit; ++it)
+    {
         (*it)->update();
     }
 }
@@ -791,11 +812,14 @@ void ofxUICanvas::mousePressed(int x, int y, int button) {
     }
 }
 
-void ofxUICanvas::mouseReleased(int x, int y, int button) {
+void ofxUICanvas::mouseReleased(int x, int y, int button)
+{
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
-        if((*it)->isVisible()) {
+    for(; it != eit; ++it)
+    {
+        if((*it)->isVisible())
+        {
             (*it)->mouseReleased(x, y, button);
         }
     }
@@ -804,7 +828,8 @@ void ofxUICanvas::mouseReleased(int x, int y, int button) {
 void ofxUICanvas::windowResized(int w, int h) {
     vector<ofxUIWidget *>::iterator it = widgets.begin();
     vector<ofxUIWidget *>::iterator eit = widgets.end();
-    for(; it != eit; ++it) {
+    for(; it != eit; ++it)
+    {
         (*it)->windowResized(w, h);
     }
 }

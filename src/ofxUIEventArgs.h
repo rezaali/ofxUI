@@ -40,6 +40,13 @@ public:
     ofxUIButton *getButton();
     ofxUIToggle *getToggle();
     ofxUISlider *getSlider();
+
+    bool isName(string _name);
+    bool getBool();
+    float getFloat();
+    double getDouble();
+    int getInt();
+    
     ofxUICanvas *getCanvasParent();
     ofxUIWidget *getParent();
 

@@ -42,6 +42,7 @@ public:
     bool isMinified();
     void toggleMinified();
     ofxUILabel *getCanvasTitle();
+    bool didHitHeaderWidgets(float x, float y); 
     void autoSizeToFitWidgets(); 
 
     virtual void keyPressed(int key);

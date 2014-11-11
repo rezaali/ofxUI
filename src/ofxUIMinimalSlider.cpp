@@ -55,7 +55,6 @@ void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_valu
     draw_fill = true;
     showValue = true;
     value = *_value;                                               //the widget's value
-    
     if(useReference)
     {
         valueRef = _value;
@@ -80,14 +79,17 @@ void ofxUIMinimalSlider::init(string _name, float _min, float _max, float *_valu
     }
     
     value = ofxUIMap(value, min, max, 0.0, 1.0, true);
+    valueString = ofxUIToString(getScaledValue(),labelPrecision);
     
     label = new ofxUILabel(padding,h*.5,(name+" LABEL"), name, _size);
-    label->setDrawBack(true); 
+    label->setDrawBack(true);
     addEmbeddedWidget(label);
     
-    increment = fabs(max - min) / 10.0;
+    increment = ABS(max - min) / 10.0;
     bRoundedToNearestInt = false;
-    bClampValue = false;
+    bClampValue = true;
+    bSticky = false;
+    stickyValue = ABS(max - min) / 100.0;
 }
 
 void ofxUIMinimalSlider::drawFill()

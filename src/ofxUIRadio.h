@@ -34,6 +34,7 @@ public:
     ofxUIRadio(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     void init(string _name, vector<string> names, int _orientation, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     void setVisible(bool _visible);
+    bool hasToggle(string _name); 
 	void activateToggle(string _name);
     void triggerSelf();
 	void setParent(ofxUIWidget *_parent);

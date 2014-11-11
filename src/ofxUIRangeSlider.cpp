@@ -566,6 +566,16 @@ void ofxUIRangeSlider::setMaxAndMin(float _max, float _min)
     updateLabel();
 }
 
+float ofxUIRangeSlider::getMin()
+{
+    return min;
+}
+
+float ofxUIRangeSlider::getMax()
+{
+    return max; 
+}
+
 bool ofxUIRangeSlider::isDraggable()
 {
     return true;

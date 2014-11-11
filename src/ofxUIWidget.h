@@ -72,7 +72,7 @@ public:
 	virtual void keyReleased(int key) {}
 	virtual void windowResized(int w, int h) {}           		
     
-    void setTriggerType(ofxUITriggerType _triggerType);
+    ofxUIWidget* setTriggerType(ofxUITriggerType _triggerType);
     ofxUITriggerType getTriggerType();
     
 	virtual void setParent(ofxUIWidget *_parent);
@@ -113,6 +113,7 @@ public:
     ofxUIWidget *getEmbeddedWidget(int index);
     
     virtual void setState(int _state);
+    virtual int getState();
     virtual void setFont(ofxUIFont *_font);
 
     virtual void setPadding(float _padding);
@@ -172,9 +173,9 @@ public:
     virtual bool hasState();
     
     virtual bool getIsBindedToKey(int key); 
-    virtual void bindToKey(int key);
-    virtual void unbindToKey(int key);
-    virtual void unbindAllKeys(); 
+    virtual ofxUIWidget* bindToKey(int key);
+    virtual ofxUIWidget* unbindToKey(int key);
+    virtual ofxUIWidget* unbindAllKeys(); 
 
 #ifndef OFX_UI_NO_XML
     

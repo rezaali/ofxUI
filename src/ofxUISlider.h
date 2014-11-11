@@ -65,7 +65,7 @@ public:
     double getStickyValue();
     
     T getIncrement();
-    void setIncrement(T _increment);
+    ofxUISlider_<T>* setIncrement(T _increment);
 	
     virtual void input(float x, float y);
     void updateValueRef();
@@ -91,6 +91,8 @@ public:
     
     ofxUIVec2f getMaxAndMin();
     void setMaxAndMin(T _max, T _min, bool bKeepValueTheSame = false);
+    
+    void setValueReference(T *_value); 
     
     bool isDraggable();
     virtual bool hasState(){ return true; };

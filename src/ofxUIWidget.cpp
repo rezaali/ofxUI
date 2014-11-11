@@ -61,7 +61,8 @@ triggerType(OFX_UI_TRIGGER_ALL)
 #endif
 }
 
-ofxUIWidget::~ofxUIWidget() {
+ofxUIWidget::~ofxUIWidget()
+{
     if(rect != NULL)
     {
         delete rect;
@@ -116,7 +117,8 @@ triggerType(OFX_UI_TRIGGER_ALL)
 }
 
 // Mitchell Nordine - custom assignment operator for heap allocation handling.
-ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other) {
+ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other)
+{
     name = other.name;
     kind = other.kind;
     visible = other.visible;
@@ -149,16 +151,20 @@ ofxUIWidget& ofxUIWidget::operator=(const ofxUIWidget &other) {
     return *this;
 }
 
-void ofxUIWidget::initRect(float x, float y, float w, float h) {
-    if(rect != NULL) {
+void ofxUIWidget::initRect(float x, float y, float w, float h)
+{
+    if(rect != NULL)
+    {
         delete rect;
     }
     rect = new ofxUIRectangle(x,y,w,h);
     initPaddingRect();
 }
 
-void ofxUIWidget::initPaddingRect() {
-    if(paddedRect != NULL) {
+void ofxUIWidget::initPaddingRect()
+{
+    if(paddedRect != NULL)
+    {
         delete paddedRect;
     }
     paddedRect = new ofxUIRectangle(-padding, -padding, rect->getWidth()+padding*2.0, rect->getHeight()+padding*2.0);
@@ -166,7 +172,8 @@ void ofxUIWidget::initPaddingRect() {
     calculatePaddingRect();
 }
 
-void ofxUIWidget::calculatePaddingRect() {
+void ofxUIWidget::calculatePaddingRect()
+{
     float xMax = rect->getWidth();
     float yMax = rect->getHeight();
     vector<ofxUIWidget *>::iterator it = embeddedWidgets.begin();
@@ -181,15 +188,18 @@ void ofxUIWidget::calculatePaddingRect() {
     paddedRect->set(-padding, -padding, xMax+padding*2.0, yMax+padding*2.0);
 }
 
-void ofxUIWidget::setup() {
+void ofxUIWidget::setup()
+{
     //Custom Setup for Widgets
 }
 
-void ofxUIWidget::update() {
+void ofxUIWidget::update()
+{
 
 }
 
-void ofxUIWidget::draw() {
+void ofxUIWidget::draw()
+{
     ofxUIPushStyle();
     
     glEnable(GL_BLEND);
@@ -206,7 +216,8 @@ void ofxUIWidget::draw() {
     ofxUIPopStyle();
 }
 
-void ofxUIWidget::drawBack() {
+void ofxUIWidget::drawBack()
+{
     if(draw_back) {
         ofxUIFill();
         ofxUISetColor(color_back);
@@ -214,7 +225,8 @@ void ofxUIWidget::drawBack() {
     }
 }
 
-void ofxUIWidget::drawOutline() {
+void ofxUIWidget::drawOutline()
+{
     if(draw_outline) {
         ofxUINoFill();
         ofxUISetColor(color_outline);
@@ -222,7 +234,8 @@ void ofxUIWidget::drawOutline() {
     }
 }
 
-void ofxUIWidget::drawOutlineHighlight() {
+void ofxUIWidget::drawOutlineHighlight()
+{
     if(draw_outline_highlight) {
         ofxUINoFill();
         ofxUISetColor(color_outline_highlight);
@@ -293,9 +306,10 @@ void ofxUIWidget::touchCancelled(float x, float y, int id) {
 }
 #endif
 
-void ofxUIWidget::setTriggerType(ofxUITriggerType _triggerType)
+ofxUIWidget* ofxUIWidget::setTriggerType(ofxUITriggerType _triggerType)
 {
     triggerType = _triggerType;
+    return this; 
 }
 
 ofxUITriggerType ofxUIWidget::getTriggerType()
@@ -333,6 +347,11 @@ void ofxUIWidget::setState(int _state)
     state = _state;
 }
 
+int ofxUIWidget::getState()
+{
+    return state;
+}
+
 void ofxUIWidget::setDrawPadding(bool _draw_padded_rect)
 {
     draw_padded_rect = _draw_padded_rect;
@@ -343,27 +362,33 @@ void ofxUIWidget::setDrawPaddingOutline(bool _draw_padded_rect_outline)
     draw_padded_rect_outline = _draw_padded_rect_outline;
 }
 
-void ofxUIWidget::setDrawBack(bool _draw_back) {
+void ofxUIWidget::setDrawBack(bool _draw_back)
+{
     draw_back = _draw_back;
 }
 
-void ofxUIWidget::setDrawOutline(bool _draw_outline) {
+void ofxUIWidget::setDrawOutline(bool _draw_outline)
+{
     draw_outline = _draw_outline;
 }
 
-void ofxUIWidget::setDrawFill(bool _draw_fill) {
+void ofxUIWidget::setDrawFill(bool _draw_fill)
+{
     draw_fill = _draw_fill;
 }
 
-void ofxUIWidget::setDrawFillHighLight(bool _draw_fill_highlight) {
+void ofxUIWidget::setDrawFillHighLight(bool _draw_fill_highlight)
+{
     draw_fill_highlight = _draw_fill_highlight;
 }
 
-void ofxUIWidget::setDrawOutlineHighLight(bool _draw_outline_hightlight) {
+void ofxUIWidget::setDrawOutlineHighLight(bool _draw_outline_hightlight)
+{
     draw_outline_highlight = _draw_outline_hightlight;
 }
 
-bool ofxUIWidget::getDrawPadding() {
+bool ofxUIWidget::getDrawPadding()
+{
     return draw_padded_rect;
 }
 
@@ -668,19 +693,22 @@ bool ofxUIWidget::getIsBindedToKey(int key)
     return false;
 }
 
-void ofxUIWidget::bindToKey(int key)
+ofxUIWidget* ofxUIWidget::bindToKey(int key)
 {
     keyBindings[key] = true;
+    return this; 
 }
 
-void ofxUIWidget::unbindToKey(int key)
+ofxUIWidget* ofxUIWidget::unbindToKey(int key)
 {
     keyBindings[key] = false;
+    return this;
 }
 
-void ofxUIWidget::unbindAllKeys()
+ofxUIWidget* ofxUIWidget::unbindAllKeys()
 {
     keyBindings.clear();
+    return this; 
 }
 
 #ifndef OFX_UI_NO_XML

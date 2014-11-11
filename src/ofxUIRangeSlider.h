@@ -70,6 +70,8 @@ public:
     void setMax(float _max);
     void setMin(float _min);
     void setMaxAndMin(float _max, float _min);
+    float getMin();
+    float getMax();
     bool isDraggable();
     bool hasState(){ return true; };
 #ifndef OFX_UI_NO_XML
