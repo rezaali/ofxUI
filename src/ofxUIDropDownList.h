@@ -65,6 +65,9 @@ public:
     virtual void setModal(bool _modal);      
     bool isOpen();
     
+    //sets the selected toggle for a dropdown and displays it; does not allow multiple selected options
+    void setSingleSelected(int index);
+    
 protected:
     bool autoSize; 
     bool autoClose;
