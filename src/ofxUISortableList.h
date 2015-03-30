@@ -38,7 +38,6 @@ public:
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
-
 protected:
     void initDragableElements(vector<string> &items, int _size);// build draggable widgets for the sortable items
     bool isInSwapZone(ofxUIDraggableLabelButton* swapCandidate);// the "swapZone" is the area that extends from adjacent elements, in which the active widget can be bumped up or down the list

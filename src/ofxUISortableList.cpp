@@ -34,7 +34,7 @@ ofxUISortableList::ofxUISortableList(string _name, vector<string> items, float w
 
 void ofxUISortableList::init(string _name, vector<string> items, float w, float x, float y, int _size)
 {
-    itemHeight = 30;
+    itemHeight = 20;
     padding = 2;
     int height = items.size() * itemHeight + (padding*items.size() + padding);
     rect->setHeight(height);
@@ -49,6 +49,7 @@ void ofxUISortableList::init(string _name, vector<string> items, float w, float 
     activeWidgetIndex = -1;
     initDragableElements(items, _size);
 }
+
 
 vector<ofxUIDraggableLabelButton*> ofxUISortableList::getListItems()
 {
