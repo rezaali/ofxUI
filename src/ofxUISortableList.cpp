@@ -27,14 +27,14 @@
 
 // TODO easing
 
-ofxUISortableList::ofxUISortableList(string _name, vector<string> items, float w, float h, float x, float y, int _size) : ofxUIButton(_name, false, w, h, x, y, _size)
+ofxUISortableList::ofxUISortableList(string _name, vector<string> items, float w, float h, float x, float y, int _size, int _itemHeight) : ofxUIButton(_name, false, w, h, x, y, _size)
 {
-    init(_name, items, w, x, y, _size);
+    init(_name, items, w, x, y, _size, _itemHeight);
 }
 
-void ofxUISortableList::init(string _name, vector<string> items, float w, float x, float y, int _size)
+void ofxUISortableList::init(string _name, vector<string> items, float w, float x, float y, int _size, int _itemHeight)
 {
-    itemHeight = 20;
+    itemHeight = _itemHeight;
     padding = 2;
     int height = items.size() * itemHeight + (padding*items.size() + padding);
     rect->setHeight(height);

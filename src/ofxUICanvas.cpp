@@ -2031,11 +2031,11 @@ ofxUITextArea* ofxUICanvas::addTextArea(string _name, string _textstring, int _s
     return widget;
 }
 
-ofxUISortableList* ofxUICanvas::addSortableList(string _name, vector<std::string> _items, int _size) {
+ofxUISortableList* ofxUICanvas::addSortableList(string _name, vector<std::string> _items, int _size, int _itemHeight) {
     if(_size == -1) {
         _size = widgetFontSize;
     }    
-    ofxUISortableList *widget = new ofxUISortableList(_name, _items, rect->getWidth()-widgetSpacing*2, 0, 0, 0, _size);
+    ofxUISortableList *widget = new ofxUISortableList(_name, _items, rect->getWidth()-widgetSpacing*2, 0, 0, 0, _size, _itemHeight);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }

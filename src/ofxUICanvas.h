@@ -269,7 +269,7 @@ public:
     
     ofxUITextArea* addTextArea(string _name, string _textstring, int _size = OFX_UI_FONT_MEDIUM);
     
-    ofxUISortableList *addSortableList(string _name, vector<std::string> _items, int _size = -1);
+    ofxUISortableList *addSortableList(string _name, vector<std::string> _items, int _size = -1, int _itemHeight = 30);
     
     void resetPlacer();
     void setPlacer(ofxUIWidget *referenceWidget);

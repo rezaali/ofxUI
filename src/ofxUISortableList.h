@@ -30,8 +30,8 @@ class ofxUIDraggableLabelButton;
 class ofxUISortableList : public ofxUIButton
 {
 public:
-    ofxUISortableList(string _name, vector<string> items, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);
-    void init(string _name, vector<string> items, float w = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);
+    ofxUISortableList(string _name, vector<string> items, float w = 0, float h = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, int _itemHeight = 30);
+    void init(string _name, vector<string> items, float w = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM, int _itemHeight = 30);
     vector<ofxUIDraggableLabelButton*> getListItems();
     void reshuffle(std::vector<string> ordering);// reshuffle based on saved ordering
     void swapListItems(int swapA, int swapB);
