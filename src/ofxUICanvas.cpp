@@ -1459,7 +1459,7 @@ ofxUIRotarySlider* ofxUICanvas::addRotarySlider(string _name, float _min, float 
 }
 
 ofxUIRotarySlider* ofxUICanvas::addRotarySlider(string _name, float _min, float _max, float _value, float w, float x, float y, int _size) {
-    ofxUIRotarySlider* widget = new ofxUIRotarySlider(x, y, rect->getWidth()-widgetSpacing*2, _min, _max, _value, _name, _size);
+    ofxUIRotarySlider* widget = new ofxUIRotarySlider(x, y, w, _min, _max, _value, _name, _size);
     addWidgetPosition(widget, widgetPosition, widgetAlign);
     return widget;
 }
