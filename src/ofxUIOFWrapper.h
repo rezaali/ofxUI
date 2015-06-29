@@ -79,17 +79,17 @@ public:
    	//App Callbacks
     void enableAppEventCallbacks()
     {
-        ofAddListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate);
-        ofAddListener(ofEvents().draw, this, &ofxUIAppCBGlue::onDraw);
-        ofAddListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit);
+        enableAppUpdateCallback();
+        enableAppDrawCallback();
+        enableAppExitCallback();
     }
 	
 	//App Callbacks
     void disableAppEventCallbacks()
     {
-        ofRemoveListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate);
-        ofRemoveListener(ofEvents().draw, this, &ofxUIAppCBGlue::onDraw);
-        ofRemoveListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit);
+        disableAppUpdateCallback();
+        disableAppDrawCallback();
+        disableAppExitCallback();
     }
 	
     void enableAppDrawCallback()
@@ -99,12 +99,12 @@ public:
     
     void enableAppUpdateCallback()
     {
-        ofAddListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate);
+        ofAddListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate, OF_EVENT_ORDER_BEFORE_APP);
     }
     
     void enableAppExitCallback()
     {
-        ofAddListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit);
+        ofAddListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit, OF_EVENT_ORDER_BEFORE_APP);
     }
     
     void disableAppDrawCallback()
@@ -114,12 +114,12 @@ public:
     
     void disableAppUpdateCallback()
     {
-        ofRemoveListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate);
+        ofRemoveListener(ofEvents().update, this, &ofxUIAppCBGlue::onUpdate, OF_EVENT_ORDER_BEFORE_APP);
     }
     
     void disableAppExitCallback()
     {
-        ofRemoveListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit);
+        ofRemoveListener(ofEvents().exit, this, &ofxUIAppCBGlue::onExit, OF_EVENT_ORDER_BEFORE_APP);
     }
     
 #ifdef OFX_UI_TARGET_TOUCH
@@ -128,20 +128,20 @@ public:
     void enableTouchEventCallbacks()
     {
         
-        ofAddListener(ofEvents().touchUp, this, &ofxUIAppCBGlue::onTouchUp);
-        ofAddListener(ofEvents().touchDown, this, &ofxUIAppCBGlue::onTouchDown);
-        ofAddListener(ofEvents().touchMoved, this, &ofxUIAppCBGlue::onTouchMoved);
-        ofAddListener(ofEvents().touchCancelled, this, &ofxUIAppCBGlue::onTouchCancelled);
-        ofAddListener(ofEvents().touchDoubleTap, this, &ofxUIAppCBGlue::onTouchDoubleTap);
+        ofAddListener(ofEvents().touchUp, this, &ofxUIAppCBGlue::onTouchUp, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().touchDown, this, &ofxUIAppCBGlue::onTouchDown, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().touchMoved, this, &ofxUIAppCBGlue::onTouchMoved, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().touchCancelled, this, &ofxUIAppCBGlue::onTouchCancelled, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().touchDoubleTap, this, &ofxUIAppCBGlue::onTouchDoubleTap, OF_EVENT_ORDER_BEFORE_APP);
     }
     
 	void disableTouchEventCallbacks()
     {
-        ofRemoveListener(ofEvents().touchUp, this, &ofxUIAppCBGlue::onTouchUp);
-        ofRemoveListener(ofEvents().touchDown, this, &ofxUIAppCBGlue::onTouchDown);
-        ofRemoveListener(ofEvents().touchMoved, this, &ofxUIAppCBGlue::onTouchMoved);
-        ofRemoveListener(ofEvents().touchCancelled, this, &ofxUIAppCBGlue::onTouchCancelled);
-        ofRemoveListener(ofEvents().touchDoubleTap, this, &ofxUIAppCBGlue::onTouchDoubleTap);
+        ofRemoveListener(ofEvents().touchUp, this, &ofxUIAppCBGlue::onTouchUp, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().touchDown, this, &ofxUIAppCBGlue::onTouchDown, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().touchMoved, this, &ofxUIAppCBGlue::onTouchMoved, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().touchCancelled, this, &ofxUIAppCBGlue::onTouchCancelled, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().touchDoubleTap, this, &ofxUIAppCBGlue::onTouchDoubleTap, OF_EVENT_ORDER_BEFORE_APP);
     }
 	
 #else
@@ -149,31 +149,31 @@ public:
 	//Mouse Callbacks
     void enableMouseEventCallbacks()
     {
-        ofAddListener(ofEvents().mouseReleased, this, &ofxUIAppCBGlue::onMouseReleased);
-        ofAddListener(ofEvents().mousePressed, this, &ofxUIAppCBGlue::onMousePressed);
-        ofAddListener(ofEvents().mouseMoved, this, &ofxUIAppCBGlue::onMouseMoved);
-        ofAddListener(ofEvents().mouseDragged, this, &ofxUIAppCBGlue::onMouseDragged);
+        ofAddListener(ofEvents().mouseReleased, this, &ofxUIAppCBGlue::onMouseReleased, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().mousePressed, this, &ofxUIAppCBGlue::onMousePressed, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().mouseMoved, this, &ofxUIAppCBGlue::onMouseMoved, OF_EVENT_ORDER_BEFORE_APP);
+        ofAddListener(ofEvents().mouseDragged, this, &ofxUIAppCBGlue::onMouseDragged, OF_EVENT_ORDER_BEFORE_APP);
     }
     
 	//Mouse Callbacks
     void disableMouseEventCallbacks()
     {
-        ofRemoveListener(ofEvents().mouseReleased, this, &ofxUIAppCBGlue::onMouseReleased);
-        ofRemoveListener(ofEvents().mousePressed, this, &ofxUIAppCBGlue::onMousePressed);
-        ofRemoveListener(ofEvents().mouseMoved, this, &ofxUIAppCBGlue::onMouseMoved);
-        ofRemoveListener(ofEvents().mouseDragged, this, &ofxUIAppCBGlue::onMouseDragged);
+        ofRemoveListener(ofEvents().mouseReleased, this, &ofxUIAppCBGlue::onMouseReleased, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().mousePressed, this, &ofxUIAppCBGlue::onMousePressed, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().mouseMoved, this, &ofxUIAppCBGlue::onMouseMoved, OF_EVENT_ORDER_BEFORE_APP);
+        ofRemoveListener(ofEvents().mouseDragged, this, &ofxUIAppCBGlue::onMouseDragged, OF_EVENT_ORDER_BEFORE_APP);
     }
     
     //Window Resize Callback
     void enableWindowEventCallbacks()
     {
-        ofAddListener(ofEvents().windowResized, this, &ofxUIAppCBGlue::onWindowResized);
+        ofAddListener(ofEvents().windowResized, this, &ofxUIAppCBGlue::onWindowResized, OF_EVENT_ORDER_BEFORE_APP);
     }
     
 	//Window Resize Callback
     void disableWindowEventCallbacks()
     {
-        ofRemoveListener(ofEvents().windowResized, this, &ofxUIAppCBGlue::onWindowResized);
+        ofRemoveListener(ofEvents().windowResized, this, &ofxUIAppCBGlue::onWindowResized, OF_EVENT_ORDER_BEFORE_APP);
     }
 	
 #endif
@@ -181,15 +181,15 @@ public:
     //KeyBoard Callbacks
 	void enableKeyEventCallbacks()
 	{
-		ofAddListener(ofEvents().keyPressed, this, &ofxUIAppCBGlue::onKeyPressed);
-		ofAddListener(ofEvents().keyReleased, this, &ofxUIAppCBGlue::onKeyReleased);
+		ofAddListener(ofEvents().keyPressed, this, &ofxUIAppCBGlue::onKeyPressed, OF_EVENT_ORDER_BEFORE_APP);
+		ofAddListener(ofEvents().keyReleased, this, &ofxUIAppCBGlue::onKeyReleased, OF_EVENT_ORDER_BEFORE_APP);
 	}
     
 	//KeyBoard Callbacks
 	void disableKeyEventCallbacks()
 	{
-		ofRemoveListener(ofEvents().keyPressed, this, &ofxUIAppCBGlue::onKeyPressed);
-		ofRemoveListener(ofEvents().keyReleased, this, &ofxUIAppCBGlue::onKeyReleased);
+		ofRemoveListener(ofEvents().keyPressed, this, &ofxUIAppCBGlue::onKeyPressed, OF_EVENT_ORDER_BEFORE_APP);
+		ofRemoveListener(ofEvents().keyReleased, this, &ofxUIAppCBGlue::onKeyReleased, OF_EVENT_ORDER_BEFORE_APP);
 	}
     
     void onUpdate(ofEventArgs &data)
