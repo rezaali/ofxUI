@@ -462,3 +462,17 @@ bool ofxUIDropDownList::isOpen()
 {
     return *value;
 }
+
+void ofxUIDropDownList::setSingleSelected(int index){
+    
+    vector<ofxUILabelToggle*> toggles = getToggles();
+    if(index < toggles.size()){
+        selected.clear();
+        ofxUILabelToggle *lt = toggles.at(index);
+        selected.push_back(lt);
+        setShowCurrentSelected(true);
+    }else{
+        ofLogWarning("index for ufxUIDropDownList::setSingleSelected is out of range");
+    }
+    
+}
