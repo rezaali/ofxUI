@@ -129,6 +129,20 @@ void ofxUISuperCanvas::autoSizeToFitWidgets()
     canvasTitle->getRect()->setWidth(rect->getWidth()-widgetSpacing*2);    
 }
 
+bool ofxUISuperCanvas::didHitHeaderWidgets(float x, float y)
+{
+    vector<ofxUIWidget *>::iterator it = headerWidgets.begin();
+    vector<ofxUIWidget *>::iterator eit = headerWidgets.end();
+    for(; it != eit; ++it)
+    {
+        if((*it)->isHit(x, y))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void ofxUISuperCanvas::keyPressed(int key)
 {
     if(getIsBindedToKey(key) && !bKeyHit)
@@ -258,20 +272,6 @@ void ofxUISuperCanvas::onMouseReleased(ofMouseEventArgs& data)
 {
     bTitleLabelHit = false;
     mouseReleased(data.x, data.y, data.button);
-}
-
-bool ofxUISuperCanvas::didHitHeaderWidgets(float x, float y)
-{
-    vector<ofxUIWidget *>::iterator it = headerWidgets.begin();
-    vector<ofxUIWidget *>::iterator eit = headerWidgets.end();
-    for(; it != eit; ++it)
-    {
-        if((*it)->isHit(x, y))
-        {
-            return true;
-        }
-    }
-    return false;
 }
 
 void ofxUISuperCanvas::onMousePressed(ofMouseEventArgs& data)
