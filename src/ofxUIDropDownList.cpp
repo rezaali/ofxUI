@@ -411,7 +411,7 @@ void ofxUIDropDownList::activateToggle(string _name)
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUILabelToggle *t = toggles[i];
-        if(!(t->getName().compare(_name.c_str())))
+        if(t->getName() == _name)
         {
             t->setValue(true);
             singleSelected = t;
@@ -476,3 +476,51 @@ void ofxUIDropDownList::setSingleSelected(int index){
     }
     
 }
+
+#ifndef OFX_UI_NO_XML
+
+void ofxUIDropDownList::saveState(ofxXmlSettings *XML)
+{
+    XML->setValue("Open", (isOpen() ? 1 : 0), 0);
+    int index = XML->addTag("Selected");
+    if(XML->pushTag("Selected", index)) {
+        int cnt = 0;
+        for(vector<ofxUIWidget *>::iterator it = selected.begin(); it != selected.end(); ++it) {
+            ofxUILabelToggle *lt = (ofxUILabelToggle *) (*it);
+            XML->setValue("Name", lt->getName(), cnt++);
+        }
+    }
+    XML->popTag();
+}
+
+void ofxUIDropDownList::loadState(ofxXmlSettings *XML)
+{
+    selected.clear();
+    selectedIndeces.clear();
+    singleSelected = nullptr;
+    
+    int value = XML->getValue("Open", (isOpen() ? 1 : 0), 0);
+    if(value) { open(); } else { close(); }
+    XML->pushTag("Selected", 0);
+    int widgetTags = XML->getNumTags("Name");
+    for(int i = 0; i < widgetTags; ++i) {
+        string selName = XML->getValue("Name", "NULL", i);
+        if(selName != "NULL"){
+            if(allowMultiple) {
+                for(unsigned int i = 0; i < toggles.size(); i++) {
+                    ofxUILabelToggle *t = toggles[i];
+                    if(t->getName() == selName) {
+                        t->setValue(true);
+                        selected.push_back(t);
+                        selectedIndeces.push_back(i);
+                    }
+                }
+            } else {
+                activateToggle(selName);
+            }
+        }
+    }
+    XML->popTag();
+}
+
+#endif

@@ -63,6 +63,12 @@ public:
     virtual void setValue(bool _value);
     virtual void setModal(bool _modal);      
     bool isOpen();
+    bool hasState() { return true; }
+    
+#ifndef OFX_UI_NO_XML
+    virtual void saveState(ofxXmlSettings *XML);
+    virtual void loadState(ofxXmlSettings *XML);
+#endif
     
     //sets the selected toggle for a dropdown and displays it; does not allow multiple selected options
     void setSingleSelected(int index);

@@ -168,12 +168,17 @@
 <Widget>
     <Kind>22</Kind>
     <Name>DROP DOWN LIST</Name>
-    <Value>0</Value>
+    <Open>1</Open>
+    <Selected>
+        <Name>FIRST ITEM</Name>
+        <Name>THIRD ITEM</Name>
+        <Name>FIFTH ITEM</Name>
+    </Selected>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>FIRST ITEM</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -183,7 +188,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>THIRD ITEM</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -193,7 +198,7 @@
 <Widget>
     <Kind>17</Kind>
     <Name>FIFTH ITEM</Name>
-    <Value>0</Value>
+    <Value>1</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
