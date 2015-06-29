@@ -40,6 +40,11 @@ ofxUIButton *ofxUIEventArgs::getButton()
     return (ofxUIButton *) widget;
 }
 
+ofxUIRadio *ofxUIEventArgs::getRadio()
+{
+    return (ofxUIRadio *) widget;
+}
+
 ofxUIToggle *ofxUIEventArgs::getToggle()
 {
     return (ofxUIToggle *) widget;
