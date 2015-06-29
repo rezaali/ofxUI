@@ -60,6 +60,9 @@ public:
     virtual void setDimensions(float _width, float _height);
     void drawScrollableRect();
 
+    void setShowOverflow(bool showOverFlow) { bShowOverFlow = showOverFlow; }
+    bool getShowOverflow() { return bShowOverFlow; }
+    
 #ifdef OFX_UI_TARGET_TOUCH
     void touchDown(float x, float y, int id);
     void touchMoved(float x, float y, int id);
@@ -75,7 +78,8 @@ public:
 protected:
     ofxUIRectangle *sRect;
     bool isScrolling;
-    bool snapping; 
+    bool bShowOverFlow = false;
+    bool snapping;
     bool scrollX, scrollY; 
     bool nearTop, nearBot, nearRight, nearLeft;
     bool hitWidget; 
