@@ -144,6 +144,7 @@ void ofxUIButton::mouseReleased(int x, int y, int button)
 #ifdef OFX_UI_TARGET_TOUCH
         state = OFX_UI_STATE_NORMAL;
 #else
+        hit = false;
         if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
         {
             state = OFX_UI_STATE_OVER;
@@ -164,7 +165,6 @@ void ofxUIButton::mouseReleased(int x, int y, int button)
         state = OFX_UI_STATE_NORMAL;
     }
     stateChange();
-    hit = false;
 }
 
 void ofxUIButton::stateChange()
