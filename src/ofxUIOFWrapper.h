@@ -400,17 +400,17 @@ static void ofxUISetRectMode(ofRectMode rectMode)
 
 static void ofxUICircle(float x, float y, float radius)
 {
-    ofCircle(x, y, radius);
+    ofDrawCircle(x, y, radius);
 }
 
 static void ofxUIDrawRect(float x, float y, float w, float h)
 {
-    ofRect(x,y,w,h);
+    ofDrawRectangle(x,y,w,h);
 }
 
 static void ofxUIDrawLine(float x1, float y1, float x2, float y2)
 {
-    ofLine(x1, y1, x2, y2); 
+    ofDrawLine(x1, y1, x2, y2);
 }
 
 static int ofxUIGetHeight()

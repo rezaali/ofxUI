@@ -54,28 +54,28 @@ void ofxUI2DGraph::drawBack()
         ofFill();
         ofSetColor(color_back);
         rect->draw();
-        
+    
         ofPushMatrix();
         ofTranslate(rect->getX(), rect->getY(), 0);
         
         for(int x = 0; x <= rect->getWidth(); x+=inc)
         {
-            ofLine(x, 0, x, rect->getHeight());   //y
+            ofxUIDrawLine(x, 0, x, rect->getHeight());   //y
         }
         
         for(int y = 0; y <= rect->getHeight(); y+=inc)
         {
-            ofLine(0, y, rect->getWidth(), y);   //x
+            ofxUIDrawLine(0, y, rect->getWidth(), y);   //x
         }
         
         ofSetLineWidth(2);
-        ofLine(rect->getHalfWidth(), 0, rect->getHalfWidth(), rect->getHeight());
-        ofLine(0, rect->getHalfHeight(), rect->getWidth(), rect->getHalfHeight());
+        ofxUIDrawLine(rect->getHalfWidth(), 0, rect->getHalfWidth(), rect->getHeight());
+        ofxUIDrawLine(0, rect->getHalfHeight(), rect->getWidth(), rect->getHalfHeight());
         ofPopMatrix();
         ofNoFill();
         rect->draw();
         
-        ofSetLineWidth(1);
+        ofxUISetLineWidth(1);
         ofFill();
     }
 }

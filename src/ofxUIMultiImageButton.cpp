@@ -92,9 +92,9 @@ void ofxUIMultiImageButton::init(float x, float y, float w, float h, bool *_valu
         extension = _pathURL.substr(found);
     }
     
-    back = new ofImage();    back->loadImage(_pathURL);
-    over = new ofImage();   over->loadImage(coreURL+"over"+extension);
-    on = new ofImage();     on->loadImage(coreURL+"on"+extension);
+    back = new ofImage(_pathURL);
+    over = new ofImage(coreURL+"over"+extension);
+    on = new ofImage(coreURL+"on"+extension);
 }
 
 void ofxUIMultiImageButton::drawBack()                     //NORMAL

@@ -114,31 +114,23 @@ void ofxUIImageSlider::init(float x, float y, float w, float h, float _min, floa
         extension = _pathURL.substr(found);
     }
     
-    track = new ofImage();         //back
-    track->loadImage(coreURL+"track"+extension);
+    track = new ofImage(coreURL+"track"+extension);         //back
     
-    trackleft = new ofImage();         //back
-    trackleft->loadImage(coreURL+"trackleft"+extension);
+    trackleft = new ofImage(coreURL+"trackleft"+extension);         //back
     tlaspect = (float)trackleft->getWidth()/(float)trackleft->getHeight();
     
-    trackright = new ofImage();         //back
-    trackright->loadImage(coreURL+"trackright"+extension);
+    trackright = new ofImage(coreURL+"trackright"+extension);         //back
     traspect = (float)trackright->getWidth()/(float)trackright->getHeight();
     
-    progress = new ofImage();      //fill
-    progress->loadImage(coreURL+"progress"+extension);
+    progress = new ofImage(coreURL+"progress"+extension);      //fill
     
-    progressright = new ofImage();      //fill
-    progressright->loadImage(coreURL+"progressright"+extension);
+    progressright = new ofImage(coreURL+"progressright"+extension);      //fill
     
-    progressleft = new ofImage();      //fill
-    progressleft->loadImage(coreURL+"progressleft"+extension);
+    progressleft = new ofImage(coreURL+"progressleft"+extension);      //fill
     
-    handle = new ofImage();        //handle
-    handle->loadImage(coreURL+"handle"+extension);
+    handle = new ofImage(coreURL+"handle"+extension);        //handle
     
-    handleDown = new ofImage();    //handleOver State
-    handleDown->loadImage(coreURL+"handledown"+extension);
+    handleDown = new ofImage(coreURL+"handledown"+extension);    //handleOver State
     
     handleHalfWidth = handle->getWidth()*.5;
     handleHalfHeight = handle->getHeight()*.5;
