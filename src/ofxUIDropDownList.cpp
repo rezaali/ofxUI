@@ -64,26 +64,6 @@ void ofxUIDropDownList::init(string _name, vector<string> items, float w, float 
     singleSelected = NULL;
 }
 
-void ofxUIDropDownList::draw()
-{
-    ofxUIPushStyle();
-    
-    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    
-    drawPadded();
-    drawPaddedOutline();
-    
-    drawBack();
-    
-    drawOutline();
-    drawOutlineHighlight();
-    
-    drawFill();
-    drawFillHighlight();
-    
-    ofxUIPopStyle();
-}
-
 void ofxUIDropDownList::clearToggles()
 {
     while(toggles.size())

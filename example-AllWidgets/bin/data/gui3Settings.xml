@@ -2,8 +2,8 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>424.000000000</XPosition>
-    <YPosition>0.000000000</YPosition>
+    <XPosition>432.000000000</XPosition>
+    <YPosition>3.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>2</Kind>
@@ -13,7 +13,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(1,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -23,17 +23,17 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(0,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(1,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(2,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -43,7 +43,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX1(1,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -53,7 +53,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(0,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -63,7 +63,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(2,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -73,7 +73,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(4,0)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -88,7 +88,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(1,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -98,7 +98,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(3,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -108,12 +108,12 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(5,1)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(0,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -123,7 +123,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(2,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -133,7 +133,7 @@
 <Widget>
     <Kind>2</Kind>
     <Name>MATRIX2(4,2)</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>

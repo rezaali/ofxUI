@@ -2,26 +2,26 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>212.000000000</XPosition>
-    <YPosition>0.000000000</YPosition>
+    <XPosition>219.000000000</XPosition>
+    <YPosition>2.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>12</Kind>
     <Name>TEXT INPUT</Name>
-    <Value>&#x1B;&#x1B;2014-02-08-10-32-09-29</Value>
+    <Value>2015-06-28-17-47-41-515</Value>
 </Widget>
 <Widget>
     <Kind>12</Kind>
     <Name>TEXT INPUT2</Name>
-    <Value>&#x1B;here there</Value>
+    <Value>Input Text</Value>
 </Widget>
 <Widget>
     <Kind>8</Kind>
     <Name>DIALER</Name>
-    <Value>-9520.000000000</Value>
+    <Value>4999.032226562</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
     <Name>LABEL TGL</Name>
-    <Value>1</Value>
+    <Value>0</Value>
 </Widget>

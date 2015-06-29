@@ -37,17 +37,17 @@ public:
     ofxUITextInput *textInput; 
 
 	bool hideGUI;
-	
+
 	float red, green, blue;
 	bool bdrawGrid;
 	bool bdrawPadding;
-	
+
 	void guiEvent(ofxUIEventArgs &e);
-    
+
     ofxUIMovingGraph *mg;
     ofxUIDropDownList *ddl;
     ofxUIToggleMatrix *tm;
-    
+
     float *buffer;
     ofImage *img;
 };

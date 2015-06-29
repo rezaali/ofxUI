@@ -35,7 +35,6 @@ public:
     ofxUIDropDownList(float w, string _name, vector<string> items, int _size);
     ofxUIDropDownList(float x, float y, string _name, vector<string> items, int _size);
     void init(string _name, vector<string> items, float w = 0, float x = 0, float y = 0, int _size = OFX_UI_FONT_MEDIUM);
-    virtual void draw();
     void clearToggles();
     void clearSelected();
     void addToggle(string toggleName);

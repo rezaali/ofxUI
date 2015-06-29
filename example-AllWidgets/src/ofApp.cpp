@@ -11,8 +11,7 @@ void ofApp::setup(){
 
     ddl = NULL;
     textInput = NULL;
-    img = new ofImage();
-    img->loadImage("nerd_me.png");
+    img = new ofImage("nerd_me.png");
     buffer = new float[256];
     for(int i = 0; i < 256; i++) { buffer[i] = ofNoise(i/100.0); }
     
@@ -38,20 +37,12 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(red, green, blue, 255);
-	
-	ofPushStyle();
-	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-    
     
 	if(bdrawGrid)
 	{
 		ofSetColor(255, 255, 255, 25);
 		drawGrid(8,8);
 	}
-    
-	ofPopStyle();
-    
-    ofSetRectMode(OF_RECTMODE_CENTER);
 }
 
 void ofApp::guiEvent(ofxUIEventArgs &e)
@@ -255,11 +246,11 @@ void ofApp::keyPressed(int key){
         case '2':
             gui2->toggleVisible();
             break;
-            
+
         case '3':
             gui3->toggleVisible();
             break;
-            
+
         case '4':
             gui4->toggleVisible();
             break;
@@ -280,12 +271,12 @@ void ofApp::drawGrid(float x, float y)
     
     for(int i = 0; i < h; i+=y)
     {
-        ofLine(0,i,w,i);
+        ofDrawLine(0,i,w,i);
     }
     
     for(int j = 0; j < w; j+=x)
     {
-        ofLine(j,0,j,h);
+        ofDrawLine(j,0,j,h);
     }
 }
 
@@ -418,8 +409,6 @@ void ofApp::setGUI3()
     vector<string> items;
     items.push_back("FIRST ITEM"); items.push_back("SECOND ITEM"); items.push_back("THIRD ITEM");
     items.push_back("FOURTH ITEM"); items.push_back("FIFTH ITEM"); items.push_back("SIXTH ITEM");
-    
-    gui3->addSpacer();
     gui3->setWidgetFontSize(OFX_UI_FONT_SMALL);
     gui3->addSortableList("SORTABLE LIST", items);
     

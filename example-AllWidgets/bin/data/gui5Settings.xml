@@ -2,22 +2,22 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>848.000000000</XPosition>
-    <YPosition>0.000000000</YPosition>
+    <XPosition>856.000000000</XPosition>
+    <YPosition>4.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>11</Kind>
     <Name>PAD</Name>
-    <XValue>-15.270936966</XValue>
-    <YValue>21.182262421</YValue>
+    <XValue>-48.768470764</XValue>
+    <YValue>-26.108371735</YValue>
 </Widget>
 <Widget>
     <Kind>21</Kind>
     <Name>R2SLIDER</Name>
-    <Value>20.319635391</Value>
+    <Value>50.000000000</Value>
 </Widget>
 <Widget>
     <Kind>27</Kind>
     <Name>NORTH SOUTH</Name>
-    <Value>37.000000000</Value>
+    <Value>50.000000000</Value>
 </Widget>
