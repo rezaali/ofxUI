@@ -198,10 +198,7 @@ void ofxUIWidget::update()
 
 }
 
-void ofxUIWidget::draw()
-{
-    ofxUIPushStyle();
-    
+void ofxUIWidget::draw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
@@ -212,8 +209,6 @@ void ofxUIWidget::draw()
     drawOutlineHighlight();
     drawFill();
     drawFillHighlight();
-    
-    ofxUIPopStyle();
 }
 
 void ofxUIWidget::drawBack()
