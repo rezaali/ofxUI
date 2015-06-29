@@ -1,2 +1,2 @@
-ofxUI
 ofxXmlSettings
+ofxUI

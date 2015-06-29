@@ -5,8 +5,7 @@ void ofApp::setup()
 {	
     drawPadding = false;
     
-    gui = new ofxUICanvas();
-	gui->addLabel("CUSTOM WIDGETS");
+    gui = new ofxUISuperCanvas("CUSTOM WIDGETS");
     gui->addSpacer(); 
     gui->addFPS();
     
@@ -14,27 +13,25 @@ void ofApp::setup()
     gui->addNumberDialer("NDIALER", -99999.0000, 99999.0000, 100.0, 4);
 
     gui->addSpacer(); 
-    gui->addLabel("TEXT INPUT"); 
+    gui->addLabel("TEXT INPUT");
     gui->addTextInput("Text Input Large", "LARGE TEXTINPUT", OFX_UI_FONT_LARGE);
     gui->addTextInput("Text Input Medium", "MEDIUM TEXTINPUT", OFX_UI_FONT_MEDIUM);
     gui->addTextInput("Text Input Small", "SMALL TEXTINPUT", OFX_UI_FONT_SMALL);
     gui->addTextInput("Text Input Autoclear", "Auto Clear Disabled", OFX_UI_FONT_SMALL)->setAutoClear(false);
-
+//
     gui->addSpacer(); 
-    buffer = new float[256];     
+    buffer = new float[256];
     for(int i = 0; i < 256; i++) { buffer[i] = ofNoise(i/100.0); }
-    
+//
 	gui->addLabel("WAVEFORM GRAPH");     
-	gui->addWaveform("WAVEFORM", buffer, 256, 0.0, 1.0); 
-    gui->addLabel("SPECTRUM GRAPH");        
+	gui->addWaveform("WAVEFORM", buffer, 256, 0.0, 1.0);
+    gui->addLabel("SPECTRUM GRAPH");
     gui->addSpectrum("SPECTRUM", buffer, 256, 0.0, 1.0);
 
     gui->addSpacer();
-    img = new ofImage(); 
-    img->loadImage("of1.jpg"); 
-    img2 = new ofImage(); 
-    img2->loadImage("of2.jpg");     
-    
+    img = new ofImage("of1.jpg");
+    img2 = new ofImage("of2.jpg");
+
     float dim = (gui->getGlobalCanvasWidth() - gui->getPadding()*7.0)*0.5;
     gui->addLabel("IMAGE DISPLAY");
     gui->addImage("OF LOGO 1", img, dim, dim);
@@ -42,11 +39,9 @@ void ofApp::setup()
     bgColor = &gui->addImageSampler("OF LOGO 2", img2, dim, dim)->getColor();
     gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
     gui->addSpacer();
-    
 
-    gui->addSpacer();
     gui->addLabel("DROP DOWN LIST");
-    
+
     vector<string> items;
     items.push_back("FIRST");
     items.push_back("SECOND");
@@ -65,7 +60,7 @@ void ofApp::setup()
     gui->setWidgetPosition(OFX_UI_WIDGET_POSITION_DOWN);
 
     ofAddListener(gui->newGUIEvent,this,&ofApp::guiEvent);
-    
+
     gui->autoSizeToFitWidgets();
     gui->loadSettings("settings.xml");
     

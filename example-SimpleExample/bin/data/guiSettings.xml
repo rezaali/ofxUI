@@ -2,38 +2,38 @@
     <Kind>40</Kind>
     <Name>OFX_UI_WIDGET_CANVAS</Name>
     <IsMinified>0</IsMinified>
-    <XPosition>0.000000000</XPosition>
-    <YPosition>0.000000000</YPosition>
+    <XPosition>65.000000000</XPosition>
+    <YPosition>36.000000000</YPosition>
 </Canvas>
 <Widget>
     <Kind>4</Kind>
     <Name>BGR</Name>
-    <Value>236.157638550</Value>
+    <Value>231.133010864</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BGG</Name>
-    <Value>64.064041138</Value>
+    <Value>2.512315273</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BGB</Name>
-    <Value>125.615768433</Value>
+    <Value>155.763549805</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>RED</Name>
-    <Value>255.000000000</Value>
+    <Value>0.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>GREEN</Name>
-    <Value>195.960586548</Value>
+    <Value>227.364532471</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BLUE</Name>
-    <Value>70.344825745</Value>
+    <Value>255.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -46,9 +46,9 @@
     <Value>180.000000000</Value>
 </Widget>
 <Widget>
-    <Kind>4</Kind>
+    <Kind>42</Kind>
     <Name>RESOLUTION</Name>
-    <Value>28.000000000</Value>
+    <Value>60</Value>
 </Widget>
 <Widget>
     <Kind>17</Kind>
@@ -58,6 +58,6 @@
 <Widget>
     <Kind>11</Kind>
     <Name>POSITION</Name>
-    <XValue>620.453186035</XValue>
-    <YValue>435.073883057</YValue>
+    <XValue>464.078826904</XValue>
+    <YValue>219.428588867</YValue>
 </Widget>

@@ -21,7 +21,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    ofxUICanvas *gui; 
+    ofxUISuperCanvas *gui;
     ofxUIDropDownList *ddl;
     void guiEvent(ofxUIEventArgs &e);
     

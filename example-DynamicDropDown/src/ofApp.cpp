@@ -5,8 +5,7 @@ void ofApp::setup()
 {
     ofBackground(150);
     
-    gui = new ofxUICanvas();
-    gui->addLabel("DYNAMIC DROPDOWN", OFX_UI_FONT_MEDIUM);
+    gui = new ofxUISuperCanvas("DYNAMIC DROPDOWN");
     gui->addSpacer();
     gui->addLabel("'1' TO ADD TO LIST", OFX_UI_FONT_SMALL);
     gui->addLabel("'2' TO DELETE FROM LIST", OFX_UI_FONT_SMALL);
@@ -75,7 +74,7 @@ void ofApp::keyPressed(int key)
             break;
 
         case '2':
-            ddl->removeToggle("NEW TOGGLE");
+            ddl->removeToggle("ONE");
             break;
 
         case '3':

@@ -86,7 +86,7 @@ void ofxUITabBar::mainUiEvent(ofxUIEventArgs &event)
         {
             it->first->setValue(false);
             it->second->disable();
-        }        
+        }
     }
 }
 

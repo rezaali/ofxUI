@@ -25,8 +25,8 @@ public:
 	void guiEvent(ofxUIEventArgs &e);
 
     bool drawFill;
+    float bgRed, bgGreen, bgBlue;
 	float red, green, blue, alpha;
-    ofColor backgroundColor; 
     float radius; 
     int resolution;    
     ofPoint position; 

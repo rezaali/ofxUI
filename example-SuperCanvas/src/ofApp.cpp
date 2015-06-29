@@ -49,19 +49,9 @@ void ofApp::draw()
 	ofBackground(backgroundColor);
 	ofPushStyle(); 
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
-
     ofSetColor(red, green, blue, alpha);
-    if(drawFill)
-    {
-        ofFill(); 
-    }
-    else
-    {
-        ofNoFill(); 
-    }
-
-    ofCircle(position.x, position.y, radius);
-    
+    if(drawFill) { ofFill(); } else { ofNoFill(); }
+    ofDrawCircle(position.x, position.y, radius);
 	ofPopStyle(); 
 }
 //--------------------------------------------------------------

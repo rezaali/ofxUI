@@ -3,9 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup()
 {
-    gui = new ofxUICanvas();
-    
-    gui->addLabel("OFXUI TUTORIAL", OFX_UI_FONT_LARGE);
+    gui = new ofxUISuperCanvas("OFXUI TUTORIAL");
     gui->addSlider("BACKGROUND",0.0,255.0,100.0);
     gui->addToggle("FULLSCREEN", false);
     gui->autoSizeToFitWidgets(); 

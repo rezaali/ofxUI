@@ -1,2 +1,3 @@
-ofxUI
 ofxXmlSettings
+ofxUI
+addons

@@ -3,9 +3,9 @@ ofxUI
 
 A User Interface Library/Addon for openFrameworks
 
-ofxUI is an addon for openFrameworks (version 0.8.0+) that easily allows for the creation of user interfaces aka GUIs. ofxUI also takes care of widget layout, spacing, font loading, saving and loading settings, and widget callbacks. ofxUI can be easily customized (colors, font & widget sizes, padding, layout, etc).
+ofxUI is an addon for openFrameworks (version 0.9.0+) that easily allows for the creation of user interfaces aka GUIs. ofxUI also takes care of widget layout, spacing, font loading, saving and loading settings, and widget callbacks. ofxUI can be easily customized (colors, font & widget sizes, padding, layout, etc).
 
-Featured Projects: http://www.syedrezaali.com/blog/?p=3102
+Featured Projects: http://www.syedrezaali.com/#/ofxui-project-showcase/
 
 ofxUI contains a collection of minimally designed graphical user interface (GUI) widgets including:
 
@@ -48,7 +48,7 @@ Additionally, I was motived to write my own since I wanted something like Contro
 When I first started programming with C++ it was difficult for me to use the other GUIs...their either depended on other libraries, which weren't included in the download, and it wouldn't work out of the box, or they were complicated to integrate into my projects. Additionally, I was motived to write my own since I wanted something like ControlP5 (which is easy to get up and running) for Processing for OF. I use ControlP5 a lot and love its minimal aesthetic. I also love simpleGUI for Cinder, but since I primarily code using OF, I developed ofxUI with the intentions that it needs to be minimally designed, intuitive to use, easily integrated, flexible and customizable.
 
 ## Requirements
-- openFrameworks 0.8.0+
+- openFrameworks 0.9.0+
 
 ## Getting Started
 
@@ -65,7 +65,7 @@ This tutorial will provide step by step instructions on how to get started with 
 - Then in your ofApp.h file, create a new ```ofxUICanvas``` object within the ofApp class like so:
 
 ```cpp
-ofxUICanvas *gui;
+ofxUISuperCanvas *gui;
 ```
 
 In addition create two functions:
@@ -92,7 +92,7 @@ void ofApp::guiEvent(ofxUIEventArgs &e)
 - Within the setup function we are going to initialize the gui object and add widgets to it. So one way to do that is: 
 
 ```cpp
-gui = new ofxUICanvas();		//Creates a canvas at (0,0) using the default width	
+gui = new ofxUISuperCanvas("OFXUI TUTORIAL");		//Creates a canvas at (0,0) using the default width	
 ```
 
 - In the exit function we have to delete the gui after we are done using the application. But before this we want to tell the GUI to save the current values in the widgets to an XML file. Thus your exit function should look like: 

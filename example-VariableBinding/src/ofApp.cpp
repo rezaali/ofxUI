@@ -35,13 +35,12 @@ void ofApp::setup()
     gui->addSlider("BLUE", 0.0, 255.0, &blue);
     gui->addSlider("ALPHA", 0.0, 255.0, &alpha);
     gui->addSlider("RADIUS", 0.0, 600.0, &radius);
-	gui->addSlider("RESOLUTION", 3, 60, &resolution);
+	gui->addIntSlider("RESOLUTION", 3, 60, &resolution);
     gui->addLabelToggle("DRAW FILL", &drawFill);
     gui->add2DPad("POSITION", ofPoint(0, ofGetWidth()), ofPoint(0, ofGetHeight()), &position);
     gui->addSpacer();
     gui->addTextArea("TEXT AREA", "HIDE & SHOW GUI BY PRESSING 'g'. MOUSE OVER A SLIDER AND PRESS UP, DOWN, LEFT, RIGHT", OFX_UI_FONT_SMALL);
     gui->autoSizeToFitWidgets();
-    ofAddListener(gui->newGUIEvent,this,&ofApp::guiEvent);	    
 }
 
 //--------------------------------------------------------------
@@ -55,35 +54,13 @@ void ofApp::draw()
 {    	
 	ofBackground(bgRed, bgGreen, bgBlue);     
 	ofPushStyle(); 
-	ofEnableBlendMode(OF_BLENDMODE_ALPHA);     
-    
-    ofSetColor(red, green, blue, alpha); 
-    if(drawFill)
-    {
-        ofFill(); 
-    }
-    else
-    {
-        ofNoFill(); 
-    }
-    ofCircle(position.x,position.y, radius); 
-    
-    
+	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofSetColor(red, green, blue, alpha);
+    ofSetCircleResolution(resolution);
+    if(drawFill) { ofFill(); } else { ofNoFill(); }
+    ofDrawCircle(position.x,position.y, radius);
 	ofPopStyle(); 
 }
-//--------------------------------------------------------------
-void ofApp::guiEvent(ofxUIEventArgs &e)
-{
-
-	string name = e.widget->getName(); 
-	int kind = e.widget->getKind(); 
-	
-    if(name == "RESOLUTION")
-    {
-        ofSetCircleResolution(resolution); 
-    }
-}
-
 //--------------------------------------------------------------
 void ofApp::exit()
 {

@@ -22,15 +22,13 @@ class ofApp : public ofBaseApp
 	void gotMessage(ofMessage msg);
 	
 	ofxUISuperCanvas *gui;
-	void guiEvent(ofxUIEventArgs &e);
     bool drawFill; 
 	float red, green, blue, alpha; 	
-    
     
     float bgRed; 
     float bgGreen; 
     float bgBlue; 
     float radius; 
-    float resolution;    
+    int resolution;
     ofPoint position; 
 };

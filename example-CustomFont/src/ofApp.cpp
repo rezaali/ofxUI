@@ -52,7 +52,6 @@ void ofApp::draw()
 	ofBackground(backgroundColor);     
 	ofPushStyle(); 
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);     
-    
 	ofPopStyle(); 
 }
 //--------------------------------------------------------------

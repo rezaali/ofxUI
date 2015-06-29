@@ -7,8 +7,7 @@ void ofApp::setup()
 	ofEnableSmoothing();
 	
     drawPadding = false;
-    gui = new ofxUICanvas();
-	gui->addLabel("BUTTONS/TOGGLES", OFX_UI_FONT_LARGE);
+    gui = new ofxUISuperCanvas("BUTTONS/TOGGLES");
     gui->addSpacer();
 	gui->addLabel("BUTTONS");
     gui->addButton("B1", false, 44, 44);

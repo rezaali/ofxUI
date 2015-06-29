@@ -302,6 +302,7 @@ void ofxUIImageSlider::input(float x, float y)
         value = MIN(1.0, MAX(0.0, 1.0-imageRect->percentInside(x, y).y));
     }
 
+    updateValueRef();
     updateLabel();
 }
 

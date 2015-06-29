@@ -69,7 +69,7 @@ void ofApp::setup()
     gui1->addSpacer();
 	gui1->addLabel("IMAGE SLIDER");
     gui1->setGlobalSliderHeight(32);
-    gui1->addImageSlider("IMAGE SLIDER", "slider.png", 0.0, 255.0, 100.0);
+    gui1->addImageSlider("IMAGE SLIDER", "slider.png", 0.0, 255.0, &red);
     gui1->autoSizeToFitWidgets();
     ofAddListener(gui1->newGUIEvent,this,&ofApp::guiEvent);
     ofBackground(red, green, blue);

@@ -43,7 +43,7 @@ void ofxUITextInput::init(string _name, string _textstring, float w, float h, fl
     clicked = false;                                            //the widget's value
     autoclear = true;
     triggerOnClick = true;
-    label = new ofxUILabel((name+" LABEL"), _size);
+    label = new ofxUILabel(w-padding*2.0, (name+" LABEL"), _size);
     addEmbeddedWidget(label);
     
     inputTriggerType = OFX_UI_TEXTINPUT_ON_FOCUS;
