@@ -1,11 +1,9 @@
+# OFXUI IS DEPRECATED, USE OFXGUI (BUILT INTO OF) THIS ADDON IS NO LONGER SUPPORTED
+
 ofxUI
 =====
 
-# OFXUI'S DEVELOP BRANCH WILL BE GOING THROUGH SOME MAJOR CHANGES. THESE CHANGES ARE NOT BACKWARDS COMPATIBLE. 
-
-BUT AFTER ITS BEEN REFACTORED IT WILL BETTER, FASTER, HARDER, STRONGER
-
-A User Interface Library/Addon for openFrameworks
+A User Interface Library/Addon for openFrameworks 
 
 ofxUI is an addon for openFrameworks (version 0.9.0+) that easily allows for the creation of user interfaces aka GUIs. ofxUI also takes care of widget layout, spacing, font loading, saving and loading settings, and widget callbacks. ofxUI can be easily customized (colors, font & widget sizes, padding, layout, etc).
 
