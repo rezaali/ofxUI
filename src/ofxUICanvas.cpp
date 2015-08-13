@@ -600,8 +600,8 @@ void ofxUICanvas::update()
 void ofxUICanvas::draw() {
     ofxUIPushStyle();
 
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_LIGHTING);
+    ofDisableDepthTest();
+    ofDisableLighting();
 
     glEnable(GL_BLEND);
 #ifndef OFX_UI_TARGET_TOUCH

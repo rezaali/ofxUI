@@ -348,8 +348,8 @@ void ofxUIScrollableCanvas::draw()
 {
     ofxUIPushStyle();
     
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_LIGHTING);
+    ofDisableDepthTest();
+    ofDisableLighting();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);
     ofSetLineWidth(1.0);
